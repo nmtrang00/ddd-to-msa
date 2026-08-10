@@ -1,0 +1,28 @@
+# Init Spring Boot projects
+./initProjects.sh "/Users/trangnguyen/Study/MS-Thesis/msc-thesis/impl_new/test_new/dact-to-lemma/phase2/cargo.service" "/Users/trangnguyen/Study/MS-Thesis/msc-thesis/impl_new/test_new/dact-to-lemma/phase3"
+
+# Clean the 'domain' layer across all projects inside cargo_example
+./cleanProjects.sh -r /Users/trangnguyen/Study/MS-Thesis/msc-thesis/impl_new/test_new/dact-to-lemma/phase3 -l domain
+
+# Clean the 'exception' layer across all projects inside cargo_example
+./cleanProjects.sh -r /Users/trangnguyen/Study/MS-Thesis/msc-thesis/impl_new/test_new/dact-to-lemma/phase3 -l exception
+
+# Clean the 'payload' layer across all projects inside cargo_example
+./cleanProjects.sh -r /Users/trangnguyen/Study/MS-Thesis/msc-thesis/impl_new/test_new/dact-to-lemma/phase3 -l payload
+
+# Clean the 'controller' layer across all projects inside cargo_example
+./cleanProjects.sh -r /Users/trangnguyen/Study/MS-Thesis/msc-thesis/impl_new/test_new/dact-to-lemma/phase3 -l controller
+
+
+# Clean only the 'customer' service inside cargo_example
+./cleanProjects.sh -r /Users/trangnguyen/Study/MS-Thesis/msc-thesis/impl_new/test_new/dact-to-lemma/phase3 -s customer
+
+# Reset everything (preserving all main Spring Boot Application entry points)
+./cleanProjects.sh -r /Users/trangnguyen/Study/MS-Thesis/msc-thesis/impl_new/test_new/dact-to-lemma/phase3 -a
+
+mvn clean test -e
+
+#Customer
+mvn clean spring-boot:run -Dspring-boot.run.arguments="--server.port=8082"
+
+./mvnw clean spring-boot:run
