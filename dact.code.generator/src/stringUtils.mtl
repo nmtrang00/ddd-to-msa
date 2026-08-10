@@ -1,0 +1,45 @@
+[comment encoding = UTF-8 /]
+[module stringUtils('http://www.example.org/xcore/service')/]
+
+[comment] Converts snake_case, spaces, or hyphens into lowerCamelCase [/comment]
+[query public toCamelCase(str : String) : String = 
+  let words : Sequence(String) = str.tokenize('_') in
+    if words->size() > 1 then
+      words->first().toLower() + 
+      words->subSequence(2, words->size())->collect(w | w.toLower().toUpperFirst())->sep('')
+    else if words->size() = 1 then
+      words->first().toLower()
+    else
+      ''
+    endif endif
+/]
+
+[query public toPascalCase(str : String) : String = 
+str.toCamelCase().toUpperFirst()
+/]
+
+[query public toSingleLine(str : String) : String = 
+str.replaceAll('\\r\\n|\\r|\\n', '').trim() 
+/]
+
+[query public camelToSnake(str : String) : String = 
+  str.replaceAll('([a-z0-9])([A-Z])', '$1_$2')
+     .replaceAll('([A-Z]+)([A-Z][a-z])', '$1_$2')
+     .toLower()
+/]
+
+[comment -- Convert CamelCase or PascalCase to snake_case (e.g., "StudentAccount" -> "student_account") --/]
+[query public toSnakeCase(str : String) : String = 
+  str.replaceAll('([a-z0-9])([A-Z])', '$1_$2')
+     .replaceAll('([A-Z]+)([A-Z][a-z])', '$1_$2')
+     .replaceAll('[\\s\\-]+', '_')
+     .toLower()
+/]
+
+[comment -- Convert CamelCase or PascalCase to kebab-case (e.g., "StudentAccount" -> "student-account") --/]
+[query public toKebabCase(str : String) : String = 
+  str.replaceAll('([a-z0-9])([A-Z])', '$1-$2')
+     .replaceAll('([A-Z]+)([A-Z][a-z])', '$1-$2')
+     .replaceAll('[\\s_]+', '-')
+     .toLower()
+/]

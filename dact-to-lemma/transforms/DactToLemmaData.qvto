@@ -1,0 +1,253 @@
+import DactUtils;
+import StringUtils;
+import DactToLemmaUtils;
+
+modeltype DACT uses 'http://www.example.org/xcore/dact';
+modeltype DATA uses 'http://www.example.org/xcore/data';
+
+modeltype ECORE "strict" uses ecore('http://www.eclipse.org/emf/2002/Ecore');
+
+transformation DactToLemmaData(in dact: DACT, out data: DATA);
+
+property PROJECT_NAME : String = "DefaultProject";
+property DATA_MODEL : DATA::DataModel = null;
+
+main() {
+//	
+	log("");
+	log("-------------------------------------");
+	log("2.TRANSFORMING DACT TO LEMMA DATA MODEL");
+	log("-------------------------------------");
+	dact.rootObjects()[DACT::Root].ddd -> map DddModelToDataModel();
+	log("-------------------------------------");
+	log("");
+}
+
+mapping DACT::DddModel::DddModelToDataModel(): DATA::DataModel
+{
+	log("DddModel: Start parsing");
+	DATA_MODEL := result;
+	t_modelUri := PROJECT_NAME;
+	contexts := self.boundedContexts -> map BoundedContextToContext();
+	log("DddModel: End parsing");	
+};
+
+mapping DACT::BoundedContext::BoundedContextToContext(): DATA::Context{
+	self.printInfo(1);
+	
+	name := self.name.toUpperCamel();
+	complexTypes += self.ownedElements -> map DomainElementToComplexType();
+	
+	self.printInfo(1);
+	log("\t---")
+}
+			
+mapping DACT::DomainElement::DomainElementToComplexType(): DATA::ComplexType
+	disjuncts DACT::Enumeration::EnumerationToEnumeration,
+				DACT::DomainObject::DomainObjectToDataStructure {}
+				
+mapping DACT::Enumeration::EnumerationToEnumeration(): DATA::Enumeration {
+	self.printInfo(2);
+	
+	name := self.name.toUpperCamel();
+	fields := self.ownedLiterals -> map EnumerationLiteralToEnumerationField();
+}
+
+mapping DACT::EnumerationLiteral::EnumerationLiteralToEnumerationField(): DATA::EnumerationField {
+	name:= self.name;
+}
+
+mapping DACT::DomainObject::DomainObjectToDataStructure(): DATA::DataStructure {
+	self.printInfo(2);
+	
+	name := self.name;
+	features := self.GetCorrespondingComplexTypeFeatures();
+	dataFields := self.ownedProperties -> map PropertyToDataField();
+	operations := self.ownedOperations -> map OperationToDataOperation();
+}
+
+mapping DACT::Property::PropertyToDataField(): DATA::DataField 
+	disjuncts DACT::Property::PrimitivePropertyToDataField,
+				DACT::Property::EnumerationPropertyToDataField,
+				DACT::Property::AssociationPropertyToDataField {}
+
+mapping DACT::Property::PrimitivePropertyToDataField(): DATA::DataField 
+when {self.type.oclIsKindOf(DACT::PrimitiveType)}
+{
+	
+	self.printInfo(3,"Primitive Property");
+	
+	name := self.name.toCamel();
+	features := self.GetCorrespondingDataFieldFeatures();
+	lowerBound := self.lowerBound;
+	upperBound := self.upperBound;
+	if (self.upperBound < 0 or self.upperBound > 1){
+		complexType := self.type.oclAsType(DACT::PrimitiveType).map PrimitiveTypesToPrimitiveTypeCollection();
+	} else {
+		primitiveType := self.type.oclAsType(DACT::PrimitiveType).PrimitiveTypetoDataPrimitive();
+	};
+	if (not self._default.oclIsUndefined() and not self._default.oclIsKindOf(DACT::LiteralNull)){
+		initializationValue := self._default.map ValueSpecificationToValueSpecification().oclAsType(DATA::PrimitiveValue);
+	}
+	-- TODO: Default value for complex type
+}
+
+mapping DACT::Property::EnumerationPropertyToDataField(): DATA::DataField 
+when {self.type.oclIsKindOf(DACT::Enumeration)}
+{
+	self.printInfo(3,"Enumeration Property");
+	
+	name := self.name.toCamel();
+	features := self.GetCorrespondingDataFieldFeatures();
+	upperBound := self.upperBound;
+	if (self.upperBound <0 or self.upperBound > 1){
+		complexType := self.type.oclAsType(DACT::Enumeration).map DomainElementsToComplexTypeCollection();
+	} else {
+		complexType := self.type.oclAsType(DACT::Enumeration).map EnumerationToEnumeration();
+	};
+	if (not self._default.oclIsUndefined() and not self._default.oclIsKindOf(DACT::LiteralNull)){
+		initializationValue := self._default.map ValueSpecificationToValueSpecification().oclAsType(DATA::PrimitiveValue);
+	}
+}
+
+mapping DACT::Property::AssociationPropertyToDataField(): DATA::DataField 
+when {self.type.oclIsKindOf(DACT::DomainObject)}
+{
+	self.printInfo(3,"Association Property");
+	
+	name := self.name;
+	if (self.isComposite){
+		features := Sequence{DATA::DataFieldFeature::PART};
+	};
+	lowerBound := self.lowerBound;
+	upperBound := self.upperBound;
+	if (self.upperBound <0 or self.upperBound > 1){
+		complexType := self.type.oclAsType(DACT::DomainObject).map DomainElementsToComplexTypeCollection();
+	} else {
+		complexType := self.type.oclAsType(DACT::DomainObject).map DomainElementToComplexType();
+	};
+	-- TODO: Support the default value for structured data
+}
+
+mapping DACT::PrimitiveType::PrimitiveTypesToPrimitiveTypeCollection(): DATA::CollectionType {
+    self.printInfo(4, "Global Collection of PrimitiveType");
+    
+    name := self.name.replace("E","").toUpperCamel();
+    primitiveType := self.PrimitiveTypetoDataPrimitive();
+    
+    -- Add directly to the global DataModel container
+    
+    if (DATA_MODEL <> null and not DATA_MODEL.complexTypes->includes(result)) {
+        DATA_MODEL.complexTypes += result;
+    };
+}
+
+mapping DACT::DomainElement::DomainElementsToComplexTypeCollection(): DATA::CollectionType {
+	// Given DDMM: Currently there is no such case where this is a collection of structured data like Collection {int x, int y}
+	// --> Only Collection of Primitive or single Datafield
+	-- TODO: Support Collection of Structured Data
+	self.printInfo(4, "Collection of NamedElement");
+	
+	name := self.name.toUpperCamel();
+	context := self.context.map BoundedContextToContext();
+	dataFields := object DataField {
+		name := self.name.toCamel();
+		complexType := self.map DomainElementToComplexType();
+	};
+}
+
+query DACT::DomainElement::GetCorrespondingComplexTypeFeatures(): Sequence(DATA::ComplexTypeFeature) {
+	var features : Sequence(DATA::ComplexTypeFeature);
+
+    if (self.oclIsKindOf(DACT::Entity)) then { features += DATA::ComplexTypeFeature::ENTITY } endif;
+    if (self.oclIsKindOf(DACT::ValueObject)) then { features += DATA::ComplexTypeFeature::VALUE_OBJECT } endif;
+    if (self.oclIsKindOf(DACT::SharedValueObject)) then { features += DATA::ComplexTypeFeature::SHARED_VALUE_OBJECT } endif;
+    if (self.oclIsKindOf(DACT::AggregateRoot)) then { features += DATA::ComplexTypeFeature::AGGREGATE } endif;
+
+    return features;
+}
+
+query DACT::Property::GetCorrespondingDataFieldFeatures(): Sequence(DATA::DataFieldFeature) {
+	var features : Sequence(DATA::DataFieldFeature);
+	
+	if (self.definesIdentity) then { features += DATA::DataFieldFeature::IDENTIFIER} endif;
+	if (self.lowerBound>=1) then { features += DATA::DataFieldFeature::NEVER_EMPTY} endif;
+	if (self.isComposite) then { features += DATA::DataFieldFeature::PART} endif;
+	
+	return features;
+}
+
+mapping DACT::Operation::OperationToDataOperation(): DATA::DataOperation
+when {
+	// Within this transformation, only non-invariant is transformed!
+    not self.oclIsKindOf(DACT::InvariantOperation);
+}
+{
+	self.printInfo(3);
+	
+	name := self.name;
+	features := self.GetCorrespondingDataFieldFeatures();
+	operationType := self.type.GetCorrespondingOperationType();
+	parameters := self.ownedParameters -> map ParameterToDataOperationParameter();
+}
+
+mapping DACT::Parameter::ParameterToDataOperationParameter(): DATA::DataOperationParameter{
+	self.printInfo(4);
+	
+	name := self.name;
+	exchangePattern := self.direction.GetCorrespondingExchangePattern();
+	var currentContext : DACT::BoundedContext;
+	if (not self.operation.domainObject.oclIsUndefined()){
+		currentContext := self.operation.domainObject.context;
+	}elif (not self.operation.interface.oclIsUndefined()){
+		currentContext := self.operation.interface.context;
+	}else{
+		log(indent(4) + "WARNING: No bounded context found in parent!");	
+	};
+	lowerBound := self.lowerBound;
+	upperBound := self.upperBound;
+	if (self.type.oclIsKindOf(DACT::PrimitiveType)){
+		if (self.upperBound <0 or self.upperBound > 1){
+			complexType := self.type.oclAsType(DACT::PrimitiveType).map PrimitiveTypesToPrimitiveTypeCollection();
+		} else {
+			primitiveType := self.type.oclAsType(DACT::PrimitiveType).PrimitiveTypetoDataPrimitive();
+			if (not self._default.oclIsUndefined() and not self._default.oclIsKindOf(DACT::LiteralNull)){
+				initializationValue := self._default.map ValueSpecificationToValueSpecification().oclAsType(DATA::PrimitiveValue);
+				-- TODO: Check why this is logged but not presented in the output file!!!
+			}
+		};
+	}elif (self.type.oclIsKindOf(DACT::DomainObject)){
+		if (self.upperBound <0 or self.upperBound > 1){
+			complexType := self.type.oclAsType(DACT::DomainObject).map DomainElementsToComplexTypeCollection();
+		} else {
+			complexType := self.type.oclAsType(DACT::DomainObject).map DomainElementToComplexType();
+			-- TODO: Default value for complex type
+		};
+	}
+}
+
+query DACT::Operation::GetCorrespondingDataFieldFeatures(): Sequence(DATA::DataOperationFeature) {
+	var features : Sequence(DATA::DataOperationFeature);
+	
+	-- TODO: Uncomment when support operation defining id
+//	if (self.definesIdentity) then { features += DATA::DataOperationFeature::IDENTIFIER} endif;
+	if (self.closure) then { features += DATA::DataOperationFeature::CLOSURE} endif;
+	if (self.sideEffectFree) then { features += DATA::DataOperationFeature::SIDE_EFFECT_FREE} endif;
+	if (self.validatesSpec) then { features += DATA::DataOperationFeature::VALIDATOR} endif;
+	
+	return features;
+}
+
+query DACT::ParameterDirection::GetCorrespondingExchangePattern(): DATA::ExchangePattern {
+	return switch{
+		case (self = DACT::ParameterDirection::IN) DATA::ExchangePattern::IN;
+		case (self = DACT::ParameterDirection::OUT) DATA::ExchangePattern::OUT;
+	}
+}
+
+query DACT::OperationType::GetCorrespondingOperationType(): DATA::OperationType{
+    var literalName : String = self.toString();
+    
+    return DATA::OperationType.oclAsType(ecore::EEnum).getEEnumLiteral(literalName).instance
+        .oclAsType(DATA::OperationType);
+}

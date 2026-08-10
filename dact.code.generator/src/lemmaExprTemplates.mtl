@@ -1,0 +1,36 @@
+[comment encoding = UTF-8 /]
+[module lemmaExprTemplates(
+	'http://www.example.org/xcore/data',
+	'http://www.example.org/xcore/service',
+	'http://www.example.org/xcore/behavior',
+	'http://www.example.org/xcore/technology'
+)/]
+[import lemmaUtils/]
+
+[template public generateExpression(expr : behavior::Expression)]
+[expr.child.generateExpressionChild()/]
+[/template]
+
+[template public generateExpressionChild(expr : behavior::ExpressionChild)]
+[/template]
+
+[template public generateExpressionChild(expr : behavior::UnaryExpression)]
+[if (expr.identifier <> null)][expr.identifier.name/][else][if (expr.value <> null)][if (expr.value.oclIsKindOf(data::PrimitiveValue))][let value = expr.value.oclAsType(data::PrimitiveValue)][if (value.stringValue <> null)]"[value.stringValue/]"[elseif (value.booleanValue <> null)][value.booleanValue/][elseif (value.numericValue <> null)][value.numericValue/][else]null[/if][/let][/if][/if][/if]
+[/template]
+
+[template public generateExpressionChild(expr : behavior::BinaryExpression)][expr.leftExpr.generateExpression()/] [expr.operator.getOperatorPresentation()/] [expr.rightExpr.generateExpression()/][/template]
+
+[template public generateExpressionChild(expr : behavior::NotExpression)]!([expr.expr.generateExpression()/])[/template]
+
+  
+[query public generateGetterChain(name : String) : String =
+  let parts : Sequence(String) = name.tokenize('.') in
+    parts->first() + 
+    if parts->size() > 1 then 
+      '.' + parts->subSequence(2, parts->size())
+        ->collect(p | 'get' + p.toUpperFirst() + '()')
+        ->sep('.')
+    else 
+      '' 
+    endif
+/]

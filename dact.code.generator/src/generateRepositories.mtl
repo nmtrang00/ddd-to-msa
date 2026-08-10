@@ -1,0 +1,60 @@
+[comment encoding = UTF-8 /]
+[**
+ * The documentation of the module generate.
+ * @author trangnguyen
+ * @version 1.0.0
+ * @since 1.0.0
+ */]
+[module generateRepositories('http://www.example.org/xcore/data','http://www.example.org/xcore/service')/]
+
+[import stringUtils/]
+[import lemmaUtils/]
+[import lemmaDataTypeTemplates/]
+
+[comment @main/]
+[template public generateRepositories(serviceModel: service::ServiceModel)]
+[for (microservice : service::Microservice | serviceModel.microservices)]
+  	[let serviceName : String = microservice.name.toCamelCase(), 
+  		interfaceDir : String = serviceName+'-service/src/main/java/com/example/'+serviceName+'/repository/']
+    [for (interface: service::Interface | microservice.interfaces -> select(i|i.isRepository()))]
+      	  [let filePath: String = interfaceDir + interface.name.toUpperFirst()+'.java']
+		  [interface.generateRepository(filePath, serviceName)/]
+		  [/let]
+	[/for]
+	[/let]
+[/for]
+[/template]
+
+[template public generateRepository(
+	interface : service::Interface, 
+	filePath: String, 
+	serviceName: String)]
+[file (filePath, overwrite, 'UTF-8')]
+[let aggregate : data::DataStructure = interface.getRepositoryAggregate(), aggregateIdType : String = aggregate.getIdType()]
+  package com.example.[serviceName/].repository;
+  
+[for (typeToImport | interface.getDomainObjectsToImport())]
+  import com.example.[serviceName/].domain.[typeToImport.name.toUpperFirst()/];
+[/for]
+[if (interface.hasCollectionTypeParameter())]
+  import java.util.List;
+[/if]
+[if (interface.hasOptionalOutParam())]
+  import java.util.Optional;
+[/if]
+[if (aggregateIdType == 'UUID')]
+  import java.util.UUID;
+[/if]
+  import org.springframework.data.jpa.repository.JpaRepository;
+
+  public interface [interface.name.toUpperFirst()/] extends JpaRepository<[aggregate.name.toUpperFirst()/], [aggregateIdType/]> {
+[for (op : service::Operation | interface.operations)]
+[if (not op.name.startsWith('create') and not op.name.startsWith('update'))]
+      [op.generateOperation().toSingleLine()/];
+[/if]
+[/for]
+  }
+[/let]
+[/file]
+[/template]
+

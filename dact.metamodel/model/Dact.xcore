@@ -1,0 +1,834 @@
+@Ecore(nsURI="http://www.example.org/xcore/dact")
+@GenModel(
+    modelDirectory="/dact.metamodel/src-gen",
+    editDirectory="/dact.metamodel.edit/src-gen",
+    editorDirectory="/dact.metamodel.editor/src-gen",
+    editPluginID="dact.metamodel.edit",
+    editorPluginID="dact.metamodel.editor"
+)
+package dact
+import org.eclipse.emf.common.util.BasicDiagnostic
+import org.eclipse.emf.common.util.Diagnostic
+import org.eclipse.emf.ecore.EDiagnosticChain
+import org.eclipse.emf.ecore.EMap
+
+abstract class DiagnosticSupported {
+    op boolean report(EDiagnosticChain diagnostics, String message) {
+    if (diagnostics !== null) {
+        diagnostics.add(new BasicDiagnostic(Diagnostic.ERROR,
+            "http://www.example.org/xcore/dact", 0, message, #[this]))
+    }
+    return false
+    }
+} 
+
+@Ecore(constraints="UniquePrimitiveType")
+class Root extends  DiagnosticSupported {
+    contains DddModel[0..1] ddd
+    contains ActivityModel[0..1] activity
+    contains PrimitiveType[] primitivesTypes
+    
+    op boolean UniquePrimitiveType(EDiagnosticChain diagnostics, EMap<Object, Object> context) {
+        val typesList = primitivesTypes.map[it?.eClass].filterNull.toList
+        val isUnique = typesList.size === typesList.toSet.size
+        
+        if (!isUnique && diagnostics !== null) {
+            report(diagnostics, "Duplicate primitive types detected.")
+        }
+        return isUnique
+    }
+}
+
+abstract class NamedElement{
+	String name
+}
+
+abstract class TypedMultiplicityElement {
+	contains ValueSpecification[0..1] ^default
+	refers Type ^type
+	Integer upperBound = '1'
+	Integer lowerBound = '0'
+}
+
+abstract class Model{}
+
+class DddModel extends Model{
+	contains BoundedContext[] boundedContexts
+	contains SharedDomainObject[] sharedDomainObjects
+}
+
+class ActivityModel extends Model{
+	contains Activity[] activities
+}
+
+class DomainNodeOperationMapping{
+	Boolean usedByExternalContext
+	refers DomainNode domainNode
+	refers Operation operation
+}
+
+class BoundedContext extends NamedElement{
+	contains DomainElement[] ownedElements opposite context
+}
+
+abstract class DomainElement extends NamedElement
+{
+	container BoundedContext context opposite ownedElements
+}
+
+class Entity extends InternalDomainObject{
+	refers Repository repository opposite entity
+}
+
+class ValueObject extends InternalDomainObject{}
+
+class SharedValueObject extends SharedDomainObject{
+	refers AggregateRoot abstractedRoot
+}
+
+class AggregateRoot extends Entity{
+}
+
+class Repository extends Interface{
+	refers Entity entity opposite repository
+}
+
+class Service extends Interface{}
+
+@Ecore(constraints="MandatoryType CompositeRequiresEntity AggregateIsNotComposed PrimitivePropertyRequiresName")
+class Property extends NamedElement, DefinesIdentityObject, TypedMultiplicityElement,DiagnosticSupported{
+	Boolean isComposite = 'false'
+	
+	container DomainObject domainObject opposite ownedProperties
+	
+	op boolean MandatoryType(EDiagnosticChain diagnostics, EMap<Object, Object> context) {
+        val hasType = this.^type !== null
+
+        if (!hasType && diagnostics !== null) {
+            report(diagnostics,
+                "Property '" + name + "' of '" + domainObject?.name +
+                "' must declare a type.")
+        }
+        return hasType
+    }
+    
+    op boolean CompositeRequiresEntity(EDiagnosticChain diagnostics,
+                                             EMap<Object, Object> context) {
+        val isValid = (!isComposite || (this.domainObject instanceof Entity && this.^type instanceof Entity))
+
+        if (!isValid && diagnostics !== null) {
+            report(diagnostics,
+                "Property '" + name + "' cannot be composite: composition requires " +
+					"both the owning element and the declared type to be entities."
+            )
+        }
+        return isValid
+    }
+    
+    op boolean AggregateIsNotComposed(EDiagnosticChain diagnostics,
+                            EMap<Object, Object> context) {
+	    val isValid = !isComposite || !(this.^type instanceof AggregateRoot)
+	
+	    if (!isValid && diagnostics !== null) {
+	        report(diagnostics,
+	            "Property '" + name + "' cannot compose the aggregate root '" +
+					this.^type?.name + "': aggregate roots are referenced, not owned."
+	         )
+	    }
+	    return isValid
+	}
+    
+    op boolean PrimitivePropertyRequiresName(EDiagnosticChain diagnostics,
+                                         EMap<Object, Object> context) {
+	    val isValid = !(this.^type instanceof PrimitiveType) ||
+	                  !(name === null || name.trim.empty)
+	
+	    if (!isValid && diagnostics !== null) {
+	        report(diagnostics,
+	            "A property of primitive type '" + this.^type?.name + "' in '" +
+	            domainObject?.name + "' must declare a name, since no " +
+	            "meaningful name can be derived from a primitive type.")
+	    }
+	    return isValid
+	}
+}
+
+@Ecore(constraints="BehaviorXorSpecification")
+class Operation extends NamedElement, DefinesIdentityObject,DiagnosticSupported{
+	OperationType ^type
+	Boolean validatesSpec = 'false'
+	Boolean closure = 'false'
+	Boolean sideEffectFree = 'false'
+	
+	refers Behavior behavior opposite specification
+	
+	contains Parameter[] ownedParameters opposite operation
+	contains Expression[0..*] validatesSpecExpr  // Only when validatesSpect == True -> Multiple eval assume AND
+	
+	container Interface ^interface opposite ownedOperations
+	container DomainObject domainObject opposite ownedOperations
+	
+	op boolean BehaviorXorSpecification(EDiagnosticChain diagnostics,
+                                        EMap<Object, Object> context) {
+        val hasBehavior = behavior !== null
+        val hasSpec = validatesSpec && !validatesSpecExpr.empty
+        val isValid = hasBehavior !== hasSpec
+
+        if (!isValid && diagnostics !== null) {
+            val message = if (hasBehavior)
+                    "Operation '" + name + "' must define either a " +
+                    "behavior or a specification, but not both."
+                else
+                    "Operation '" + name + "' must define either a " +
+                    "behavior or at least one specification expression."
+
+            report(diagnostics, message)
+        }
+        return isValid
+    }
+}
+
+class InvariantOperation extends Operation{
+	// No Parameter -> just validate using the property or nested property: chain of identifier -> Only allow nested if no one-to-many
+	op void init() {
+		this.name = "isValid";
+		this.^type = OperationType::D5_SPECIFICATION;
+		this.validatesSpec = true
+		this.sideEffectFree = true;
+		
+		val expr = DactFactory.eINSTANCE.createExpression();
+		expr.name = this.domainObject.name+"Rule0";
+		this.validatesSpecExpr.add(expr)
+		
+		val outParam = DactFactory.eINSTANCE.createParameter();
+		outParam.name = "result";
+		if (this.eResource !== null) {
+		        val globalBoolean = this.eResource.allContents
+		            .filter(BooleanType)
+		            .head;
+		        if (globalBoolean !== null) {
+		            outParam.^type = globalBoolean;
+		        }
+		    }
+		outParam.direction = ParameterDirection::OUT;
+		outParam.lowerBound = 1;
+		outParam.upperBound = 1;
+		this.ownedParameters.add(outParam);
+	}
+}
+
+enum OperationType {
+	I0_INBOUND_GET,
+	I1_INBOUND_PUT,
+	I2_INBOUND_POST,
+	I3_INBOUND_DELETE,
+	I4_MESSAGE_HANDLER,
+	S0_DOMAIN_SERVICE,
+	S1_APPLICATION_SERVICE,
+	R0_REPOSITORY_CREATE,
+	R1_REPOSITORY_READ,
+	R2_REPOSITORY_UPDATE,
+	R3_REPOSITORY_DELETE,
+	R4_REPOSITORY_EXIST,
+	O0_OUTBOUND_GET,
+	O1_OUTBOUND_PUT,
+	O2_OUTBOUND_POST,
+	O3_OUTBOUND_DELETE,
+	O4_MESSAGE_DISPATCHER,
+	O5_OUTBOX_POLLER,
+	D0_CONSTRUCTOR,
+	D1_SIMPLE_MUTATOR,
+	D2_COMPOUND_MUTATOR,
+	D3_SIMPLE_ACCESSOR,
+	D4_COMPOUND_ACCESSOR,
+	D5_SPECIFICATION,
+	A0_INTERNAL_ACL,
+	A1_EXTERNAL_ACL
+}
+
+abstract class InternalDomainObject extends DomainObject{}
+
+abstract class Interface extends DomainElement{
+	contains Operation[] ownedOperations opposite ^interface
+}
+
+abstract class DefinesIdentityObject {
+	Boolean definesIdentity = 'false'
+}
+
+abstract class DomainObject extends Type, DomainElement{
+	contains Property[] ownedProperties opposite domainObject
+	contains Operation[] ownedOperations opposite domainObject
+}
+
+abstract class SharedDomainObject extends DomainObject{}
+
+abstract class PrimitiveType extends DataType{}
+
+class StringType extends PrimitiveType{}
+
+class BooleanType extends PrimitiveType{}
+
+class IntegerType extends PrimitiveType{}
+
+class RealType extends PrimitiveType{}
+
+abstract class Type extends NamedElement{}
+
+class Enumeration extends DataType, DomainElement{
+	contains EnumerationLiteral[] ownedLiterals
+}
+
+abstract class DataType extends Type{}
+
+class EnumerationLiteral extends NamedElement{}
+
+abstract class Literal extends ValueSpecification{}
+
+class LiteralNull extends Literal{}
+
+class LiteralString extends Literal{
+	String value
+	
+	// 1. Derived Feature: Gets the length of the string
+	derived Integer length get{
+		if (value === null) return 0
+		return value.length()
+	}
+	
+	// 2. Basic Operation: Checks if it contains a substring
+	op Boolean ^contains(String substring) {
+		if (value === null || substring === null) return false
+		return value.contains(substring)
+	}
+}
+
+class LiteralInteger extends Literal
+{
+	Integer value
+}
+
+class LiteralBoolean extends Literal
+{
+	Boolean value
+}
+
+class LiteralReal extends Literal
+{
+	Double value
+}
+
+class DomainEvent extends NamedElement, SharedDomainObject{}
+
+@Ecore(constraints="MatchedParameterMappings")
+class Activity extends NamedElement, Behavior,DiagnosticSupported
+{
+	Boolean toTransform = 'true'
+	contains Parameter[] ownedParameters opposite activity
+	contains ParameterMapping[] parameterMappings opposite activity
+	contains ActivityGroup[0..1] root opposite activity
+	contains DomainNode[] ownedDomainNodes // Only used during transformation to derive the most influential impact
+	contains DomainNodeOperationMapping[] processedDomainNodeMappings
+	op void init() {
+		val rootGroup = DactFactory.eINSTANCE.createActivityGroup()
+		rootGroup.name = "Root"
+		rootGroup.init()
+		this.root = rootGroup
+	}
+	
+	op boolean MatchedParameterMappings(EDiagnosticChain diagnostics,
+                                        EMap<Object, Object> context) {
+        if (parameterMappings.empty) return true
+
+        val operation = specification
+        if (operation === null){
+            return report(diagnostics, "Activity '" + name +
+                "' declares parameter mappings but specifies no operation.")
+		}
+		
+        val opParams = operation.ownedParameters
+        if (parameterMappings.size !== ownedParameters.size ||
+            parameterMappings.size !== opParams.size){
+            return report(diagnostics, "Activity '" + name + "' declares " +
+                parameterMappings.size + " parameter mappings for " +
+                ownedParameters.size + " activity parameters and " +
+                opParams.size + " operation parameters; all three must " +
+                "be equal.")
+		}
+		
+        val mappedOpParams = parameterMappings
+            .map[operationParameter].filterNull.toList
+        val mappedActParams = parameterMappings
+            .map[activityParameter].filterNull.toList
+
+        var isValid = true
+
+        if (mappedOpParams.size !== mappedOpParams.toSet.size ||
+            !mappedOpParams.containsAll(opParams))
+            isValid = report(diagnostics, "Each operation parameter of '" +
+                operation.name + "' must be covered by exactly one " +
+                "mapping in activity '" + name + "'.")
+
+        if (mappedActParams.size !== mappedActParams.toSet.size ||
+            !mappedActParams.containsAll(ownedParameters))
+            isValid = report(diagnostics, "Each parameter of activity '" +
+                name + "' must be covered by exactly one mapping.")
+
+        return isValid
+    }
+	
+}
+
+class Scope{
+	refers Scope[0..1] parent opposite children
+	refers Scope[0..*] children opposite parent 
+	refers Variable[] inheritedVariables opposite accessibleScopes
+	contains Variable[] ownedVariables opposite scope
+	container ActivityGroup group opposite scope
+}
+
+class Identifier extends NamedElement{}
+
+class ActivityGroup extends NamedElement{
+	contains ActivityNode[0..*] ownedNodes opposite group
+	contains ActivityEdge[0..*] ownedEdges opposite group
+	contains Scope scope opposite group
+	
+	container Activity[0..1] activity opposite root
+	container StructuredActivityNode[0..1] structuredActivityNode opposite body
+	container ConditionalNode[0..1] conditionalNode opposite elseBody
+	container ParallelNode[0..1] parallelNode opposite flows
+	
+	op void init() {
+		val initNode = DactFactory.eINSTANCE.createInitialNode()
+		this.ownedNodes.add(initNode)
+	}
+}
+
+class Variable extends NamedElement{
+	refers Type ^type
+	Integer upperBound = '1'
+	Integer lowerBound = '0'
+	refers Scope[] accessibleScopes opposite inheritedVariables
+	container Scope scope opposite ownedVariables
+}
+
+class InstanceValue extends ValueSpecification
+{
+	refers DomainObject isInstanceOf
+	contains InstanceProperty[] ownedProperties
+}
+
+class InstanceProperty extends NamedElement{
+	refers Property isInstanceOf
+	contains ValueSpecification[] value
+}
+
+abstract class ValueSpecification{}
+
+abstract class ActivityNode extends NamedElement{
+	refers ActivityEdge sEdge opposite source
+	refers ActivityEdge tEdge opposite target
+	container ActivityGroup group opposite ownedNodes
+}
+
+class ActivityEdge extends NamedElement {
+	refers ActivityNode source opposite sEdge
+	refers ActivityNode target opposite tEdge
+	
+	container ActivityGroup group opposite ownedEdges
+}
+
+class InitialNode extends ControlNode{
+	derived String tName get{
+		return this.group.name + "-InitNode";
+	}
+}
+
+abstract class ControlNode extends ActivityNode{}
+
+abstract class ExecutableNode extends ActivityNode{}
+
+abstract class FinalNode extends ControlNode{
+	contains Identifier[] variablesToReturn
+}
+
+class ActivityFinalNode extends FinalNode{}
+
+class FlowFinalNode extends FinalNode{}
+
+abstract class StructuredActivityNode extends ControlNode{
+	contains Expression test
+	contains ActivityGroup body opposite structuredActivityNode
+}
+
+class ConditionalNode extends StructuredActivityNode{
+	contains ActivityGroup elseBody opposite conditionalNode
+	
+	op void init() {
+		val test = DactFactory.eINSTANCE.createExpression();
+		test.name = "Test"
+		this.test = test
+		
+		val body = DactFactory.eINSTANCE.createActivityGroup()
+		body.name = "Body"
+		body.init()
+		this.body = body
+		
+		val elseBody = DactFactory.eINSTANCE.createActivityGroup()
+		elseBody.name = "ElseBody"
+		elseBody.init()
+		this.elseBody = elseBody
+	}
+}
+
+class LoopNode extends StructuredActivityNode{
+	contains ActivityGroup setup
+	
+	op void init() {
+		val setup = DactFactory.eINSTANCE.createActivityGroup()
+		setup.name = "Setup"
+		setup.init()
+		this.setup = setup
+		
+		val test = DactFactory.eINSTANCE.createExpression();
+		test.name = "Test"
+		this.test = test
+		
+		val body = DactFactory.eINSTANCE.createActivityGroup()
+		body.name = "Body"
+		body.init()
+		this.body = body
+	}
+}
+
+class OCLExpression extends Behavior{
+	String body
+}
+
+abstract class Behavior{
+	refers Operation specification opposite behavior
+}
+
+class CallOperationAction extends ExecutableNode{
+	Boolean domainToDeclareResult = 'false'
+	refers Operation[1..1] operation
+	contains  ParameterMapping[] parameterMappings opposite action
+}
+
+class VariableDeclarationAction extends ExecutableNode{
+	refers Type ^type
+	Integer upperBound = '1'
+	Integer lowerBound = '0'
+	contains VariableAssignment declaration
+}
+
+class VariableAssignment{
+	contains Identifier identifier
+	contains Expression[0..1] expr
+}
+
+class RaiseExceptionAction extends ExecutableNode{
+	String description
+}
+
+class RaiseEntityNotFoundExceptionAction extends RaiseExceptionAction{
+	refers Entity entity
+}
+
+class SendSignalAction extends SignalAction{}
+
+class ReceiveSignalAction extends SignalAction{}
+
+class VariableAssignmentAction extends ExecutableNode{
+	contains VariableAssignment assignment
+}
+
+class ParallelNode extends ControlNode{
+	contains ActivityGroup[] flows opposite parallelNode
+}
+
+@Ecore(constraints="SelfAnchoredBinaryExpression")
+abstract class DomainNode extends ExecutableNode, DiagnosticSupported{
+	refers AggregateRoot aggregate
+	contains Identifier[0..1] result
+	
+	refers Entity[0..1] entity 
+	contains Expression[] mainExpr
+	refers Property[] propertyChain // Derived from the above mutationExpression or entity 
+	
+	op boolean SelfAnchoredBinaryExpression(EDiagnosticChain diagnostics,
+                                            EMap<Object, Object> context) {
+        var isValid = true
+
+        for (expr : mainExpr) {
+            val binary = expr?.child
+            if (!(binary instanceof BinaryExpression)) {
+                isValid = report(diagnostics,
+                    "Expression '" + expr?.name + "' of node '" + name +
+                    "' must be a binary expression.")
+            } else {
+                val left = (binary as BinaryExpression).leftExpr?.child
+                if (!(left instanceof UnaryExpression)) {
+                    isValid = report(diagnostics,
+                        "The left operand of expression '" + expr?.name +
+                        "' must be a unary expression.")
+                } else {
+                    val identifier = (left as UnaryExpression).identifier
+                    if (identifier === null || !identifier.name.startsWith("self")) {
+                        isValid = report(diagnostics,
+                            "The left operand of expression '" + expr?.name +
+                            "' must be an identifier anchored at 'self'.")
+                    }
+                }
+            }
+        }
+        return isValid
+    }
+	
+}
+
+class DomainExistAction extends DomainFindAction{}
+
+class DomainFindAction extends DomainNode{
+	// Format: Current support only Eq + AND logic: self.propertyPath (Should be of primitiveType) = identifier/literal
+}
+
+class DomainCreateAction extends DomainNode{
+	
+	// Format: self.entityPath = identifier -> followed by required Id-> 
+	// Each time enter a one to many relationship must specify id of child
+	op void init() {
+		val expr = DactFactory.eINSTANCE.createExpression()
+		expr.name = "Main"
+		
+		val child = DactFactory.eINSTANCE.createBinaryExpression()
+		child.operator = DactFactory.eINSTANCE.createEq()
+		
+		val leftExpr = DactFactory.eINSTANCE.createExpression()
+		val leftExprChild=DactFactory.eINSTANCE.createUnaryExpression()
+		leftExprChild.identifier = DactFactory.eINSTANCE.createIdentifier()
+		leftExprChild.identifier.name = "EntityPath";
+		leftExpr.child = leftExprChild;
+		child.leftExpr = leftExpr;
+		
+		val rightExpr = DactFactory.eINSTANCE.createExpression()
+		val rightExprChild=DactFactory.eINSTANCE.createUnaryExpression()
+		rightExprChild.identifier = DactFactory.eINSTANCE.createIdentifier()
+		rightExprChild.identifier.name = "IdentifierToAssignHere";
+		rightExpr.child = rightExprChild;
+		child.rightExpr = rightExpr;
+		
+		expr.child = child;
+		this.mainExpr.add(expr);
+	}	
+}
+
+class DomainUpdateAction extends DomainCreateAction{
+	// Format: self.propertyPath (Should be of primitiveType) = identifier/literal
+}
+
+class DomainDeleteAction extends DomainNode{
+	// Format: self.propertyPath (ID only) = identifier/literal
+}
+
+@Ecore(constraints="ExclusiveEventSource")
+abstract class SignalAction extends ExecutableNode, DiagnosticSupported{
+	refers DomainEvent event
+	
+	refers Variable variable
+	contains Identifier identifier
+	contains ValueSpecification value
+	
+	op boolean ExclusiveEventSource(EDiagnosticChain diagnostics,
+                                    EMap<Object, Object> context) {
+        val sources = #[identifier, value].filterNull.size
+        val isValid = sources === 1
+
+        if (!isValid && diagnostics !== null) {
+            val message = if (sources === 0)
+                    "Signal action '" + name + "' must supply the value of " +
+                    "event '" + event?.name + "' through either an " +
+                    "identifier or a value specification."
+                else
+                    "Signal action '" + name + "' supplies the value of " +
+                    "event '" + event?.name + "' through both an identifier " +
+                    "and a value specification; only one is allowed."
+
+            report(diagnostics, message)
+        }
+        return isValid
+    }
+}
+
+class Parameter extends NamedElement, TypedMultiplicityElement {
+	ParameterDirection direction = 'IN' 
+	ParameterRole role = 'CORE'
+	container Operation operation opposite ownedParameters
+	container Activity activity opposite ownedParameters
+}
+
+enum ParameterDirection{
+	IN
+	OUT
+}
+
+enum ParameterRole{
+	CORE,
+	SUPPORTING
+}
+
+@Ecore(constraints="ConformingActivityOperationParameter ExclusiveMappingSource ValueOnlyInAction")
+class ParameterMapping extends DiagnosticSupported{
+	ParameterMappingType ^type
+	refers Parameter operationParameter
+	
+	// Map Variable to Operation Param
+	contains Identifier[0..1] identifier // Originally defined in the model
+	refers Variable[0..1] variable // Later derived in the transformation
+	
+	// Map Activity Param to Operation Param
+	refers Parameter[0..1] activityParameter
+	
+	// Map Value directly to the Operation Param -> Allow to use for ACTION param mapping only !!!
+	contains ValueSpecification[0..1] value
+	
+	container CallOperationAction[0..1] action opposite parameterMappings
+	container Activity[0..1] activity opposite parameterMappings
+	
+	op boolean ConformingActivityOperationParameter(EDiagnosticChain diagnostics,
+                                        EMap<Object, Object> context) {
+        if (activityParameter === null || operationParameter === null)
+            return true
+
+        val sameType = activityParameter.^type === operationParameter.^type
+        val sameLower =
+            activityParameter.lowerBound === operationParameter.lowerBound
+        val sameUpper =
+            activityParameter.upperBound === operationParameter.upperBound
+        var sameDirection =
+        	activityParameter.direction === operationParameter.direction
+        	
+        val isValid = sameType && sameLower && sameUpper && sameDirection
+
+        if (!isValid && diagnostics !== null) {
+            report(diagnostics,
+                "Activity parameter '" + activityParameter.name +
+                "' does not conform to operation parameter '" +
+                operationParameter.name +
+                "': type and multiplicity must be identical."
+             )
+        }
+        return isValid
+    }
+    
+    op boolean ExclusiveMappingSource(EDiagnosticChain diagnostics,
+                                      EMap<Object, Object> context) {
+        val sources = #[identifier, activityParameter, value]
+        val count = sources.filterNull.size
+        val isValid = count === 1
+
+        if (!isValid && diagnostics !== null) {
+            val message = if (count === 0)
+                    "Parameter mapping for '" + operationParameter?.name +
+                    "' must define exactly one source: an identifier, a " +
+                    "variable, an activity parameter, or a value."
+                else
+                    "Parameter mapping for '" + operationParameter?.name +
+                    "' defines " + count + " sources; exactly one is allowed."
+
+            report(diagnostics, message)
+        }
+        return isValid
+    }
+
+    op boolean ValueOnlyInAction(EDiagnosticChain diagnostics,
+                                 EMap<Object, Object> context) {
+        val isValid = value === null || action !== null
+
+        if (!isValid && diagnostics !== null) {
+            report(diagnostics,
+                "Parameter mapping for '" + operationParameter?.name +
+                "' may only map a literal value within a call operation " +
+                "action.")
+        }
+        return isValid
+    }
+}
+
+enum ParameterMappingType{
+	ACTION_IN
+	ACTION_OUT
+	ACTIVITY_IN
+	ACTIVITY_OUT
+}
+
+class Expression extends NamedElement{
+	contains ExpressionChild child 
+	
+}
+ 
+abstract class ExpressionChild extends NamedElement{}
+
+class UnaryExpression extends ExpressionChild {
+	contains ValueSpecification[0..1] value
+	contains Identifier[0..1] identifier
+}
+
+class BinaryExpression extends ExpressionChild
+{
+	contains Operator operator
+	contains Expression leftExpr
+	contains Expression rightExpr
+	
+	op void init() {
+		val leftExpr = DactFactory.eINSTANCE.createExpression();
+		leftExpr.name = "LeftExpr";
+		this.leftExpr = leftExpr;
+		
+		val rightExpr = DactFactory.eINSTANCE.createExpression();
+		rightExpr.name = "RightExpr";
+		this.rightExpr = rightExpr; 
+	}
+}
+
+class NotExpression extends ExpressionChild
+{
+	contains Expression expr
+	
+	op void init() {
+		val expr = DactFactory.eINSTANCE.createExpression();
+		expr.name = "Expr";
+		this.expr = expr;
+	}
+}
+
+abstract class Operator{}
+
+abstract class IntegerOperator extends Operator{}
+
+class Divide extends IntegerOperator{}
+
+class Times extends IntegerOperator{}
+
+class Plus extends IntegerOperator{}
+
+class Minus extends IntegerOperator{}
+
+abstract class LogicalOperator extends Operator{}
+
+class Gt extends LogicalOperator{}
+
+class Lt extends LogicalOperator{}
+
+class Ge extends LogicalOperator{}
+
+class Le extends LogicalOperator{}
+
+class Eq extends LogicalOperator{}
+
+class Ne extends LogicalOperator{}
+
+class And extends LogicalOperator{}
+
+class Or extends LogicalOperator{}

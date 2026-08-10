@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<dact:Expression
+    xmi:version="2.0"
+    xmlns:xmi="http://www.omg.org/XMI"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xmlns:dact="http://www.example.org/xcore/dact"
+    name="test">
+  <child xsi:type="dact:BinaryExpression">
+    <operator
+        xsi:type="dact:Or"/>
+    <leftExpr>
+      <child
+          xsi:type="dact:UnaryExpression">
+        <value
+            xsi:type="dact:LiteralString"
+            value="100"/>
+      </child>
+    </leftExpr>
+    <rightExpr
+        name="">
+      <child
+          xsi:type="dact:UnaryExpression">
+        <value
+            xsi:type="dact:LiteralString"
+            value="hic"/>
+      </child>
+    </rightExpr>
+  </child>
+</dact:Expression>

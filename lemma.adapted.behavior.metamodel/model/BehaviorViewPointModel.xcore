@@ -1,0 +1,279 @@
+@Ecore(nsURI="http://www.example.org/xcore/behavior")
+@GenModel(
+    modelDirectory="/lemma.adapted.behavior.metamodel/src-gen",
+    editDirectory="/lemma.adapted.behavior.metamodel.edit/src-gen",
+    editorDirectory="/lemma.adapted.behavior.metamodel.editor/src-gen",
+    editPluginID="lemma.adapted.behavior.metamodel.edit",
+    editorPluginID="lemma.adapted.behavior.metamodel.editor"
+)
+package lemma.adapted.xcore.behavior
+
+import lemma.adapted.xcore.data.PrimitiveType
+import lemma.adapted.xcore.data.DataStructure
+import lemma.adapted.xcore.data.ValueSpecification
+import lemma.adapted.xcore.data.DataOperation
+import lemma.adapted.xcore.data.DataOperationParameter
+import lemma.adapted.xcore.service.Operation
+import lemma.adapted.xcore.service.Parameter
+import lemma.adapted.xcore.service.Import
+import lemma.adapted.xcore.service.ImportedType
+
+
+// The initialization of Complex Type is not yet supported
+class BehaviorModel {
+	String t_modelUri
+	contains Import[] imports
+	contains ActivityModel activityModel
+}
+
+class ActivityModel{
+	contains Activity[] activities
+}
+
+abstract class NamedElement{
+	String name
+}
+
+class InvariantDataOperation extends DataOperation{
+	// No Parameter -> just validate using the property or nested property: chain of identifier -> Only allow nested if no one-to-many
+	contains Expression[] expr
+}
+
+abstract class ImportedOperation{
+	refers Import ^import 
+}
+
+class ImportedInterfaceOperation extends ImportedOperation{
+    refers Operation operation
+}
+
+class ImportedDataOperation extends ImportedOperation{
+    refers DataOperation operation
+}
+
+abstract class ImportedParameter{
+	refers Import ^import
+}
+
+class ImportedInterfaceParameter extends ImportedParameter{
+	refers Parameter parameter
+}
+
+class ImportedDataParameter extends ImportedParameter{
+	refers DataOperationParameter parameter
+}
+
+abstract class Behavior{
+	contains ImportedOperation specification
+}
+
+class Activity extends NamedElement, Behavior
+{
+	Boolean toTransform = 'true'
+	contains Parameter[] ownedParameters
+	contains ParameterMapping[] parameterMappings opposite activity
+	contains ActivityGroup[0..1] root opposite activity
+}
+
+class Scope{
+	refers Scope[0..1] parent opposite children
+	refers Scope[0..*] children opposite parent 
+	refers Variable[] inheritedVariables opposite accessibleScopes
+	contains Variable[] ownedVariables opposite scope
+	container ActivityGroup group opposite scope
+}
+
+class Identifier extends NamedElement{}
+
+class ActivityGroup extends NamedElement, Scope{
+	contains ActivityNode[0..*] ownedNodes opposite group
+	contains ActivityEdge[0..*] ownedEdges opposite group
+	contains Scope scope opposite group
+	
+	container Activity[0..1] activity opposite root
+	container StructuredActivityNode[0..1] structuredActivityNode opposite body
+	container ConditionalNode[0..1] conditionalNode opposite elseBody
+}
+
+class Variable extends NamedElement{
+	contains ImportedType importedType
+	contains PrimitiveType primitiveType
+	Integer upperBound = '1'
+	Integer lowerBound = '0'
+	refers Scope[] accessibleScopes opposite inheritedVariables
+	container Scope scope opposite ownedVariables
+}
+
+
+abstract class ActivityNode extends NamedElement{
+	refers ActivityEdge sEdge opposite source
+	refers ActivityEdge tEdge opposite target
+	container ActivityGroup group opposite ownedNodes
+}
+
+class ActivityEdge extends NamedElement {
+	refers ActivityNode source opposite sEdge
+	refers ActivityNode target opposite tEdge
+	
+	container ActivityGroup group opposite ownedEdges
+}
+
+
+class InitialNode extends ControlNode{}
+
+abstract class ControlNode extends ActivityNode{}
+
+abstract class ExecutableNode extends ActivityNode{}
+
+abstract class FinalNode extends ControlNode{
+	contains Identifier[] variablesToReturn
+}
+
+class ActivityFinalNode extends FinalNode{}
+
+class FlowFinalNode extends FinalNode{}
+
+class StructuredActivityNode extends ControlNode{
+	contains Expression test
+	contains ActivityGroup body opposite structuredActivityNode
+}
+
+class ConditionalNode extends StructuredActivityNode{
+	contains ActivityGroup elseBody opposite conditionalNode
+}
+
+class LoopNode extends StructuredActivityNode{
+	contains ActivityGroup setup
+}
+
+
+class CallOperationAction extends ExecutableNode{
+	Boolean domainToDeclareResult = 'false'
+	contains ImportedOperation[0..1] importedOperation
+	contains  ParameterMapping[] parameterMappings opposite action
+}
+
+class VariableDeclarationAction extends ExecutableNode{
+	Integer lowerBound
+	Integer upperBound
+	contains ImportedType[0..1] importedType
+	contains PrimitiveType[0..1] primitiveType
+	
+	contains VariableAssignment declaration
+}
+
+class VariableAssignmentAction extends ExecutableNode{
+	contains VariableAssignment assignment
+}
+
+class VariableAssignment{
+	contains Identifier identifier
+	contains Expression[0..1] expr
+}
+
+class RaiseExceptionAction extends ExecutableNode{
+	contains ImportedType exception
+}
+
+class RaiseEntityNotFoundExceptionAction extends RaiseExceptionAction{
+	refers DataStructure entity
+}
+
+class SendSignalAction extends SignalAction{}
+
+class ReceiveSignalAction extends SignalAction{}
+
+class ParallelNode extends ControlNode{
+	contains ActivityGroup[] ownedGroup
+}
+
+abstract class SignalAction extends ExecutableNode{
+	contains ImportedType event
+	contains ValueSpecification value
+}
+
+class ParameterMapping{
+	ParameterMappingType ^type
+	contains ImportedParameter operationParameter
+	
+	// Map Variable to Operation Param
+	contains Identifier[0..1] identifier // Originally defined in the model
+	refers Variable[0..1] variable // Later derived in the transformation
+	
+	// Map Activity Param to Operation Param
+	refers Parameter[0..1] activityParameter
+	
+	// Map Value directly to the Operation Param -> Allow to use for ACTION param mapping only !!!
+	contains ValueSpecification[0..1] value
+	
+	container CallOperationAction[0..1] action opposite parameterMappings
+	container Activity[0..1] activity opposite parameterMappings
+}
+
+enum ParameterMappingType{
+	ACTION_IN
+	ACTION_OUT
+	ACTIVITY_IN
+	ACTIVITY_OUT
+}
+
+class Expression extends NamedElement{
+	contains ExpressionChild child 
+	
+}
+ 
+abstract class ExpressionChild extends NamedElement{}
+
+class UnaryExpression extends ExpressionChild {
+	contains ValueSpecification[0..1] value
+	contains Identifier[0..1] identifier
+}
+
+class BinaryExpression extends ExpressionChild
+{
+	contains Operator operator
+	contains Expression leftExpr
+	contains Expression rightExpr
+}
+
+class NotExpression extends ExpressionChild
+{
+	contains Expression expr
+}
+
+abstract class Operator{}
+
+abstract class IntegerOperator extends Operator{}
+
+class Divide extends IntegerOperator{}
+
+class Times extends IntegerOperator{}
+
+class Plus extends IntegerOperator{}
+
+class Minus extends IntegerOperator{}
+
+abstract class LogicalOperator extends Operator{}
+
+class Gt extends LogicalOperator{}
+
+class Lt extends LogicalOperator{}
+
+class Ge extends LogicalOperator{}
+
+class Le extends LogicalOperator{}
+
+class Eq extends LogicalOperator{}
+
+class Ne extends LogicalOperator{}
+
+class And extends LogicalOperator{}
+
+class Or extends LogicalOperator{}
+
+abstract class TypedMultiplicityElement{
+	contains ValueSpecification[0..1] ^default
+	contains ImportedType ^type
+	Integer upperBound = '1'
+	Integer lowerBound = '0'
+}

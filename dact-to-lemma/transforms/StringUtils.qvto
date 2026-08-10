@@ -1,0 +1,91 @@
+library StringUtils;
+
+-- "HandleEvent" -> {Handle,Event}; "tracking_id" -> {tracking,id};
+-- "trackingID" -> {tracking,ID}; "HTTPServer" -> {HTTP,Server}
+query String::splitWords(): Sequence(String) {
+	var s := self.replace('-', '_').replace(' ', '_');
+	var words : Sequence(String) := Sequence{};
+	var current : String := '';
+	var i := 1;
+	while (i <= s.size()) {
+		var c := s.substring(i, i);
+		if (c = '_') {
+			if (current <> '') { words += current; current := ''; };
+		} elif (c.toUpper() = c and c.toLower() <> c) {
+			-- uppercase letter
+			if (current = '') {
+				current := c;
+			} elif (current.toUpper() = current) {
+				current := current + c;      -- extend an uppercase run
+			} else {
+				words += current;            -- lowercase word ends here
+				current := c;
+			};
+		} else {
+			-- lowercase letter or digit
+			if (current.size() > 1 and current.toUpper() = current
+					and current.toLower() <> current) {
+				-- run like "HTTPS" followed by lowercase: last capital
+				-- starts the new word ("HTTPServer" -> "HTTP" + "Se...")
+				words += current.substring(1, current.size() - 1);
+				current := current.substring(current.size(), current.size()) + c;
+			} else {
+				current := current + c;
+			};
+		};
+		i := i + 1;
+	};
+	if (current <> '') { words += current; };
+	return words;
+}
+
+-- First letter upper, rest lower: "ID" -> "Id", "tracking" -> "Tracking"
+query String::normalizeWord(): String {
+	if (self.size() = 0) { return self; };
+	return self.substring(1, 1).toUpper()
+		+ (if self.size() > 1
+			then self.substring(2, self.size()).toLower()
+			else '' endif);
+}
+
+query String::toCamel(): String {
+	return self.splitWords()->iterate(p; acc: String = '' |
+		acc + (if acc = '' then p.toLower() else p.normalizeWord() endif));
+}
+
+query String::toUpperCamel(): String {
+	return self.splitWords()->iterate(p; acc: String = '' |
+		acc + p.normalizeWord());
+}
+
+-- "eVENT" -> "Event"
+query String::capitalize(): String {
+	return if self.size() = 0 then self
+		else self.substring(1, 1).toUpper()
+			+ self.substring(2, self.size()).toLower()
+		endif;
+}
+
+query Sequence(String)::joinStr(sep: String): String{
+    return self ->subSequence(2, self->size())
+		->iterate(str; res : String = self->first() | res + sep + str);
+}
+
+-- Helper to convert CamelCase/PascalCase string to kebab-case
+query String::toKebabCase() : String {
+    -- Insert a dash before every uppercase letter (except the first character), 
+    -- then convert the entire string to lowercase.
+    return self.replaceAll("([a-z0-9])([A-Z])", "$1-$2").toLower();
+}
+
+-- Helper to convert dotted path string "role.customerId" -> "RoleCustomerId"
+query String::toPascalCase() : String {
+    var parts : Sequence(String) := self.tokenize('.');
+    var rel : String := '';
+    
+    parts->forEach(part) {
+        rel := rel + part.toUpperCamel();
+    };
+    
+    return rel;
+}

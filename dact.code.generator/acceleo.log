@@ -1,0 +1,15 @@
+WARNING generateServices L40: AQL evaluation issue
+	WARNING : Couldn't find the 'aqlFeatureAccess(java.lang.Object,java.lang.String)' service
+WARNING generateServices L41: AQL evaluation issue
+	WARNING : Couldn't find the 'aqlFeatureAccess(java.lang.Object,java.lang.String)' service
+Files: 1, Lost Files: 0, Errors: 0, Warnings: 2, Infos: 0.
+WARNING generateServices L40: AQL evaluation issue
+	WARNING : Couldn't find the 'aqlFeatureAccess(java.lang.Object,java.lang.String)' service
+WARNING generateServices L41: AQL evaluation issue
+	WARNING : Couldn't find the 'aqlFeatureAccess(java.lang.Object,java.lang.String)' service
+Files: 1, Lost Files: 0, Errors: 0, Warnings: 2, Infos: 0.
+WARNING generateServices L37: AQL evaluation issue
+	WARNING : Couldn't find the 'aqlFeatureAccess(java.lang.Object,java.lang.String)' service
+WARNING generateServices L38: AQL evaluation issue
+	WARNING : Couldn't find the 'aqlFeatureAccess(java.lang.Object,java.lang.String)' service
+Files: 1, Lost Files: 0, Errors: 0, Warnings: 2, Infos: 0.

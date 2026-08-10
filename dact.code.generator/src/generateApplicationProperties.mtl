@@ -1,0 +1,60 @@
+[comment encoding = UTF-8 /]
+[**
+ * The documentation of the module generate.
+ * @author trangnguyen
+ * @version 1.0.0
+ * @since 1.0.0
+ */]
+[module generateApplicationProperties('http://www.example.org/xcore/service')/]
+
+[import stringUtils/]
+
+[comment @main/]
+[template public generateApplicationProperties(serviceModel : service::ServiceModel)]
+[for (ms : service::Microservice | serviceModel.microservices)]
+  	[let projectName : String = ms.name.toCamelCase()]
+	[file (projectName+'-service/src/main/resources/application.properties', overwrite, 'UTF-8')]
+	  spring.application.name=[projectName/]
+	
+	  # Enable H2 Console so you can view the DB in your browser
+	  spring.h2.console.enabled=true
+	  spring.h2.console.path=/h2-console
+	
+	  # Database Connection Settings
+	  spring.datasource.url=jdbc:h2:mem:testdb
+	  spring.datasource.driverClassName=org.h2.Driver
+	  spring.datasource.username=sa
+	  spring.datasource.password=123456
+	
+	  # Show SQL queries in the console log
+	  spring.jpa.show-sql=true
+	  
+	  # Services
+	[let ownPort : Integer = 8080 + serviceModel.microservices->indexOf(ms)]
+	  server.port=${SERVER_PORT:[ownPort/]}
+	[/let]
+
+	  # External Services Base URLs
+	[for (otherMs : service::Microservice | serviceModel.microservices)]
+	[if (otherMs != ms)]
+	[let envVar : String = otherMs.name.toSnakeCase().toUpper(), 
+     propKey : String = otherMs.name.toKebabCase(),
+     targetPort : Integer = 8080 + serviceModel.microservices->indexOf(otherMs)]
+	  services.[propKey/].url=${[envVar/]_URL:http://localhost:[targetPort/]}
+	[/let]
+	[/if]
+	[/for]
+
+	  # OpenAPI / Swagger UI Settings
+	  springdoc.api-docs.path=/v3/api-docs
+	  springdoc.swagger-ui.path=/swagger-ui.html
+	  springdoc.swagger-ui.enabled=true
+	  springdoc.api-docs.enabled=true
+	  springdoc.group-configs['['/]0[']'/].group=default
+	  springdoc.group-configs['['/]0[']'/].paths-to-match=/**
+	  springdoc.group-configs['['/]0[']'/].packages-to-scan=com.example.[ms.name.toLower()/].controller
+
+	[/file]
+	[/let]
+[/for]
+[/template]

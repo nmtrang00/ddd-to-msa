@@ -1,0 +1,717 @@
+import DactUtils;
+import StringUtils;
+import DactToLemmaUtils;
+import DactToLemmaData;
+import DactToLemmaService;
+import LemmaUtils;
+
+modeltype DACT uses 'http://www.example.org/xcore/dact';
+modeltype DATA uses 'http://www.example.org/xcore/data';
+modeltype SERV uses 'http://www.example.org/xcore/service';
+modeltype BEHA uses 'http://www.example.org/xcore/behavior' ;
+modeltype TECH uses 'http://www.example.org/xcore/technology' ;
+
+modeltype ECORE "strict" uses ecore('http://www.eclipse.org/emf/2002/Ecore');
+
+transformation DactToLemmaBehavior(in dact: DACT, in data: DATA, inout service: SERV, out behavior: BEHA);
+
+property PROJECT_NAME : String = "DefaultProject";
+property DATA_IMPORT_NAME : String = "DomainData";
+property SERV_IMPORT_NAME : String = "DomainService";
+property SERV_IMPORT : SERV::Import;
+property DATA_IMPORT : SERV::Import;
+property MAPPING_ACTIVITY = "MAPPING_ACTIVITY";
+property MAPPING_ACTION = "MAPPING_ACTION";
+
+// ASSUMPTION: There are no naming conflicts among domain objects across context -> Need to add a layer to resolve the conflict by explicit mapping later!!!!
+// Skip ACL for now
+
+main() {
+//	
+	log("");
+	log("-------------------------------------------");
+	log("4.TRANSFORMING DACT TO LEMMA BEHAVIOR MODEL");
+	log("-------------------------------------------");	
+	dact.rootObjects()[DACT::Root]-> map DactToLact();
+	log("-------------------------------------------");
+	log("");
+}
+
+mapping DACT::Root::DactToLact(): BEHA::BehaviorModel{
+	t_modelUri := PROJECT_NAME;
+	
+	var dataRelativePath := "./" + PROJECT_NAME + ".data";
+    DATA_IMPORT := object SERV::Import {
+        name := DATA_IMPORT_NAME;
+        importURI := dataRelativePath; 
+        importType := SERV::ImportType::DATATYPES;
+    };
+	log("New Data Import created with URI: "+DATA_IMPORT.importURI);
+	
+	var serviceRelativePath := "./" + PROJECT_NAME + ".service";
+	SERV_IMPORT := object SERV::Import {
+        name := SERV_IMPORT_NAME;
+        importURI := serviceRelativePath; 
+        importType := SERV::ImportType::MICROSERVICES;
+    };
+    log("New Service Import created with URI: "+SERV_IMPORT.importURI);
+    
+    imports := Sequence{DATA_IMPORT,SERV_IMPORT};
+	
+	// Generate LEMMA model from DACT and DATA
+	log("4.1. Extracting Domain Object Invariants: Start parsing");
+	self.ddd.map ExtractDomainObjectInvariants();
+	log("4.1. Extracting Domain Object Invariants: End parsing");
+	log("************************************************");
+	
+	// Generate LEMMA Activity
+	log("4.2. Transformaing Domain Activity Model to Service Activity Model: Start parsing");
+	activityModel := self.activity.map DomainActivityModelToServiceActivityModel();
+	log("4.2. Transformaing Domain Activity Model to Service Activity Model: End parsing");
+	log("************************************************");
+	
+	// Generate Controller activities
+	log("4.1.3. Generating Activity For Root Controller Operations: Start parsing");
+	activityModel.generateRootControllerActivities(activityModel);
+	log("4.1.3. Generating Activity For Root Controller Operations: End parsing");
+	log("************************************************");
+	
+}
+
+mapping DACT::DddModel::ExtractDomainObjectInvariants(){
+	self.boundedContexts -> forEach(b){
+		b.printInfo(1);
+		b.ownedElements[DACT::DomainObject]->forEach(d){
+			d.printInfo(2);
+			d.ownedOperations[DACT::InvariantOperation]->map InvariantOperationToInvariantDataOperation(); 
+		}
+	}		
+}
+
+mapping DACT::InvariantOperation::InvariantOperationToInvariantDataOperation(): BEHA::InvariantDataOperation{
+	self.printInfo(3);
+	
+	// No input parameter here
+	name := self.name;
+	operationType := self.type.GetCorrespondingOperationType();
+	features := self.GetCorrespondingDataFieldFeatures();
+	expr := self.validatesSpecExpr -> map ExpressionToExpression();
+	parameters := self.ownedParameters -> map ParameterToDataOperationParameter();
+	dataStructure := self.domainObject.resolveoneIn(DACT::DomainObject::DomainObjectToDataStructure, DATA::DataStructure);
+}
+
+mapping DACT::Expression::ExpressionToExpression(): BEHA::Expression{
+	name := self.name;
+	child := self.child.map ExpressionChildToExpressionChild();
+}
+
+mapping DACT::ExpressionChild::ExpressionChildToExpressionChild(): BEHA::ExpressionChild
+	disjuncts DACT::UnaryExpression::UnaryExpressionToUnaryExpression,
+		DACT::BinaryExpression::BinaryExpressionToBinaryExpression,
+		DACT::NotExpression::NotExpressionToNotExpression {}
+	
+mapping DACT::UnaryExpression::UnaryExpressionToUnaryExpression(): BEHA::UnaryExpression{
+	name := self.name;
+	value := self.value.map ValueSpecificationToValueSpecification();
+	identifier := self.identifier.map IdentifierToIdentifier();
+}
+
+mapping DACT::BinaryExpression::BinaryExpressionToBinaryExpression(): BEHA::BinaryExpression{
+	name := self.name;
+	leftExpr := self.leftExpr.map ExpressionToExpression();
+	operator := self.operator.map OperatorToOperator();
+	rightExpr := self.rightExpr.map ExpressionToExpression();
+}
+
+mapping DACT::NotExpression::NotExpressionToNotExpression(): BEHA::NotExpression{
+	name := self.name;
+	expr := self.expr.map ExpressionToExpression();
+}
+
+mapping DACT::Identifier::IdentifierToIdentifier(): BEHA::Identifier{
+	// More check might be done later for the correct DataStructure and DomainObject mapping
+	name := self.name;
+}
+
+
+//helper DACT::Identifier::IdentifierToIdentifier(): BEHA::Identifier{
+//	// More check might be done later for the correct DataStructure and DomainObject mapping
+//	return object BEHA::Identifier {name := self.name};
+//}
+
+mapping DACT::Operator::OperatorToOperator(): BEHA::Operator
+	disjuncts DACT::IntegerOperator::IntegerOperatorToIntegerOperator,
+		DACT::LogicalOperator::LogicalOperatorToLogicalOperator {}
+		
+mapping DACT::IntegerOperator::IntegerOperatorToIntegerOperator(): BEHA::IntegerOperator
+	disjuncts DACT::Divide::DivideToDivide,
+		DACT::Times::TimesToTimes,
+		DACT::Plus::PlusToPlus,
+		DACT::Minus::MinusToMinus {}
+
+mapping DACT::LogicalOperator::LogicalOperatorToLogicalOperator(): BEHA::LogicalOperator
+	disjuncts DACT::Gt::GtToGt,
+		DACT::Lt::LtToLt,
+		DACT::Ge::GeToGe,
+		DACT::Le::LeToLe,
+		DACT::Eq::EqToEq,
+		DACT::Ne::NeToNe,
+		DACT::And::AndToAnd,
+		DACT::Or::OrToOr {}
+
+mapping DACT::Divide::DivideToDivide(): BEHA::Divide{}
+
+mapping DACT::Times::TimesToTimes(): BEHA::Times{}
+
+mapping DACT::Plus::PlusToPlus(): BEHA::Plus{}
+
+mapping DACT::Minus::MinusToMinus(): BEHA::Minus{}
+
+mapping DACT::Gt::GtToGt(): BEHA::Gt{}
+
+mapping DACT::Lt::LtToLt(): BEHA::Lt{}
+
+mapping DACT::Ge::GeToGe(): BEHA::Ge{}
+
+mapping DACT::Le::LeToLe(): BEHA::Le{}
+
+mapping DACT::Eq::EqToEq(): BEHA::Eq{}
+
+mapping DACT::Ne::NeToNe(): BEHA::Ne{}
+
+mapping DACT::And::AndToAnd(): BEHA::And{}
+
+mapping DACT::Or::OrToOr(): BEHA::Or{}
+
+mapping DACT::ActivityModel::DomainActivityModelToServiceActivityModel(): BEHA::ActivityModel{
+	activities := self.activities -> map DomainActivityToServiceActivity()
+}
+
+mapping DACT::Activity::DomainActivityToServiceActivity(): BEHA::Activity
+when {
+   self.toTransform = true
+}
+{
+	self.printInfo(1);
+
+	toTransform := self.toTransform;
+	name := self.name;
+	ownedParameters := self.ownedParameters -> map ParameterToParameter();
+	parameterMappings := self.parameterMappings -> map ParameterMappingToParameterMapping();
+	root := self.root.map ActivityGroupToActivityGroup();
+	specification := self.specification.OperationToImportedInterfaceOperation();
+}
+
+mapping DACT::ParameterMapping::ParameterMappingToParameterMapping(): BEHA::ParameterMapping{
+	self.printInfo(2);
+	
+	type := self.type.getCorrespondingParameterMappingType();
+	
+	if (self.operationParameter.operation.domainObject <> null){
+		// Operation owner is Domain Object -> Map to Data Operation Parameter
+		log(indent(3)+"Operation owner is DomainObject -> Map to DataOperationParameter");
+		operationParameter := object BEHA::ImportedDataParameter{
+			 _import := DATA_IMPORT;
+			parameter := self.operationParameter.map ParameterToDataOperationParameter();
+		};
+	}else if (self.operationParameter.operation.interface <> null){
+		// Operation owner is Interface -> Map to Operation Parameter
+		log(indent(3)+"Operation owner is Interface -> Map to Parameter");
+		operationParameter := object BEHA::ImportedInterfaceParameter{
+			_import := SERV_IMPORT;
+			parameter := self.operationParameter.map ParameterToParameter();
+		};
+	};
+
+	identifier := self.identifier.map IdentifierToIdentifier();
+	activityParameter := self.activityParameter.map ParameterToParameter();
+	value := self.value.map ValueSpecificationToValueSpecification();
+}
+
+helper DACT::Operation::OperationToImportedDataOperation(): BEHA::ImportedDataOperation{
+	return object BEHA::ImportedDataOperation{
+		_import := DATA_IMPORT;
+		operation := self.map OperationToDataOperation();
+	}
+}
+
+helper DACT::Operation::OperationToImportedInterfaceOperation(): BEHA::ImportedInterfaceOperation{
+	return object BEHA::ImportedInterfaceOperation{
+		_import := SERV_IMPORT;
+		operation := self.resolveoneIn(DACT::Operation::InterfaceOperationToOperation, SERV::Operation);
+	}
+}
+
+mapping DACT::ActivityGroup::ActivityGroupToActivityGroup(): BEHA::ActivityGroup{
+	log(indent(2)+"-----------");
+	self.printInfo(2);
+	
+	ownedNodes := self.ownedNodes -> map NodeToNode();
+	ownedEdges := self.ownedEdges -> map EdgeToEdge();
+	scope := self.scope.map ScopeToScope();
+	log(indent(2)+"***********");
+}
+
+mapping DACT::Scope::ScopeToScope(): BEHA::Scope{
+	log(indent(3) + "Processing scope:");
+	
+	parent := self.parent.map ScopeToScope();
+	children := self.children.map ScopeToScope();
+	inheritedVariables := self.inheritedVariables -> map VariableToVariable();
+	ownedVariables := self.ownedVariables -> map VariableToVariable();
+}
+
+mapping DACT::Variable::VariableToVariable(): BEHA::Variable{
+	self.printInfo(4);
+	
+	name := self.name;
+	upperBound := self.upperBound;
+	lowerBound := self.lowerBound;
+	if (self.upperBound = -1 or self.upperBound > 1){
+		importedType := self.type.TypesToImportedTypeCollection();
+	}else{
+		if (self.type.oclIsKindOf(DACT::PrimitiveType)){
+			primitiveType := self.type.oclAsType(DACT::PrimitiveType).PrimitiveTypetoDataPrimitive();
+		}else if (self.type.oclIsKindOf(DACT::DomainObject)){
+			importedType := self.type.oclAsType(DACT::DomainObject).DomainElementToImportedType();
+			-- TODO: Default value for Data Structure
+		}else if (self.type.oclIsKindOf(DACT::Enumeration)){
+			importedType := self.type.oclAsType(DACT::Enumeration).DomainElementToImportedType();
+		}
+	};
+}
+
+mapping DACT::ActivityNode::NodeToNode(): BEHA::ActivityNode
+	disjuncts DACT::InitialNode::NodeToNode,
+		DACT::ActivityFinalNode::NodeToNode,
+		DACT::FlowFinalNode::NodeToNode,
+		DACT::ConditionalNode::NodeToNode,
+		DACT::LoopNode::NodeToNode,
+		DACT::ParallelNode::NodeToNode,
+		DACT::CallOperationAction::NodeToNode,
+		DACT::VariableDeclarationAction::NodeToNode,
+		DACT::VariableAssignmentAction::NodeToNode,
+		DACT::RaiseEntityNotFoundExceptionAction::NodeToNode,
+		DACT::RaiseExceptionAction::NodeToNode,
+		DACT::SendSignalAction::NodeToNode,
+		DACT::ReceiveSignalAction::NodeToNode{}
+
+mapping DACT::InitialNode::NodeToNode(): BEHA::InitialNode{
+	name := self.name;
+}
+
+mapping DACT::ActivityFinalNode::NodeToNode(): BEHA::ActivityFinalNode{
+	self.printInfo(2);
+	
+	name := self.name;
+	variablesToReturn := self.variablesToReturn -> map IdentifierToIdentifier();
+}
+
+mapping DACT::FlowFinalNode::NodeToNode(): BEHA::FlowFinalNode{
+	self.printInfo(2);
+	
+	name := self.name;
+	variablesToReturn := self.variablesToReturn -> map IdentifierToIdentifier();
+}
+
+mapping DACT::ConditionalNode::NodeToNode(): BEHA::ConditionalNode{
+	self.printInfo(2);
+	
+	name := self.name;
+	test := self.test.map ExpressionToExpression();
+	body := self.body.map ActivityGroupToActivityGroup();
+	elseBody := self.elseBody.map ActivityGroupToActivityGroup();
+}
+
+mapping DACT::LoopNode::NodeToNode(): BEHA::LoopNode{
+	self.printInfo(2);
+	
+	name := self.name;
+	test := self.test.map ExpressionToExpression();
+	body := self.body.map ActivityGroupToActivityGroup();
+}
+
+mapping DACT::CallOperationAction::NodeToNode(): BEHA::CallOperationAction{
+	self.printInfo(2);
+	
+	name := self.name;
+	if (self.operation.domainObject <> null){
+		log(indent(3)+"Operation belongs to a DomainObject -> Map to DataOperation");
+		importedOperation := self.operation.OperationToImportedDataOperation();
+	}else if (self.operation.interface <> null){
+		log(indent(3)+"Operation belongs to a Interface -> Map to Operation");
+		importedOperation := self.operation.OperationToImportedInterfaceOperation();
+	};
+	domainToDeclareResult := self.domainToDeclareResult;
+	parameterMappings := self.parameterMappings -> map ParameterMappingToParameterMapping();
+}
+
+mapping DACT::VariableDeclarationAction::NodeToNode(): BEHA::VariableDeclarationAction{
+	self.printInfo(2);
+	
+	name := self.name;
+	lowerBound := self.lowerBound;
+	upperBound := self.upperBound;
+	
+	if (self.upperBound = -1 or self.upperBound > 1){
+		importedType := self.type.TypesToImportedTypeCollection();
+	}else{
+		if (self.type.oclIsKindOf(DACT::PrimitiveType)){
+			primitiveType := self.type.oclAsType(DACT::PrimitiveType).PrimitiveTypetoDataPrimitive();
+		}else if (self.type.oclIsKindOf(DACT::DomainObject)){
+			importedType := self.type.oclAsType(DACT::DomainObject).DomainElementToImportedType();
+			-- TODO: Default value for Data Structure
+		}else if (self.type.oclIsKindOf(DACT::Enumeration)){
+			importedType := self.type.oclAsType(DACT::Enumeration).DomainElementToImportedType();
+		}
+	};
+	
+	declaration := self.declaration.map VariableAssignmentToVariableAssignment();
+}
+
+mapping DACT::VariableAssignmentAction::NodeToNode(): BEHA::VariableAssignmentAction{
+	self.printInfo(2);
+	
+	name := self.name;
+	assignment := self.assignment.map VariableAssignmentToVariableAssignment();
+}
+
+mapping DACT::VariableAssignment::VariableAssignmentToVariableAssignment(): BEHA::VariableAssignment{
+	identifier := self.identifier.map IdentifierToIdentifier();
+	expr := self.expr.map ExpressionToExpression();
+}
+
+mapping DACT::RaiseExceptionAction::NodeToNode(): BEHA::RaiseExceptionAction{
+	self.printInfo(2);
+
+	name := self.name;	
+	var context := self.getBoundedContext().resolveoneIn(DACT::BoundedContext::BoundedContextToContext, DATA::Context);
+	assert warning(context <> null)
+		with log ("Compile error: Could not find bounded context to add the exception");
+	var newException := object DataStructure{
+		name := self.name;
+		features := DATA::ComplexTypeFeature::RUNTIME_EXCEPTION;
+		dataFields := object DataField{
+			name := "description";
+			primitiveType := object DATA::PrimitiveString{};
+			lowerBound := 1;
+			upperBound := 1;
+			initializationValue := object DATA::PrimitiveValue{stringValue := self.description};
+		}
+	};
+	context.complexTypes += newException;
+	
+	_exception := object ImportedType{
+		_import := DATA_IMPORT;
+		type := newException;
+	}
+}
+
+mapping DACT::RaiseEntityNotFoundExceptionAction::NodeToNode(): BEHA::RaiseEntityNotFoundExceptionAction{
+	self.printInfo(2);
+
+	name := self.name;	
+	entity := self.entity.resolveoneIn(DACT::DomainObject::DomainObjectToDataStructure, DATA::DataStructure );
+	
+	var context := self.getBoundedContext().resolveoneIn(DACT::BoundedContext::BoundedContextToContext, DATA::Context);
+	assert warning(context <> null)
+		with log ("Compile error: Could not find bounded context to add the exception");
+	
+	var matchedException := context.complexTypes 
+		-> selectOne(t|
+			t.features->includes(DATA::ComplexTypeFeature::RUNTIME_EXCEPTION) or 
+			t.features->includes(DATA::ComplexTypeFeature::NOTFOUND_EXCEPTION) and 
+			t.name = self.name);
+	if (matchedException.oclIsUndefined()){
+		var newException := object DataStructure{
+			name := self.name;
+			features := DATA::ComplexTypeFeature::NOTFOUND_EXCEPTION;
+			dataFields := Sequence{
+				object DataField{
+					name := "description";
+					primitiveType := object DATA::PrimitiveString{};
+					lowerBound := 1;
+					upperBound := 1;
+					initializationValue := object DATA::PrimitiveValue{stringValue := self.description};
+				},
+				object DataField{
+					name := "entity";
+					complexType := result.entity;
+					lowerBound := 1;
+					upperBound := 1;
+				}
+			}
+		};
+		context.complexTypes += newException;
+		matchedException := newException;
+	};
+	
+	_exception := object ImportedType{
+		_import := DATA_IMPORT;
+		type := matchedException;
+	}
+}
+
+mapping DACT::SendSignalAction::NodeToNode(): BEHA::SendSignalAction{
+	--TODO
+	self.printInfo(2);
+	name := self.name;
+}
+
+mapping DACT::ReceiveSignalAction::NodeToNode(): BEHA::ReceiveSignalAction{
+	--TODO
+	self.printInfo(2);
+	name := self.name;
+}
+
+mapping DACT::ParallelNode::NodeToNode(): BEHA::ParallelNode{
+	--TODO
+	self.printInfo(2);
+	name := self.name;
+}
+
+mapping DACT::ActivityEdge::EdgeToEdge(): BEHA::ActivityEdge{
+	self.printInfo(2);
+	
+	name := self.name;
+//	source := self.source.resolveoneIn(DACT::ActivityNode::NodeToNode, BEHA::ActivityNode);
+	source := self.source.map NodeToNode();
+	target := self.target.map NodeToNode();
+}
+
+
+query DACT::ParameterMappingType::getCorrespondingParameterMappingType(): BEHA::ParameterMappingType{
+	return switch{
+		case (self = DACT::ParameterMappingType::ACTION_IN)  BEHA::ParameterMappingType::ACTION_IN;
+		case (self = DACT::ParameterMappingType::ACTION_OUT)  BEHA::ParameterMappingType::ACTION_OUT;
+		case (self = DACT::ParameterMappingType::ACTIVITY_IN)  BEHA::ParameterMappingType::ACTIVITY_IN;
+		case (self = DACT::ParameterMappingType::ACTIVITY_OUT)  BEHA::ParameterMappingType::ACTIVITY_OUT;
+	}
+}
+
+helper DACT::ActivityGroup::introduceMessageHandlerToRoot(){}
+
+helper DACT::DomainElement::DomainElementToImportedType(): SERV::ImportedType{
+	return object SERV::ImportedType{
+		_import := DATA_IMPORT;
+		type := self.map DomainElementToComplexType();
+	};
+}
+
+helper DACT::Type::TypesToImportedTypeCollection(): SERV::ImportedType{
+	return null;
+}
+
+helper DACT::PrimitiveType::TypesToImportedTypeCollection(): SERV::ImportedType{
+	return object SERV::ImportedType{
+		_import := DATA_IMPORT;
+		type := self.map PrimitiveTypesToPrimitiveTypeCollection();
+	};
+}
+
+helper DACT::DomainObject::TypesToImportedTypeCollection(): SERV::ImportedType{
+	return object SERV::ImportedType{
+		_import := DATA_IMPORT;
+		type := self.map DomainElementsToComplexTypeCollection();
+	};
+}
+
+helper DACT::Enumeration::TypesToImportedTypeCollection(): SERV::ImportedType{
+	return object SERV::ImportedType{
+		_import := DATA_IMPORT;
+		type := self.map DomainElementsToComplexTypeCollection();
+	};
+}
+
+helper BEHA::ActivityModel::generateRootControllerActivities(inout model: BEHA::ActivityModel){
+	var newActivities: Sequence(BEHA::Activity);	
+	model.activities -> forEach(activity){
+		activity.printInfo(0);
+		newActivities += activity.createActivityForDefaultControllerOperation();
+	};
+	model.activities += newActivities;
+}
+
+query BEHA::Activity::createActivityForDefaultControllerOperation(): BEHA::Activity{
+	if (not self.toTransform){
+		return null;
+	};
+	// Get the corresponding Controller and Operation
+	var spec := self.specification.oclAsType(BEHA::ImportedInterfaceOperation).operation;
+	var serviceInterface := spec.interface;
+	var ms := serviceInterface.microservice;
+	
+	var controller := ms.interfaces 
+							-> selectOne(i|i.interfaceType = SERV::InterfaceType::CONTROLLER and (i.name = serviceInterface.name or i.name = serviceInterface.name.replace("Service","Controller")));
+	var controllerOp := controller.operations -> selectOne(o|o.name=spec.name);
+	
+	assert warning (controllerOp <> null)
+		with log("Compile Error: Cannot find the matching Controller Operation to process specification!");
+	
+	log(indent(1)+"Create a new activity for Controller Operation '"+controllerOp.name+"': " );
+	serviceInterface.printInfo(1);
+	spec.printInfo(2);
+	
+	controller.printInfo(1);
+	controllerOp.printInfo(2);
+	
+	var newActivity := object BEHA::Activity{
+		name := self.name + "Controller";
+		specification := object BEHA::ImportedInterfaceOperation{
+			_import := SERV_IMPORT;
+			operation := controllerOp;
+		};
+		root := object BEHA::ActivityGroup{scope:=object BEHA::Scope{}};
+	};
+	
+	// New activity params + mappings -> return mapping from new input to the service
+	var newActivityMp := controllerOp.createParamsAndMappingsForActivity();
+	newActivity.ownedParameters := newActivityMp.activityParameters;
+	newActivity.parameterMappings := newActivityMp.mappings;
+	
+	// Create a new Node to declare response
+	var responseParam := controllerOp.parameters -> selectOne(p|p.exchangePattern = TECH::ExchangePattern::OUT);
+	var newResponseVariable := object BEHA::Variable {
+			name := "responseParam";
+			lowerBound := 1;
+			upperBound := 1;
+	};
+	
+	newActivity.root.scope.ownedVariables+=newResponseVariable;
+	
+	var newVariableDeclaration := object BEHA::VariableDeclarationAction{
+		name := "declareResponseVariable";
+		lowerBound :=1;
+		upperBound :=1;
+		declaration := object BEHA::VariableAssignment{
+			identifier := object BEHA::Identifier {name := "responseParam"};
+		};
+	};
+	
+	if (responseParam.primitiveType <> null){
+		newResponseVariable.primitiveType := responseParam.primitiveType.deepclone();
+		newVariableDeclaration.primitiveType := responseParam.primitiveType.deepclone();	
+	}else{
+		newResponseVariable.importedType := object SERV::ImportedType{
+			_import := DATA_IMPORT;
+			type := responseParam.importedType.type;
+		};
+		newVariableDeclaration.importedType := object SERV::ImportedType{
+			_import := DATA_IMPORT;
+			type := responseParam.importedType.type;
+		}
+	};
+	
+	// Create a new CallOperationAction for the ServiceOperation
+	var newCallServiceOpAction := spec.createNewCallOperationAction(newActivityMp.csParamMappings);
+	newCallServiceOpAction.domainToDeclareResult := false;
+	
+	// TODO : Create init node -> call node -> final node : Later add ACL 
+	var rootGroup := newActivity.root;
+	var initNode := object BEHA::InitialNode{
+		name := newActivity.name+"-InitNode";
+	};
+	var finalNode := object BEHA::ActivityFinalNode{
+		name := newActivity.name+"-ActivityFinalNode";
+	};
+	newActivity.ownedParameters
+		->select(p|p.exchangePattern=TECH::ExchangePattern::OUT)
+		->forEach(p){
+			finalNode.variablesToReturn += object BEHA::Identifier{name:=p.name};
+		};
+	rootGroup.ownedNodes := Sequence{initNode, newVariableDeclaration, newCallServiceOpAction, finalNode};
+	
+	Sequence{2..rootGroup.ownedNodes->size()-1} -> forEach(i){		
+		rootGroup.ownedEdges+= Sequence{
+			object BEHA::ActivityEdge{
+				source := rootGroup.ownedNodes -> at(i-1);
+				target := rootGroup.ownedNodes -> at(i);	
+			},
+			object BEHA::ActivityEdge{
+				source := rootGroup.ownedNodes -> at(i);
+				target := rootGroup.ownedNodes -> at(i+1);	
+			}
+		};	
+	};	
+	return newActivity;
+}
+
+query SERV::Operation::createParamsAndMappingsForActivity(): Tuple(activityParameters: Sequence(SERV::Parameter), mappings:Sequence(BEHA::ParameterMapping), csParamMappings: Dict(String, String)){
+	var activityParameters : Sequence(SERV::Parameter);
+	var mappings : Sequence(BEHA::ParameterMapping);
+	var csParamMappings: Dict(String, String) := Dict{};
+	
+	self.parameters -> forEach(p){
+		var newOpParameter := object BEHA::ImportedInterfaceParameter{
+			_import := SERV_IMPORT;
+			parameter := p;
+		};
+		var newAcParameter := p.deepclone();
+		
+		activityParameters += newAcParameter;
+		
+		var newMapping := object BEHA::ParameterMapping{
+			operationParameter := newOpParameter;
+			activityParameter := newAcParameter;
+			type := p.exchangePattern.getCorrespondingParameterMappingType(MAPPING_ACTIVITY);
+		};
+		
+		mappings += newMapping;	
+		
+		if (p.adapterParameterType = SERV::AdapterParameterType::REQUEST_BODY){
+			p.importedType.type.oclAsType(DATA::DataStructure).dataFields->forEach(f){
+				csParamMappings -> put(f.name,"requestParam."+f.name);
+			}
+		}else if (p.adapterParameterType = SERV::AdapterParameterType::RESPONSE_BODY){
+			p.importedType.type.oclAsType(DATA::DataStructure).dataFields->forEach(f){
+				csParamMappings -> put(f.name,"responseParam."+f.name);
+			}
+		}else{
+			csParamMappings -> put(p.name,p.name);
+		}
+		;
+	};
+	
+	return Tuple{activityParameters=activityParameters, mappings=mappings, csParamMappings=csParamMappings};
+}
+
+query SERV::Operation::createNewCallOperationAction(csParamMapping:Dict(String, String)): BEHA::CallOperationAction{
+	return self.createNewCallOperationAction(csParamMapping,SERV_IMPORT); 
+}
+
+query SERV::Operation::createNewCallOperationAction(csParamMapping:Dict(String, String),servImport: SERV::Import): BEHA::CallOperationAction{
+	var newAction : BEHA::CallOperationAction;
+	
+	var newParameterMappings : Sequence(BEHA::ParameterMapping);
+	self.parameters -> forEach(p){
+		var newMapping := object BEHA::ParameterMapping{
+			type := p.exchangePattern.getCorrespondingParameterMappingType(MAPPING_ACTION);
+			operationParameter := object BEHA::ImportedInterfaceParameter{
+				_import := servImport;
+				parameter := p;
+			};
+			identifier := object BEHA::Identifier{
+				name:= if csParamMapping -> hasKey(p.name) then csParamMapping->get(p.name) else p.name endif
+			};
+		};
+		newParameterMappings += newMapping;
+	};
+	var newCallServiceOpAction := object BEHA::CallOperationAction{
+		name := self.name;
+		importedOperation := object ImportedInterfaceOperation{
+			_import := SERV_IMPORT;
+			operation := self;
+		};
+		parameterMappings := newParameterMappings
+	};
+	return newCallServiceOpAction;
+}
+
+query TECH::ExchangePattern::getCorrespondingParameterMappingType(target: String): BEHA::ParameterMappingType{
+	return switch{
+		case (target = MAPPING_ACTIVITY and self = TECH::ExchangePattern::IN) BEHA::ParameterMappingType::ACTIVITY_IN;
+		case (target = MAPPING_ACTIVITY and self = TECH::ExchangePattern::OUT) BEHA::ParameterMappingType::ACTIVITY_OUT;
+		case (target = MAPPING_ACTION and self = TECH::ExchangePattern::IN) BEHA::ParameterMappingType::ACTION_IN;
+		case (target = MAPPING_ACTION and self = TECH::ExchangePattern::OUT) BEHA::ParameterMappingType::ACTION_OUT;
+	}
+}

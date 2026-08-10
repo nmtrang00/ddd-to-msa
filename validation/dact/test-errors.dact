@@ -1,0 +1,384 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<dact:Root xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:dact="http://www.example.org/xcore/dact">
+  <ddd>
+    <boundedContexts name="Customer">
+      <ownedElements xsi:type="dact:AggregateRoot" name="Customer">
+        <ownedProperties name="customerId" definesIdentity="true" type="//@primitivesTypes.0" lowerBound="1"/>
+        <ownedProperties name="name" type="//@primitivesTypes.0" lowerBound="1"/>
+        <ownedOperations xsi:type="dact:InvariantOperation" name="isValid" type="D5_SPECIFICATION" validatesSpec="true" sideEffectFree="true">
+          <ownedParameters name="result" type="//@primitivesTypes.2" lowerBound="1" direction="RETURN"/>
+          <validatesSpecExpr name="expr0">
+            <child xsi:type="dact:NotExpression">
+              <expr name="Expr">
+                <child xsi:type="dact:BinaryExpression">
+                  <operator xsi:type="dact:Eq"/>
+                  <leftExpr name="LeftExpr">
+                    <child xsi:type="dact:UnaryExpression">
+                      <identifier name="name"/>
+                    </child>
+                  </leftExpr>
+                  <rightExpr name="RightExpr">
+                    <child xsi:type="dact:UnaryExpression">
+                      <value xsi:type="dact:LiteralNull"/>
+                    </child>
+                  </rightExpr>
+                </child>
+              </expr>
+            </child>
+          </validatesSpecExpr>
+          <validatesSpecExpr name="expr1">
+            <child xsi:type="dact:BinaryExpression">
+              <operator xsi:type="dact:Gt"/>
+              <leftExpr name="LeftExpr">
+                <child xsi:type="dact:UnaryExpression" name="">
+                  <identifier name="name.length()"/>
+                </child>
+              </leftExpr>
+              <rightExpr name="RightExpr">
+                <child xsi:type="dact:UnaryExpression" name="">
+                  <value xsi:type="dact:LiteralInteger" value="5"/>
+                </child>
+              </rightExpr>
+            </child>
+          </validatesSpecExpr>
+        </ownedOperations>
+      </ownedElements>
+      <ownedElements xsi:type="dact:Service" name="CustomerService">
+        <ownedOperations name="registerANewCustomer" type="S0_DOMAIN_SERVICE">
+          <ownedParameters name="customerName" type="//@primitivesTypes.0" lowerBound="1"/>
+          <ownedParameters name="newCustomer" type="//@ddd/@boundedContexts.0/@ownedElements.0" direction="RETURN"/>
+        </ownedOperations>
+      </ownedElements>
+      <ownedElements xsi:type="dact:Repository" name="CustomerRespository" aggregate="//@ddd/@boundedContexts.0/@ownedElements.0">
+        <ownedOperations name="findByCustomerId" type="R1_REPOSITORY_READ" sideEffectFree="true" behavior="//@activity/@activities.4">
+          <ownedParameters name="customerId" type="//@primitivesTypes.0" lowerBound="1"/>
+          <ownedParameters name="customer" type="//@ddd/@boundedContexts.0/@ownedElements.0" direction="RETURN"/>
+        </ownedOperations>
+      </ownedElements>
+    </boundedContexts>
+    <boundedContexts name="Location">
+      <ownedElements xsi:type="dact:AggregateRoot" name="Location">
+        <ownedProperties name="portCode" definesIdentity="true" type="//@primitivesTypes.0" lowerBound="1"/>
+      </ownedElements>
+      <ownedElements xsi:type="dact:Service" name="LocationService">
+        <ownedOperations name="resolveByPortCode" type="S0_DOMAIN_SERVICE" sideEffectFree="true">
+          <ownedParameters name="portCode" type="//@primitivesTypes.0" lowerBound="1"/>
+          <ownedParameters name="location" type="//@ddd/@boundedContexts.1/@ownedElements.0" direction="RETURN"/>
+        </ownedOperations>
+      </ownedElements>
+    </boundedContexts>
+    <boundedContexts name="Cargo">
+      <ownedElements xsi:type="dact:AggregateRoot" name="Cargo">
+        <ownedProperties name="trackingId" definesIdentity="true" type="//@primitivesTypes.0" lowerBound="1"/>
+        <ownedProperties name="role" type="//@ddd/@sharedDomainObjects.0" lowerBound="1" sharedObjectResolver="//@ddd/@boundedContexts.0/@ownedElements.2/@ownedOperations.0"/>
+        <ownedProperties type="//@ddd/@boundedContexts.2/@ownedElements.2" lowerBound="1" isComposite="true"/>
+        <ownedProperties name="goal" type="//@ddd/@boundedContexts.2/@ownedElements.1" lowerBound="1"/>
+      </ownedElements>
+      <ownedElements xsi:type="dact:ValueObject" name="DeliverySpecification">
+        <ownedProperties name="arrivalTime" type="//@primitivesTypes.1" lowerBound="1"/>
+        <ownedProperties name="destination" type="//@ddd/@sharedDomainObjects.1" lowerBound="1" sharedObjectResolver="//@ddd/@boundedContexts.1/@ownedElements.1/@ownedOperations.0"/>
+        <ownedOperations xsi:type="dact:InvariantOperation" name="isValid" type="D5_SPECIFICATION" validatesSpec="true" sideEffectFree="true">
+          <ownedParameters name="result" lowerBound="1" direction="RETURN"/>
+          <validatesSpecExpr name="expr">
+            <child xsi:type="dact:BinaryExpression">
+              <operator xsi:type="dact:Gt"/>
+              <leftExpr name="LeftExpr">
+                <child xsi:type="dact:UnaryExpression">
+                  <identifier name="arrivalTime"/>
+                </child>
+              </leftExpr>
+              <rightExpr name="RightExpr">
+                <child xsi:type="dact:UnaryExpression">
+                  <value xsi:type="dact:LiteralInteger" value="0"/>
+                </child>
+              </rightExpr>
+            </child>
+          </validatesSpecExpr>
+        </ownedOperations>
+      </ownedElements>
+      <ownedElements xsi:type="dact:Entity" name="DeliveryHistory">
+        <ownedProperties type="//@ddd/@boundedContexts.2/@ownedElements.3" upperBound="-1" isComposite="true"/>
+      </ownedElements>
+      <ownedElements xsi:type="dact:Entity" name="HandlingEvent">
+        <ownedProperties name="completionTime" type="//@primitivesTypes.1" lowerBound="1"/>
+        <ownedProperties name="type" type="//@ddd/@boundedContexts.2/@ownedElements.4" lowerBound="1"/>
+        <ownedProperties type="//@ddd/@boundedContexts.2/@ownedElements.5" isComposite="true"/>
+      </ownedElements>
+      <ownedElements xsi:type="dact:Enumeration" name="HandlingEventType">
+        <ownedLiterals name="CREATED"/>
+        <ownedLiterals name="LOADED"/>
+        <ownedLiterals name="IN_TRANSIT"/>
+        <ownedLiterals name="IN_CUSTOM"/>
+        <ownedLiterals name="OUT_FOR_DELIVERY"/>
+        <ownedLiterals name="DELIVERED"/>
+      </ownedElements>
+      <ownedElements xsi:type="dact:Entity" name="CarrierMovement">
+        <ownedProperties name="from" type="//@ddd/@sharedDomainObjects.1" lowerBound="1" sharedObjectResolver="//@ddd/@boundedContexts.1/@ownedElements.1/@ownedOperations.0"/>
+        <ownedProperties name="to" type="//@ddd/@sharedDomainObjects.1" lowerBound="1" sharedObjectResolver="//@ddd/@boundedContexts.1/@ownedElements.1/@ownedOperations.0"/>
+      </ownedElements>
+      <ownedElements xsi:type="dact:Service" name="CargoService">
+        <ownedOperations name="createANewCargoForCustomer" type="S0_DOMAIN_SERVICE"/>
+      </ownedElements>
+    </boundedContexts>
+    <sharedDomainObjects xsi:type="dact:SharedValueObject" name="SharedCustomer" abstractedRoot="//@ddd/@boundedContexts.0/@ownedElements.0">
+      <ownedProperties name="customerId" type="//@primitivesTypes.0" lowerBound="1"/>
+    </sharedDomainObjects>
+    <sharedDomainObjects xsi:type="dact:SharedValueObject" name="SharedLocation" abstractedRoot="//@ddd/@boundedContexts.1/@ownedElements.0">
+      <ownedProperties name="portCode" type="//@primitivesTypes.0" lowerBound="1"/>
+    </sharedDomainObjects>
+  </ddd>
+  <activity>
+    <activities name="testVariableFromSpec" toTransform="false">
+      <root name="Root"/>
+    </activities>
+    <activities name="testVariableMapping" toTransform="false">
+      <ownedParameters name="Id" type="//@primitivesTypes.0" lowerBound="1"/>
+      <parameterMappings type="ACTIVITY_IN" operationParameter="//@ddd/@boundedContexts.0/@ownedElements.2/@ownedOperations.0/@ownedParameters.0" activityParameter="//@activity/@activities.1/@ownedParameters.0"/>
+      <root name="Root">
+        <ownedNodes xsi:type="dact:InitialNode"/>
+      </root>
+    </activities>
+    <activities name="testVariableMappingMismatch" toTransform="false">
+      <ownedParameters name="Id" type="//@primitivesTypes.1" lowerBound="1"/>
+      <parameterMappings type="ACTIVITY_IN" operationParameter="//@ddd/@boundedContexts.0/@ownedElements.2/@ownedOperations.0/@ownedParameters.0" activityParameter="//@activity/@activities.2/@ownedParameters.0"/>
+      <root name="Root">
+        <ownedNodes xsi:type="dact:InitialNode"/>
+      </root>
+    </activities>
+    <activities name="testVariableDeclarationMismatchType" toTransform="false">
+      <root name="Root">
+        <ownedNodes xsi:type="dact:InitialNode" name="Init3" sEdge="//@activity/@activities.3/@root/@ownedEdges.0"/>
+        <ownedNodes xsi:type="dact:VariableDeclarationAction" name="varDecl3" tEdge="//@activity/@activities.3/@root/@ownedEdges.0" type="//@primitivesTypes.2">
+          <declaration>
+            <identifier name="newVar"/>
+            <expr>
+              <child xsi:type="dact:UnaryExpression">
+                <value xsi:type="dact:LiteralInteger" value="10"/>
+              </child>
+            </expr>
+          </declaration>
+        </ownedNodes>
+        <ownedEdges source="//@activity/@activities.3/@root/@ownedNodes.0" target="//@activity/@activities.3/@root/@ownedNodes.1"/>
+      </root>
+    </activities>
+    <activities name="testVariableDeclaration" specification="//@ddd/@boundedContexts.0/@ownedElements.2/@ownedOperations.0" toTransform="false">
+      <root name="Root">
+        <ownedNodes xsi:type="dact:InitialNode" name="Init4" sEdge="//@activity/@activities.4/@root/@ownedEdges.0"/>
+        <ownedNodes xsi:type="dact:VariableDeclarationAction" name="varDecl4" tEdge="//@activity/@activities.4/@root/@ownedEdges.0" type="//@primitivesTypes.0">
+          <declaration>
+            <identifier name="newVar"/>
+            <expr>
+              <child xsi:type="dact:UnaryExpression">
+                <value xsi:type="dact:LiteralString" value="hi"/>
+              </child>
+            </expr>
+          </declaration>
+        </ownedNodes>
+        <ownedEdges source="//@activity/@activities.4/@root/@ownedNodes.0" target="//@activity/@activities.4/@root/@ownedNodes.1"/>
+      </root>
+    </activities>
+    <activities name="testVariableDeclarationDup" toTransform="false">
+      <root name="Root">
+        <ownedNodes xsi:type="dact:InitialNode" name="Init4" sEdge="//@activity/@activities.5/@root/@ownedEdges.0"/>
+        <ownedNodes xsi:type="dact:VariableDeclarationAction" name="varDecl4" sEdge="//@activity/@activities.5/@root/@ownedEdges.1" tEdge="//@activity/@activities.5/@root/@ownedEdges.0" type="//@primitivesTypes.0">
+          <declaration>
+            <identifier name="newVar"/>
+            <expr>
+              <child xsi:type="dact:UnaryExpression">
+                <value xsi:type="dact:LiteralString" value="hi"/>
+              </child>
+            </expr>
+          </declaration>
+        </ownedNodes>
+        <ownedNodes xsi:type="dact:VariableDeclarationAction" name="varDecl4Dup" tEdge="//@activity/@activities.5/@root/@ownedEdges.1" type="//@primitivesTypes.0">
+          <declaration>
+            <identifier name="newVar"/>
+            <expr>
+              <child xsi:type="dact:UnaryExpression">
+                <value xsi:type="dact:LiteralString" value="hi"/>
+              </child>
+            </expr>
+          </declaration>
+        </ownedNodes>
+        <ownedEdges source="//@activity/@activities.5/@root/@ownedNodes.0" target="//@activity/@activities.5/@root/@ownedNodes.1"/>
+        <ownedEdges source="//@activity/@activities.5/@root/@ownedNodes.1" target="//@activity/@activities.5/@root/@ownedNodes.2"/>
+      </root>
+    </activities>
+    <activities name="testVariableDeclarationNested">
+      <root name="Root">
+        <ownedNodes xsi:type="dact:InitialNode" name="Init5" sEdge="//@activity/@activities.6/@root/@ownedEdges.0"/>
+        <ownedNodes xsi:type="dact:VariableDeclarationAction" name="varDecl5" sEdge="//@activity/@activities.6/@root/@ownedEdges.1" tEdge="//@activity/@activities.6/@root/@ownedEdges.0" type="//@primitivesTypes.0">
+          <declaration>
+            <identifier name="newVar"/>
+            <expr>
+              <child xsi:type="dact:UnaryExpression">
+                <value xsi:type="dact:LiteralString" value="hi"/>
+              </child>
+            </expr>
+          </declaration>
+        </ownedNodes>
+        <ownedNodes xsi:type="dact:ConditionalNode" name="cond5" sEdge="//@activity/@activities.6/@root/@ownedEdges.2" tEdge="//@activity/@activities.6/@root/@ownedEdges.1">
+          <test name="Test">
+            <child xsi:type="dact:BinaryExpression">
+              <operator xsi:type="dact:Eq"/>
+              <leftExpr name="LeftExpr">
+                <child xsi:type="dact:UnaryExpression" name="">
+                  <value xsi:type="dact:LiteralString" value="test"/>
+                </child>
+              </leftExpr>
+              <rightExpr name="RightExpr">
+                <child xsi:type="dact:UnaryExpression">
+                  <identifier name="newVar"/>
+                </child>
+              </rightExpr>
+            </child>
+          </test>
+          <body name="Body">
+            <ownedNodes xsi:type="dact:InitialNode" name="Body-Init5" sEdge="//@activity/@activities.6/@root/@ownedNodes.2/@body/@ownedEdges.0"/>
+            <ownedNodes xsi:type="dact:VariableDeclarationAction" name="varDecl5-nestedMain" tEdge="//@activity/@activities.6/@root/@ownedNodes.2/@body/@ownedEdges.0" type="//@primitivesTypes.0">
+              <declaration>
+                <identifier name="newVar1"/>
+                <expr>
+                  <child xsi:type="dact:UnaryExpression">
+                    <value xsi:type="dact:LiteralString" value="hi"/>
+                  </child>
+                </expr>
+              </declaration>
+            </ownedNodes>
+            <ownedEdges source="//@activity/@activities.6/@root/@ownedNodes.2/@body/@ownedNodes.0" target="//@activity/@activities.6/@root/@ownedNodes.2/@body/@ownedNodes.1"/>
+          </body>
+          <elseBody name="ElseBody">
+            <ownedNodes xsi:type="dact:InitialNode" name="Else-Init5" sEdge="//@activity/@activities.6/@root/@ownedNodes.2/@elseBody/@ownedEdges.0"/>
+            <ownedNodes xsi:type="dact:VariableDeclarationAction" name="varDecl5-nestedElse" tEdge="//@activity/@activities.6/@root/@ownedNodes.2/@elseBody/@ownedEdges.0" type="//@primitivesTypes.0">
+              <declaration>
+                <identifier name="newVar2"/>
+                <expr>
+                  <child xsi:type="dact:UnaryExpression">
+                    <value xsi:type="dact:LiteralString" value="hi"/>
+                  </child>
+                </expr>
+              </declaration>
+            </ownedNodes>
+            <ownedEdges source="//@activity/@activities.6/@root/@ownedNodes.2/@elseBody/@ownedNodes.0" target="//@activity/@activities.6/@root/@ownedNodes.2/@elseBody/@ownedNodes.1"/>
+          </elseBody>
+        </ownedNodes>
+        <ownedNodes xsi:type="dact:ActivityFinalNode" name="final5" tEdge="//@activity/@activities.6/@root/@ownedEdges.2"/>
+        <ownedEdges name="first" source="//@activity/@activities.6/@root/@ownedNodes.0" target="//@activity/@activities.6/@root/@ownedNodes.1"/>
+        <ownedEdges name="sec" source="//@activity/@activities.6/@root/@ownedNodes.1" target="//@activity/@activities.6/@root/@ownedNodes.2"/>
+        <ownedEdges name="third" source="//@activity/@activities.6/@root/@ownedNodes.2" target="//@activity/@activities.6/@root/@ownedNodes.3"/>
+      </root>
+    </activities>
+    <activities name="testVariableDeclarationNestedDup" toTransform="false">
+      <root name="Root">
+        <ownedNodes xsi:type="dact:InitialNode" name="Init5" sEdge="//@activity/@activities.7/@root/@ownedEdges.0"/>
+        <ownedNodes xsi:type="dact:VariableDeclarationAction" name="varDecl5" sEdge="//@activity/@activities.7/@root/@ownedEdges.1" tEdge="//@activity/@activities.7/@root/@ownedEdges.0" type="//@primitivesTypes.0">
+          <declaration>
+            <identifier name="newVar"/>
+            <expr>
+              <child xsi:type="dact:UnaryExpression">
+                <value xsi:type="dact:LiteralString" value="hi"/>
+              </child>
+            </expr>
+          </declaration>
+        </ownedNodes>
+        <ownedNodes xsi:type="dact:ConditionalNode" name="cond5" tEdge="//@activity/@activities.7/@root/@ownedEdges.1">
+          <test name="Test">
+            <child xsi:type="dact:BinaryExpression">
+              <operator xsi:type="dact:Eq"/>
+              <leftExpr name="LeftExpr">
+                <child xsi:type="dact:UnaryExpression" name="">
+                  <value xsi:type="dact:LiteralString" value="test"/>
+                </child>
+              </leftExpr>
+              <rightExpr name="RightExpr">
+                <child xsi:type="dact:UnaryExpression">
+                  <identifier name="newVar"/>
+                </child>
+              </rightExpr>
+            </child>
+          </test>
+          <body name="Body">
+            <ownedNodes xsi:type="dact:InitialNode" name="Body-Init5" sEdge="//@activity/@activities.7/@root/@ownedNodes.2/@body/@ownedEdges.0"/>
+            <ownedNodes xsi:type="dact:VariableDeclarationAction" name="varDecl5-nestedMain" tEdge="//@activity/@activities.7/@root/@ownedNodes.2/@body/@ownedEdges.0" type="//@primitivesTypes.0">
+              <declaration>
+                <identifier name="newVar1"/>
+                <expr>
+                  <child xsi:type="dact:UnaryExpression">
+                    <value xsi:type="dact:LiteralString" value="hi"/>
+                  </child>
+                </expr>
+              </declaration>
+            </ownedNodes>
+            <ownedEdges source="//@activity/@activities.7/@root/@ownedNodes.2/@body/@ownedNodes.0" target="//@activity/@activities.7/@root/@ownedNodes.2/@body/@ownedNodes.1"/>
+          </body>
+          <elseBody name="ElseBody">
+            <ownedNodes xsi:type="dact:InitialNode" name="Else-Init5" sEdge="//@activity/@activities.7/@root/@ownedNodes.2/@elseBody/@ownedEdges.0"/>
+            <ownedNodes xsi:type="dact:VariableDeclarationAction" name="varDecl5-nestedElse-dup" sEdge="//@activity/@activities.7/@root/@ownedNodes.2/@elseBody/@ownedEdges.1" tEdge="//@activity/@activities.7/@root/@ownedNodes.2/@elseBody/@ownedEdges.0" type="//@primitivesTypes.0">
+              <declaration>
+                <identifier name="newVar2"/>
+                <expr>
+                  <child xsi:type="dact:UnaryExpression">
+                    <value xsi:type="dact:LiteralString" value="hi"/>
+                  </child>
+                </expr>
+              </declaration>
+            </ownedNodes>
+            <ownedNodes xsi:type="dact:ConditionalNode" name="cond5-nested" tEdge="//@activity/@activities.7/@root/@ownedNodes.2/@elseBody/@ownedEdges.1">
+              <test name="Test">
+                <child xsi:type="dact:BinaryExpression">
+                  <operator xsi:type="dact:Eq"/>
+                  <leftExpr name="LeftExpr">
+                    <child xsi:type="dact:UnaryExpression" name="">
+                      <value xsi:type="dact:LiteralString" value="test"/>
+                    </child>
+                  </leftExpr>
+                  <rightExpr name="RightExpr">
+                    <child xsi:type="dact:UnaryExpression">
+                      <identifier name="newVar"/>
+                    </child>
+                  </rightExpr>
+                </child>
+              </test>
+              <body name="Body">
+                <ownedNodes xsi:type="dact:InitialNode" name="Body-Init5" sEdge="//@activity/@activities.7/@root/@ownedNodes.2/@elseBody/@ownedNodes.2/@body/@ownedEdges.0"/>
+                <ownedNodes xsi:type="dact:VariableDeclarationAction" name="varDecl5-nestedMain" tEdge="//@activity/@activities.7/@root/@ownedNodes.2/@elseBody/@ownedNodes.2/@body/@ownedEdges.0" type="//@primitivesTypes.0">
+                  <declaration>
+                    <identifier name="newVar1"/>
+                    <expr>
+                      <child xsi:type="dact:UnaryExpression">
+                        <value xsi:type="dact:LiteralString" value="hi"/>
+                      </child>
+                    </expr>
+                  </declaration>
+                </ownedNodes>
+                <ownedEdges source="//@activity/@activities.7/@root/@ownedNodes.2/@elseBody/@ownedNodes.2/@body/@ownedNodes.0" target="//@activity/@activities.7/@root/@ownedNodes.2/@elseBody/@ownedNodes.2/@body/@ownedNodes.1"/>
+              </body>
+              <elseBody name="ElseBody">
+                <ownedNodes xsi:type="dact:InitialNode" name="Else-Init5" sEdge="//@activity/@activities.7/@root/@ownedNodes.2/@elseBody/@ownedNodes.2/@elseBody/@ownedEdges.0"/>
+                <ownedNodes xsi:type="dact:VariableDeclarationAction" name="varDecl5-nestedElse" tEdge="//@activity/@activities.7/@root/@ownedNodes.2/@elseBody/@ownedNodes.2/@elseBody/@ownedEdges.0" type="//@primitivesTypes.0">
+                  <declaration>
+                    <identifier name="newVar2"/>
+                    <expr>
+                      <child xsi:type="dact:UnaryExpression">
+                        <value xsi:type="dact:LiteralString" value="hi"/>
+                      </child>
+                    </expr>
+                  </declaration>
+                </ownedNodes>
+                <ownedEdges source="//@activity/@activities.7/@root/@ownedNodes.2/@elseBody/@ownedNodes.2/@elseBody/@ownedNodes.0" target="//@activity/@activities.7/@root/@ownedNodes.2/@elseBody/@ownedNodes.2/@elseBody/@ownedNodes.1"/>
+              </elseBody>
+            </ownedNodes>
+            <ownedEdges source="//@activity/@activities.7/@root/@ownedNodes.2/@elseBody/@ownedNodes.0" target="//@activity/@activities.7/@root/@ownedNodes.2/@elseBody/@ownedNodes.1"/>
+            <ownedEdges source="//@activity/@activities.7/@root/@ownedNodes.2/@elseBody/@ownedNodes.1" target="//@activity/@activities.7/@root/@ownedNodes.2/@elseBody/@ownedNodes.2"/>
+          </elseBody>
+        </ownedNodes>
+        <ownedEdges source="//@activity/@activities.7/@root/@ownedNodes.0" target="//@activity/@activities.7/@root/@ownedNodes.1"/>
+        <ownedEdges source="//@activity/@activities.7/@root/@ownedNodes.1" target="//@activity/@activities.7/@root/@ownedNodes.2"/>
+      </root>
+    </activities>
+  </activity>
+  <primitivesTypes xsi:type="dact:StringType" name="String"/>
+  <primitivesTypes xsi:type="dact:IntegerType" name="Integer"/>
+  <primitivesTypes xsi:type="dact:BooleanType" name="Boolean"/>
+  <primitivesTypes xsi:type="dact:RealType" name="Real"/>
+</dact:Root>

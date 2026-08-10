@@ -1,0 +1,244 @@
+import DactUtils; // Reuses the shared 'indent(ntabs)' query function
+
+library LemmaUtils;
+
+modeltype DATA uses 'http://www.example.org/xcore/data' ;
+modeltype SERV uses 'http://www.example.org/xcore/service' ;
+modeltype BEHA uses 'http://www.example.org/xcore/behavior' ;
+
+--------------------------------------------------------------------------------
+-- 1. LEMMA NAMED ELEMENT PRINT INFO (Unified signature matching DactUtils)
+--------------------------------------------------------------------------------
+
+-- Helper to print info of a BEHA NamedElement without specialTag
+query BEHA::NamedElement::printInfo(ntabs: Integer): String {
+    return self.printInfo(ntabs, '');
+}
+
+-- Specialized printInfo query with specialTag and category markers
+query BEHA::NamedElement::printInfo(ntabs: Integer, specialTag: String): String {
+	
+    -- 1. Extract Element Name
+    var memberName : String;
+    if (self.oclIsKindOf(BEHA::CallOperationAction)){
+      memberName := self.oclAsType(BEHA::CallOperationAction).getQualifiedName();
+    } else{
+      memberName := if self.name.oclIsUndefined() or self.name = '' 
+                               then '<Anonymous>' 
+                               else self.name 
+                               endif;
+    };                           
+    -- 2. Extract Metamodel Concrete Type
+    var memberType : String := self.metaClassName();
+    
+    -- 3. Determine Category Marker
+    var mark := switch {
+        case (self.oclIsKindOf(BEHA::Activity)) "^";
+        case (self.oclIsKindOf(BEHA::ActivityGroup)) "&";
+        case (self.oclIsKindOf(BEHA::ActivityNode)) "*";
+        case (self.oclIsKindOf(SERV::Parameter)) "%";
+        case (self.oclIsKindOf(BEHA::Variable)) "#";
+        else "?";
+    };
+    
+    -- 4. Construct Output Log String
+    var toPrint : String;
+    if (specialTag <> '') then {
+        toPrint := indent(ntabs) + 
+            '[' + mark + '] ' + specialTag + ': ' + memberName + ' | Type: ' + memberType;
+    } else {
+        toPrint := indent(ntabs) + 
+            '[' + mark + '] ' + memberType + ': ' + memberName;
+    } endif;
+    
+    log(toPrint);
+    return toPrint;
+}
+
+--------------------------------------------------------------------------------
+-- 2. LEMMA SPECIFIC PRINT INFO OVERRIDES
+--------------------------------------------------------------------------------
+
+query BEHA::Activity::printInfoFull(ntabs : Integer) {
+    self.printInfo(ntabs);
+
+    if (not self.specification.oclIsUndefined()) then {
+        self.specification.printInfo(ntabs + 1, "Specification");
+    } endif;
+
+    -- Owned Parameters
+    self.ownedParameters->forEach(param) {
+        param.printInfo(ntabs + 1);
+    };
+
+    -- Parameter Mappings
+    self.parameterMappings->forEach(pm) {
+        pm.printInfo(ntabs + 1);
+    };
+
+    -- Root Group
+    if (not self.root.oclIsUndefined()) then {
+        self.root.printInfo(ntabs + 1);
+    } endif;
+}
+
+query BEHA::ActivityGroup::printInfo(ntabs : Integer): String {
+    var groupName := if (not self.name.oclIsUndefined()) then self.name else "RootGroup" endif;
+    var toPrint := indent(ntabs) + "[&] ActivityGroup: " + groupName;
+    log(toPrint);
+
+//    -- Nodes
+//    if (self.ownedNodes->notEmpty()) then {
+//        log(indent(ntabs + 1) + "├── Nodes:");
+//        self.ownedNodes->forEach(node) {
+//            node.printInfo(ntabs + 2);
+//        };
+//    } endif;
+//
+//    -- Edges
+//    if (self.ownedEdges->notEmpty()) then {
+//        log(indent(ntabs + 1) + "└── Edges:");
+//        self.ownedEdges->forEach(edge) {
+//            edge.printInfo(ntabs + 2);
+//        };
+//    } endif;
+
+    return toPrint;
+}
+
+query BEHA::CallOperationAction::getQualifiedName(): String {
+    if (self.importedOperation.oclIsKindOf(BEHA::ImportedInterfaceOperation)){
+    	return self.importedOperation.oclAsType(BEHA::ImportedInterfaceOperation).operation.buildQualifiedName("::");
+    }else{
+    	return self.importedOperation.oclAsType(BEHA::ImportedDataOperation).operation.buildQualifiedName("::");
+    }
+}
+
+query BEHA::ImportedOperation::printInfo(ntabs: Integer, specialTag: String): String {
+    var opName : String;
+    if (self.oclIsKindOf(BEHA::ImportedInterfaceOperation)) then {
+        opName := self.oclAsType(BEHA::ImportedInterfaceOperation).operation.name;
+    } else {
+        opName := self.oclAsType(BEHA::ImportedDataOperation).operation.name;
+    } endif;
+
+    var toPrint := indent(ntabs) + "[$] " + specialTag + ": " + opName;
+    log(toPrint);
+    return toPrint;
+}
+
+//query BEHA::ConditionalNode::printInfo(ntabs : Integer): String {
+//    var toPrint := self.printInfo(ntabs);
+//
+//    if (not self.body.oclIsUndefined()) then {
+//        log(indent(ntabs + 1) + "[THEN]");
+//        self.body.printInfo(ntabs + 2);
+//    } endif;
+//
+//    if (not self.elseBody.oclIsUndefined()) then {
+//        log(indent(ntabs + 1) + "[ELSE]");
+//        self.elseBody.printInfo(ntabs + 2);
+//    } endif;
+//
+//    return toPrint;
+//}
+
+query BEHA::ActivityEdge::printInfo(ntabs : Integer): String {
+    var source := if self.source.oclIsUndefined() then "'UndefinedSource'" else self.source.name endif;
+    var target := if self.target.oclIsUndefined() then "'UndefinedTarget'" else self.target.name endif;
+    
+    var toReturn := "ActivityEdge: " + source + " ---> " + target;
+    
+    log(indent(ntabs) + "[`] " + toReturn);
+    return toReturn; 
+}
+
+query BEHA::ParameterMapping::printInfo(ntabs: Integer): String {
+    var src := self.operationParameter.toString();
+    var tgt : String := "unmapped";
+    
+    if (not self.variable.oclIsUndefined()) then tgt := self.variable.name endif;
+    if (not self.identifier.oclIsUndefined()) then tgt := self.identifier.name endif;
+    if (not self.activityParameter.oclIsUndefined()) then tgt := self.activityParameter.name endif;
+    if (not self.value.oclIsUndefined()) then tgt := self.value.toString() endif;
+    
+    var toReturn := self.type.toString() + " : " + src + " -> " + tgt;
+    log(indent(ntabs) + "[+] ParameterMapping - " + toReturn);
+    return toReturn;
+}
+
+query SERV::Microservice::printInfo(ntabs:Integer): String{
+	var toPrint := indent(ntabs) + "[~] Microservice: " + self.buildQualifiedName("::");
+    log(toPrint);
+    return toPrint;
+}
+
+query SERV::Interface::printInfo(ntabs: Integer): String{
+	var toPrint := indent(ntabs) + "[!] "+self.interfaceType.toString()+" Interface: " + self.buildQualifiedName("::");
+    log(toPrint);
+    return toPrint;
+}
+
+query SERV::Operation::printInfo(ntabs:Integer): String{
+	var toPrint := indent(ntabs) + "[$] Operation: " + self.buildQualifiedName("::");
+    log(toPrint);
+    return toPrint;
+}
+
+query SERV::Parameter::printInfo(ntabs: Integer): String {
+    var toPrint := indent(ntabs) + "[%] Parameter: " + self.buildQualifiedName("::");
+    log(toPrint);
+    return toPrint;
+}
+
+
+query SERV::Operation::isInboundHttp(): Boolean {
+    var inboundTypes := Set{
+        SERV::OperationType::I0_INBOUND_GET,
+        SERV::OperationType::I1_INBOUND_PUT,
+        SERV::OperationType::I2_INBOUND_POST,
+        SERV::OperationType::I3_INBOUND_DELETE
+    };
+
+    return inboundTypes->includes(self.operationType);
+}
+
+query BEHA::Activity::getMicroservice(): SERV::Microservice {
+	var spec := self.specification.oclAsType(BEHA::ImportedInterfaceOperation).operation;
+	var interface := spec.interface;
+	var microservice := interface.microservice;
+	
+	return microservice;
+}
+
+query DATA::DataStructure::getMicroservice(): SERV::Microservice{
+	// Current 1 BoundedContext = 1 Context = 1 MS
+	
+	var context := self.context;
+	var matchedMicroservice := SERV::Microservice.allInstances() -> selectOne (s|s.name = context.name);
+	
+	return  matchedMicroservice;
+}
+
+query BEHA::CallOperationAction::getMicroservice(): SERV::Microservice{
+	var microservice : SERV::Microservice;
+	
+	if (self.importedOperation.oclIsKindOf(BEHA::ImportedInterfaceOperation)){
+		var operation := self.importedOperation.oclAsType(BEHA::ImportedInterfaceOperation).operation;
+		var interface := operation.interface;
+		microservice := interface.microservice;
+	}else if (self.importedOperation.oclIsKindOf(BEHA::ImportedDataOperation)){
+		var operation := self.importedOperation.oclAsType(BEHA::ImportedDataOperation).operation;
+		var dataStructure := operation.dataStructure;
+		microservice := dataStructure.getMicroservice();
+	};
+	return microservice;	
+}
+query SERV::Microservice::getCorrespondingOutboundAdapterName(): String{
+	return self.name + "OutboundAdapter"
+}
+
+query SERV::Microservice::getCorrespondingContext(): DATA::Context{
+	return DATA::Context.allInstances() -> selectOne(c|c.name=self.name);
+}
+

@@ -1,0 +1,37 @@
+import DactUtils;
+
+library DactToLemmaUtils;
+modeltype DACT uses 'http://www.example.org/xcore/dact';
+modeltype DATA uses 'http://www.example.org/xcore/data';
+modeltype SERV uses 'http://www.example.org/xcore/service';
+modeltype TECH uses 'http://www.example.org/xcore/technology';
+modeltype BEHA uses 'http://www.example.org/xcore/behavior';
+
+query DACT::PrimitiveType::PrimitiveTypetoDataPrimitive(): DATA::PrimitiveType {
+	self.printInfo(4);
+	-- TODO: Implement other types
+	return switch {
+		case (self.oclIsKindOf(DACT::BooleanType)) object DATA::PrimitiveBoolean{};
+		case (self.oclIsKindOf(DACT::RealType))  object DATA::PrimitiveDouble{};
+		case (self.oclIsKindOf(DACT::IntegerType)) object DATA::PrimitiveInteger{};
+		case (self.oclIsKindOf(DACT::StringType))  object DATA::PrimitiveString{};
+//		case (n.indexOf("Float") > 0)   object DATA::PrimitiveFloat{};
+//		case (n.indexOf("Long") > 0)    object DATA::PrimitiveLong{};
+//		case (n.indexOf("Short") > 0)   object DATA::PrimitiveShort{};
+//		case (n.indexOf("Byte") > 0)    object DATA::PrimitiveByte{};
+//		case (n.indexOf("Char") > 0)    object DATA::PrimitiveCharacter{};
+//		case (n.indexOf("Date") > 0)    object DATA::PrimitiveDate{};
+		else object DATA::PrimitiveUnspecified{};
+	};
+}
+
+mapping DACT::ValueSpecification::ValueSpecificationToValueSpecification(): DATA::ValueSpecification
+	disjuncts DACT::Literal::LiteralToPrimitiveValue{}
+
+mapping DACT::Literal::LiteralToPrimitiveValue(): DATA::PrimitiveValue {
+	if (self.oclIsKindOf(DACT::LiteralString)) {stringValue := self.oclAsType(DACT::LiteralString).value};
+	if (self.oclIsKindOf(DACT::LiteralBoolean)) {booleanValue := self.oclAsType(DACT::LiteralBoolean).value};
+	if (self.oclIsKindOf(DACT::LiteralInteger)) {numericValue := self.oclAsType(DACT::LiteralInteger).value};
+	if (self.oclIsKindOf(DACT::LiteralReal)) {numericValue := self.oclAsType(DACT::LiteralReal).value};
+}
+

@@ -1,0 +1,14 @@
+Manifest-Version: 1.0
+Bundle-ManifestVersion: 2
+Bundle-Name: DDD Activity Code Generator
+Bundle-SymbolicName: dact.code.generator
+Bundle-Version: 1.0.0.qualifier
+Export-Package: dact.code.generator.utils
+Require-Bundle: org.eclipse.swt,
+ org.eclipse.jface,
+ org.eclipse.acceleo.aql;bundle-version="4.2.2",
+ lemma.adapted.data.metamodel;bundle-version="0.1.0",
+ lemma.adapted.service.metamodel;bundle-version="0.1.0",
+ lemma.adapted.behavior.metamodel;bundle-version="0.1.0"
+Automatic-Module-Name: dddActivity.code.generator
+Bundle-RequiredExecutionEnvironment: JavaSE-21

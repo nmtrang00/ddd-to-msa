@@ -1,0 +1,258 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<description:Group xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:description="http://www.eclipse.org/sirius/description/1.1.0" xmlns:description_1="http://www.eclipse.org/sirius/diagram/description/1.1.0" xmlns:style="http://www.eclipse.org/sirius/diagram/description/style/1.1.0" xmlns:tool="http://www.eclipse.org/sirius/diagram/description/tool/1.1.0" xmlns:tool_1="http://www.eclipse.org/sirius/description/tool/1.1.0" xmlns:validation="http://www.eclipse.org/sirius/description/validation/1.1.0" name="activity" version="15.4.0.202401051836">
+  <ownedViewpoints name="activity">
+    <ownedRepresentations xsi:type="description_1:DiagramDescription" name="Activity Diagram" domainClass="dact::ActivityModel" enablePopupBars="true">
+      <validationSet name="EcoreOclValidation">
+        <ownedRules xsi:type="validation:SemanticValidationRule" name="EcoreOclValidation" level="ERROR" targetClass="ecore.EObject"/>
+      </validationSet>
+      <defaultLayer name="Default">
+        <edgeMappings name="ActivityEdge" synchronizationLock="true" sourceMapping="//@ownedViewpoints[name='activity']/@ownedRepresentations[name='Activity%20Diagram']/@defaultLayer/@containerMappings[name='ActivityContainer']/@subContainerMappings[name='ActivityGroup']/@subNodeMappings[name='InitialNode'] //@ownedViewpoints[name='activity']/@ownedRepresentations[name='Activity%20Diagram']/@defaultLayer/@containerMappings[name='ActivityContainer']/@subContainerMappings[name='ActivityGroup']/@subNodeMappings[name='VariableAssignmentNode'] //@ownedViewpoints[name='activity']/@ownedRepresentations[name='Activity%20Diagram']/@defaultLayer/@containerMappings[name='ActivityContainer']/@subContainerMappings[name='ActivityGroup']/@subNodeMappings[name='VariableDeclarationNode'] //@ownedViewpoints[name='activity']/@ownedRepresentations[name='Activity%20Diagram']/@defaultLayer/@containerMappings[name='ActivityContainer']/@subContainerMappings[name='ActivityGroup']/@subNodeMappings[name='CallOperationNode'] //@ownedViewpoints[name='activity']/@ownedRepresentations[name='Activity%20Diagram']/@defaultLayer/@containerMappings[name='ActivityContainer']/@subContainerMappings[name='ActivityGroup']/@subNodeMappings[name='DomainCreateAction'] //@ownedViewpoints[name='activity']/@ownedRepresentations[name='Activity%20Diagram']/@defaultLayer/@containerMappings[name='ActivityContainer']/@subContainerMappings[name='ActivityGroup']/@subNodeMappings[name='DomainDeleteAction'] //@ownedViewpoints[name='activity']/@ownedRepresentations[name='Activity%20Diagram']/@defaultLayer/@containerMappings[name='ActivityContainer']/@subContainerMappings[name='ActivityGroup']/@subNodeMappings[name='DomainFindAction'] //@ownedViewpoints[name='activity']/@ownedRepresentations[name='Activity%20Diagram']/@defaultLayer/@containerMappings[name='ActivityContainer']/@subContainerMappings[name='ActivityGroup']/@subNodeMappings[name='DomainUpdateAction'] //@ownedViewpoints[name='activity']/@ownedRepresentations[name='Activity%20Diagram']/@defaultLayer/@containerMappings[name='ActivityContainer']/@subContainerMappings[name='ActivityGroup']/@subNodeMappings[name='RaiseExceptionNode'] //@ownedViewpoints[name='activity']/@ownedRepresentations[name='Activity%20Diagram']/@defaultLayer/@containerMappings[name='ActivityContainer']/@subContainerMappings[name='ActivityGroup']/@subContainerMappings[name='ConditionalContainer'] //@ownedViewpoints[name='activity']/@ownedRepresentations[name='Activity%20Diagram']/@defaultLayer/@containerMappings[name='ActivityContainer']/@subContainerMappings[name='ActivityGroup']/@subContainerMappings[name='ParallelContainer']" targetMapping="//@ownedViewpoints[name='activity']/@ownedRepresentations[name='Activity%20Diagram']/@defaultLayer/@containerMappings[name='ActivityContainer']/@subContainerMappings[name='ActivityGroup']/@subNodeMappings[name='FlowFinalNode'] //@ownedViewpoints[name='activity']/@ownedRepresentations[name='Activity%20Diagram']/@defaultLayer/@containerMappings[name='ActivityContainer']/@subContainerMappings[name='ActivityGroup']/@subNodeMappings[name='ActivityFinalNode'] //@ownedViewpoints[name='activity']/@ownedRepresentations[name='Activity%20Diagram']/@defaultLayer/@containerMappings[name='ActivityContainer']/@subContainerMappings[name='ActivityGroup']/@subNodeMappings[name='VariableAssignmentNode'] //@ownedViewpoints[name='activity']/@ownedRepresentations[name='Activity%20Diagram']/@defaultLayer/@containerMappings[name='ActivityContainer']/@subContainerMappings[name='ActivityGroup']/@subNodeMappings[name='VariableDeclarationNode'] //@ownedViewpoints[name='activity']/@ownedRepresentations[name='Activity%20Diagram']/@defaultLayer/@containerMappings[name='ActivityContainer']/@subContainerMappings[name='ActivityGroup']/@subNodeMappings[name='CallOperationNode'] //@ownedViewpoints[name='activity']/@ownedRepresentations[name='Activity%20Diagram']/@defaultLayer/@containerMappings[name='ActivityContainer']/@subContainerMappings[name='ActivityGroup']/@subNodeMappings[name='DomainCreateAction'] //@ownedViewpoints[name='activity']/@ownedRepresentations[name='Activity%20Diagram']/@defaultLayer/@containerMappings[name='ActivityContainer']/@subContainerMappings[name='ActivityGroup']/@subNodeMappings[name='DomainDeleteAction'] //@ownedViewpoints[name='activity']/@ownedRepresentations[name='Activity%20Diagram']/@defaultLayer/@containerMappings[name='ActivityContainer']/@subContainerMappings[name='ActivityGroup']/@subNodeMappings[name='DomainFindAction'] //@ownedViewpoints[name='activity']/@ownedRepresentations[name='Activity%20Diagram']/@defaultLayer/@containerMappings[name='ActivityContainer']/@subContainerMappings[name='ActivityGroup']/@subNodeMappings[name='DomainUpdateAction'] //@ownedViewpoints[name='activity']/@ownedRepresentations[name='Activity%20Diagram']/@defaultLayer/@containerMappings[name='ActivityContainer']/@subContainerMappings[name='ActivityGroup']/@subNodeMappings[name='RaiseExceptionNode'] //@ownedViewpoints[name='activity']/@ownedRepresentations[name='Activity%20Diagram']/@defaultLayer/@containerMappings[name='ActivityContainer']/@subContainerMappings[name='ActivityGroup']/@subContainerMappings[name='ConditionalContainer'] //@ownedViewpoints[name='activity']/@ownedRepresentations[name='Activity%20Diagram']/@defaultLayer/@containerMappings[name='ActivityContainer']/@subContainerMappings[name='ActivityGroup']/@subContainerMappings[name='ParallelContainer']" targetFinderExpression="aql:self.target" sourceFinderExpression="aql:self.source" domainClass="dact::ActivityEdge" useDomainElement="true">
+          <style sizeComputationExpression="2" routingStyle="manhattan">
+            <strokeColor xsi:type="description:SystemColor" href="environment:/viewpoint#//@systemColors/@entries[name='gray']"/>
+            <centerLabelStyleDescription labelSize="12" showIcon="false">
+              <labelColor xsi:type="description:SystemColor" href="environment:/viewpoint#//@systemColors/@entries[name='black']"/>
+            </centerLabelStyleDescription>
+          </style>
+        </edgeMappings>
+        <containerMappings name="ActivityContainer" semanticCandidatesExpression="aql:self.activities" synchronizationLock="true" domainClass="dact::Activity">
+          <subContainerMappings name="ActivityGroup" semanticCandidatesExpression="aql:self.root" synchronizationLock="true" domainClass="dact::ActivityGroup">
+            <subNodeMappings name="InitialNode" semanticCandidatesExpression="aql:self.ownedNodes->select(n | n.oclIsKindOf(dact::InitialNode))" synchronizationLock="true" domainClass="dact::InitialNode">
+              <style xsi:type="style:DotDescription" labelSize="12" showIcon="false" hideLabelByDefault="true" resizeKind="NSEW">
+                <borderColor xsi:type="description:SystemColor" href="environment:/viewpoint#//@systemColors/@entries[name='black']"/>
+                <labelColor xsi:type="description:SystemColor" href="environment:/viewpoint#//@systemColors/@entries[name='black']"/>
+                <backgroundColor xsi:type="description:SystemColor" href="environment:/viewpoint#//@systemColors/@entries[name='black']"/>
+              </style>
+            </subNodeMappings>
+            <subNodeMappings name="FlowFinalNode" semanticCandidatesExpression="aql:self.ownedNodes->select(n | n.oclIsKindOf(dact::FlowFinalNode))" synchronizationLock="true" domainClass="dact::FlowFinalNode">
+              <style xsi:type="style:WorkspaceImageDescription" labelSize="12" showIcon="false" hideLabelByDefault="true" resizeKind="NSEW" workspacePath="dact.design/icons/flowFinalNode.svg">
+                <borderColor xsi:type="description:SystemColor" href="environment:/viewpoint#//@systemColors/@entries[name='black']"/>
+                <labelColor xsi:type="description:SystemColor" href="environment:/viewpoint#//@systemColors/@entries[name='black']"/>
+              </style>
+            </subNodeMappings>
+            <subNodeMappings name="ActivityFinalNode" semanticCandidatesExpression="aql:self.ownedNodes->select(n | n.oclIsKindOf(dact::ActivityFinalNode))" synchronizationLock="true" domainClass="dact::ActivityFinalNode">
+              <style xsi:type="style:WorkspaceImageDescription" labelSize="12" showIcon="false" hideLabelByDefault="true" sizeComputationExpression="4" resizeKind="NSEW" workspacePath="dact.design/icons/activityFinalNode.svg">
+                <borderColor xsi:type="description:SystemColor" href="environment:/viewpoint#//@systemColors/@entries[name='black']"/>
+                <labelColor xsi:type="description:SystemColor" href="environment:/viewpoint#//@systemColors/@entries[name='black']"/>
+              </style>
+            </subNodeMappings>
+            <subNodeMappings name="VariableDeclarationNode" semanticCandidatesExpression="aql:self.ownedNodes->select(n | n.oclIsKindOf(dact::VariableDeclarationAction))" synchronizationLock="true" domainClass="dact::VariableDeclarationAction">
+              <style xsi:type="style:SquareDescription" borderSizeComputationExpression="1" labelSize="12" showIcon="false" labelExpression="aql:'var ' + self.declaration.identifier.name + ' : ' + self.type.name" labelPosition="node" resizeKind="NSEW" width="15" height="5">
+                <borderColor xsi:type="description:SystemColor" href="environment:/viewpoint#//@systemColors/@entries[name='black']"/>
+                <labelColor xsi:type="description:SystemColor" href="environment:/viewpoint#//@systemColors/@entries[name='black']"/>
+                <color xsi:type="description:SystemColor" href="environment:/viewpoint#//@systemColors/@entries[name='white']"/>
+              </style>
+            </subNodeMappings>
+            <subNodeMappings name="VariableAssignmentNode" semanticCandidatesExpression="aql:self.ownedNodes" synchronizationLock="true" domainClass="dact::VariableAssignmentAction">
+              <style xsi:type="style:SquareDescription" borderSizeComputationExpression="1" labelSize="12" showIcon="false" labelExpression="aql:self.name" labelPosition="node" resizeKind="NSEW" width="10" height="5">
+                <borderColor xsi:type="description:SystemColor" href="environment:/viewpoint#//@systemColors/@entries[name='black']"/>
+                <labelColor xsi:type="description:SystemColor" href="environment:/viewpoint#//@systemColors/@entries[name='black']"/>
+                <color xsi:type="description:SystemColor" href="environment:/viewpoint#//@systemColors/@entries[name='white']"/>
+              </style>
+            </subNodeMappings>
+            <subNodeMappings name="CallOperationNode" semanticCandidatesExpression="aql:self.ownedNodes->select(n | n.oclIsKindOf(dact::CallOperationAction))" synchronizationLock="true" domainClass="dact::CallOperationAction">
+              <style xsi:type="style:SquareDescription" labelSize="12" labelExpression="aql:'call\n' + if self.operation != null then self.operation.name + '()' else 'callOperation()' endif" labelPosition="node" resizeKind="NSEW" width="15" height="5">
+                <borderColor xsi:type="description:SystemColor" href="environment:/viewpoint#//@systemColors/@entries[name='black']"/>
+                <labelColor xsi:type="description:SystemColor" href="environment:/viewpoint#//@systemColors/@entries[name='black']"/>
+                <color xsi:type="description:SystemColor" href="environment:/viewpoint#//@systemColors/@entries[name='white']"/>
+              </style>
+            </subNodeMappings>
+            <subNodeMappings name="DomainCreateAction" semanticCandidatesExpression="aql:self.ownedNodes->select(n | n.oclIsKindOf(dact::DomainCreateAction))" synchronizationLock="true" domainClass="dact::DomainCreateAction">
+              <style xsi:type="style:SquareDescription" borderSizeComputationExpression="1" labelSize="12" labelExpression="aql:self.name" labelPosition="node" resizeKind="NSEW" width="15" height="5">
+                <borderColor xsi:type="description:SystemColor" href="environment:/viewpoint#//@systemColors/@entries[name='green']"/>
+                <labelColor xsi:type="description:SystemColor" href="environment:/viewpoint#//@systemColors/@entries[name='black']"/>
+                <color xsi:type="description:SystemColor" href="environment:/viewpoint#//@systemColors/@entries[name='white']"/>
+              </style>
+            </subNodeMappings>
+            <subNodeMappings name="DomainFindAction" semanticCandidatesExpression="aql:self.ownedNodes->select(n | n.oclIsKindOf(dact::DomainFindAction))" synchronizationLock="true" domainClass="dact::DomainFindAction">
+              <style xsi:type="style:SquareDescription" borderSizeComputationExpression="1" labelSize="12" labelExpression="aql:self.name" labelPosition="node" resizeKind="NSEW" width="15" height="5">
+                <borderColor xsi:type="description:SystemColor" href="environment:/viewpoint#//@systemColors/@entries[name='blue']"/>
+                <labelColor xsi:type="description:SystemColor" href="environment:/viewpoint#//@systemColors/@entries[name='black']"/>
+                <color xsi:type="description:SystemColor" href="environment:/viewpoint#//@systemColors/@entries[name='white']"/>
+              </style>
+            </subNodeMappings>
+            <subNodeMappings name="DomainUpdateAction" semanticCandidatesExpression="aql:self.ownedNodes->select(n | n.oclIsKindOf(dact::DomainUpdateAction))" synchronizationLock="true" domainClass="dact::DomainUpdateAction">
+              <style xsi:type="style:SquareDescription" borderSizeComputationExpression="1" labelSize="12" labelExpression="aql:self.name" labelPosition="node" resizeKind="NSEW" width="15" height="5">
+                <borderColor xsi:type="description:SystemColor" href="environment:/viewpoint#//@systemColors/@entries[name='orange']"/>
+                <labelColor xsi:type="description:SystemColor" href="environment:/viewpoint#//@systemColors/@entries[name='black']"/>
+                <color xsi:type="description:SystemColor" href="environment:/viewpoint#//@systemColors/@entries[name='white']"/>
+              </style>
+            </subNodeMappings>
+            <subNodeMappings name="DomainDeleteAction" semanticCandidatesExpression="aql:self.ownedNodes->select(n | n.oclIsKindOf(dact::DomainDeleteAction))" synchronizationLock="true" domainClass="dact::DomainDeleteAction">
+              <style xsi:type="style:SquareDescription" borderSizeComputationExpression="1" labelSize="12" labelExpression="aql:self.name" labelPosition="node" resizeKind="NSEW" width="15" height="5">
+                <borderColor xsi:type="description:SystemColor" href="environment:/viewpoint#//@systemColors/@entries[name='red']"/>
+                <labelColor xsi:type="description:SystemColor" href="environment:/viewpoint#//@systemColors/@entries[name='black']"/>
+                <color xsi:type="description:SystemColor" href="environment:/viewpoint#//@systemColors/@entries[name='white']"/>
+              </style>
+            </subNodeMappings>
+            <subNodeMappings name="RaiseExceptionNode" semanticCandidatesExpression="aql:self.ownedNodes" synchronizationLock="true" domainClass="dact::RaiseExceptionAction">
+              <style xsi:type="style:SquareDescription" borderSizeComputationExpression="1" labelSize="12" labelExpression="aql:self.name" labelPosition="node" resizeKind="NSEW" width="15" height="5">
+                <borderColor xsi:type="description:SystemColor" href="environment:/viewpoint#//@systemColors/@entries[name='red']"/>
+                <labelColor xsi:type="description:SystemColor" href="environment:/viewpoint#//@systemColors/@entries[name='black']"/>
+                <color xsi:type="description:SystemColor" href="environment:/viewpoint#//@systemColors/@entries[name='light_red']"/>
+              </style>
+            </subNodeMappings>
+            <subNodeMappings name="SendSignalNode" semanticCandidatesExpression="aql:self.ownedNodes" synchronizationLock="true" domainClass="dact::SendSignalNode">
+              <style xsi:type="style:SquareDescription" borderSizeComputationExpression="1" labelSize="12" labelExpression="aql:self.name" labelPosition="node" resizeKind="NSEW" width="15" height="5">
+                <borderColor xsi:type="description:SystemColor" href="environment:/viewpoint#//@systemColors/@entries[name='red']"/>
+                <labelColor xsi:type="description:SystemColor" href="environment:/viewpoint#//@systemColors/@entries[name='black']"/>
+                <color xsi:type="description:SystemColor" href="environment:/viewpoint#//@systemColors/@entries[name='chocolate']"/>
+              </style>
+            </subNodeMappings>
+            <subContainerMappings name="ConditionalContainer" semanticCandidatesExpression="aql:self.ownedNodes->select(n | n.oclIsKindOf(dact::ConditionalNode))" synchronizationLock="true" domainClass="dact::ConditionalNode">
+              <subContainerMappings name="BodyGroup" semanticCandidatesExpression="aql:self.body" synchronizationLock="true" domainClass="dact::ActivityGroup" reusedNodeMappings="//@ownedViewpoints[name='activity']/@ownedRepresentations[name='Activity%20Diagram']/@defaultLayer/@containerMappings[name='ActivityContainer']/@subContainerMappings[name='ActivityGroup']/@subNodeMappings[name='ActivityFinalNode'] //@ownedViewpoints[name='activity']/@ownedRepresentations[name='Activity%20Diagram']/@defaultLayer/@containerMappings[name='ActivityContainer']/@subContainerMappings[name='ActivityGroup']/@subNodeMappings[name='FlowFinalNode'] //@ownedViewpoints[name='activity']/@ownedRepresentations[name='Activity%20Diagram']/@defaultLayer/@containerMappings[name='ActivityContainer']/@subContainerMappings[name='ActivityGroup']/@subNodeMappings[name='VariableDeclarationNode'] //@ownedViewpoints[name='activity']/@ownedRepresentations[name='Activity%20Diagram']/@defaultLayer/@containerMappings[name='ActivityContainer']/@subContainerMappings[name='ActivityGroup']/@subNodeMappings[name='VariableAssignmentNode'] //@ownedViewpoints[name='activity']/@ownedRepresentations[name='Activity%20Diagram']/@defaultLayer/@containerMappings[name='ActivityContainer']/@subContainerMappings[name='ActivityGroup']/@subNodeMappings[name='CallOperationNode'] //@ownedViewpoints[name='activity']/@ownedRepresentations[name='Activity%20Diagram']/@defaultLayer/@containerMappings[name='ActivityContainer']/@subContainerMappings[name='ActivityGroup']/@subNodeMappings[name='DomainCreateAction'] //@ownedViewpoints[name='activity']/@ownedRepresentations[name='Activity%20Diagram']/@defaultLayer/@containerMappings[name='ActivityContainer']/@subContainerMappings[name='ActivityGroup']/@subNodeMappings[name='DomainDeleteAction'] //@ownedViewpoints[name='activity']/@ownedRepresentations[name='Activity%20Diagram']/@defaultLayer/@containerMappings[name='ActivityContainer']/@subContainerMappings[name='ActivityGroup']/@subNodeMappings[name='DomainFindAction'] //@ownedViewpoints[name='activity']/@ownedRepresentations[name='Activity%20Diagram']/@defaultLayer/@containerMappings[name='ActivityContainer']/@subContainerMappings[name='ActivityGroup']/@subNodeMappings[name='DomainUpdateAction'] //@ownedViewpoints[name='activity']/@ownedRepresentations[name='Activity%20Diagram']/@defaultLayer/@containerMappings[name='ActivityContainer']/@subContainerMappings[name='ActivityGroup']/@subNodeMappings[name='InitialNode'] //@ownedViewpoints[name='activity']/@ownedRepresentations[name='Activity%20Diagram']/@defaultLayer/@containerMappings[name='ActivityContainer']/@subContainerMappings[name='ActivityGroup']/@subNodeMappings[name='RaiseExceptionNode']" reusedContainerMappings="//@ownedViewpoints[name='activity']/@ownedRepresentations[name='Activity%20Diagram']/@defaultLayer/@containerMappings[name='ActivityContainer']/@subContainerMappings[name='ActivityGroup']/@subContainerMappings[name='ConditionalContainer'] //@ownedViewpoints[name='activity']/@ownedRepresentations[name='Activity%20Diagram']/@defaultLayer/@containerMappings[name='ActivityContainer']/@subContainerMappings[name='ActivityGroup']/@subContainerMappings[name='ParallelContainer']">
+                <style xsi:type="style:FlatContainerStyleDescription" borderSizeComputationExpression="1" borderLineStyle="dash" labelSize="10" showIcon="false" labelExpression="aql:'Body (True)'">
+                  <borderColor xsi:type="description:SystemColor" href="environment:/viewpoint#//@systemColors/@entries[name='gray']"/>
+                  <labelColor xsi:type="description:SystemColor" href="environment:/viewpoint#//@systemColors/@entries[name='dark_gray']"/>
+                  <backgroundColor xsi:type="description:SystemColor" href="environment:/viewpoint#//@systemColors/@entries[name='white']"/>
+                  <foregroundColor xsi:type="description:SystemColor" href="environment:/viewpoint#//@systemColors/@entries[name='white']"/>
+                </style>
+              </subContainerMappings>
+              <subContainerMappings name="ElseBodyGroup" semanticCandidatesExpression="aql:self.elseBody" synchronizationLock="true" domainClass="dact::ActivityGroup" reusedNodeMappings="//@ownedViewpoints[name='activity']/@ownedRepresentations[name='Activity%20Diagram']/@defaultLayer/@containerMappings[name='ActivityContainer']/@subContainerMappings[name='ActivityGroup']/@subNodeMappings[name='ActivityFinalNode'] //@ownedViewpoints[name='activity']/@ownedRepresentations[name='Activity%20Diagram']/@defaultLayer/@containerMappings[name='ActivityContainer']/@subContainerMappings[name='ActivityGroup']/@subNodeMappings[name='FlowFinalNode'] //@ownedViewpoints[name='activity']/@ownedRepresentations[name='Activity%20Diagram']/@defaultLayer/@containerMappings[name='ActivityContainer']/@subContainerMappings[name='ActivityGroup']/@subNodeMappings[name='VariableDeclarationNode'] //@ownedViewpoints[name='activity']/@ownedRepresentations[name='Activity%20Diagram']/@defaultLayer/@containerMappings[name='ActivityContainer']/@subContainerMappings[name='ActivityGroup']/@subNodeMappings[name='VariableAssignmentNode'] //@ownedViewpoints[name='activity']/@ownedRepresentations[name='Activity%20Diagram']/@defaultLayer/@containerMappings[name='ActivityContainer']/@subContainerMappings[name='ActivityGroup']/@subNodeMappings[name='CallOperationNode'] //@ownedViewpoints[name='activity']/@ownedRepresentations[name='Activity%20Diagram']/@defaultLayer/@containerMappings[name='ActivityContainer']/@subContainerMappings[name='ActivityGroup']/@subNodeMappings[name='DomainCreateAction'] //@ownedViewpoints[name='activity']/@ownedRepresentations[name='Activity%20Diagram']/@defaultLayer/@containerMappings[name='ActivityContainer']/@subContainerMappings[name='ActivityGroup']/@subNodeMappings[name='DomainDeleteAction'] //@ownedViewpoints[name='activity']/@ownedRepresentations[name='Activity%20Diagram']/@defaultLayer/@containerMappings[name='ActivityContainer']/@subContainerMappings[name='ActivityGroup']/@subNodeMappings[name='DomainFindAction'] //@ownedViewpoints[name='activity']/@ownedRepresentations[name='Activity%20Diagram']/@defaultLayer/@containerMappings[name='ActivityContainer']/@subContainerMappings[name='ActivityGroup']/@subNodeMappings[name='DomainUpdateAction'] //@ownedViewpoints[name='activity']/@ownedRepresentations[name='Activity%20Diagram']/@defaultLayer/@containerMappings[name='ActivityContainer']/@subContainerMappings[name='ActivityGroup']/@subNodeMappings[name='InitialNode'] //@ownedViewpoints[name='activity']/@ownedRepresentations[name='Activity%20Diagram']/@defaultLayer/@containerMappings[name='ActivityContainer']/@subContainerMappings[name='ActivityGroup']/@subNodeMappings[name='RaiseExceptionNode']" reusedContainerMappings="//@ownedViewpoints[name='activity']/@ownedRepresentations[name='Activity%20Diagram']/@defaultLayer/@containerMappings[name='ActivityContainer']/@subContainerMappings[name='ActivityGroup']/@subContainerMappings[name='ConditionalContainer'] //@ownedViewpoints[name='activity']/@ownedRepresentations[name='Activity%20Diagram']/@defaultLayer/@containerMappings[name='ActivityContainer']/@subContainerMappings[name='ActivityGroup']/@subContainerMappings[name='ParallelContainer']">
+                <style xsi:type="style:FlatContainerStyleDescription" borderSizeComputationExpression="1" borderLineStyle="dash" labelSize="10" showIcon="false" labelExpression="aql:'Else Body (False)'">
+                  <borderColor xsi:type="description:SystemColor" href="environment:/viewpoint#//@systemColors/@entries[name='gray']"/>
+                  <labelColor xsi:type="description:SystemColor" href="environment:/viewpoint#//@systemColors/@entries[name='dark_gray']"/>
+                  <backgroundColor xsi:type="description:SystemColor" href="environment:/viewpoint#//@systemColors/@entries[name='white']"/>
+                  <foregroundColor xsi:type="description:SystemColor" href="environment:/viewpoint#//@systemColors/@entries[name='white']"/>
+                </style>
+              </subContainerMappings>
+              <style xsi:type="style:FlatContainerStyleDescription" borderSizeComputationExpression="1" borderLineStyle="dash" labelSize="12" showIcon="false" labelExpression="aql:self.name" roundedCorner="true">
+                <borderColor xsi:type="description:SystemColor" href="environment:/viewpoint#//@systemColors/@entries[name='black']"/>
+                <labelColor xsi:type="description:SystemColor" href="environment:/viewpoint#//@systemColors/@entries[name='black']"/>
+                <backgroundColor xsi:type="description:SystemColor" href="environment:/viewpoint#//@systemColors/@entries[name='white']"/>
+                <foregroundColor xsi:type="description:SystemColor" href="environment:/viewpoint#//@systemColors/@entries[name='white']"/>
+                <labelBorderStyle href="environment:/viewpoint#//@labelBorderStyles/@labelBorderStyleDescriptions.2"/>
+              </style>
+            </subContainerMappings>
+            <subContainerMappings name="ParallelContainer" semanticCandidatesExpression="aql:self.ownedNodes->select(n | n.oclIsKindOf(dact::ParallelNode))" synchronizationLock="true" domainClass="dact::ParallelNode">
+              <subContainerMappings name="FlowGroup" semanticCandidatesExpression="aql:self.flows" synchronizationLock="true" domainClass="dact::ActivityGroup" reusedNodeMappings="//@ownedViewpoints[name='activity']/@ownedRepresentations[name='Activity%20Diagram']/@defaultLayer/@containerMappings[name='ActivityContainer']/@subContainerMappings[name='ActivityGroup']/@subNodeMappings[name='ActivityFinalNode'] //@ownedViewpoints[name='activity']/@ownedRepresentations[name='Activity%20Diagram']/@defaultLayer/@containerMappings[name='ActivityContainer']/@subContainerMappings[name='ActivityGroup']/@subNodeMappings[name='FlowFinalNode'] //@ownedViewpoints[name='activity']/@ownedRepresentations[name='Activity%20Diagram']/@defaultLayer/@containerMappings[name='ActivityContainer']/@subContainerMappings[name='ActivityGroup']/@subNodeMappings[name='VariableDeclarationNode'] //@ownedViewpoints[name='activity']/@ownedRepresentations[name='Activity%20Diagram']/@defaultLayer/@containerMappings[name='ActivityContainer']/@subContainerMappings[name='ActivityGroup']/@subNodeMappings[name='VariableAssignmentNode'] //@ownedViewpoints[name='activity']/@ownedRepresentations[name='Activity%20Diagram']/@defaultLayer/@containerMappings[name='ActivityContainer']/@subContainerMappings[name='ActivityGroup']/@subNodeMappings[name='CallOperationNode'] //@ownedViewpoints[name='activity']/@ownedRepresentations[name='Activity%20Diagram']/@defaultLayer/@containerMappings[name='ActivityContainer']/@subContainerMappings[name='ActivityGroup']/@subNodeMappings[name='DomainCreateAction'] //@ownedViewpoints[name='activity']/@ownedRepresentations[name='Activity%20Diagram']/@defaultLayer/@containerMappings[name='ActivityContainer']/@subContainerMappings[name='ActivityGroup']/@subNodeMappings[name='DomainDeleteAction'] //@ownedViewpoints[name='activity']/@ownedRepresentations[name='Activity%20Diagram']/@defaultLayer/@containerMappings[name='ActivityContainer']/@subContainerMappings[name='ActivityGroup']/@subNodeMappings[name='DomainFindAction'] //@ownedViewpoints[name='activity']/@ownedRepresentations[name='Activity%20Diagram']/@defaultLayer/@containerMappings[name='ActivityContainer']/@subContainerMappings[name='ActivityGroup']/@subNodeMappings[name='DomainUpdateAction'] //@ownedViewpoints[name='activity']/@ownedRepresentations[name='Activity%20Diagram']/@defaultLayer/@containerMappings[name='ActivityContainer']/@subContainerMappings[name='ActivityGroup']/@subNodeMappings[name='InitialNode'] //@ownedViewpoints[name='activity']/@ownedRepresentations[name='Activity%20Diagram']/@defaultLayer/@containerMappings[name='ActivityContainer']/@subContainerMappings[name='ActivityGroup']/@subNodeMappings[name='RaiseExceptionNode']" reusedContainerMappings="//@ownedViewpoints[name='activity']/@ownedRepresentations[name='Activity%20Diagram']/@defaultLayer/@containerMappings[name='ActivityContainer']/@subContainerMappings[name='ActivityGroup']/@subContainerMappings[name='ParallelContainer'] //@ownedViewpoints[name='activity']/@ownedRepresentations[name='Activity%20Diagram']/@defaultLayer/@containerMappings[name='ActivityContainer']/@subContainerMappings[name='ActivityGroup']/@subContainerMappings[name='ConditionalContainer']">
+                <style xsi:type="style:FlatContainerStyleDescription" borderSizeComputationExpression="1" borderLineStyle="dash" labelSize="10" showIcon="false" labelExpression="aql:'Flow-'  +self.name">
+                  <borderColor xsi:type="description:SystemColor" href="environment:/viewpoint#//@systemColors/@entries[name='gray']"/>
+                  <labelColor xsi:type="description:SystemColor" href="environment:/viewpoint#//@systemColors/@entries[name='dark_gray']"/>
+                  <backgroundColor xsi:type="description:SystemColor" href="environment:/viewpoint#//@systemColors/@entries[name='white']"/>
+                  <foregroundColor xsi:type="description:SystemColor" href="environment:/viewpoint#//@systemColors/@entries[name='white']"/>
+                </style>
+              </subContainerMappings>
+              <style xsi:type="style:FlatContainerStyleDescription" borderSizeComputationExpression="1" borderLineStyle="dash" labelSize="12" showIcon="false" labelExpression="aql:self.name" roundedCorner="true">
+                <borderColor xsi:type="description:SystemColor" href="environment:/viewpoint#//@systemColors/@entries[name='black']"/>
+                <labelColor xsi:type="description:SystemColor" href="environment:/viewpoint#//@systemColors/@entries[name='black']"/>
+                <backgroundColor xsi:type="description:SystemColor" href="environment:/viewpoint#//@systemColors/@entries[name='white']"/>
+                <foregroundColor xsi:type="description:SystemColor" href="environment:/viewpoint#//@systemColors/@entries[name='white']"/>
+                <labelBorderStyle href="environment:/viewpoint#//@labelBorderStyles/@labelBorderStyleDescriptions.2"/>
+              </style>
+            </subContainerMappings>
+            <style xsi:type="style:FlatContainerStyleDescription" borderLineStyle="dash" labelSize="12" showIcon="false" hideLabelByDefault="true">
+              <borderColor xsi:type="description:SystemColor" href="environment:/viewpoint#//@systemColors/@entries[name='black']"/>
+              <labelColor xsi:type="description:SystemColor" href="environment:/viewpoint#//@systemColors/@entries[name='black']"/>
+              <backgroundColor xsi:type="description:SystemColor" href="environment:/viewpoint#//@systemColors/@entries[name='white']"/>
+              <foregroundColor xsi:type="description:SystemColor" href="environment:/viewpoint#//@systemColors/@entries[name='white']"/>
+            </style>
+          </subContainerMappings>
+          <style xsi:type="style:FlatContainerStyleDescription" borderSizeComputationExpression="1" labelSize="12" showIcon="false" labelExpression="aql:self.name" roundedCorner="true">
+            <borderColor xsi:type="description:SystemColor" href="environment:/viewpoint#//@systemColors/@entries[name='black']"/>
+            <labelFormat>bold</labelFormat>
+            <labelColor xsi:type="description:SystemColor" href="environment:/viewpoint#//@systemColors/@entries[name='black']"/>
+            <backgroundColor xsi:type="description:SystemColor" href="environment:/viewpoint#//@systemColors/@entries[name='white']"/>
+            <foregroundColor xsi:type="description:SystemColor" href="environment:/viewpoint#//@systemColors/@entries[name='white']"/>
+            <labelBorderStyle href="environment:/viewpoint#//@labelBorderStyles/@labelBorderStyleDescriptions.1"/>
+          </style>
+        </containerMappings>
+        <toolSections>
+          <ownedTools xsi:type="tool:ContainerCreationDescription" name="New Activity" containerMappings="//@ownedViewpoints[name='activity']/@ownedRepresentations[name='Activity%20Diagram']/@defaultLayer/@containerMappings[name='ActivityContainer']">
+            <variable name="container"/>
+            <viewVariable name="containerView"/>
+            <initialOperation>
+              <firstModelOperations xsi:type="tool_1:ChangeContext" browseExpression="var:container">
+                <subModelOperations xsi:type="tool_1:CreateInstance" typeName="dact::Activity" referenceName="activities" variableName="newActivity">
+                  <subModelOperations xsi:type="tool_1:SetValue" featureName="name" valueExpression="aql:'Activity'+self.activities -> size()"/>
+                  <subModelOperations xsi:type="tool_1:CreateInstance" typeName="dact::ActivityGroup" referenceName="root" variableName="newRoot">
+                    <subModelOperations xsi:type="tool_1:SetValue" featureName="name" valueExpression="aql:'Group0'"/>
+                  </subModelOperations>
+                  <subModelOperations xsi:type="tool_1:SetValue" featureName="root" valueExpression="var:newRoot"/>
+                </subModelOperations>
+              </firstModelOperations>
+            </initialOperation>
+          </ownedTools>
+          <ownedTools xsi:type="tool:NodeCreationDescription" name="New InitialNode" forceRefresh="true" nodeMappings="//@ownedViewpoints[name='activity']/@ownedRepresentations[name='Activity%20Diagram']/@defaultLayer/@containerMappings[name='ActivityContainer']/@subContainerMappings[name='ActivityGroup']/@subNodeMappings[name='InitialNode']">
+            <variable name="container"/>
+            <viewVariable name="containerView"/>
+            <initialOperation>
+              <firstModelOperations xsi:type="tool_1:ChangeContext" browseExpression="var:container">
+                <subModelOperations xsi:type="tool_1:CreateInstance" typeName="dact::InitialNode" referenceName="ownedNodes">
+                  <subModelOperations xsi:type="tool_1:SetValue" featureName="name" valueExpression="aql:'InitialNode'+container.ownedNodes->size()"/>
+                </subModelOperations>
+              </firstModelOperations>
+            </initialOperation>
+          </ownedTools>
+          <ownedTools xsi:type="tool:NodeCreationDescription" name="New ActivityFinalNode" forceRefresh="true" nodeMappings="//@ownedViewpoints[name='activity']/@ownedRepresentations[name='Activity%20Diagram']/@defaultLayer/@containerMappings[name='ActivityContainer']/@subContainerMappings[name='ActivityGroup']/@subNodeMappings[name='ActivityFinalNode']">
+            <variable name="container"/>
+            <viewVariable name="containerView"/>
+            <initialOperation>
+              <firstModelOperations xsi:type="tool_1:ChangeContext" browseExpression="var:container">
+                <subModelOperations xsi:type="tool_1:CreateInstance" typeName="dact::ActivityFinalNode" referenceName="ownedNodes">
+                  <subModelOperations xsi:type="tool_1:SetValue" featureName="name" valueExpression="aql:'ActivityFinalNode'+container.ownedNodes->size()"/>
+                </subModelOperations>
+              </firstModelOperations>
+            </initialOperation>
+          </ownedTools>
+          <ownedTools xsi:type="tool:NodeCreationDescription" name="New FlowFinalNode" forceRefresh="true" nodeMappings="//@ownedViewpoints[name='activity']/@ownedRepresentations[name='Activity%20Diagram']/@defaultLayer/@containerMappings[name='ActivityContainer']/@subContainerMappings[name='ActivityGroup']/@subNodeMappings[name='FlowFinalNode']">
+            <variable name="container"/>
+            <viewVariable name="containerView"/>
+            <initialOperation>
+              <firstModelOperations xsi:type="tool_1:ChangeContext" browseExpression="var:container">
+                <subModelOperations xsi:type="tool_1:CreateInstance" typeName="dact::FlowFinalNode" referenceName="ownedNodes">
+                  <subModelOperations xsi:type="tool_1:SetValue" featureName="name" valueExpression="aql:'FlowFinalNode'+container.ownedNodes->size()"/>
+                </subModelOperations>
+              </firstModelOperations>
+            </initialOperation>
+          </ownedTools>
+          <ownedTools xsi:type="tool:EdgeCreationDescription" name="New NextEdge" forceRefresh="true" edgeMappings="//@ownedViewpoints[name='activity']/@ownedRepresentations[name='Activity%20Diagram']/@defaultLayer/@edgeMappings[name='ActivityEdge']">
+            <sourceVariable name="source"/>
+            <targetVariable name="target"/>
+            <sourceViewVariable name="sourceView"/>
+            <targetViewVariable name="targetView"/>
+            <initialOperation>
+              <firstModelOperations xsi:type="tool_1:ChangeContext" browseExpression="aql:self.eContainer()">
+                <subModelOperations xsi:type="tool_1:CreateInstance" typeName="dact::ActivityEdge" referenceName="ownedEdges">
+                  <subModelOperations xsi:type="tool_1:SetValue" featureName="source" valueExpression="var:source"/>
+                  <subModelOperations xsi:type="tool_1:SetValue" featureName="target" valueExpression="var:target"/>
+                  <subModelOperations xsi:type="tool_1:SetValue" featureName="type" valueExpression="aql:dact::ActivityEdgeType::NEXT"/>
+                </subModelOperations>
+              </firstModelOperations>
+            </initialOperation>
+          </ownedTools>
+          <ownedTools xsi:type="tool:EdgeCreationDescription" name="New TrueEdge" forceRefresh="true" edgeMappings="//@ownedViewpoints[name='activity']/@ownedRepresentations[name='Activity%20Diagram']/@defaultLayer/@edgeMappings[name='ActivityEdge']">
+            <sourceVariable name="source"/>
+            <targetVariable name="target"/>
+            <sourceViewVariable name="sourceView"/>
+            <targetViewVariable name="targetView"/>
+            <initialOperation>
+              <firstModelOperations xsi:type="tool_1:ChangeContext" browseExpression="aql:self.eContainer()">
+                <subModelOperations xsi:type="tool_1:CreateInstance" typeName="dact::ActivityEdge" referenceName="ownedEdges">
+                  <subModelOperations xsi:type="tool_1:SetValue" featureName="source" valueExpression="var:source"/>
+                  <subModelOperations xsi:type="tool_1:SetValue" featureName="target" valueExpression="var:target"/>
+                  <subModelOperations xsi:type="tool_1:SetValue" featureName="type" valueExpression="aql:dact::ActivityEdgeType::TRUE"/>
+                </subModelOperations>
+              </firstModelOperations>
+            </initialOperation>
+          </ownedTools>
+          <ownedTools xsi:type="tool:EdgeCreationDescription" name="New FalseEdge" forceRefresh="true" edgeMappings="//@ownedViewpoints[name='activity']/@ownedRepresentations[name='Activity%20Diagram']/@defaultLayer/@edgeMappings[name='ActivityEdge']">
+            <sourceVariable name="source"/>
+            <targetVariable name="target"/>
+            <sourceViewVariable name="sourceView"/>
+            <targetViewVariable name="targetView"/>
+            <initialOperation>
+              <firstModelOperations xsi:type="tool_1:ChangeContext" browseExpression="aql:self.eContainer()">
+                <subModelOperations xsi:type="tool_1:CreateInstance" typeName="dact::ActivityEdge" referenceName="ownedEdges">
+                  <subModelOperations xsi:type="tool_1:SetValue" featureName="source" valueExpression="var:source"/>
+                  <subModelOperations xsi:type="tool_1:SetValue" featureName="target" valueExpression="var:target"/>
+                  <subModelOperations xsi:type="tool_1:SetValue" featureName="type" valueExpression="aql:dact::ActivityEdgeType::FALSE"/>
+                </subModelOperations>
+              </firstModelOperations>
+            </initialOperation>
+          </ownedTools>
+        </toolSections>
+      </defaultLayer>
+    </ownedRepresentations>
+    <ownedJavaExtensions qualifiedClassName="ddd.activity.design.Services"/>
+  </ownedViewpoints>
+</description:Group>
