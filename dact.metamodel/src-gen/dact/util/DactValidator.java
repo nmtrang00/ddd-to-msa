@@ -48,12 +48,36 @@ public class DactValidator extends EObjectValidator {
 	public static final int ROOT__UNIQUE_PRIMITIVE_TYPE = 1;
 
 	/**
+	 * The {@link org.eclipse.emf.common.util.Diagnostic#getCode() code} for constraint 'Unique Bounded Context Names' of 'Ddd Model'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public static final int DDD_MODEL__UNIQUE_BOUNDED_CONTEXT_NAMES = 2;
+
+	/**
+	 * The {@link org.eclipse.emf.common.util.Diagnostic#getCode() code} for constraint 'Unique Shared Domain Object Names' of 'Ddd Model'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public static final int DDD_MODEL__UNIQUE_SHARED_DOMAIN_OBJECT_NAMES = 3;
+
+	/**
+	 * The {@link org.eclipse.emf.common.util.Diagnostic#getCode() code} for constraint 'Unique Activity Names' of 'Activity Model'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public static final int ACTIVITY_MODEL__UNIQUE_ACTIVITY_NAMES = 4;
+
+	/**
 	 * The {@link org.eclipse.emf.common.util.Diagnostic#getCode() code} for constraint 'Mandatory Type' of 'Property'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public static final int PROPERTY__MANDATORY_TYPE = 2;
+	public static final int PROPERTY__MANDATORY_TYPE = 5;
 
 	/**
 	 * The {@link org.eclipse.emf.common.util.Diagnostic#getCode() code} for constraint 'Composite Requires Entity' of 'Property'.
@@ -61,7 +85,7 @@ public class DactValidator extends EObjectValidator {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public static final int PROPERTY__COMPOSITE_REQUIRES_ENTITY = 3;
+	public static final int PROPERTY__COMPOSITE_REQUIRES_ENTITY = 6;
 
 	/**
 	 * The {@link org.eclipse.emf.common.util.Diagnostic#getCode() code} for constraint 'Aggregate Is Not Composed' of 'Property'.
@@ -69,7 +93,7 @@ public class DactValidator extends EObjectValidator {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public static final int PROPERTY__AGGREGATE_IS_NOT_COMPOSED = 4;
+	public static final int PROPERTY__AGGREGATE_IS_NOT_COMPOSED = 7;
 
 	/**
 	 * The {@link org.eclipse.emf.common.util.Diagnostic#getCode() code} for constraint 'Primitive Property Requires Name' of 'Property'.
@@ -77,7 +101,7 @@ public class DactValidator extends EObjectValidator {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public static final int PROPERTY__PRIMITIVE_PROPERTY_REQUIRES_NAME = 5;
+	public static final int PROPERTY__PRIMITIVE_PROPERTY_REQUIRES_NAME = 8;
 
 	/**
 	 * The {@link org.eclipse.emf.common.util.Diagnostic#getCode() code} for constraint 'Behavior Xor Specification' of 'Operation'.
@@ -85,7 +109,31 @@ public class DactValidator extends EObjectValidator {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public static final int OPERATION__BEHAVIOR_XOR_SPECIFICATION = 6;
+	public static final int OPERATION__BEHAVIOR_XOR_SPECIFICATION = 9;
+
+	/**
+	 * The {@link org.eclipse.emf.common.util.Diagnostic#getCode() code} for constraint 'Unique Operation Names' of 'Interface'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public static final int INTERFACE__UNIQUE_OPERATION_NAMES = 10;
+
+	/**
+	 * The {@link org.eclipse.emf.common.util.Diagnostic#getCode() code} for constraint 'Unique Operation Names' of 'Domain Object'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public static final int DOMAIN_OBJECT__UNIQUE_OPERATION_NAMES = 11;
+
+	/**
+	 * The {@link org.eclipse.emf.common.util.Diagnostic#getCode() code} for constraint 'Unique Property Names' of 'Domain Object'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public static final int DOMAIN_OBJECT__UNIQUE_PROPERTY_NAMES = 12;
 
 	/**
 	 * The {@link org.eclipse.emf.common.util.Diagnostic#getCode() code} for constraint 'Matched Parameter Mappings' of 'Activity'.
@@ -93,7 +141,55 @@ public class DactValidator extends EObjectValidator {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public static final int ACTIVITY__MATCHED_PARAMETER_MAPPINGS = 7;
+	public static final int ACTIVITY__MATCHED_PARAMETER_MAPPINGS = 13;
+
+	/**
+	 * The {@link org.eclipse.emf.common.util.Diagnostic#getCode() code} for constraint 'Single Initial Node' of 'Activity Group'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public static final int ACTIVITY_GROUP__SINGLE_INITIAL_NODE = 14;
+
+	/**
+	 * The {@link org.eclipse.emf.common.util.Diagnostic#getCode() code} for constraint 'Single Final Node' of 'Activity Group'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public static final int ACTIVITY_GROUP__SINGLE_FINAL_NODE = 15;
+
+	/**
+	 * The {@link org.eclipse.emf.common.util.Diagnostic#getCode() code} for constraint 'Non Empty Group' of 'Activity Group'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public static final int ACTIVITY_GROUP__NON_EMPTY_GROUP = 16;
+
+	/**
+	 * The {@link org.eclipse.emf.common.util.Diagnostic#getCode() code} for constraint 'No Edge Into Initial Node' of 'Activity Edge'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public static final int ACTIVITY_EDGE__NO_EDGE_INTO_INITIAL_NODE = 17;
+
+	/**
+	 * The {@link org.eclipse.emf.common.util.Diagnostic#getCode() code} for constraint 'No Edge Out Of Final Node' of 'Activity Edge'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public static final int ACTIVITY_EDGE__NO_EDGE_OUT_OF_FINAL_NODE = 18;
+
+	/**
+	 * The {@link org.eclipse.emf.common.util.Diagnostic#getCode() code} for constraint 'Requires Main Expression' of 'Domain Node'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public static final int DOMAIN_NODE__REQUIRES_MAIN_EXPRESSION = 19;
 
 	/**
 	 * The {@link org.eclipse.emf.common.util.Diagnostic#getCode() code} for constraint 'Self Anchored Binary Expression' of 'Domain Node'.
@@ -101,7 +197,7 @@ public class DactValidator extends EObjectValidator {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public static final int DOMAIN_NODE__SELF_ANCHORED_BINARY_EXPRESSION = 8;
+	public static final int DOMAIN_NODE__SELF_ANCHORED_BINARY_EXPRESSION = 20;
 
 	/**
 	 * The {@link org.eclipse.emf.common.util.Diagnostic#getCode() code} for constraint 'Exclusive Event Source' of 'Signal Action'.
@@ -109,7 +205,7 @@ public class DactValidator extends EObjectValidator {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public static final int SIGNAL_ACTION__EXCLUSIVE_EVENT_SOURCE = 9;
+	public static final int SIGNAL_ACTION__EXCLUSIVE_EVENT_SOURCE = 21;
 
 	/**
 	 * The {@link org.eclipse.emf.common.util.Diagnostic#getCode() code} for constraint 'Conforming Activity Operation Parameter' of 'Parameter Mapping'.
@@ -117,7 +213,7 @@ public class DactValidator extends EObjectValidator {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public static final int PARAMETER_MAPPING__CONFORMING_ACTIVITY_OPERATION_PARAMETER = 10;
+	public static final int PARAMETER_MAPPING__CONFORMING_ACTIVITY_OPERATION_PARAMETER = 22;
 
 	/**
 	 * The {@link org.eclipse.emf.common.util.Diagnostic#getCode() code} for constraint 'Exclusive Mapping Source' of 'Parameter Mapping'.
@@ -125,7 +221,7 @@ public class DactValidator extends EObjectValidator {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public static final int PARAMETER_MAPPING__EXCLUSIVE_MAPPING_SOURCE = 11;
+	public static final int PARAMETER_MAPPING__EXCLUSIVE_MAPPING_SOURCE = 23;
 
 	/**
 	 * The {@link org.eclipse.emf.common.util.Diagnostic#getCode() code} for constraint 'Value Only In Action' of 'Parameter Mapping'.
@@ -133,7 +229,7 @@ public class DactValidator extends EObjectValidator {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public static final int PARAMETER_MAPPING__VALUE_ONLY_IN_ACTION = 12;
+	public static final int PARAMETER_MAPPING__VALUE_ONLY_IN_ACTION = 24;
 
 	/**
 	 * A constant with a fixed name that can be used as the base value for additional hand written constants.
@@ -141,7 +237,7 @@ public class DactValidator extends EObjectValidator {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	private static final int GENERATED_DIAGNOSTIC_CODE_COUNT = 12;
+	private static final int GENERATED_DIAGNOSTIC_CODE_COUNT = 24;
 
 	/**
 	 * A constant with a fixed name that can be used as the base value for additional hand written constants in a derived class.
@@ -463,7 +559,38 @@ public class DactValidator extends EObjectValidator {
 	 * @generated
 	 */
 	public boolean validateDddModel(DddModel dddModel, DiagnosticChain diagnostics, Map<Object, Object> context) {
-		return validate_EveryDefaultConstraint(dddModel, diagnostics, context);
+		if (!validate_NoCircularContainment(dddModel, diagnostics, context)) return false;
+		boolean result = validate_EveryMultiplicityConforms(dddModel, diagnostics, context);
+		if (result || diagnostics != null) result &= validate_EveryDataValueConforms(dddModel, diagnostics, context);
+		if (result || diagnostics != null) result &= validate_EveryReferenceIsContained(dddModel, diagnostics, context);
+		if (result || diagnostics != null) result &= validate_EveryBidirectionalReferenceIsPaired(dddModel, diagnostics, context);
+		if (result || diagnostics != null) result &= validate_EveryProxyResolves(dddModel, diagnostics, context);
+		if (result || diagnostics != null) result &= validate_UniqueID(dddModel, diagnostics, context);
+		if (result || diagnostics != null) result &= validate_EveryKeyUnique(dddModel, diagnostics, context);
+		if (result || diagnostics != null) result &= validate_EveryMapEntryUnique(dddModel, diagnostics, context);
+		if (result || diagnostics != null) result &= validateDddModel_UniqueBoundedContextNames(dddModel, diagnostics, context);
+		if (result || diagnostics != null) result &= validateDddModel_UniqueSharedDomainObjectNames(dddModel, diagnostics, context);
+		return result;
+	}
+
+	/**
+	 * Validates the UniqueBoundedContextNames constraint of '<em>Ddd Model</em>'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public boolean validateDddModel_UniqueBoundedContextNames(DddModel dddModel, DiagnosticChain diagnostics, Map<Object, Object> context) {
+		return dddModel.UniqueBoundedContextNames(diagnostics, context);
+	}
+
+	/**
+	 * Validates the UniqueSharedDomainObjectNames constraint of '<em>Ddd Model</em>'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public boolean validateDddModel_UniqueSharedDomainObjectNames(DddModel dddModel, DiagnosticChain diagnostics, Map<Object, Object> context) {
+		return dddModel.UniqueSharedDomainObjectNames(diagnostics, context);
 	}
 
 	/**
@@ -472,7 +599,27 @@ public class DactValidator extends EObjectValidator {
 	 * @generated
 	 */
 	public boolean validateActivityModel(ActivityModel activityModel, DiagnosticChain diagnostics, Map<Object, Object> context) {
-		return validate_EveryDefaultConstraint(activityModel, diagnostics, context);
+		if (!validate_NoCircularContainment(activityModel, diagnostics, context)) return false;
+		boolean result = validate_EveryMultiplicityConforms(activityModel, diagnostics, context);
+		if (result || diagnostics != null) result &= validate_EveryDataValueConforms(activityModel, diagnostics, context);
+		if (result || diagnostics != null) result &= validate_EveryReferenceIsContained(activityModel, diagnostics, context);
+		if (result || diagnostics != null) result &= validate_EveryBidirectionalReferenceIsPaired(activityModel, diagnostics, context);
+		if (result || diagnostics != null) result &= validate_EveryProxyResolves(activityModel, diagnostics, context);
+		if (result || diagnostics != null) result &= validate_UniqueID(activityModel, diagnostics, context);
+		if (result || diagnostics != null) result &= validate_EveryKeyUnique(activityModel, diagnostics, context);
+		if (result || diagnostics != null) result &= validate_EveryMapEntryUnique(activityModel, diagnostics, context);
+		if (result || diagnostics != null) result &= validateActivityModel_UniqueActivityNames(activityModel, diagnostics, context);
+		return result;
+	}
+
+	/**
+	 * Validates the UniqueActivityNames constraint of '<em>Activity Model</em>'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public boolean validateActivityModel_UniqueActivityNames(ActivityModel activityModel, DiagnosticChain diagnostics, Map<Object, Object> context) {
+		return activityModel.UniqueActivityNames(diagnostics, context);
 	}
 
 	/**
@@ -508,7 +655,18 @@ public class DactValidator extends EObjectValidator {
 	 * @generated
 	 */
 	public boolean validateEntity(Entity entity, DiagnosticChain diagnostics, Map<Object, Object> context) {
-		return validate_EveryDefaultConstraint(entity, diagnostics, context);
+		if (!validate_NoCircularContainment(entity, diagnostics, context)) return false;
+		boolean result = validate_EveryMultiplicityConforms(entity, diagnostics, context);
+		if (result || diagnostics != null) result &= validate_EveryDataValueConforms(entity, diagnostics, context);
+		if (result || diagnostics != null) result &= validate_EveryReferenceIsContained(entity, diagnostics, context);
+		if (result || diagnostics != null) result &= validate_EveryBidirectionalReferenceIsPaired(entity, diagnostics, context);
+		if (result || diagnostics != null) result &= validate_EveryProxyResolves(entity, diagnostics, context);
+		if (result || diagnostics != null) result &= validate_UniqueID(entity, diagnostics, context);
+		if (result || diagnostics != null) result &= validate_EveryKeyUnique(entity, diagnostics, context);
+		if (result || diagnostics != null) result &= validate_EveryMapEntryUnique(entity, diagnostics, context);
+		if (result || diagnostics != null) result &= validateDomainObject_UniqueOperationNames(entity, diagnostics, context);
+		if (result || diagnostics != null) result &= validateDomainObject_UniquePropertyNames(entity, diagnostics, context);
+		return result;
 	}
 
 	/**
@@ -517,7 +675,18 @@ public class DactValidator extends EObjectValidator {
 	 * @generated
 	 */
 	public boolean validateValueObject(ValueObject valueObject, DiagnosticChain diagnostics, Map<Object, Object> context) {
-		return validate_EveryDefaultConstraint(valueObject, diagnostics, context);
+		if (!validate_NoCircularContainment(valueObject, diagnostics, context)) return false;
+		boolean result = validate_EveryMultiplicityConforms(valueObject, diagnostics, context);
+		if (result || diagnostics != null) result &= validate_EveryDataValueConforms(valueObject, diagnostics, context);
+		if (result || diagnostics != null) result &= validate_EveryReferenceIsContained(valueObject, diagnostics, context);
+		if (result || diagnostics != null) result &= validate_EveryBidirectionalReferenceIsPaired(valueObject, diagnostics, context);
+		if (result || diagnostics != null) result &= validate_EveryProxyResolves(valueObject, diagnostics, context);
+		if (result || diagnostics != null) result &= validate_UniqueID(valueObject, diagnostics, context);
+		if (result || diagnostics != null) result &= validate_EveryKeyUnique(valueObject, diagnostics, context);
+		if (result || diagnostics != null) result &= validate_EveryMapEntryUnique(valueObject, diagnostics, context);
+		if (result || diagnostics != null) result &= validateDomainObject_UniqueOperationNames(valueObject, diagnostics, context);
+		if (result || diagnostics != null) result &= validateDomainObject_UniquePropertyNames(valueObject, diagnostics, context);
+		return result;
 	}
 
 	/**
@@ -526,7 +695,18 @@ public class DactValidator extends EObjectValidator {
 	 * @generated
 	 */
 	public boolean validateSharedValueObject(SharedValueObject sharedValueObject, DiagnosticChain diagnostics, Map<Object, Object> context) {
-		return validate_EveryDefaultConstraint(sharedValueObject, diagnostics, context);
+		if (!validate_NoCircularContainment(sharedValueObject, diagnostics, context)) return false;
+		boolean result = validate_EveryMultiplicityConforms(sharedValueObject, diagnostics, context);
+		if (result || diagnostics != null) result &= validate_EveryDataValueConforms(sharedValueObject, diagnostics, context);
+		if (result || diagnostics != null) result &= validate_EveryReferenceIsContained(sharedValueObject, diagnostics, context);
+		if (result || diagnostics != null) result &= validate_EveryBidirectionalReferenceIsPaired(sharedValueObject, diagnostics, context);
+		if (result || diagnostics != null) result &= validate_EveryProxyResolves(sharedValueObject, diagnostics, context);
+		if (result || diagnostics != null) result &= validate_UniqueID(sharedValueObject, diagnostics, context);
+		if (result || diagnostics != null) result &= validate_EveryKeyUnique(sharedValueObject, diagnostics, context);
+		if (result || diagnostics != null) result &= validate_EveryMapEntryUnique(sharedValueObject, diagnostics, context);
+		if (result || diagnostics != null) result &= validateDomainObject_UniqueOperationNames(sharedValueObject, diagnostics, context);
+		if (result || diagnostics != null) result &= validateDomainObject_UniquePropertyNames(sharedValueObject, diagnostics, context);
+		return result;
 	}
 
 	/**
@@ -535,7 +715,18 @@ public class DactValidator extends EObjectValidator {
 	 * @generated
 	 */
 	public boolean validateAggregateRoot(AggregateRoot aggregateRoot, DiagnosticChain diagnostics, Map<Object, Object> context) {
-		return validate_EveryDefaultConstraint(aggregateRoot, diagnostics, context);
+		if (!validate_NoCircularContainment(aggregateRoot, diagnostics, context)) return false;
+		boolean result = validate_EveryMultiplicityConforms(aggregateRoot, diagnostics, context);
+		if (result || diagnostics != null) result &= validate_EveryDataValueConforms(aggregateRoot, diagnostics, context);
+		if (result || diagnostics != null) result &= validate_EveryReferenceIsContained(aggregateRoot, diagnostics, context);
+		if (result || diagnostics != null) result &= validate_EveryBidirectionalReferenceIsPaired(aggregateRoot, diagnostics, context);
+		if (result || diagnostics != null) result &= validate_EveryProxyResolves(aggregateRoot, diagnostics, context);
+		if (result || diagnostics != null) result &= validate_UniqueID(aggregateRoot, diagnostics, context);
+		if (result || diagnostics != null) result &= validate_EveryKeyUnique(aggregateRoot, diagnostics, context);
+		if (result || diagnostics != null) result &= validate_EveryMapEntryUnique(aggregateRoot, diagnostics, context);
+		if (result || diagnostics != null) result &= validateDomainObject_UniqueOperationNames(aggregateRoot, diagnostics, context);
+		if (result || diagnostics != null) result &= validateDomainObject_UniquePropertyNames(aggregateRoot, diagnostics, context);
+		return result;
 	}
 
 	/**
@@ -544,7 +735,17 @@ public class DactValidator extends EObjectValidator {
 	 * @generated
 	 */
 	public boolean validateRepository(Repository repository, DiagnosticChain diagnostics, Map<Object, Object> context) {
-		return validate_EveryDefaultConstraint(repository, diagnostics, context);
+		if (!validate_NoCircularContainment(repository, diagnostics, context)) return false;
+		boolean result = validate_EveryMultiplicityConforms(repository, diagnostics, context);
+		if (result || diagnostics != null) result &= validate_EveryDataValueConforms(repository, diagnostics, context);
+		if (result || diagnostics != null) result &= validate_EveryReferenceIsContained(repository, diagnostics, context);
+		if (result || diagnostics != null) result &= validate_EveryBidirectionalReferenceIsPaired(repository, diagnostics, context);
+		if (result || diagnostics != null) result &= validate_EveryProxyResolves(repository, diagnostics, context);
+		if (result || diagnostics != null) result &= validate_UniqueID(repository, diagnostics, context);
+		if (result || diagnostics != null) result &= validate_EveryKeyUnique(repository, diagnostics, context);
+		if (result || diagnostics != null) result &= validate_EveryMapEntryUnique(repository, diagnostics, context);
+		if (result || diagnostics != null) result &= validateInterface_UniqueOperationNames(repository, diagnostics, context);
+		return result;
 	}
 
 	/**
@@ -553,7 +754,17 @@ public class DactValidator extends EObjectValidator {
 	 * @generated
 	 */
 	public boolean validateService(Service service, DiagnosticChain diagnostics, Map<Object, Object> context) {
-		return validate_EveryDefaultConstraint(service, diagnostics, context);
+		if (!validate_NoCircularContainment(service, diagnostics, context)) return false;
+		boolean result = validate_EveryMultiplicityConforms(service, diagnostics, context);
+		if (result || diagnostics != null) result &= validate_EveryDataValueConforms(service, diagnostics, context);
+		if (result || diagnostics != null) result &= validate_EveryReferenceIsContained(service, diagnostics, context);
+		if (result || diagnostics != null) result &= validate_EveryBidirectionalReferenceIsPaired(service, diagnostics, context);
+		if (result || diagnostics != null) result &= validate_EveryProxyResolves(service, diagnostics, context);
+		if (result || diagnostics != null) result &= validate_UniqueID(service, diagnostics, context);
+		if (result || diagnostics != null) result &= validate_EveryKeyUnique(service, diagnostics, context);
+		if (result || diagnostics != null) result &= validate_EveryMapEntryUnique(service, diagnostics, context);
+		if (result || diagnostics != null) result &= validateInterface_UniqueOperationNames(service, diagnostics, context);
+		return result;
 	}
 
 	/**
@@ -672,7 +883,18 @@ public class DactValidator extends EObjectValidator {
 	 * @generated
 	 */
 	public boolean validateInternalDomainObject(InternalDomainObject internalDomainObject, DiagnosticChain diagnostics, Map<Object, Object> context) {
-		return validate_EveryDefaultConstraint(internalDomainObject, diagnostics, context);
+		if (!validate_NoCircularContainment(internalDomainObject, diagnostics, context)) return false;
+		boolean result = validate_EveryMultiplicityConforms(internalDomainObject, diagnostics, context);
+		if (result || diagnostics != null) result &= validate_EveryDataValueConforms(internalDomainObject, diagnostics, context);
+		if (result || diagnostics != null) result &= validate_EveryReferenceIsContained(internalDomainObject, diagnostics, context);
+		if (result || diagnostics != null) result &= validate_EveryBidirectionalReferenceIsPaired(internalDomainObject, diagnostics, context);
+		if (result || diagnostics != null) result &= validate_EveryProxyResolves(internalDomainObject, diagnostics, context);
+		if (result || diagnostics != null) result &= validate_UniqueID(internalDomainObject, diagnostics, context);
+		if (result || diagnostics != null) result &= validate_EveryKeyUnique(internalDomainObject, diagnostics, context);
+		if (result || diagnostics != null) result &= validate_EveryMapEntryUnique(internalDomainObject, diagnostics, context);
+		if (result || diagnostics != null) result &= validateDomainObject_UniqueOperationNames(internalDomainObject, diagnostics, context);
+		if (result || diagnostics != null) result &= validateDomainObject_UniquePropertyNames(internalDomainObject, diagnostics, context);
+		return result;
 	}
 
 	/**
@@ -681,7 +903,27 @@ public class DactValidator extends EObjectValidator {
 	 * @generated
 	 */
 	public boolean validateInterface(Interface interface_, DiagnosticChain diagnostics, Map<Object, Object> context) {
-		return validate_EveryDefaultConstraint(interface_, diagnostics, context);
+		if (!validate_NoCircularContainment(interface_, diagnostics, context)) return false;
+		boolean result = validate_EveryMultiplicityConforms(interface_, diagnostics, context);
+		if (result || diagnostics != null) result &= validate_EveryDataValueConforms(interface_, diagnostics, context);
+		if (result || diagnostics != null) result &= validate_EveryReferenceIsContained(interface_, diagnostics, context);
+		if (result || diagnostics != null) result &= validate_EveryBidirectionalReferenceIsPaired(interface_, diagnostics, context);
+		if (result || diagnostics != null) result &= validate_EveryProxyResolves(interface_, diagnostics, context);
+		if (result || diagnostics != null) result &= validate_UniqueID(interface_, diagnostics, context);
+		if (result || diagnostics != null) result &= validate_EveryKeyUnique(interface_, diagnostics, context);
+		if (result || diagnostics != null) result &= validate_EveryMapEntryUnique(interface_, diagnostics, context);
+		if (result || diagnostics != null) result &= validateInterface_UniqueOperationNames(interface_, diagnostics, context);
+		return result;
+	}
+
+	/**
+	 * Validates the UniqueOperationNames constraint of '<em>Interface</em>'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public boolean validateInterface_UniqueOperationNames(Interface interface_, DiagnosticChain diagnostics, Map<Object, Object> context) {
+		return interface_.UniqueOperationNames(diagnostics, context);
 	}
 
 	/**
@@ -699,7 +941,38 @@ public class DactValidator extends EObjectValidator {
 	 * @generated
 	 */
 	public boolean validateDomainObject(DomainObject domainObject, DiagnosticChain diagnostics, Map<Object, Object> context) {
-		return validate_EveryDefaultConstraint(domainObject, diagnostics, context);
+		if (!validate_NoCircularContainment(domainObject, diagnostics, context)) return false;
+		boolean result = validate_EveryMultiplicityConforms(domainObject, diagnostics, context);
+		if (result || diagnostics != null) result &= validate_EveryDataValueConforms(domainObject, diagnostics, context);
+		if (result || diagnostics != null) result &= validate_EveryReferenceIsContained(domainObject, diagnostics, context);
+		if (result || diagnostics != null) result &= validate_EveryBidirectionalReferenceIsPaired(domainObject, diagnostics, context);
+		if (result || diagnostics != null) result &= validate_EveryProxyResolves(domainObject, diagnostics, context);
+		if (result || diagnostics != null) result &= validate_UniqueID(domainObject, diagnostics, context);
+		if (result || diagnostics != null) result &= validate_EveryKeyUnique(domainObject, diagnostics, context);
+		if (result || diagnostics != null) result &= validate_EveryMapEntryUnique(domainObject, diagnostics, context);
+		if (result || diagnostics != null) result &= validateDomainObject_UniqueOperationNames(domainObject, diagnostics, context);
+		if (result || diagnostics != null) result &= validateDomainObject_UniquePropertyNames(domainObject, diagnostics, context);
+		return result;
+	}
+
+	/**
+	 * Validates the UniqueOperationNames constraint of '<em>Domain Object</em>'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public boolean validateDomainObject_UniqueOperationNames(DomainObject domainObject, DiagnosticChain diagnostics, Map<Object, Object> context) {
+		return domainObject.UniqueOperationNames(diagnostics, context);
+	}
+
+	/**
+	 * Validates the UniquePropertyNames constraint of '<em>Domain Object</em>'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public boolean validateDomainObject_UniquePropertyNames(DomainObject domainObject, DiagnosticChain diagnostics, Map<Object, Object> context) {
+		return domainObject.UniquePropertyNames(diagnostics, context);
 	}
 
 	/**
@@ -708,7 +981,18 @@ public class DactValidator extends EObjectValidator {
 	 * @generated
 	 */
 	public boolean validateSharedDomainObject(SharedDomainObject sharedDomainObject, DiagnosticChain diagnostics, Map<Object, Object> context) {
-		return validate_EveryDefaultConstraint(sharedDomainObject, diagnostics, context);
+		if (!validate_NoCircularContainment(sharedDomainObject, diagnostics, context)) return false;
+		boolean result = validate_EveryMultiplicityConforms(sharedDomainObject, diagnostics, context);
+		if (result || diagnostics != null) result &= validate_EveryDataValueConforms(sharedDomainObject, diagnostics, context);
+		if (result || diagnostics != null) result &= validate_EveryReferenceIsContained(sharedDomainObject, diagnostics, context);
+		if (result || diagnostics != null) result &= validate_EveryBidirectionalReferenceIsPaired(sharedDomainObject, diagnostics, context);
+		if (result || diagnostics != null) result &= validate_EveryProxyResolves(sharedDomainObject, diagnostics, context);
+		if (result || diagnostics != null) result &= validate_UniqueID(sharedDomainObject, diagnostics, context);
+		if (result || diagnostics != null) result &= validate_EveryKeyUnique(sharedDomainObject, diagnostics, context);
+		if (result || diagnostics != null) result &= validate_EveryMapEntryUnique(sharedDomainObject, diagnostics, context);
+		if (result || diagnostics != null) result &= validateDomainObject_UniqueOperationNames(sharedDomainObject, diagnostics, context);
+		if (result || diagnostics != null) result &= validateDomainObject_UniquePropertyNames(sharedDomainObject, diagnostics, context);
+		return result;
 	}
 
 	/**
@@ -852,7 +1136,18 @@ public class DactValidator extends EObjectValidator {
 	 * @generated
 	 */
 	public boolean validateDomainEvent(DomainEvent domainEvent, DiagnosticChain diagnostics, Map<Object, Object> context) {
-		return validate_EveryDefaultConstraint(domainEvent, diagnostics, context);
+		if (!validate_NoCircularContainment(domainEvent, diagnostics, context)) return false;
+		boolean result = validate_EveryMultiplicityConforms(domainEvent, diagnostics, context);
+		if (result || diagnostics != null) result &= validate_EveryDataValueConforms(domainEvent, diagnostics, context);
+		if (result || diagnostics != null) result &= validate_EveryReferenceIsContained(domainEvent, diagnostics, context);
+		if (result || diagnostics != null) result &= validate_EveryBidirectionalReferenceIsPaired(domainEvent, diagnostics, context);
+		if (result || diagnostics != null) result &= validate_EveryProxyResolves(domainEvent, diagnostics, context);
+		if (result || diagnostics != null) result &= validate_UniqueID(domainEvent, diagnostics, context);
+		if (result || diagnostics != null) result &= validate_EveryKeyUnique(domainEvent, diagnostics, context);
+		if (result || diagnostics != null) result &= validate_EveryMapEntryUnique(domainEvent, diagnostics, context);
+		if (result || diagnostics != null) result &= validateDomainObject_UniqueOperationNames(domainEvent, diagnostics, context);
+		if (result || diagnostics != null) result &= validateDomainObject_UniquePropertyNames(domainEvent, diagnostics, context);
+		return result;
 	}
 
 	/**
@@ -908,7 +1203,49 @@ public class DactValidator extends EObjectValidator {
 	 * @generated
 	 */
 	public boolean validateActivityGroup(ActivityGroup activityGroup, DiagnosticChain diagnostics, Map<Object, Object> context) {
-		return validate_EveryDefaultConstraint(activityGroup, diagnostics, context);
+		if (!validate_NoCircularContainment(activityGroup, diagnostics, context)) return false;
+		boolean result = validate_EveryMultiplicityConforms(activityGroup, diagnostics, context);
+		if (result || diagnostics != null) result &= validate_EveryDataValueConforms(activityGroup, diagnostics, context);
+		if (result || diagnostics != null) result &= validate_EveryReferenceIsContained(activityGroup, diagnostics, context);
+		if (result || diagnostics != null) result &= validate_EveryBidirectionalReferenceIsPaired(activityGroup, diagnostics, context);
+		if (result || diagnostics != null) result &= validate_EveryProxyResolves(activityGroup, diagnostics, context);
+		if (result || diagnostics != null) result &= validate_UniqueID(activityGroup, diagnostics, context);
+		if (result || diagnostics != null) result &= validate_EveryKeyUnique(activityGroup, diagnostics, context);
+		if (result || diagnostics != null) result &= validate_EveryMapEntryUnique(activityGroup, diagnostics, context);
+		if (result || diagnostics != null) result &= validateActivityGroup_SingleInitialNode(activityGroup, diagnostics, context);
+		if (result || diagnostics != null) result &= validateActivityGroup_SingleFinalNode(activityGroup, diagnostics, context);
+		if (result || diagnostics != null) result &= validateActivityGroup_NonEmptyGroup(activityGroup, diagnostics, context);
+		return result;
+	}
+
+	/**
+	 * Validates the SingleInitialNode constraint of '<em>Activity Group</em>'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public boolean validateActivityGroup_SingleInitialNode(ActivityGroup activityGroup, DiagnosticChain diagnostics, Map<Object, Object> context) {
+		return activityGroup.SingleInitialNode(diagnostics, context);
+	}
+
+	/**
+	 * Validates the SingleFinalNode constraint of '<em>Activity Group</em>'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public boolean validateActivityGroup_SingleFinalNode(ActivityGroup activityGroup, DiagnosticChain diagnostics, Map<Object, Object> context) {
+		return activityGroup.SingleFinalNode(diagnostics, context);
+	}
+
+	/**
+	 * Validates the NonEmptyGroup constraint of '<em>Activity Group</em>'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public boolean validateActivityGroup_NonEmptyGroup(ActivityGroup activityGroup, DiagnosticChain diagnostics, Map<Object, Object> context) {
+		return activityGroup.NonEmptyGroup(diagnostics, context);
 	}
 
 	/**
@@ -962,7 +1299,38 @@ public class DactValidator extends EObjectValidator {
 	 * @generated
 	 */
 	public boolean validateActivityEdge(ActivityEdge activityEdge, DiagnosticChain diagnostics, Map<Object, Object> context) {
-		return validate_EveryDefaultConstraint(activityEdge, diagnostics, context);
+		if (!validate_NoCircularContainment(activityEdge, diagnostics, context)) return false;
+		boolean result = validate_EveryMultiplicityConforms(activityEdge, diagnostics, context);
+		if (result || diagnostics != null) result &= validate_EveryDataValueConforms(activityEdge, diagnostics, context);
+		if (result || diagnostics != null) result &= validate_EveryReferenceIsContained(activityEdge, diagnostics, context);
+		if (result || diagnostics != null) result &= validate_EveryBidirectionalReferenceIsPaired(activityEdge, diagnostics, context);
+		if (result || diagnostics != null) result &= validate_EveryProxyResolves(activityEdge, diagnostics, context);
+		if (result || diagnostics != null) result &= validate_UniqueID(activityEdge, diagnostics, context);
+		if (result || diagnostics != null) result &= validate_EveryKeyUnique(activityEdge, diagnostics, context);
+		if (result || diagnostics != null) result &= validate_EveryMapEntryUnique(activityEdge, diagnostics, context);
+		if (result || diagnostics != null) result &= validateActivityEdge_NoEdgeIntoInitialNode(activityEdge, diagnostics, context);
+		if (result || diagnostics != null) result &= validateActivityEdge_NoEdgeOutOfFinalNode(activityEdge, diagnostics, context);
+		return result;
+	}
+
+	/**
+	 * Validates the NoEdgeIntoInitialNode constraint of '<em>Activity Edge</em>'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public boolean validateActivityEdge_NoEdgeIntoInitialNode(ActivityEdge activityEdge, DiagnosticChain diagnostics, Map<Object, Object> context) {
+		return activityEdge.NoEdgeIntoInitialNode(diagnostics, context);
+	}
+
+	/**
+	 * Validates the NoEdgeOutOfFinalNode constraint of '<em>Activity Edge</em>'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public boolean validateActivityEdge_NoEdgeOutOfFinalNode(ActivityEdge activityEdge, DiagnosticChain diagnostics, Map<Object, Object> context) {
+		return activityEdge.NoEdgeOutOfFinalNode(diagnostics, context);
 	}
 
 	/**
@@ -1181,6 +1549,7 @@ public class DactValidator extends EObjectValidator {
 		if (result || diagnostics != null) result &= validate_EveryKeyUnique(domainNode, diagnostics, context);
 		if (result || diagnostics != null) result &= validate_EveryMapEntryUnique(domainNode, diagnostics, context);
 		if (result || diagnostics != null) result &= validateDomainNode_SelfAnchoredBinaryExpression(domainNode, diagnostics, context);
+		if (result || diagnostics != null) result &= validateDomainNode_RequiresMainExpression(domainNode, diagnostics, context);
 		return result;
 	}
 
@@ -1192,6 +1561,16 @@ public class DactValidator extends EObjectValidator {
 	 */
 	public boolean validateDomainNode_SelfAnchoredBinaryExpression(DomainNode domainNode, DiagnosticChain diagnostics, Map<Object, Object> context) {
 		return domainNode.SelfAnchoredBinaryExpression(diagnostics, context);
+	}
+
+	/**
+	 * Validates the RequiresMainExpression constraint of '<em>Domain Node</em>'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public boolean validateDomainNode_RequiresMainExpression(DomainNode domainNode, DiagnosticChain diagnostics, Map<Object, Object> context) {
+		return domainNode.RequiresMainExpression(diagnostics, context);
 	}
 
 	/**
@@ -1210,6 +1589,7 @@ public class DactValidator extends EObjectValidator {
 		if (result || diagnostics != null) result &= validate_EveryKeyUnique(domainExistAction, diagnostics, context);
 		if (result || diagnostics != null) result &= validate_EveryMapEntryUnique(domainExistAction, diagnostics, context);
 		if (result || diagnostics != null) result &= validateDomainNode_SelfAnchoredBinaryExpression(domainExistAction, diagnostics, context);
+		if (result || diagnostics != null) result &= validateDomainNode_RequiresMainExpression(domainExistAction, diagnostics, context);
 		return result;
 	}
 
@@ -1229,6 +1609,7 @@ public class DactValidator extends EObjectValidator {
 		if (result || diagnostics != null) result &= validate_EveryKeyUnique(domainFindAction, diagnostics, context);
 		if (result || diagnostics != null) result &= validate_EveryMapEntryUnique(domainFindAction, diagnostics, context);
 		if (result || diagnostics != null) result &= validateDomainNode_SelfAnchoredBinaryExpression(domainFindAction, diagnostics, context);
+		if (result || diagnostics != null) result &= validateDomainNode_RequiresMainExpression(domainFindAction, diagnostics, context);
 		return result;
 	}
 
@@ -1248,6 +1629,7 @@ public class DactValidator extends EObjectValidator {
 		if (result || diagnostics != null) result &= validate_EveryKeyUnique(domainCreateAction, diagnostics, context);
 		if (result || diagnostics != null) result &= validate_EveryMapEntryUnique(domainCreateAction, diagnostics, context);
 		if (result || diagnostics != null) result &= validateDomainNode_SelfAnchoredBinaryExpression(domainCreateAction, diagnostics, context);
+		if (result || diagnostics != null) result &= validateDomainNode_RequiresMainExpression(domainCreateAction, diagnostics, context);
 		return result;
 	}
 
@@ -1267,6 +1649,7 @@ public class DactValidator extends EObjectValidator {
 		if (result || diagnostics != null) result &= validate_EveryKeyUnique(domainUpdateAction, diagnostics, context);
 		if (result || diagnostics != null) result &= validate_EveryMapEntryUnique(domainUpdateAction, diagnostics, context);
 		if (result || diagnostics != null) result &= validateDomainNode_SelfAnchoredBinaryExpression(domainUpdateAction, diagnostics, context);
+		if (result || diagnostics != null) result &= validateDomainNode_RequiresMainExpression(domainUpdateAction, diagnostics, context);
 		return result;
 	}
 
@@ -1286,6 +1669,7 @@ public class DactValidator extends EObjectValidator {
 		if (result || diagnostics != null) result &= validate_EveryKeyUnique(domainDeleteAction, diagnostics, context);
 		if (result || diagnostics != null) result &= validate_EveryMapEntryUnique(domainDeleteAction, diagnostics, context);
 		if (result || diagnostics != null) result &= validateDomainNode_SelfAnchoredBinaryExpression(domainDeleteAction, diagnostics, context);
+		if (result || diagnostics != null) result &= validateDomainNode_RequiresMainExpression(domainDeleteAction, diagnostics, context);
 		return result;
 	}
 

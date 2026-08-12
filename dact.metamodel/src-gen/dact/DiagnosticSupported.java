@@ -25,4 +25,12 @@ public interface DiagnosticSupported extends EObject {
 	 */
 	boolean report(DiagnosticChain diagnostics, String message);
 
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @model unique="false" diagnosticsUnique="false" messageUnique="false"
+	 * @generated
+	 */
+	boolean warn(DiagnosticChain diagnostics, String message);
+
 } // DiagnosticSupported

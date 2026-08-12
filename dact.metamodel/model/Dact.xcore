@@ -20,6 +20,14 @@ abstract class DiagnosticSupported {
     }
     return false
     }
+    
+    op boolean warn(EDiagnosticChain diagnostics, String message) {
+        if (diagnostics !== null) {
+            diagnostics.add(new BasicDiagnostic(Diagnostic.WARNING,
+                "http://www.example.org/xcore/dact", 0, message, #[this]))
+        }
+        return true
+    }
 } 
 
 @Ecore(constraints="UniquePrimitiveType")
@@ -52,13 +60,50 @@ abstract class TypedMultiplicityElement {
 
 abstract class Model{}
 
-class DddModel extends Model{
-	contains BoundedContext[] boundedContexts
-	contains SharedDomainObject[] sharedDomainObjects
+@Ecore(constraints="UniqueBoundedContextNames UniqueSharedDomainObjectNames")
+class DddModel extends Model, DiagnosticSupported {
+    contains BoundedContext[] boundedContexts
+    contains SharedDomainObject[] sharedDomainObjects
+
+    op boolean UniqueBoundedContextNames(EDiagnosticChain diagnostics,
+                                         EMap<Object, Object> context) {
+        val names = boundedContexts.map[name].filterNull.toList
+        if (names.size === names.toSet.size) return true
+
+        val duplicates = names.filter[n | names.filter[it == n].size > 1]
+                              .toSet.join(", ")
+        return report(diagnostics,
+            "Bounded context names must be unique; duplicated: " +
+            duplicates + ".")
+    }
+
+    op boolean UniqueSharedDomainObjectNames(EDiagnosticChain diagnostics,
+                                             EMap<Object, Object> context) {
+        val names = sharedDomainObjects.map[name].filterNull.toList
+        if (names.size === names.toSet.size) return true
+
+        val duplicates = names.filter[n | names.filter[it == n].size > 1]
+                              .toSet.join(", ")
+        return report(diagnostics,
+            "Shared domain object names must be unique; duplicated: " +
+            duplicates + ".")
+    }
 }
 
-class ActivityModel extends Model{
-	contains Activity[] activities
+@Ecore(constraints="UniqueActivityNames")
+class ActivityModel extends Model, DiagnosticSupported {
+    contains Activity[] activities
+
+    op boolean UniqueActivityNames(EDiagnosticChain diagnostics,
+                                   EMap<Object, Object> context) {
+        val names = activities.map[name].filterNull.toList
+        if (names.size === names.toSet.size) return true
+
+        val duplicates = names.filter[n | names.filter[it == n].size > 1]
+                              .toSet.join(", ")
+        return report(diagnostics,
+            "Activity names must be unique; duplicated: " + duplicates + ".")
+    }
 }
 
 class DomainNodeOperationMapping{
@@ -76,8 +121,8 @@ abstract class DomainElement extends NamedElement
 	container BoundedContext context opposite ownedElements
 }
 
-class Entity extends InternalDomainObject{
-	refers Repository repository opposite entity
+class Entity extends InternalDomainObject {
+    refers Repository repository opposite entity
 }
 
 class ValueObject extends InternalDomainObject{}
@@ -169,23 +214,24 @@ class Operation extends NamedElement, DefinesIdentityObject,DiagnosticSupported{
 	container DomainObject domainObject opposite ownedOperations
 	
 	op boolean BehaviorXorSpecification(EDiagnosticChain diagnostics,
-                                        EMap<Object, Object> context) {
-        val hasBehavior = behavior !== null
-        val hasSpec = validatesSpec && !validatesSpecExpr.empty
-        val isValid = hasBehavior !== hasSpec
-
-        if (!isValid && diagnostics !== null) {
-            val message = if (hasBehavior)
-                    "Operation '" + name + "' must define either a " +
-                    "behavior or a specification, but not both."
-                else
-                    "Operation '" + name + "' must define either a " +
-                    "behavior or at least one specification expression."
-
-            report(diagnostics, message)
-        }
-        return isValid
-    }
+                                    EMap<Object, Object> context) {
+	    val hasBehavior = behavior !== null
+	    val hasSpec = validatesSpec && !validatesSpecExpr.empty
+	
+	    if (hasBehavior && hasSpec) {
+	        return report(diagnostics,
+	            "Operation '" + name + "' defines both a behavior and a " +
+	            "specification; only one is allowed.")
+	    }
+	
+	    if (!hasBehavior && !hasSpec) {
+	        return warn(diagnostics,
+	            "Operation '" + name + "' defines neither a behavior nor a " +
+	            "specification; a default body will be generated.")
+	    }
+	
+	    return true
+	}
 }
 
 class InvariantOperation extends Operation{
@@ -248,17 +294,55 @@ enum OperationType {
 
 abstract class InternalDomainObject extends DomainObject{}
 
-abstract class Interface extends DomainElement{
-	contains Operation[] ownedOperations opposite ^interface
+@Ecore(constraints="UniqueOperationNames")
+abstract class Interface extends DomainElement, DiagnosticSupported {
+    contains Operation[] ownedOperations opposite ^interface
+
+    op boolean UniqueOperationNames(EDiagnosticChain diagnostics,
+                                    EMap<Object, Object> context) {
+        val names = ownedOperations.map[name].filterNull.toList
+        if (names.size === names.toSet.size) return true
+
+        val duplicates = names.filter[n | names.filter[it == n].size > 1]
+                              .toSet.join(", ")
+        return report(diagnostics,
+            "Operations of interface '" + name + "' must have unique " +
+            "names; duplicated: " + duplicates + ".")
+    }
 }
 
 abstract class DefinesIdentityObject {
 	Boolean definesIdentity = 'false'
 }
 
-abstract class DomainObject extends Type, DomainElement{
-	contains Property[] ownedProperties opposite domainObject
-	contains Operation[] ownedOperations opposite domainObject
+@Ecore(constraints="UniqueOperationNames UniquePropertyNames")
+abstract class DomainObject extends Type, DomainElement, DiagnosticSupported {
+    contains Property[] ownedProperties opposite domainObject
+    contains Operation[] ownedOperations opposite domainObject
+
+    op boolean UniqueOperationNames(EDiagnosticChain diagnostics,
+                                    EMap<Object, Object> context) {
+        val names = ownedOperations.map[name].filterNull.toList
+        if (names.size === names.toSet.size) return true
+
+        val duplicates = names.filter[n | names.filter[it == n].size > 1]
+                              .toSet.join(", ")
+        return report(diagnostics,
+            "Operations of '" + name + "' must have unique names; " +
+            "duplicated: " + duplicates + ".")
+    }
+    
+    op boolean UniquePropertyNames(EDiagnosticChain diagnostics,
+                               EMap<Object, Object> context) {
+	    val names = ownedProperties.map[name].filterNull.toList
+	    if (names.size === names.toSet.size) return true
+	
+	    val duplicates = names.filter[n | names.filter[it == n].size > 1]
+	                          .toSet.join(", ")
+	    return report(diagnostics,
+	        "Properties of '" + name + "' must have unique names; duplicated: " +
+	        duplicates + ".")
+	}
 }
 
 abstract class SharedDomainObject extends DomainObject{}
@@ -389,7 +473,8 @@ class Scope{
 
 class Identifier extends NamedElement{}
 
-class ActivityGroup extends NamedElement{
+@Ecore(constraints="SingleInitialNode SingleFinalNode NonEmptyGroup")
+class ActivityGroup extends NamedElement, DiagnosticSupported{
 	contains ActivityNode[0..*] ownedNodes opposite group
 	contains ActivityEdge[0..*] ownedEdges opposite group
 	contains Scope scope opposite group
@@ -403,6 +488,40 @@ class ActivityGroup extends NamedElement{
 		val initNode = DactFactory.eINSTANCE.createInitialNode()
 		this.ownedNodes.add(initNode)
 	}
+	
+	op boolean SingleInitialNode(EDiagnosticChain diagnostics,
+                                 EMap<Object, Object> context) {
+        if (ownedNodes.size() === 0) return true
+                                 	
+        val count = ownedNodes.filter(InitialNode).size
+        if (count === 1) return true
+
+        return report(diagnostics,
+            "Activity group '" + name + "' contains " + count +
+            " initial nodes; exactly one is required.")
+    }
+
+    op boolean SingleFinalNode(EDiagnosticChain diagnostics,
+                                 EMap<Object, Object> context) {
+        if (ownedNodes.size() === 0) return true
+                                 	
+        val count = ownedNodes.filter(FinalNode).size
+        if (count === 1) return true
+
+        return report(diagnostics,
+             "Activity group '" + name + "' contains " + count +
+            " final nodes; exactly one is required.")
+    }
+
+    op boolean NonEmptyGroup(EDiagnosticChain diagnostics,
+                             EMap<Object, Object> context) {
+        val hasContent = ownedNodes.exists[
+            !(it instanceof InitialNode) && !(it instanceof FinalNode)]
+        if (hasContent) return true
+
+        return warn(diagnostics,
+            "Activity group '" + name + "' contains no executable nodes.")
+    }
 }
 
 class Variable extends NamedElement{
@@ -432,17 +551,43 @@ abstract class ActivityNode extends NamedElement{
 	container ActivityGroup group opposite ownedNodes
 }
 
-class ActivityEdge extends NamedElement {
-	refers ActivityNode source opposite sEdge
-	refers ActivityNode target opposite tEdge
-	
-	container ActivityGroup group opposite ownedEdges
+@Ecore(constraints="NoEdgeIntoInitialNode NoEdgeOutOfFinalNode")
+class ActivityEdge extends NamedElement, DiagnosticSupported {
+    refers ActivityNode source opposite sEdge
+    refers ActivityNode target opposite tEdge
+
+    container ActivityGroup group opposite ownedEdges
+
+    op boolean NoEdgeIntoInitialNode(EDiagnosticChain diagnostics,
+                                     EMap<Object, Object> context) {
+        val isValid = !(target instanceof InitialNode)
+
+        if (!isValid && diagnostics !== null) {
+            report(diagnostics,
+                "Edge '" + name + "' targets the initial node of group '" +
+                group?.name + "': an initial node cannot have incoming edges.")
+        }
+        return isValid
+    }
+
+    op boolean NoEdgeOutOfFinalNode(EDiagnosticChain diagnostics,
+                                    EMap<Object, Object> context) {
+        val isValid = !(source instanceof FinalNode)
+
+        if (!isValid && diagnostics !== null) {
+            report(diagnostics,
+                "Edge '" + name + "' originates from a final node in group '" +
+                group?.name + "': a final node cannot have outgoing edges.")
+        }
+        return isValid
+    }
 }
 
 class InitialNode extends ControlNode{
 	derived String tName get{
 		return this.group.name + "-InitNode";
 	}
+	
 }
 
 abstract class ControlNode extends ActivityNode{}
@@ -548,7 +693,7 @@ class ParallelNode extends ControlNode{
 	contains ActivityGroup[] flows opposite parallelNode
 }
 
-@Ecore(constraints="SelfAnchoredBinaryExpression")
+@Ecore(constraints="SelfAnchoredBinaryExpression RequiresMainExpression")
 abstract class DomainNode extends ExecutableNode, DiagnosticSupported{
 	refers AggregateRoot aggregate
 	contains Identifier[0..1] result
@@ -557,6 +702,19 @@ abstract class DomainNode extends ExecutableNode, DiagnosticSupported{
 	contains Expression[] mainExpr
 	refers Property[] propertyChain // Derived from the above mutationExpression or entity 
 	
+	op boolean RequiresMainExpression(EDiagnosticChain diagnostics,
+                                      EMap<Object, Object> context) {
+        val isValid = this instanceof DomainFindAction || !mainExpr.empty
+
+        if (!isValid && diagnostics !== null) {
+            report(diagnostics,
+                "Domain node '" + name + "' must declare at least one main " +
+                "expression to identify the target aggregate or the value " +
+                "to be written.")
+        }
+        return isValid
+    }
+    
 	op boolean SelfAnchoredBinaryExpression(EDiagnosticChain diagnostics,
                                             EMap<Object, Object> context) {
         var isValid = true

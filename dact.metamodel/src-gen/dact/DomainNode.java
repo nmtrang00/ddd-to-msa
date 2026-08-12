@@ -25,7 +25,7 @@ import org.eclipse.emf.common.util.EList;
  *
  * @see dact.DactPackage#getDomainNode()
  * @model abstract="true"
- *        annotation="http://www.eclipse.org/emf/2002/Ecore constraints='SelfAnchoredBinaryExpression'"
+ *        annotation="http://www.eclipse.org/emf/2002/Ecore constraints='SelfAnchoredBinaryExpression RequiresMainExpression'"
  * @generated
  */
 public interface DomainNode extends ExecutableNode, DiagnosticSupported {
@@ -118,6 +118,14 @@ public interface DomainNode extends ExecutableNode, DiagnosticSupported {
 	 * @generated
 	 */
 	EList<Property> getPropertyChain();
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @model unique="false" diagnosticsUnique="false" contextUnique="false"
+	 * @generated
+	 */
+	boolean RequiresMainExpression(DiagnosticChain diagnostics, Map<Object, Object> context);
 
 	/**
 	 * <!-- begin-user-doc -->

@@ -6,6 +6,7 @@ import dact.AggregateRoot;
 import dact.BinaryExpression;
 import dact.DactPackage;
 import dact.DiagnosticSupported;
+import dact.DomainFindAction;
 import dact.DomainNode;
 import dact.Entity;
 import dact.Expression;
@@ -280,6 +281,27 @@ public abstract class DomainNodeImpl extends ExecutableNodeImpl implements Domai
 	 * @generated
 	 */
 	@Override
+	public boolean RequiresMainExpression(final DiagnosticChain diagnostics, final Map<Object, Object> context) {
+		final boolean isValid = ((this instanceof DomainFindAction) || (!this.getMainExpr().isEmpty()));
+		if (((!isValid) && (diagnostics != null))) {
+			String _name = this.getName();
+			String _plus = ("Domain node \'" + _name);
+			String _plus_1 = (_plus + "\' must declare at least one main ");
+			String _plus_2 = (_plus_1 + 
+				"expression to identify the target aggregate or the value ");
+			String _plus_3 = (_plus_2 + 
+				"to be written.");
+			this.report(diagnostics, _plus_3);
+		}
+		return isValid;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	@Override
 	public boolean SelfAnchoredBinaryExpression(final DiagnosticChain diagnostics, final Map<Object, Object> context) {
 		boolean isValid = true;
 		EList<Expression> _mainExpr = this.getMainExpr();
@@ -352,6 +374,21 @@ public abstract class DomainNodeImpl extends ExecutableNodeImpl implements Domai
 			diagnostics.add(_basicDiagnostic);
 		}
 		return false;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	@Override
+	public boolean warn(final DiagnosticChain diagnostics, final String message) {
+		if ((diagnostics != null)) {
+			BasicDiagnostic _basicDiagnostic = new BasicDiagnostic(Diagnostic.WARNING, 
+				"http://www.example.org/xcore/dact", 0, message, new Object[] { this });
+			diagnostics.add(_basicDiagnostic);
+		}
+		return true;
 	}
 
 	/**
@@ -483,6 +520,7 @@ public abstract class DomainNodeImpl extends ExecutableNodeImpl implements Domai
 		if (baseClass == DiagnosticSupported.class) {
 			switch (baseOperationID) {
 				case DactPackage.DIAGNOSTIC_SUPPORTED___REPORT__DIAGNOSTICCHAIN_STRING: return DactPackage.DOMAIN_NODE___REPORT__DIAGNOSTICCHAIN_STRING;
+				case DactPackage.DIAGNOSTIC_SUPPORTED___WARN__DIAGNOSTICCHAIN_STRING: return DactPackage.DOMAIN_NODE___WARN__DIAGNOSTICCHAIN_STRING;
 				default: return -1;
 			}
 		}
@@ -498,10 +536,14 @@ public abstract class DomainNodeImpl extends ExecutableNodeImpl implements Domai
 	@SuppressWarnings("unchecked")
 	public Object eInvoke(int operationID, EList<?> arguments) throws InvocationTargetException {
 		switch (operationID) {
+			case DactPackage.DOMAIN_NODE___REQUIRES_MAIN_EXPRESSION__DIAGNOSTICCHAIN_MAP:
+				return RequiresMainExpression((DiagnosticChain)arguments.get(0), (Map<Object, Object>)arguments.get(1));
 			case DactPackage.DOMAIN_NODE___SELF_ANCHORED_BINARY_EXPRESSION__DIAGNOSTICCHAIN_MAP:
 				return SelfAnchoredBinaryExpression((DiagnosticChain)arguments.get(0), (Map<Object, Object>)arguments.get(1));
 			case DactPackage.DOMAIN_NODE___REPORT__DIAGNOSTICCHAIN_STRING:
 				return report((DiagnosticChain)arguments.get(0), (String)arguments.get(1));
+			case DactPackage.DOMAIN_NODE___WARN__DIAGNOSTICCHAIN_STRING:
+				return warn((DiagnosticChain)arguments.get(0), (String)arguments.get(1));
 		}
 		return super.eInvoke(operationID, arguments);
 	}

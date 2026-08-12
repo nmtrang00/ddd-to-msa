@@ -64,10 +64,27 @@ public abstract class DiagnosticSupportedImpl extends MinimalEObjectImpl.Contain
 	 * @generated
 	 */
 	@Override
+	public boolean warn(final DiagnosticChain diagnostics, final String message) {
+		if ((diagnostics != null)) {
+			BasicDiagnostic _basicDiagnostic = new BasicDiagnostic(Diagnostic.WARNING, 
+				"http://www.example.org/xcore/dact", 0, message, new Object[] { this });
+			diagnostics.add(_basicDiagnostic);
+		}
+		return true;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	@Override
 	public Object eInvoke(int operationID, EList<?> arguments) throws InvocationTargetException {
 		switch (operationID) {
 			case DactPackage.DIAGNOSTIC_SUPPORTED___REPORT__DIAGNOSTICCHAIN_STRING:
 				return report((DiagnosticChain)arguments.get(0), (String)arguments.get(1));
+			case DactPackage.DIAGNOSTIC_SUPPORTED___WARN__DIAGNOSTICCHAIN_STRING:
+				return warn((DiagnosticChain)arguments.get(0), (String)arguments.get(1));
 		}
 		return super.eInvoke(operationID, arguments);
 	}

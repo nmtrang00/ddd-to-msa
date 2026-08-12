@@ -55,16 +55,14 @@
     <boundedContexts name="Location">
       <ownedElements xsi:type="dact:AggregateRoot" name="Location">
         <ownedProperties name="portCode" definesIdentity="true" type="//@primitivesTypes.1" lowerBound="1"/>
-        <ownedProperties name="testMulti" type="//@primitivesTypes.0" upperBound="20"/>
-        <ownedProperties name="testMulti1" type="//@primitivesTypes.1" upperBound="20"/>
+        <ownedProperties name="name" type="//@primitivesTypes.0"/>
       </ownedElements>
       <ownedElements xsi:type="dact:Service" name="LocationService">
-        <ownedOperations name="resolveByPortCode" type="S0_DOMAIN_SERVICE" sideEffectFree="true">
+        <ownedOperations name="resolveByPortCode" type="S0_DOMAIN_SERVICE" sideEffectFree="true" behavior="//@activity/@activities.13">
           <ownedParameters name="portCode" type="//@primitivesTypes.1" lowerBound="1"/>
           <ownedParameters name="location" type="//@ddd/@boundedContexts.1/@ownedElements.0" direction="OUT"/>
         </ownedOperations>
       </ownedElements>
-      <ownedElements xsi:type="dact:Entity" name="Entity3"/>
     </boundedContexts>
     <boundedContexts name="Cargo">
       <ownedElements xsi:type="dact:AggregateRoot" name="Cargo">
@@ -78,7 +76,7 @@
         <ownedProperties name="destination" type="//@ddd/@sharedDomainObjects.1" lowerBound="1"/>
         <ownedOperations xsi:type="dact:InvariantOperation" name="isValid" type="D5_SPECIFICATION" validatesSpec="true" sideEffectFree="true">
           <ownedParameters name="result" type="//@primitivesTypes.2" lowerBound="1" direction="OUT"/>
-          <validatesSpecExpr name="expr">
+          <validatesSpecExpr name="ArrivalTimeIsPositive">
             <child xsi:type="dact:BinaryExpression">
               <operator xsi:type="dact:Gt"/>
               <leftExpr name="LeftExpr">
@@ -159,12 +157,8 @@
     <activities name="createNewCustomer" specification="//@ddd/@boundedContexts.0/@ownedElements.1/@ownedOperations.0">
       <ownedParameters name="customerName" type="//@primitivesTypes.0" lowerBound="1"/>
       <ownedParameters name="newCustomer" type="//@ddd/@boundedContexts.0/@ownedElements.0" direction="OUT"/>
-      <parameterMappings activityParameter="//@activity/@activities.0/@ownedParameters.0" 
-                   operationParameter="//@ddd/@boundedContexts.0/@ownedElements.1/@ownedOperations.0/@ownedParameters.0" 
-                   type="ACTIVITY_IN"/>
-	<parameterMappings activityParameter="//@activity/@activities.0/@ownedParameters.1" 
-		                   operationParameter="//@ddd/@boundedContexts.0/@ownedElements.1/@ownedOperations.0/@ownedParameters.1" 
-		                   type="ACTIVITY_OUT"/>
+      <parameterMappings type="ACTIVITY_IN" operationParameter="//@ddd/@boundedContexts.0/@ownedElements.1/@ownedOperations.0/@ownedParameters.0" activityParameter="//@activity/@activities.0/@ownedParameters.0"/>
+      <parameterMappings type="ACTIVITY_OUT" operationParameter="//@ddd/@boundedContexts.0/@ownedElements.1/@ownedOperations.0/@ownedParameters.1" activityParameter="//@activity/@activities.0/@ownedParameters.1"/>
       <root name="Root">
         <ownedNodes xsi:type="dact:InitialNode" name="Init" sEdge="//@activity/@activities.0/@root/@ownedEdges.0"/>
         <ownedNodes xsi:type="dact:DomainExistAction" name="CheckUniqueCustomer" sEdge="//@activity/@activities.0/@root/@ownedEdges.1" tEdge="//@activity/@activities.0/@root/@ownedEdges.0" aggregate="//@ddd/@boundedContexts.0/@ownedElements.0">
@@ -174,7 +168,7 @@
               <operator xsi:type="dact:Eq"/>
               <leftExpr name="LeftExpr">
                 <child xsi:type="dact:UnaryExpression">
-                  <identifier name="name"/>
+                  <identifier name="self.name"/>
                 </child>
               </leftExpr>
               <rightExpr name="RightExpr">
@@ -266,7 +260,7 @@
               <operator xsi:type="dact:Eq"/>
               <leftExpr>
                 <child xsi:type="dact:UnaryExpression">
-                  <identifier name="customerId"/>
+                  <identifier name="self.customerId"/>
                 </child>
               </leftExpr>
               <rightExpr>
@@ -303,7 +297,7 @@
               <operator xsi:type="dact:Eq"/>
               <leftExpr>
                 <child xsi:type="dact:UnaryExpression">
-                  <identifier name="customerId"/>
+                  <identifier name="self.customerId"/>
                 </child>
               </leftExpr>
               <rightExpr>
@@ -425,7 +419,7 @@
               <operator xsi:type="dact:Eq"/>
               <leftExpr>
                 <child xsi:type="dact:UnaryExpression">
-                  <identifier name="role.customerId"/>
+                  <identifier name="self.role.customerId"/>
                 </child>
               </leftExpr>
               <rightExpr>
@@ -454,7 +448,7 @@
               <operator xsi:type="dact:Eq"/>
               <leftExpr>
                 <child xsi:type="dact:UnaryExpression">
-                  <identifier name="customerId"/>
+                  <identifier name="self.customerId"/>
                 </child>
               </leftExpr>
               <rightExpr>
@@ -525,7 +519,7 @@
               <operator xsi:type="dact:Eq"/>
               <leftExpr>
                 <child xsi:type="dact:UnaryExpression">
-                  <identifier name="trackingId"/>
+                  <identifier name="self.trackingId"/>
                 </child>
               </leftExpr>
               <rightExpr>
@@ -598,7 +592,7 @@
               <operator xsi:type="dact:Eq"/>
               <leftExpr>
                 <child xsi:type="dact:UnaryExpression">
-                  <identifier name="trackingId"/>
+                  <identifier name="self.trackingId"/>
                 </child>
               </leftExpr>
               <rightExpr>
@@ -669,7 +663,7 @@
                   <operator xsi:type="dact:Eq"/>
                   <leftExpr>
                     <child xsi:type="dact:UnaryExpression">
-                      <identifier name="deliveryHistory.handlingEvent"/>
+                      <identifier name="self.deliveryHistory.handlingEvent"/>
                     </child>
                   </leftExpr>
                   <rightExpr>
@@ -713,7 +707,7 @@
               <operator xsi:type="dact:Eq"/>
               <leftExpr>
                 <child xsi:type="dact:UnaryExpression">
-                  <identifier name="trackingId"/>
+                  <identifier name="self.trackingId"/>
                 </child>
               </leftExpr>
               <rightExpr>
@@ -806,7 +800,7 @@
               <operator xsi:type="dact:Eq"/>
               <leftExpr>
                 <child xsi:type="dact:UnaryExpression">
-                  <identifier name="trackingId"/>
+                  <identifier name="self.trackingId"/>
                 </child>
               </leftExpr>
               <rightExpr>
@@ -817,6 +811,200 @@
             </child>
           </mainExpr>
         </ownedNodes>
+      </root>
+    </activities>
+    <activities name="createNewLocation">
+      <ownedParameters name="name" type="//@primitivesTypes.0"/>
+      <ownedParameters name="newLocation" type="//@ddd/@boundedContexts.1/@ownedElements.0" direction="OUT"/>
+      <root name="Root">
+        <ownedNodes xsi:type="dact:InitialNode" name="Init" sEdge="//@activity/@activities.9/@root/@ownedEdges.0"/>
+        <ownedNodes xsi:type="dact:DomainExistAction" name="CheckUniqueLocation" sEdge="//@activity/@activities.9/@root/@ownedEdges.1" tEdge="//@activity/@activities.9/@root/@ownedEdges.0" aggregate="//@ddd/@boundedContexts.1/@ownedElements.0">
+          <result name="isExisting"/>
+          <mainExpr name="MatchPortCode">
+            <child xsi:type="dact:BinaryExpression">
+              <operator xsi:type="dact:Eq"/>
+              <leftExpr name="LeftExpr">
+                <child xsi:type="dact:UnaryExpression">
+                  <identifier name="self.name"/>
+                </child>
+              </leftExpr>
+              <rightExpr name="RightExpr">
+                <child xsi:type="dact:UnaryExpression">
+                  <identifier name="name"/>
+                </child>
+              </rightExpr>
+            </child>
+          </mainExpr>
+        </ownedNodes>
+        <ownedNodes xsi:type="dact:VariableDeclarationAction" name="DeclareNewLocation" sEdge="//@activity/@activities.9/@root/@ownedEdges.2" tEdge="//@activity/@activities.9/@root/@ownedEdges.1" type="//@ddd/@boundedContexts.1/@ownedElements.0">
+          <declaration>
+            <identifier name="newLocation"/>
+          </declaration>
+        </ownedNodes>
+        <ownedNodes xsi:type="dact:ConditionalNode" name="EvaluateUniqueness" sEdge="//@activity/@activities.9/@root/@ownedEdges.3" tEdge="//@activity/@activities.9/@root/@ownedEdges.2">
+          <test name="TestNotExists">
+            <child xsi:type="dact:BinaryExpression">
+              <operator xsi:type="dact:Eq"/>
+              <leftExpr>
+                <child xsi:type="dact:UnaryExpression">
+                  <identifier name="isExisting"/>
+                </child>
+              </leftExpr>
+              <rightExpr>
+                <child xsi:type="dact:UnaryExpression">
+                  <value xsi:type="dact:LiteralBoolean" value="false"/>
+                </child>
+              </rightExpr>
+            </child>
+          </test>
+          <body name="Body">
+            <ownedNodes xsi:type="dact:InitialNode" name="Body-Init" sEdge="//@activity/@activities.9/@root/@ownedNodes.3/@body/@ownedEdges.0"/>
+            <ownedNodes xsi:type="dact:VariableAssignmentAction" name="AssignLocationName" sEdge="//@activity/@activities.9/@root/@ownedNodes.3/@body/@ownedEdges.1" tEdge="//@activity/@activities.9/@root/@ownedNodes.3/@body/@ownedEdges.0">
+              <assignment>
+                <identifier name="newLocation.name"/>
+                <expr>
+                  <child xsi:type="dact:UnaryExpression">
+                    <identifier name="name"/>
+                  </child>
+                </expr>
+              </assignment>
+            </ownedNodes>
+            <ownedNodes xsi:type="dact:DomainCreateAction" name="PersistLocation" tEdge="//@activity/@activities.9/@root/@ownedNodes.3/@body/@ownedEdges.1" aggregate="//@ddd/@boundedContexts.1/@ownedElements.0">
+              <result name="newLocation"/>
+              <mainExpr name="Main">
+                <child xsi:type="dact:BinaryExpression">
+                  <operator xsi:type="dact:Eq"/>
+                  <leftExpr>
+                    <child xsi:type="dact:UnaryExpression">
+                      <identifier name="self"/>
+                    </child>
+                  </leftExpr>
+                  <rightExpr>
+                    <child xsi:type="dact:UnaryExpression">
+                      <identifier name="newLocation"/>
+                    </child>
+                  </rightExpr>
+                </child>
+              </mainExpr>
+            </ownedNodes>
+            <ownedEdges source="//@activity/@activities.9/@root/@ownedNodes.3/@body/@ownedNodes.0" target="//@activity/@activities.9/@root/@ownedNodes.3/@body/@ownedNodes.1"/>
+            <ownedEdges source="//@activity/@activities.9/@root/@ownedNodes.3/@body/@ownedNodes.1" target="//@activity/@activities.9/@root/@ownedNodes.3/@body/@ownedNodes.2"/>
+          </body>
+          <elseBody name="ElseBody">
+            <ownedNodes xsi:type="dact:InitialNode" name="ElseBody-Init" sEdge="//@activity/@activities.9/@root/@ownedNodes.3/@elseBody/@ownedEdges.0"/>
+            <ownedNodes xsi:type="dact:RaiseExceptionAction" name="DuplicateLocationException" tEdge="//@activity/@activities.9/@root/@ownedNodes.3/@elseBody/@ownedEdges.0" description="Location with given portCode already exists."/>
+            <ownedEdges source="//@activity/@activities.9/@root/@ownedNodes.3/@elseBody/@ownedNodes.0" target="//@activity/@activities.9/@root/@ownedNodes.3/@elseBody/@ownedNodes.1"/>
+          </elseBody>
+        </ownedNodes>
+        <ownedNodes xsi:type="dact:ActivityFinalNode" name="End" tEdge="//@activity/@activities.9/@root/@ownedEdges.3">
+          <variablesToReturn name="newLocation"/>
+        </ownedNodes>
+        <ownedEdges source="//@activity/@activities.9/@root/@ownedNodes.0" target="//@activity/@activities.9/@root/@ownedNodes.1"/>
+        <ownedEdges source="//@activity/@activities.9/@root/@ownedNodes.1" target="//@activity/@activities.9/@root/@ownedNodes.2"/>
+        <ownedEdges source="//@activity/@activities.9/@root/@ownedNodes.2" target="//@activity/@activities.9/@root/@ownedNodes.3"/>
+        <ownedEdges source="//@activity/@activities.9/@root/@ownedNodes.3" target="//@activity/@activities.9/@root/@ownedNodes.4"/>
+      </root>
+    </activities>
+    <activities name="getAllLocations">
+      <ownedParameters name="locations" type="//@ddd/@boundedContexts.1/@ownedElements.0" upperBound="-1" direction="OUT"/>
+      <root name="Root">
+        <ownedNodes xsi:type="dact:InitialNode" name="Init" sEdge="//@activity/@activities.10/@root/@ownedEdges.0"/>
+        <ownedNodes xsi:type="dact:DomainFindAction" name="FindAllLocations" sEdge="//@activity/@activities.10/@root/@ownedEdges.1" tEdge="//@activity/@activities.10/@root/@ownedEdges.0" aggregate="//@ddd/@boundedContexts.1/@ownedElements.0">
+          <result name="locations"/>
+        </ownedNodes>
+        <ownedNodes xsi:type="dact:ActivityFinalNode" name="End" tEdge="//@activity/@activities.10/@root/@ownedEdges.1">
+          <variablesToReturn name="locations"/>
+        </ownedNodes>
+        <ownedEdges source="//@activity/@activities.10/@root/@ownedNodes.0" target="//@activity/@activities.10/@root/@ownedNodes.1"/>
+        <ownedEdges source="//@activity/@activities.10/@root/@ownedNodes.1" target="//@activity/@activities.10/@root/@ownedNodes.2"/>
+      </root>
+    </activities>
+    <activities name="getAllCustomers">
+      <ownedParameters name="customers" type="//@ddd/@boundedContexts.0/@ownedElements.0" upperBound="-1" direction="OUT"/>
+      <root name="Root">
+        <ownedNodes xsi:type="dact:InitialNode" name="Init" sEdge="//@activity/@activities.11/@root/@ownedEdges.0"/>
+        <ownedNodes xsi:type="dact:DomainFindAction" name="FindAllCustomers" sEdge="//@activity/@activities.11/@root/@ownedEdges.1" tEdge="//@activity/@activities.11/@root/@ownedEdges.0" aggregate="//@ddd/@boundedContexts.0/@ownedElements.0">
+          <result name="customers"/>
+        </ownedNodes>
+        <ownedNodes xsi:type="dact:ActivityFinalNode" name="End" tEdge="//@activity/@activities.11/@root/@ownedEdges.1">
+          <variablesToReturn name="customers"/>
+        </ownedNodes>
+        <ownedEdges source="//@activity/@activities.11/@root/@ownedNodes.0" target="//@activity/@activities.11/@root/@ownedNodes.1"/>
+        <ownedEdges source="//@activity/@activities.11/@root/@ownedNodes.1" target="//@activity/@activities.11/@root/@ownedNodes.2"/>
+      </root>
+    </activities>
+    <activities name="getAllCargo">
+      <ownedParameters name="cargos" type="//@ddd/@boundedContexts.2/@ownedElements.0" upperBound="-1" direction="OUT"/>
+      <root name="Root">
+        <ownedNodes xsi:type="dact:InitialNode" name="Init" sEdge="//@activity/@activities.12/@root/@ownedEdges.0"/>
+        <ownedNodes xsi:type="dact:DomainFindAction" name="FindAllCargo" sEdge="//@activity/@activities.12/@root/@ownedEdges.1" tEdge="//@activity/@activities.12/@root/@ownedEdges.0" aggregate="//@ddd/@boundedContexts.2/@ownedElements.0">
+          <result name="cargos"/>
+        </ownedNodes>
+        <ownedNodes xsi:type="dact:ActivityFinalNode" name="End" tEdge="//@activity/@activities.12/@root/@ownedEdges.1">
+          <variablesToReturn name="cargos"/>
+        </ownedNodes>
+        <ownedEdges source="//@activity/@activities.12/@root/@ownedNodes.0" target="//@activity/@activities.12/@root/@ownedNodes.1"/>
+        <ownedEdges source="//@activity/@activities.12/@root/@ownedNodes.1" target="//@activity/@activities.12/@root/@ownedNodes.2"/>
+      </root>
+    </activities>
+    <activities name="resolveByPortCode" specification="//@ddd/@boundedContexts.1/@ownedElements.1/@ownedOperations.0">
+      <ownedParameters name="portCode" type="//@primitivesTypes.1" lowerBound="1"/>
+      <ownedParameters name="location" type="//@ddd/@boundedContexts.1/@ownedElements.0" direction="OUT"/>
+      <parameterMappings type="ACTIVITY_IN" operationParameter="//@ddd/@boundedContexts.1/@ownedElements.1/@ownedOperations.0/@ownedParameters.0" activityParameter="//@activity/@activities.13/@ownedParameters.0"/>
+      <parameterMappings type="ACTIVITY_OUT" operationParameter="//@ddd/@boundedContexts.1/@ownedElements.1/@ownedOperations.0/@ownedParameters.1" activityParameter="//@activity/@activities.13/@ownedParameters.1"/>
+      <root name="Root">
+        <ownedNodes xsi:type="dact:InitialNode" name="Init" sEdge="//@activity/@activities.13/@root/@ownedEdges.0"/>
+        <ownedNodes xsi:type="dact:DomainFindAction" name="FindLocationByPortCode" sEdge="//@activity/@activities.13/@root/@ownedEdges.1" tEdge="//@activity/@activities.13/@root/@ownedEdges.0" aggregate="//@ddd/@boundedContexts.1/@ownedElements.0">
+          <result name="location"/>
+          <mainExpr name="MatchPortCode">
+            <child xsi:type="dact:BinaryExpression">
+              <operator xsi:type="dact:Eq"/>
+              <leftExpr>
+                <child xsi:type="dact:UnaryExpression">
+                  <identifier name="self.portCode"/>
+                </child>
+              </leftExpr>
+              <rightExpr>
+                <child xsi:type="dact:UnaryExpression">
+                  <identifier name="portCode"/>
+                </child>
+              </rightExpr>
+            </child>
+          </mainExpr>
+        </ownedNodes>
+        <ownedNodes xsi:type="dact:ConditionalNode" name="CheckLocationExists" sEdge="//@activity/@activities.13/@root/@ownedEdges.2" tEdge="//@activity/@activities.13/@root/@ownedEdges.1">
+          <test name="TestLocationNotNull">
+            <child xsi:type="dact:BinaryExpression">
+              <operator xsi:type="dact:Ne"/>
+              <leftExpr>
+                <child xsi:type="dact:UnaryExpression">
+                  <identifier name="location"/>
+                </child>
+              </leftExpr>
+              <rightExpr>
+                <child xsi:type="dact:UnaryExpression">
+                  <value xsi:type="dact:LiteralNull"/>
+                </child>
+              </rightExpr>
+            </child>
+          </test>
+          <body name="Body">
+            <ownedNodes xsi:type="dact:InitialNode" name="Body-Init" sEdge="//@activity/@activities.13/@root/@ownedNodes.2/@body/@ownedEdges.0"/>
+            <ownedNodes xsi:type="dact:FlowFinalNode" name="Body-End" tEdge="//@activity/@activities.13/@root/@ownedNodes.2/@body/@ownedEdges.0"/>
+            <ownedEdges source="//@activity/@activities.13/@root/@ownedNodes.2/@body/@ownedNodes.0" target="//@activity/@activities.13/@root/@ownedNodes.2/@body/@ownedNodes.1"/>
+          </body>
+          <elseBody name="ElseBody">
+            <ownedNodes xsi:type="dact:InitialNode" name="ElseBody-Init" sEdge="//@activity/@activities.13/@root/@ownedNodes.2/@elseBody/@ownedEdges.0"/>
+            <ownedNodes xsi:type="dact:RaiseEntityNotFoundExceptionAction" name="LocationNotFoundException" tEdge="//@activity/@activities.13/@root/@ownedNodes.2/@elseBody/@ownedEdges.0" description="Location with given port code does not exist." entity="//@ddd/@boundedContexts.1/@ownedElements.0"/>
+            <ownedEdges source="//@activity/@activities.13/@root/@ownedNodes.2/@elseBody/@ownedNodes.0" target="//@activity/@activities.13/@root/@ownedNodes.2/@elseBody/@ownedNodes.1"/>
+          </elseBody>
+        </ownedNodes>
+        <ownedNodes xsi:type="dact:ActivityFinalNode" name="End" tEdge="//@activity/@activities.13/@root/@ownedEdges.2">
+          <variablesToReturn name="location"/>
+        </ownedNodes>
+        <ownedEdges source="//@activity/@activities.13/@root/@ownedNodes.0" target="//@activity/@activities.13/@root/@ownedNodes.1"/>
+        <ownedEdges source="//@activity/@activities.13/@root/@ownedNodes.1" target="//@activity/@activities.13/@root/@ownedNodes.2"/>
+        <ownedEdges source="//@activity/@activities.13/@root/@ownedNodes.2" target="//@activity/@activities.13/@root/@ownedNodes.3"/>
       </root>
     </activities>
   </activity>

@@ -21,8 +21,42 @@
 ./cleanProjects.sh -r /Users/trangnguyen/Study/MS-Thesis/msc-thesis/impl_new/test_new/dact-to-lemma/phase3 -a
 
 mvn clean test -e
+#Swagger
+Customer: http://localhost:8081/swagger-ui/index.html
+Location: http://localhost:8082/swagger-ui/index.html
+Cargo: http://localhost:8083/swagger-ui/index.html
 
-#Customer
-mvn clean spring-boot:run -Dspring-boot.run.arguments="--server.port=8082"
+#DB
+Customer: http://localhost:8081/h2-console
+Location: http://localhost:8082/h2-console
+Cargo: http://localhost:8083/h2-console
+#Test case cargo
 
-./mvnw clean spring-boot:run
+python load_data.py --file data.json --port 9090 --host http://127.0.0.1
+
+python load_data.py --file test_data/customers.json --port 8081
+python load_data.py --file test_data/locations.json --port 8082
+python load_data.py --file test_data/cargos.json --port 8083
+
+# Load Cargos
+## Not found Customer
+curl -X POST http://localhost:8083/cargo -H "Content-Type: application/json" -d '{"customerId":0,"destinationPortCode":1,"arrivalTime":1723500000}'
+## Not found Location
+curl -X POST http://localhost:8083/cargo -H "Content-Type: application/json" -d '{"customerId":1,"destinationPortCode":0,"arrivalTime":1723500000}'
+## Violating contraint on arrivalTime
+curl -X POST http://localhost:8083/cargo -H "Content-Type: application/json" -d '{"customerId":1,"destinationPortCode":1,"arrivalTime":0}'
+## OK
+curl -X POST http://localhost:8083/cargo -H "Content-Type: application/json" -d '{"customerId":1,"destinationPortCode":1,"arrivalTime":1723500000}'
+## Create History
+curl -X POST http://localhost:8083/cargo/1
+## Get All Cargos
+curl -X GET http://localhost:8083/cargo
+curl -X 'GET'  'http://localhost:8083/cargo/getAllCargoOfCustomer?customerId=0' -H 'accept: */*'
+curl -X 'GET'  'http://localhost:8083/cargo/getAllCargoOfCustomer?customerId=1' -H 'accept: */*'
+## Delete
+curl -X DELETE http://localhost:8083/cargo/1
+
+curl -X POST http://localhost:8083/cargo -H "Content-Type: application/json" -d '{"customerId":2,"destinationPortCode":2,"arrivalTime":1723600000}'
+curl -X POST http://localhost:8083/cargo -H "Content-Type: application/json" -d '{"customerId":3,"destinationPortCode":3,"arrivalTime":1723700000}'
+curl -X POST http://localhost:8083/cargo -H "Content-Type: application/json" -d '{"customerId":4,"destinationPortCode":4,"arrivalTime":1723800000}'
+curl -X POST http://localhost:8083/cargo -H "Content-Type: application/json" -d '{"customerId":5,"destinationPortCode":5,"arrivalTime":1723900000}'
