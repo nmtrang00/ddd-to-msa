@@ -212,7 +212,7 @@
                 </expr>
               </assignment>
             </ownedNodes>
-            <ownedNodes xsi:type="dact:DomainCreateAction" name="PersistCustomer" tEdge="//@activity/@activities.0/@root/@ownedNodes.3/@body/@ownedEdges.1" aggregate="//@ddd/@boundedContexts.0/@ownedElements.0">
+            <ownedNodes xsi:type="dact:DomainCreateAction" name="PersistCustomer" sEdge="//@activity/@activities.0/@root/@ownedNodes.3/@body/@ownedEdges.2" tEdge="//@activity/@activities.0/@root/@ownedNodes.3/@body/@ownedEdges.1" aggregate="//@ddd/@boundedContexts.0/@ownedElements.0">
               <result name="newCustomer"/>
               <mainExpr name="Main">
                 <child xsi:type="dact:BinaryExpression">
@@ -230,13 +230,17 @@
                 </child>
               </mainExpr>
             </ownedNodes>
+            <ownedNodes xsi:type="dact:FlowFinalNode" name="Body-End" tEdge="//@activity/@activities.0/@root/@ownedNodes.3/@body/@ownedEdges.2"/>
             <ownedEdges source="//@activity/@activities.0/@root/@ownedNodes.3/@body/@ownedNodes.0" target="//@activity/@activities.0/@root/@ownedNodes.3/@body/@ownedNodes.1"/>
             <ownedEdges source="//@activity/@activities.0/@root/@ownedNodes.3/@body/@ownedNodes.1" target="//@activity/@activities.0/@root/@ownedNodes.3/@body/@ownedNodes.2"/>
+            <ownedEdges source="//@activity/@activities.0/@root/@ownedNodes.3/@body/@ownedNodes.2" target="//@activity/@activities.0/@root/@ownedNodes.3/@body/@ownedNodes.3"/>
           </body>
           <elseBody name="ElseBody">
             <ownedNodes xsi:type="dact:InitialNode" name="ElseBody-Init" sEdge="//@activity/@activities.0/@root/@ownedNodes.3/@elseBody/@ownedEdges.0"/>
-            <ownedNodes xsi:type="dact:RaiseExceptionAction" name="DuplicateCustomerException" tEdge="//@activity/@activities.0/@root/@ownedNodes.3/@elseBody/@ownedEdges.0" description="Customer with given identifier already exists."/>
+            <ownedNodes xsi:type="dact:RaiseExceptionAction" name="DuplicateCustomerException" sEdge="//@activity/@activities.0/@root/@ownedNodes.3/@elseBody/@ownedEdges.1" tEdge="//@activity/@activities.0/@root/@ownedNodes.3/@elseBody/@ownedEdges.0" description="Customer with given identifier already exists."/>
+            <ownedNodes xsi:type="dact:FlowFinalNode" name="ElseBody-End" tEdge="//@activity/@activities.0/@root/@ownedNodes.3/@elseBody/@ownedEdges.1"/>
             <ownedEdges source="//@activity/@activities.0/@root/@ownedNodes.3/@elseBody/@ownedNodes.0" target="//@activity/@activities.0/@root/@ownedNodes.3/@elseBody/@ownedNodes.1"/>
+            <ownedEdges source="//@activity/@activities.0/@root/@ownedNodes.3/@elseBody/@ownedNodes.1" target="//@activity/@activities.0/@root/@ownedNodes.3/@elseBody/@ownedNodes.2"/>
           </elseBody>
         </ownedNodes>
         <ownedNodes xsi:type="dact:ActivityFinalNode" name="End" tEdge="//@activity/@activities.0/@root/@ownedEdges.3">
@@ -393,7 +397,7 @@
           <elseBody name="ElseBody">
             <ownedNodes xsi:type="dact:InitialNode" name="ElseBody-Init" sEdge="//@activity/@activities.2/@root/@ownedNodes.3/@elseBody/@ownedEdges.0"/>
             <ownedNodes xsi:type="dact:RaiseEntityNotFoundExceptionAction" name="CustomerNotFound" sEdge="//@activity/@activities.2/@root/@ownedNodes.3/@elseBody/@ownedEdges.1" tEdge="//@activity/@activities.2/@root/@ownedNodes.3/@elseBody/@ownedEdges.0" description="Cannot create cargo: Customer does not exist." entity="//@ddd/@boundedContexts.0/@ownedElements.0"/>
-            <ownedNodes xsi:type="dact:FlowFinalNode" name="Body-Final" tEdge="//@activity/@activities.2/@root/@ownedNodes.3/@elseBody/@ownedEdges.1"/>
+            <ownedNodes xsi:type="dact:FlowFinalNode" name="ElseBody-Final" tEdge="//@activity/@activities.2/@root/@ownedNodes.3/@elseBody/@ownedEdges.1"/>
             <ownedEdges source="//@activity/@activities.2/@root/@ownedNodes.3/@elseBody/@ownedNodes.0" target="//@activity/@activities.2/@root/@ownedNodes.3/@elseBody/@ownedNodes.1"/>
             <ownedEdges source="//@activity/@activities.2/@root/@ownedNodes.3/@elseBody/@ownedNodes.1" target="//@activity/@activities.2/@root/@ownedNodes.3/@elseBody/@ownedNodes.2"/>
           </elseBody>
@@ -477,7 +481,7 @@
           </test>
           <body name="Body">
             <ownedNodes xsi:type="dact:InitialNode" name="Body-Init" sEdge="//@activity/@activities.4/@root/@ownedNodes.2/@body/@ownedEdges.0"/>
-            <ownedNodes xsi:type="dact:DomainDeleteAction" name="HardDeleteCustomer" tEdge="//@activity/@activities.4/@root/@ownedNodes.2/@body/@ownedEdges.0" aggregate="//@ddd/@boundedContexts.0/@ownedElements.0">
+            <ownedNodes xsi:type="dact:DomainDeleteAction" name="HardDeleteCustomer" sEdge="//@activity/@activities.4/@root/@ownedNodes.2/@body/@ownedEdges.1" tEdge="//@activity/@activities.4/@root/@ownedNodes.2/@body/@ownedEdges.0" aggregate="//@ddd/@boundedContexts.0/@ownedElements.0">
               <mainExpr name="Target">
                 <child xsi:type="dact:BinaryExpression">
                   <operator xsi:type="dact:Eq"/>
@@ -494,12 +498,16 @@
                 </child>
               </mainExpr>
             </ownedNodes>
+            <ownedNodes xsi:type="dact:FlowFinalNode" name="Body-End" tEdge="//@activity/@activities.4/@root/@ownedNodes.2/@body/@ownedEdges.1"/>
             <ownedEdges source="//@activity/@activities.4/@root/@ownedNodes.2/@body/@ownedNodes.0" target="//@activity/@activities.4/@root/@ownedNodes.2/@body/@ownedNodes.1"/>
+            <ownedEdges source="//@activity/@activities.4/@root/@ownedNodes.2/@body/@ownedNodes.1" target="//@activity/@activities.4/@root/@ownedNodes.2/@body/@ownedNodes.2"/>
           </body>
           <elseBody name="ElseBody">
             <ownedNodes xsi:type="dact:InitialNode" name="ElseBody-Init" sEdge="//@activity/@activities.4/@root/@ownedNodes.2/@elseBody/@ownedEdges.0"/>
-            <ownedNodes xsi:type="dact:RaiseEntityNotFoundExceptionAction" name="CustomerNotFoundException" tEdge="//@activity/@activities.4/@root/@ownedNodes.2/@elseBody/@ownedEdges.0" description="Cannot delete: Customer with specified ID does not exist." entity="//@ddd/@boundedContexts.0/@ownedElements.0"/>
+            <ownedNodes xsi:type="dact:RaiseEntityNotFoundExceptionAction" name="CustomerNotFoundException" sEdge="//@activity/@activities.4/@root/@ownedNodes.2/@elseBody/@ownedEdges.1" tEdge="//@activity/@activities.4/@root/@ownedNodes.2/@elseBody/@ownedEdges.0" description="Cannot delete: Customer with specified ID does not exist." entity="//@ddd/@boundedContexts.0/@ownedElements.0"/>
+            <ownedNodes xsi:type="dact:FlowFinalNode" name="ElseBody-End" tEdge="//@activity/@activities.4/@root/@ownedNodes.2/@elseBody/@ownedEdges.1"/>
             <ownedEdges source="//@activity/@activities.4/@root/@ownedNodes.2/@elseBody/@ownedNodes.0" target="//@activity/@activities.4/@root/@ownedNodes.2/@elseBody/@ownedNodes.1"/>
+            <ownedEdges source="//@activity/@activities.4/@root/@ownedNodes.2/@elseBody/@ownedNodes.1" target="//@activity/@activities.4/@root/@ownedNodes.2/@elseBody/@ownedNodes.2"/>
           </elseBody>
         </ownedNodes>
         <ownedNodes xsi:type="dact:ActivityFinalNode" name="End" tEdge="//@activity/@activities.4/@root/@ownedEdges.2"/>
@@ -548,7 +556,7 @@
           </test>
           <body name="Body">
             <ownedNodes xsi:type="dact:InitialNode" name="Body-Init" sEdge="//@activity/@activities.5/@root/@ownedNodes.2/@body/@ownedEdges.0"/>
-            <ownedNodes xsi:type="dact:DomainDeleteAction" name="HardDeleteCargo" tEdge="//@activity/@activities.5/@root/@ownedNodes.2/@body/@ownedEdges.0" aggregate="//@ddd/@boundedContexts.2/@ownedElements.0">
+            <ownedNodes xsi:type="dact:DomainDeleteAction" name="HardDeleteCargo" sEdge="//@activity/@activities.5/@root/@ownedNodes.2/@body/@ownedEdges.1" tEdge="//@activity/@activities.5/@root/@ownedNodes.2/@body/@ownedEdges.0" aggregate="//@ddd/@boundedContexts.2/@ownedElements.0">
               <mainExpr name="Target">
                 <child xsi:type="dact:BinaryExpression">
                   <operator xsi:type="dact:Eq"/>
@@ -565,12 +573,16 @@
                 </child>
               </mainExpr>
             </ownedNodes>
+            <ownedNodes xsi:type="dact:FlowFinalNode" name="Body-End" tEdge="//@activity/@activities.5/@root/@ownedNodes.2/@body/@ownedEdges.1"/>
             <ownedEdges source="//@activity/@activities.5/@root/@ownedNodes.2/@body/@ownedNodes.0" target="//@activity/@activities.5/@root/@ownedNodes.2/@body/@ownedNodes.1"/>
+            <ownedEdges source="//@activity/@activities.5/@root/@ownedNodes.2/@body/@ownedNodes.1" target="//@activity/@activities.5/@root/@ownedNodes.2/@body/@ownedNodes.2"/>
           </body>
           <elseBody name="ElseBody">
             <ownedNodes xsi:type="dact:InitialNode" name="ElseBody-Init" sEdge="//@activity/@activities.5/@root/@ownedNodes.2/@elseBody/@ownedEdges.0"/>
-            <ownedNodes xsi:type="dact:RaiseEntityNotFoundExceptionAction" name="CargoNotFoundException" tEdge="//@activity/@activities.5/@root/@ownedNodes.2/@elseBody/@ownedEdges.0" description="Cannot delete: Cargo with specified tracking ID does not exist." entity="//@ddd/@boundedContexts.2/@ownedElements.0"/>
+            <ownedNodes xsi:type="dact:RaiseEntityNotFoundExceptionAction" name="CargoNotFoundException" sEdge="//@activity/@activities.5/@root/@ownedNodes.2/@elseBody/@ownedEdges.1" tEdge="//@activity/@activities.5/@root/@ownedNodes.2/@elseBody/@ownedEdges.0" description="Cannot delete: Cargo with specified tracking ID does not exist." entity="//@ddd/@boundedContexts.2/@ownedElements.0"/>
+            <ownedNodes xsi:type="dact:FlowFinalNode" name="ElseBody-End" tEdge="//@activity/@activities.5/@root/@ownedNodes.2/@elseBody/@ownedEdges.1"/>
             <ownedEdges source="//@activity/@activities.5/@root/@ownedNodes.2/@elseBody/@ownedNodes.0" target="//@activity/@activities.5/@root/@ownedNodes.2/@elseBody/@ownedNodes.1"/>
+            <ownedEdges source="//@activity/@activities.5/@root/@ownedNodes.2/@elseBody/@ownedNodes.1" target="//@activity/@activities.5/@root/@ownedNodes.2/@elseBody/@ownedNodes.2"/>
           </elseBody>
         </ownedNodes>
         <ownedNodes xsi:type="dact:ActivityFinalNode" name="End" tEdge="//@activity/@activities.5/@root/@ownedEdges.2"/>
@@ -682,8 +694,10 @@
           </body>
           <elseBody name="ElseBody">
             <ownedNodes xsi:type="dact:InitialNode" name="ElseBody-Init" sEdge="//@activity/@activities.6/@root/@ownedNodes.3/@elseBody/@ownedEdges.0"/>
-            <ownedNodes xsi:type="dact:RaiseEntityNotFoundExceptionAction" name="CargoNotFoundException" tEdge="//@activity/@activities.6/@root/@ownedNodes.3/@elseBody/@ownedEdges.0" description="Cannot create handling event: Cargo with specified tracking ID does not exist." entity="//@ddd/@boundedContexts.2/@ownedElements.0"/>
+            <ownedNodes xsi:type="dact:RaiseEntityNotFoundExceptionAction" name="CargoNotFoundException" sEdge="//@activity/@activities.6/@root/@ownedNodes.3/@elseBody/@ownedEdges.1" tEdge="//@activity/@activities.6/@root/@ownedNodes.3/@elseBody/@ownedEdges.0" description="Cannot create handling event: Cargo with specified tracking ID does not exist." entity="//@ddd/@boundedContexts.2/@ownedElements.0"/>
+            <ownedNodes xsi:type="dact:FlowFinalNode" name="ElseBody-End" tEdge="//@activity/@activities.6/@root/@ownedNodes.3/@elseBody/@ownedEdges.1"/>
             <ownedEdges source="//@activity/@activities.6/@root/@ownedNodes.3/@elseBody/@ownedNodes.0" target="//@activity/@activities.6/@root/@ownedNodes.3/@elseBody/@ownedNodes.1"/>
+            <ownedEdges source="//@activity/@activities.6/@root/@ownedNodes.3/@elseBody/@ownedNodes.1" target="//@activity/@activities.6/@root/@ownedNodes.3/@elseBody/@ownedNodes.2"/>
           </elseBody>
         </ownedNodes>
         <ownedNodes xsi:type="dact:ActivityFinalNode" name="End" tEdge="//@activity/@activities.6/@root/@ownedEdges.3">
@@ -751,7 +765,7 @@
                 </expr>
               </assignment>
             </ownedNodes>
-            <ownedNodes xsi:type="dact:DomainUpdateAction" name="PersistDeliveryHistoryToCargo" tEdge="//@activity/@activities.7/@root/@ownedNodes.3/@body/@ownedEdges.1" aggregate="//@ddd/@boundedContexts.2/@ownedElements.0">
+            <ownedNodes xsi:type="dact:DomainUpdateAction" name="PersistDeliveryHistoryToCargo" sEdge="//@activity/@activities.7/@root/@ownedNodes.3/@body/@ownedEdges.2" tEdge="//@activity/@activities.7/@root/@ownedNodes.3/@body/@ownedEdges.1" aggregate="//@ddd/@boundedContexts.2/@ownedElements.0">
               <result name="targetCargo"/>
               <mainExpr name="Main">
                 <child xsi:type="dact:BinaryExpression">
@@ -769,13 +783,17 @@
                 </child>
               </mainExpr>
             </ownedNodes>
+            <ownedNodes xsi:type="dact:FlowFinalNode" name="Body-End" tEdge="//@activity/@activities.7/@root/@ownedNodes.3/@body/@ownedEdges.2"/>
             <ownedEdges source="//@activity/@activities.7/@root/@ownedNodes.3/@body/@ownedNodes.0" target="//@activity/@activities.7/@root/@ownedNodes.3/@body/@ownedNodes.1"/>
             <ownedEdges source="//@activity/@activities.7/@root/@ownedNodes.3/@body/@ownedNodes.1" target="//@activity/@activities.7/@root/@ownedNodes.3/@body/@ownedNodes.2"/>
+            <ownedEdges source="//@activity/@activities.7/@root/@ownedNodes.3/@body/@ownedNodes.2" target="//@activity/@activities.7/@root/@ownedNodes.3/@body/@ownedNodes.3"/>
           </body>
           <elseBody name="ElseBody">
             <ownedNodes xsi:type="dact:InitialNode" name="ElseBody-Init" sEdge="//@activity/@activities.7/@root/@ownedNodes.3/@elseBody/@ownedEdges.0"/>
-            <ownedNodes xsi:type="dact:RaiseEntityNotFoundExceptionAction" name="CargoNotFoundException" tEdge="//@activity/@activities.7/@root/@ownedNodes.3/@elseBody/@ownedEdges.0" description="Cannot create delivery history: Cargo with specified tracking ID does not exist." entity="//@ddd/@boundedContexts.2/@ownedElements.0"/>
+            <ownedNodes xsi:type="dact:RaiseEntityNotFoundExceptionAction" name="CargoNotFoundException" sEdge="//@activity/@activities.7/@root/@ownedNodes.3/@elseBody/@ownedEdges.1" tEdge="//@activity/@activities.7/@root/@ownedNodes.3/@elseBody/@ownedEdges.0" description="Cannot create delivery history: Cargo with specified tracking ID does not exist." entity="//@ddd/@boundedContexts.2/@ownedElements.0"/>
+            <ownedNodes xsi:type="dact:FlowFinalNode" name="ElseBody-End" tEdge="//@activity/@activities.7/@root/@ownedNodes.3/@elseBody/@ownedEdges.1"/>
             <ownedEdges source="//@activity/@activities.7/@root/@ownedNodes.3/@elseBody/@ownedNodes.0" target="//@activity/@activities.7/@root/@ownedNodes.3/@elseBody/@ownedNodes.1"/>
+            <ownedEdges source="//@activity/@activities.7/@root/@ownedNodes.3/@elseBody/@ownedNodes.1" target="//@activity/@activities.7/@root/@ownedNodes.3/@elseBody/@ownedNodes.2"/>
           </elseBody>
         </ownedNodes>
         <ownedNodes xsi:type="dact:ActivityFinalNode" name="End" tEdge="//@activity/@activities.7/@root/@ownedEdges.3">
@@ -869,7 +887,7 @@
                 </expr>
               </assignment>
             </ownedNodes>
-            <ownedNodes xsi:type="dact:DomainCreateAction" name="PersistLocation" tEdge="//@activity/@activities.9/@root/@ownedNodes.3/@body/@ownedEdges.1" aggregate="//@ddd/@boundedContexts.1/@ownedElements.0">
+            <ownedNodes xsi:type="dact:DomainCreateAction" name="PersistLocation" sEdge="//@activity/@activities.9/@root/@ownedNodes.3/@body/@ownedEdges.2" tEdge="//@activity/@activities.9/@root/@ownedNodes.3/@body/@ownedEdges.1" aggregate="//@ddd/@boundedContexts.1/@ownedElements.0">
               <result name="newLocation"/>
               <mainExpr name="Main">
                 <child xsi:type="dact:BinaryExpression">
@@ -887,13 +905,17 @@
                 </child>
               </mainExpr>
             </ownedNodes>
+            <ownedNodes xsi:type="dact:FlowFinalNode" name="Body-End" tEdge="//@activity/@activities.9/@root/@ownedNodes.3/@body/@ownedEdges.2"/>
             <ownedEdges source="//@activity/@activities.9/@root/@ownedNodes.3/@body/@ownedNodes.0" target="//@activity/@activities.9/@root/@ownedNodes.3/@body/@ownedNodes.1"/>
             <ownedEdges source="//@activity/@activities.9/@root/@ownedNodes.3/@body/@ownedNodes.1" target="//@activity/@activities.9/@root/@ownedNodes.3/@body/@ownedNodes.2"/>
+            <ownedEdges source="//@activity/@activities.9/@root/@ownedNodes.3/@body/@ownedNodes.2" target="//@activity/@activities.9/@root/@ownedNodes.3/@body/@ownedNodes.3"/>
           </body>
           <elseBody name="ElseBody">
             <ownedNodes xsi:type="dact:InitialNode" name="ElseBody-Init" sEdge="//@activity/@activities.9/@root/@ownedNodes.3/@elseBody/@ownedEdges.0"/>
-            <ownedNodes xsi:type="dact:RaiseExceptionAction" name="DuplicateLocationException" tEdge="//@activity/@activities.9/@root/@ownedNodes.3/@elseBody/@ownedEdges.0" description="Location with given portCode already exists."/>
+            <ownedNodes xsi:type="dact:RaiseExceptionAction" name="DuplicateLocationException" sEdge="//@activity/@activities.9/@root/@ownedNodes.3/@elseBody/@ownedEdges.1" tEdge="//@activity/@activities.9/@root/@ownedNodes.3/@elseBody/@ownedEdges.0" description="Location with given portCode already exists."/>
+            <ownedNodes xsi:type="dact:FlowFinalNode" name="ElseBody-End" tEdge="//@activity/@activities.9/@root/@ownedNodes.3/@elseBody/@ownedEdges.1"/>
             <ownedEdges source="//@activity/@activities.9/@root/@ownedNodes.3/@elseBody/@ownedNodes.0" target="//@activity/@activities.9/@root/@ownedNodes.3/@elseBody/@ownedNodes.1"/>
+            <ownedEdges source="//@activity/@activities.9/@root/@ownedNodes.3/@elseBody/@ownedNodes.1" target="//@activity/@activities.9/@root/@ownedNodes.3/@elseBody/@ownedNodes.2"/>
           </elseBody>
         </ownedNodes>
         <ownedNodes xsi:type="dact:ActivityFinalNode" name="End" tEdge="//@activity/@activities.9/@root/@ownedEdges.3">
@@ -995,8 +1017,10 @@
           </body>
           <elseBody name="ElseBody">
             <ownedNodes xsi:type="dact:InitialNode" name="ElseBody-Init" sEdge="//@activity/@activities.13/@root/@ownedNodes.2/@elseBody/@ownedEdges.0"/>
-            <ownedNodes xsi:type="dact:RaiseEntityNotFoundExceptionAction" name="LocationNotFoundException" tEdge="//@activity/@activities.13/@root/@ownedNodes.2/@elseBody/@ownedEdges.0" description="Location with given port code does not exist." entity="//@ddd/@boundedContexts.1/@ownedElements.0"/>
+            <ownedNodes xsi:type="dact:RaiseEntityNotFoundExceptionAction" name="LocationNotFoundException" sEdge="//@activity/@activities.13/@root/@ownedNodes.2/@elseBody/@ownedEdges.1" tEdge="//@activity/@activities.13/@root/@ownedNodes.2/@elseBody/@ownedEdges.0" description="Location with given port code does not exist." entity="//@ddd/@boundedContexts.1/@ownedElements.0"/>
+            <ownedNodes xsi:type="dact:FlowFinalNode" name="ElseBody-End" tEdge="//@activity/@activities.13/@root/@ownedNodes.2/@elseBody/@ownedEdges.1"/>
             <ownedEdges source="//@activity/@activities.13/@root/@ownedNodes.2/@elseBody/@ownedNodes.0" target="//@activity/@activities.13/@root/@ownedNodes.2/@elseBody/@ownedNodes.1"/>
+            <ownedEdges source="//@activity/@activities.13/@root/@ownedNodes.2/@elseBody/@ownedNodes.1" target="//@activity/@activities.13/@root/@ownedNodes.2/@elseBody/@ownedNodes.2"/>
           </elseBody>
         </ownedNodes>
         <ownedNodes xsi:type="dact:ActivityFinalNode" name="End" tEdge="//@activity/@activities.13/@root/@ownedEdges.2">
