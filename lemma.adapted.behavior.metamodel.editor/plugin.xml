@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?eclipse version="3.0"?>
+
+<!--
+-->
+
+<plugin>
+
+   <extension point="org.eclipse.ui.newWizards">
+      <!-- @generated BehaviorViewPointModel -->
+      <category
+            id="org.eclipse.emf.ecore.Wizard.category.ID"
+            name="%_UI_Wizard_category"/>
+      <wizard
+            id="lemma.adapted.xcore.behavior.presentation.BehaviorModelWizardID"
+            name="%_UI_BehaviorModelWizard_label"
+            class="lemma.adapted.xcore.behavior.presentation.BehaviorModelWizard"
+            category="org.eclipse.emf.ecore.Wizard.category.ID"
+            icon="icons/full/obj16/BehaviorModelFile.gif">
+         <description>%_UI_BehaviorModelWizard_description</description>
+         <selection class="org.eclipse.core.resources.IResource"/>
+      </wizard>
+   </extension>
+
+   <extension point="org.eclipse.ui.editors">
+      <!-- @generated BehaviorViewPointModel -->
+      <editor
+            id="lemma.adapted.xcore.behavior.presentation.BehaviorEditorID"
+            name="%_UI_BehaviorEditor_label"
+            icon="icons/full/obj16/BehaviorModelFile.gif"
+            extensions="behavior"
+            class="lemma.adapted.xcore.behavior.presentation.BehaviorEditor"
+            contributorClass="lemma.adapted.xcore.behavior.presentation.BehaviorActionBarContributor">
+      </editor>
+   </extension>
+
+</plugin>

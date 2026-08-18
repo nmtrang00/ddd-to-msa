@@ -40,13 +40,22 @@ public interface BehaviorFactory extends EFactory {
 	ActivityModel createActivityModel();
 
 	/**
-	 * Returns a new object of class '<em>Invariant Data Operation</em>'.
+	 * Returns a new object of class '<em>Spec Data Operation</em>'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @return a new object of class '<em>Invariant Data Operation</em>'.
+	 * @return a new object of class '<em>Spec Data Operation</em>'.
 	 * @generated
 	 */
-	InvariantDataOperation createInvariantDataOperation();
+	SpecDataOperation createSpecDataOperation();
+
+	/**
+	 * Returns a new object of class '<em>Spec Rule</em>'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return a new object of class '<em>Spec Rule</em>'.
+	 * @generated
+	 */
+	SpecRule createSpecRule();
 
 	/**
 	 * Returns a new object of class '<em>Imported Interface Operation</em>'.
@@ -281,15 +290,6 @@ public interface BehaviorFactory extends EFactory {
 	 * @generated
 	 */
 	ParameterMapping createParameterMapping();
-
-	/**
-	 * Returns a new object of class '<em>Expression</em>'.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @return a new object of class '<em>Expression</em>'.
-	 * @generated
-	 */
-	Expression createExpression();
 
 	/**
 	 * Returns a new object of class '<em>Unary Expression</em>'.

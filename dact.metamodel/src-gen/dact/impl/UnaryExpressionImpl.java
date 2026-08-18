@@ -29,7 +29,7 @@ import org.eclipse.emf.ecore.impl.ENotificationImpl;
  *
  * @generated
  */
-public class UnaryExpressionImpl extends ExpressionChildImpl implements UnaryExpression {
+public class UnaryExpressionImpl extends ExpressionImpl implements UnaryExpression {
 	/**
 	 * The cached value of the '{@link #getValue() <em>Value</em>}' containment reference.
 	 * <!-- begin-user-doc -->

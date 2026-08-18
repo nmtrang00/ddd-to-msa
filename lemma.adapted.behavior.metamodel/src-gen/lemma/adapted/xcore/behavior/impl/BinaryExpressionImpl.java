@@ -30,7 +30,7 @@ import org.eclipse.emf.ecore.impl.ENotificationImpl;
  *
  * @generated
  */
-public class BinaryExpressionImpl extends ExpressionChildImpl implements BinaryExpression {
+public class BinaryExpressionImpl extends ExpressionImpl implements BinaryExpression {
 	/**
 	 * The cached value of the '{@link #getOperator() <em>Operator</em>}' containment reference.
 	 * <!-- begin-user-doc -->

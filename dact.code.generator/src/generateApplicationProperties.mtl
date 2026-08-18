@@ -11,7 +11,53 @@
 
 [comment @main/]
 [template public generateApplicationProperties(serviceModel : service::ServiceModel)]
-[for (ms : service::Microservice | serviceModel.microservices)]
+[let microservices : Sequence(service::Microservice) = serviceModel.microservices
+]
+[for (ms : service::Microservice| microservices)]
+[ms.generateApplicationPropertiesPerService(microservices)/]
+[/for]
+[serviceModel.generateReadme(microservices)/]
+[/let]
+[/template]
+
+[template public generateReadme(
+	serviceModel: service::ServiceModel,
+	microservices : Sequence(service::Microservice)
+)]
+[file ('README.md', overwrite, 'UTF-8')]
+[for (ms: service::Microservice|microservices)]
+[let msPort : Integer = ms.getPort(microservices),
+  projectName : String = ms.name.toCamelCase()
+]
+  # '[projectName.toUpper()/]' Microservice
+  ```bash
+  cd [projectName/]-service
+  
+  # Test 
+  mvn clean test -e
+  
+  # Deploy locally
+  mvn clean spring-boot:run
+  
+  # Service API
+  http://localhost:[msPort/]
+  
+  # Access swagger/swagger-ui.html
+  http://localhost:[msPort/]/swagger-ui/index.html
+  
+  # Access H2 Database
+  http://localhost:[msPort/]/h2-console
+  ```
+  
+[/let]
+[/for]
+[/file]
+[/template]
+
+[template public generateApplicationPropertiesPerService(
+  ms : service::Microservice,
+  microservices : Sequence(service::Microservice)
+)]
   	[let projectName : String = ms.name.toCamelCase()]
 	[file (projectName+'-service/src/main/resources/application.properties', overwrite, 'UTF-8')]
 	  spring.application.name=[projectName/]
@@ -28,21 +74,18 @@
 	
 	  # Show SQL queries in the console log
 	  spring.jpa.show-sql=true
-	  
+	
 	  # Services
-	[let ownPort : Integer = 8080 + serviceModel.microservices->indexOf(ms)]
-	  server.port=${SERVER_PORT:[ownPort/]}
-	[/let]
-
+	  server.port=${SERVER_PORT:[ms.getPort(microservices)/]}
+	
 	  # External Services Base URLs
-	[for (otherMs : service::Microservice | serviceModel.microservices)]
-	[if (otherMs != ms)]
+	[for (otherMs | microservices -> reject(other|other = ms))]
+
 	[let envVar : String = otherMs.name.toSnakeCase().toUpper(), 
      propKey : String = otherMs.name.toKebabCase(),
-     targetPort : Integer = 8080 + serviceModel.microservices->indexOf(otherMs)]
+     targetPort: Integer = otherMs.getPort(microservices)]
 	  services.[propKey/].url=${[envVar/]_URL:http://localhost:[targetPort/]}
 	[/let]
-	[/if]
 	[/for]
 
 	  # OpenAPI / Swagger UI Settings
@@ -56,5 +99,7 @@
 
 	[/file]
 	[/let]
-[/for]
 [/template]
+
+[query public getPort(target: service::Microservice,microservices: Sequence(service::Microservice), ): Integer = 
+	8080 + microservices->indexOf(target)/]

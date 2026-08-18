@@ -180,7 +180,7 @@ query DACT::Property::GetCorrespondingDataFieldFeatures(): Sequence(DATA::DataFi
 mapping DACT::Operation::OperationToDataOperation(): DATA::DataOperation
 when {
 	// Within this transformation, only non-invariant is transformed!
-    not self.oclIsKindOf(DACT::InvariantOperation);
+    not self.oclIsKindOf(DACT::SpecOperation);
 }
 {
 	self.printInfo(3);
@@ -231,9 +231,7 @@ query DACT::Operation::GetCorrespondingDataFieldFeatures(): Sequence(DATA::DataO
 	
 	-- TODO: Uncomment when support operation defining id
 //	if (self.definesIdentity) then { features += DATA::DataOperationFeature::IDENTIFIER} endif;
-	if (self.closure) then { features += DATA::DataOperationFeature::CLOSURE} endif;
-	if (self.sideEffectFree) then { features += DATA::DataOperationFeature::SIDE_EFFECT_FREE} endif;
-	if (self.validatesSpec) then { features += DATA::DataOperationFeature::VALIDATOR} endif;
+	if (self.oclIsKindOf(DACT::SpecOperation)) then { features += DATA::DataOperationFeature::VALIDATOR} endif;
 	
 	return features;
 }

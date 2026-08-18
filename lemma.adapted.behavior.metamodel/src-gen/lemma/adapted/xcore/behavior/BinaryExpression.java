@@ -21,7 +21,7 @@ package lemma.adapted.xcore.behavior;
  * @model
  * @generated
  */
-public interface BinaryExpression extends ExpressionChild {
+public interface BinaryExpression extends Expression {
 	/**
 	 * Returns the value of the '<em><b>Operator</b></em>' containment reference.
 	 * <!-- begin-user-doc -->

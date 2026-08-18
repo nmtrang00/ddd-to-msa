@@ -19,7 +19,7 @@ package dact;
  * @model
  * @generated
  */
-public interface NotExpression extends ExpressionChild {
+public interface NotExpression extends Expression {
 	/**
 	 * Returns the value of the '<em><b>Expr</b></em>' containment reference.
 	 * <!-- begin-user-doc -->
@@ -41,13 +41,5 @@ public interface NotExpression extends ExpressionChild {
 	 * @generated
 	 */
 	void setExpr(Expression value);
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @model
-	 * @generated
-	 */
-	void init();
 
 } // NotExpression

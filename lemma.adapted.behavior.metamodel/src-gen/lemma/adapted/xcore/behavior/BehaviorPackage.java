@@ -189,14 +189,14 @@ public interface BehaviorPackage extends EPackage {
 	int NAMED_ELEMENT_OPERATION_COUNT = 0;
 
 	/**
-	 * The meta object id for the '{@link lemma.adapted.xcore.behavior.impl.InvariantDataOperationImpl <em>Invariant Data Operation</em>}' class.
+	 * The meta object id for the '{@link lemma.adapted.xcore.behavior.impl.SpecDataOperationImpl <em>Spec Data Operation</em>}' class.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @see lemma.adapted.xcore.behavior.impl.InvariantDataOperationImpl
-	 * @see lemma.adapted.xcore.behavior.impl.BehaviorPackageImpl#getInvariantDataOperation()
+	 * @see lemma.adapted.xcore.behavior.impl.SpecDataOperationImpl
+	 * @see lemma.adapted.xcore.behavior.impl.BehaviorPackageImpl#getSpecDataOperation()
 	 * @generated
 	 */
-	int INVARIANT_DATA_OPERATION = 3;
+	int SPEC_DATA_OPERATION = 3;
 
 	/**
 	 * The feature id for the '<em><b>Name</b></em>' attribute.
@@ -205,7 +205,7 @@ public interface BehaviorPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int INVARIANT_DATA_OPERATION__NAME = DataPackage.DATA_OPERATION__NAME;
+	int SPEC_DATA_OPERATION__NAME = DataPackage.DATA_OPERATION__NAME;
 
 	/**
 	 * The feature id for the '<em><b>Hidden</b></em>' attribute.
@@ -214,7 +214,7 @@ public interface BehaviorPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int INVARIANT_DATA_OPERATION__HIDDEN = DataPackage.DATA_OPERATION__HIDDEN;
+	int SPEC_DATA_OPERATION__HIDDEN = DataPackage.DATA_OPERATION__HIDDEN;
 
 	/**
 	 * The feature id for the '<em><b>Has No Return Type</b></em>' attribute.
@@ -223,7 +223,7 @@ public interface BehaviorPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int INVARIANT_DATA_OPERATION__HAS_NO_RETURN_TYPE = DataPackage.DATA_OPERATION__HAS_NO_RETURN_TYPE;
+	int SPEC_DATA_OPERATION__HAS_NO_RETURN_TYPE = DataPackage.DATA_OPERATION__HAS_NO_RETURN_TYPE;
 
 	/**
 	 * The feature id for the '<em><b>Features</b></em>' attribute list.
@@ -232,7 +232,7 @@ public interface BehaviorPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int INVARIANT_DATA_OPERATION__FEATURES = DataPackage.DATA_OPERATION__FEATURES;
+	int SPEC_DATA_OPERATION__FEATURES = DataPackage.DATA_OPERATION__FEATURES;
 
 	/**
 	 * The feature id for the '<em><b>Operation Type</b></em>' attribute.
@@ -241,7 +241,7 @@ public interface BehaviorPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int INVARIANT_DATA_OPERATION__OPERATION_TYPE = DataPackage.DATA_OPERATION__OPERATION_TYPE;
+	int SPEC_DATA_OPERATION__OPERATION_TYPE = DataPackage.DATA_OPERATION__OPERATION_TYPE;
 
 	/**
 	 * The feature id for the '<em><b>Parameters</b></em>' containment reference list.
@@ -250,7 +250,7 @@ public interface BehaviorPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int INVARIANT_DATA_OPERATION__PARAMETERS = DataPackage.DATA_OPERATION__PARAMETERS;
+	int SPEC_DATA_OPERATION__PARAMETERS = DataPackage.DATA_OPERATION__PARAMETERS;
 
 	/**
 	 * The feature id for the '<em><b>Data Structure</b></em>' container reference.
@@ -259,7 +259,7 @@ public interface BehaviorPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int INVARIANT_DATA_OPERATION__DATA_STRUCTURE = DataPackage.DATA_OPERATION__DATA_STRUCTURE;
+	int SPEC_DATA_OPERATION__DATA_STRUCTURE = DataPackage.DATA_OPERATION__DATA_STRUCTURE;
 
 	/**
 	 * The feature id for the '<em><b>Inherited</b></em>' attribute.
@@ -268,25 +268,34 @@ public interface BehaviorPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int INVARIANT_DATA_OPERATION__INHERITED = DataPackage.DATA_OPERATION__INHERITED;
+	int SPEC_DATA_OPERATION__INHERITED = DataPackage.DATA_OPERATION__INHERITED;
 
 	/**
-	 * The feature id for the '<em><b>Expr</b></em>' containment reference list.
+	 * The feature id for the '<em><b>Is Invariant</b></em>' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
-	int INVARIANT_DATA_OPERATION__EXPR = DataPackage.DATA_OPERATION_FEATURE_COUNT + 0;
+	int SPEC_DATA_OPERATION__IS_INVARIANT = DataPackage.DATA_OPERATION_FEATURE_COUNT + 0;
 
 	/**
-	 * The number of structural features of the '<em>Invariant Data Operation</em>' class.
+	 * The feature id for the '<em><b>Owned Rules</b></em>' containment reference list.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
-	int INVARIANT_DATA_OPERATION_FEATURE_COUNT = DataPackage.DATA_OPERATION_FEATURE_COUNT + 1;
+	int SPEC_DATA_OPERATION__OWNED_RULES = DataPackage.DATA_OPERATION_FEATURE_COUNT + 1;
+
+	/**
+	 * The number of structural features of the '<em>Spec Data Operation</em>' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int SPEC_DATA_OPERATION_FEATURE_COUNT = DataPackage.DATA_OPERATION_FEATURE_COUNT + 2;
 
 	/**
 	 * The operation id for the '<em>Get Qualified Name Parts</em>' operation.
@@ -295,7 +304,7 @@ public interface BehaviorPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int INVARIANT_DATA_OPERATION___GET_QUALIFIED_NAME_PARTS = DataPackage.DATA_OPERATION___GET_QUALIFIED_NAME_PARTS;
+	int SPEC_DATA_OPERATION___GET_QUALIFIED_NAME_PARTS = DataPackage.DATA_OPERATION___GET_QUALIFIED_NAME_PARTS;
 
 	/**
 	 * The operation id for the '<em>Build Qualified Name</em>' operation.
@@ -304,7 +313,7 @@ public interface BehaviorPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int INVARIANT_DATA_OPERATION___BUILD_QUALIFIED_NAME__STRING = DataPackage.DATA_OPERATION___BUILD_QUALIFIED_NAME__STRING;
+	int SPEC_DATA_OPERATION___BUILD_QUALIFIED_NAME__STRING = DataPackage.DATA_OPERATION___BUILD_QUALIFIED_NAME__STRING;
 
 	/**
 	 * The operation id for the '<em>Find Eponymous Super Operation</em>' operation.
@@ -313,7 +322,7 @@ public interface BehaviorPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int INVARIANT_DATA_OPERATION___FIND_EPONYMOUS_SUPER_OPERATION = DataPackage.DATA_OPERATION___FIND_EPONYMOUS_SUPER_OPERATION;
+	int SPEC_DATA_OPERATION___FIND_EPONYMOUS_SUPER_OPERATION = DataPackage.DATA_OPERATION___FIND_EPONYMOUS_SUPER_OPERATION;
 
 	/**
 	 * The operation id for the '<em>Has Feature</em>' operation.
@@ -322,16 +331,71 @@ public interface BehaviorPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int INVARIANT_DATA_OPERATION___HAS_FEATURE__DATAOPERATIONFEATURE = DataPackage.DATA_OPERATION___HAS_FEATURE__DATAOPERATIONFEATURE;
+	int SPEC_DATA_OPERATION___HAS_FEATURE__DATAOPERATIONFEATURE = DataPackage.DATA_OPERATION___HAS_FEATURE__DATAOPERATIONFEATURE;
 
 	/**
-	 * The number of operations of the '<em>Invariant Data Operation</em>' class.
+	 * The number of operations of the '<em>Spec Data Operation</em>' class.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
-	int INVARIANT_DATA_OPERATION_OPERATION_COUNT = DataPackage.DATA_OPERATION_OPERATION_COUNT + 0;
+	int SPEC_DATA_OPERATION_OPERATION_COUNT = DataPackage.DATA_OPERATION_OPERATION_COUNT + 0;
+
+	/**
+	 * The meta object id for the '{@link lemma.adapted.xcore.behavior.impl.SpecRuleImpl <em>Spec Rule</em>}' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see lemma.adapted.xcore.behavior.impl.SpecRuleImpl
+	 * @see lemma.adapted.xcore.behavior.impl.BehaviorPackageImpl#getSpecRule()
+	 * @generated
+	 */
+	int SPEC_RULE = 4;
+
+	/**
+	 * The feature id for the '<em><b>Name</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int SPEC_RULE__NAME = NAMED_ELEMENT__NAME;
+
+	/**
+	 * The feature id for the '<em><b>Raw String</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int SPEC_RULE__RAW_STRING = NAMED_ELEMENT_FEATURE_COUNT + 0;
+
+	/**
+	 * The feature id for the '<em><b>Expr</b></em>' containment reference.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int SPEC_RULE__EXPR = NAMED_ELEMENT_FEATURE_COUNT + 1;
+
+	/**
+	 * The number of structural features of the '<em>Spec Rule</em>' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int SPEC_RULE_FEATURE_COUNT = NAMED_ELEMENT_FEATURE_COUNT + 2;
+
+	/**
+	 * The number of operations of the '<em>Spec Rule</em>' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int SPEC_RULE_OPERATION_COUNT = NAMED_ELEMENT_OPERATION_COUNT + 0;
 
 	/**
 	 * The meta object id for the '{@link lemma.adapted.xcore.behavior.impl.ImportedOperationImpl <em>Imported Operation</em>}' class.
@@ -341,7 +405,7 @@ public interface BehaviorPackage extends EPackage {
 	 * @see lemma.adapted.xcore.behavior.impl.BehaviorPackageImpl#getImportedOperation()
 	 * @generated
 	 */
-	int IMPORTED_OPERATION = 4;
+	int IMPORTED_OPERATION = 5;
 
 	/**
 	 * The feature id for the '<em><b>Import</b></em>' reference.
@@ -378,7 +442,7 @@ public interface BehaviorPackage extends EPackage {
 	 * @see lemma.adapted.xcore.behavior.impl.BehaviorPackageImpl#getImportedInterfaceOperation()
 	 * @generated
 	 */
-	int IMPORTED_INTERFACE_OPERATION = 5;
+	int IMPORTED_INTERFACE_OPERATION = 6;
 
 	/**
 	 * The feature id for the '<em><b>Import</b></em>' reference.
@@ -424,7 +488,7 @@ public interface BehaviorPackage extends EPackage {
 	 * @see lemma.adapted.xcore.behavior.impl.BehaviorPackageImpl#getImportedDataOperation()
 	 * @generated
 	 */
-	int IMPORTED_DATA_OPERATION = 6;
+	int IMPORTED_DATA_OPERATION = 7;
 
 	/**
 	 * The feature id for the '<em><b>Import</b></em>' reference.
@@ -470,7 +534,7 @@ public interface BehaviorPackage extends EPackage {
 	 * @see lemma.adapted.xcore.behavior.impl.BehaviorPackageImpl#getImportedParameter()
 	 * @generated
 	 */
-	int IMPORTED_PARAMETER = 7;
+	int IMPORTED_PARAMETER = 8;
 
 	/**
 	 * The feature id for the '<em><b>Import</b></em>' reference.
@@ -507,7 +571,7 @@ public interface BehaviorPackage extends EPackage {
 	 * @see lemma.adapted.xcore.behavior.impl.BehaviorPackageImpl#getImportedInterfaceParameter()
 	 * @generated
 	 */
-	int IMPORTED_INTERFACE_PARAMETER = 8;
+	int IMPORTED_INTERFACE_PARAMETER = 9;
 
 	/**
 	 * The feature id for the '<em><b>Import</b></em>' reference.
@@ -553,7 +617,7 @@ public interface BehaviorPackage extends EPackage {
 	 * @see lemma.adapted.xcore.behavior.impl.BehaviorPackageImpl#getImportedDataParameter()
 	 * @generated
 	 */
-	int IMPORTED_DATA_PARAMETER = 9;
+	int IMPORTED_DATA_PARAMETER = 10;
 
 	/**
 	 * The feature id for the '<em><b>Import</b></em>' reference.
@@ -599,7 +663,7 @@ public interface BehaviorPackage extends EPackage {
 	 * @see lemma.adapted.xcore.behavior.impl.BehaviorPackageImpl#getBehavior()
 	 * @generated
 	 */
-	int BEHAVIOR = 10;
+	int BEHAVIOR = 11;
 
 	/**
 	 * The feature id for the '<em><b>Specification</b></em>' containment reference.
@@ -636,7 +700,7 @@ public interface BehaviorPackage extends EPackage {
 	 * @see lemma.adapted.xcore.behavior.impl.BehaviorPackageImpl#getActivity()
 	 * @generated
 	 */
-	int ACTIVITY = 11;
+	int ACTIVITY = 12;
 
 	/**
 	 * The feature id for the '<em><b>Name</b></em>' attribute.
@@ -718,7 +782,7 @@ public interface BehaviorPackage extends EPackage {
 	 * @see lemma.adapted.xcore.behavior.impl.BehaviorPackageImpl#getScope()
 	 * @generated
 	 */
-	int SCOPE = 12;
+	int SCOPE = 13;
 
 	/**
 	 * The feature id for the '<em><b>Parent</b></em>' reference.
@@ -791,7 +855,7 @@ public interface BehaviorPackage extends EPackage {
 	 * @see lemma.adapted.xcore.behavior.impl.BehaviorPackageImpl#getIdentifier()
 	 * @generated
 	 */
-	int IDENTIFIER = 13;
+	int IDENTIFIER = 14;
 
 	/**
 	 * The feature id for the '<em><b>Name</b></em>' attribute.
@@ -828,7 +892,7 @@ public interface BehaviorPackage extends EPackage {
 	 * @see lemma.adapted.xcore.behavior.impl.BehaviorPackageImpl#getActivityGroup()
 	 * @generated
 	 */
-	int ACTIVITY_GROUP = 14;
+	int ACTIVITY_GROUP = 15;
 
 	/**
 	 * The feature id for the '<em><b>Name</b></em>' attribute.
@@ -964,7 +1028,7 @@ public interface BehaviorPackage extends EPackage {
 	 * @see lemma.adapted.xcore.behavior.impl.BehaviorPackageImpl#getVariable()
 	 * @generated
 	 */
-	int VARIABLE = 15;
+	int VARIABLE = 16;
 
 	/**
 	 * The feature id for the '<em><b>Name</b></em>' attribute.
@@ -1055,7 +1119,7 @@ public interface BehaviorPackage extends EPackage {
 	 * @see lemma.adapted.xcore.behavior.impl.BehaviorPackageImpl#getActivityNode()
 	 * @generated
 	 */
-	int ACTIVITY_NODE = 16;
+	int ACTIVITY_NODE = 17;
 
 	/**
 	 * The feature id for the '<em><b>Name</b></em>' attribute.
@@ -1119,7 +1183,7 @@ public interface BehaviorPackage extends EPackage {
 	 * @see lemma.adapted.xcore.behavior.impl.BehaviorPackageImpl#getActivityEdge()
 	 * @generated
 	 */
-	int ACTIVITY_EDGE = 17;
+	int ACTIVITY_EDGE = 18;
 
 	/**
 	 * The feature id for the '<em><b>Name</b></em>' attribute.
@@ -1183,7 +1247,7 @@ public interface BehaviorPackage extends EPackage {
 	 * @see lemma.adapted.xcore.behavior.impl.BehaviorPackageImpl#getControlNode()
 	 * @generated
 	 */
-	int CONTROL_NODE = 19;
+	int CONTROL_NODE = 20;
 
 	/**
 	 * The feature id for the '<em><b>Name</b></em>' attribute.
@@ -1247,7 +1311,7 @@ public interface BehaviorPackage extends EPackage {
 	 * @see lemma.adapted.xcore.behavior.impl.BehaviorPackageImpl#getInitialNode()
 	 * @generated
 	 */
-	int INITIAL_NODE = 18;
+	int INITIAL_NODE = 19;
 
 	/**
 	 * The feature id for the '<em><b>Name</b></em>' attribute.
@@ -1311,7 +1375,7 @@ public interface BehaviorPackage extends EPackage {
 	 * @see lemma.adapted.xcore.behavior.impl.BehaviorPackageImpl#getExecutableNode()
 	 * @generated
 	 */
-	int EXECUTABLE_NODE = 20;
+	int EXECUTABLE_NODE = 21;
 
 	/**
 	 * The feature id for the '<em><b>Name</b></em>' attribute.
@@ -1375,7 +1439,7 @@ public interface BehaviorPackage extends EPackage {
 	 * @see lemma.adapted.xcore.behavior.impl.BehaviorPackageImpl#getFinalNode()
 	 * @generated
 	 */
-	int FINAL_NODE = 21;
+	int FINAL_NODE = 22;
 
 	/**
 	 * The feature id for the '<em><b>Name</b></em>' attribute.
@@ -1448,7 +1512,7 @@ public interface BehaviorPackage extends EPackage {
 	 * @see lemma.adapted.xcore.behavior.impl.BehaviorPackageImpl#getActivityFinalNode()
 	 * @generated
 	 */
-	int ACTIVITY_FINAL_NODE = 22;
+	int ACTIVITY_FINAL_NODE = 23;
 
 	/**
 	 * The feature id for the '<em><b>Name</b></em>' attribute.
@@ -1521,7 +1585,7 @@ public interface BehaviorPackage extends EPackage {
 	 * @see lemma.adapted.xcore.behavior.impl.BehaviorPackageImpl#getFlowFinalNode()
 	 * @generated
 	 */
-	int FLOW_FINAL_NODE = 23;
+	int FLOW_FINAL_NODE = 24;
 
 	/**
 	 * The feature id for the '<em><b>Name</b></em>' attribute.
@@ -1594,7 +1658,7 @@ public interface BehaviorPackage extends EPackage {
 	 * @see lemma.adapted.xcore.behavior.impl.BehaviorPackageImpl#getStructuredActivityNode()
 	 * @generated
 	 */
-	int STRUCTURED_ACTIVITY_NODE = 24;
+	int STRUCTURED_ACTIVITY_NODE = 25;
 
 	/**
 	 * The feature id for the '<em><b>Name</b></em>' attribute.
@@ -1676,7 +1740,7 @@ public interface BehaviorPackage extends EPackage {
 	 * @see lemma.adapted.xcore.behavior.impl.BehaviorPackageImpl#getConditionalNode()
 	 * @generated
 	 */
-	int CONDITIONAL_NODE = 25;
+	int CONDITIONAL_NODE = 26;
 
 	/**
 	 * The feature id for the '<em><b>Name</b></em>' attribute.
@@ -1767,7 +1831,7 @@ public interface BehaviorPackage extends EPackage {
 	 * @see lemma.adapted.xcore.behavior.impl.BehaviorPackageImpl#getLoopNode()
 	 * @generated
 	 */
-	int LOOP_NODE = 26;
+	int LOOP_NODE = 27;
 
 	/**
 	 * The feature id for the '<em><b>Name</b></em>' attribute.
@@ -1858,7 +1922,7 @@ public interface BehaviorPackage extends EPackage {
 	 * @see lemma.adapted.xcore.behavior.impl.BehaviorPackageImpl#getCallOperationAction()
 	 * @generated
 	 */
-	int CALL_OPERATION_ACTION = 27;
+	int CALL_OPERATION_ACTION = 28;
 
 	/**
 	 * The feature id for the '<em><b>Name</b></em>' attribute.
@@ -1949,7 +2013,7 @@ public interface BehaviorPackage extends EPackage {
 	 * @see lemma.adapted.xcore.behavior.impl.BehaviorPackageImpl#getVariableDeclarationAction()
 	 * @generated
 	 */
-	int VARIABLE_DECLARATION_ACTION = 28;
+	int VARIABLE_DECLARATION_ACTION = 29;
 
 	/**
 	 * The feature id for the '<em><b>Name</b></em>' attribute.
@@ -2058,7 +2122,7 @@ public interface BehaviorPackage extends EPackage {
 	 * @see lemma.adapted.xcore.behavior.impl.BehaviorPackageImpl#getVariableAssignmentAction()
 	 * @generated
 	 */
-	int VARIABLE_ASSIGNMENT_ACTION = 29;
+	int VARIABLE_ASSIGNMENT_ACTION = 30;
 
 	/**
 	 * The feature id for the '<em><b>Name</b></em>' attribute.
@@ -2131,7 +2195,7 @@ public interface BehaviorPackage extends EPackage {
 	 * @see lemma.adapted.xcore.behavior.impl.BehaviorPackageImpl#getVariableAssignment()
 	 * @generated
 	 */
-	int VARIABLE_ASSIGNMENT = 30;
+	int VARIABLE_ASSIGNMENT = 31;
 
 	/**
 	 * The feature id for the '<em><b>Identifier</b></em>' containment reference.
@@ -2177,7 +2241,7 @@ public interface BehaviorPackage extends EPackage {
 	 * @see lemma.adapted.xcore.behavior.impl.BehaviorPackageImpl#getRaiseExceptionAction()
 	 * @generated
 	 */
-	int RAISE_EXCEPTION_ACTION = 31;
+	int RAISE_EXCEPTION_ACTION = 32;
 
 	/**
 	 * The feature id for the '<em><b>Name</b></em>' attribute.
@@ -2250,7 +2314,7 @@ public interface BehaviorPackage extends EPackage {
 	 * @see lemma.adapted.xcore.behavior.impl.BehaviorPackageImpl#getRaiseEntityNotFoundExceptionAction()
 	 * @generated
 	 */
-	int RAISE_ENTITY_NOT_FOUND_EXCEPTION_ACTION = 32;
+	int RAISE_ENTITY_NOT_FOUND_EXCEPTION_ACTION = 33;
 
 	/**
 	 * The feature id for the '<em><b>Name</b></em>' attribute.
@@ -2332,7 +2396,7 @@ public interface BehaviorPackage extends EPackage {
 	 * @see lemma.adapted.xcore.behavior.impl.BehaviorPackageImpl#getSignalAction()
 	 * @generated
 	 */
-	int SIGNAL_ACTION = 36;
+	int SIGNAL_ACTION = 37;
 
 	/**
 	 * The feature id for the '<em><b>Name</b></em>' attribute.
@@ -2414,7 +2478,7 @@ public interface BehaviorPackage extends EPackage {
 	 * @see lemma.adapted.xcore.behavior.impl.BehaviorPackageImpl#getSendSignalAction()
 	 * @generated
 	 */
-	int SEND_SIGNAL_ACTION = 33;
+	int SEND_SIGNAL_ACTION = 34;
 
 	/**
 	 * The feature id for the '<em><b>Name</b></em>' attribute.
@@ -2496,7 +2560,7 @@ public interface BehaviorPackage extends EPackage {
 	 * @see lemma.adapted.xcore.behavior.impl.BehaviorPackageImpl#getReceiveSignalAction()
 	 * @generated
 	 */
-	int RECEIVE_SIGNAL_ACTION = 34;
+	int RECEIVE_SIGNAL_ACTION = 35;
 
 	/**
 	 * The feature id for the '<em><b>Name</b></em>' attribute.
@@ -2578,7 +2642,7 @@ public interface BehaviorPackage extends EPackage {
 	 * @see lemma.adapted.xcore.behavior.impl.BehaviorPackageImpl#getParallelNode()
 	 * @generated
 	 */
-	int PARALLEL_NODE = 35;
+	int PARALLEL_NODE = 36;
 
 	/**
 	 * The feature id for the '<em><b>Name</b></em>' attribute.
@@ -2651,7 +2715,7 @@ public interface BehaviorPackage extends EPackage {
 	 * @see lemma.adapted.xcore.behavior.impl.BehaviorPackageImpl#getParameterMapping()
 	 * @generated
 	 */
-	int PARAMETER_MAPPING = 37;
+	int PARAMETER_MAPPING = 38;
 
 	/**
 	 * The feature id for the '<em><b>Type</b></em>' attribute.
@@ -2751,7 +2815,7 @@ public interface BehaviorPackage extends EPackage {
 	 * @see lemma.adapted.xcore.behavior.impl.BehaviorPackageImpl#getExpression()
 	 * @generated
 	 */
-	int EXPRESSION = 38;
+	int EXPRESSION = 39;
 
 	/**
 	 * The feature id for the '<em><b>Name</b></em>' attribute.
@@ -2763,22 +2827,13 @@ public interface BehaviorPackage extends EPackage {
 	int EXPRESSION__NAME = NAMED_ELEMENT__NAME;
 
 	/**
-	 * The feature id for the '<em><b>Child</b></em>' containment reference.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int EXPRESSION__CHILD = NAMED_ELEMENT_FEATURE_COUNT + 0;
-
-	/**
 	 * The number of structural features of the '<em>Expression</em>' class.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
-	int EXPRESSION_FEATURE_COUNT = NAMED_ELEMENT_FEATURE_COUNT + 1;
+	int EXPRESSION_FEATURE_COUNT = NAMED_ELEMENT_FEATURE_COUNT + 0;
 
 	/**
 	 * The number of operations of the '<em>Expression</em>' class.
@@ -2788,43 +2843,6 @@ public interface BehaviorPackage extends EPackage {
 	 * @ordered
 	 */
 	int EXPRESSION_OPERATION_COUNT = NAMED_ELEMENT_OPERATION_COUNT + 0;
-
-	/**
-	 * The meta object id for the '{@link lemma.adapted.xcore.behavior.impl.ExpressionChildImpl <em>Expression Child</em>}' class.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @see lemma.adapted.xcore.behavior.impl.ExpressionChildImpl
-	 * @see lemma.adapted.xcore.behavior.impl.BehaviorPackageImpl#getExpressionChild()
-	 * @generated
-	 */
-	int EXPRESSION_CHILD = 39;
-
-	/**
-	 * The feature id for the '<em><b>Name</b></em>' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int EXPRESSION_CHILD__NAME = NAMED_ELEMENT__NAME;
-
-	/**
-	 * The number of structural features of the '<em>Expression Child</em>' class.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int EXPRESSION_CHILD_FEATURE_COUNT = NAMED_ELEMENT_FEATURE_COUNT + 0;
-
-	/**
-	 * The number of operations of the '<em>Expression Child</em>' class.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int EXPRESSION_CHILD_OPERATION_COUNT = NAMED_ELEMENT_OPERATION_COUNT + 0;
 
 	/**
 	 * The meta object id for the '{@link lemma.adapted.xcore.behavior.impl.UnaryExpressionImpl <em>Unary Expression</em>}' class.
@@ -2843,7 +2861,7 @@ public interface BehaviorPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int UNARY_EXPRESSION__NAME = EXPRESSION_CHILD__NAME;
+	int UNARY_EXPRESSION__NAME = EXPRESSION__NAME;
 
 	/**
 	 * The feature id for the '<em><b>Value</b></em>' containment reference.
@@ -2852,7 +2870,7 @@ public interface BehaviorPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int UNARY_EXPRESSION__VALUE = EXPRESSION_CHILD_FEATURE_COUNT + 0;
+	int UNARY_EXPRESSION__VALUE = EXPRESSION_FEATURE_COUNT + 0;
 
 	/**
 	 * The feature id for the '<em><b>Identifier</b></em>' containment reference.
@@ -2861,7 +2879,7 @@ public interface BehaviorPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int UNARY_EXPRESSION__IDENTIFIER = EXPRESSION_CHILD_FEATURE_COUNT + 1;
+	int UNARY_EXPRESSION__IDENTIFIER = EXPRESSION_FEATURE_COUNT + 1;
 
 	/**
 	 * The number of structural features of the '<em>Unary Expression</em>' class.
@@ -2870,7 +2888,7 @@ public interface BehaviorPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int UNARY_EXPRESSION_FEATURE_COUNT = EXPRESSION_CHILD_FEATURE_COUNT + 2;
+	int UNARY_EXPRESSION_FEATURE_COUNT = EXPRESSION_FEATURE_COUNT + 2;
 
 	/**
 	 * The number of operations of the '<em>Unary Expression</em>' class.
@@ -2879,7 +2897,7 @@ public interface BehaviorPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int UNARY_EXPRESSION_OPERATION_COUNT = EXPRESSION_CHILD_OPERATION_COUNT + 0;
+	int UNARY_EXPRESSION_OPERATION_COUNT = EXPRESSION_OPERATION_COUNT + 0;
 
 	/**
 	 * The meta object id for the '{@link lemma.adapted.xcore.behavior.impl.BinaryExpressionImpl <em>Binary Expression</em>}' class.
@@ -2898,7 +2916,7 @@ public interface BehaviorPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int BINARY_EXPRESSION__NAME = EXPRESSION_CHILD__NAME;
+	int BINARY_EXPRESSION__NAME = EXPRESSION__NAME;
 
 	/**
 	 * The feature id for the '<em><b>Operator</b></em>' containment reference.
@@ -2907,7 +2925,7 @@ public interface BehaviorPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int BINARY_EXPRESSION__OPERATOR = EXPRESSION_CHILD_FEATURE_COUNT + 0;
+	int BINARY_EXPRESSION__OPERATOR = EXPRESSION_FEATURE_COUNT + 0;
 
 	/**
 	 * The feature id for the '<em><b>Left Expr</b></em>' containment reference.
@@ -2916,7 +2934,7 @@ public interface BehaviorPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int BINARY_EXPRESSION__LEFT_EXPR = EXPRESSION_CHILD_FEATURE_COUNT + 1;
+	int BINARY_EXPRESSION__LEFT_EXPR = EXPRESSION_FEATURE_COUNT + 1;
 
 	/**
 	 * The feature id for the '<em><b>Right Expr</b></em>' containment reference.
@@ -2925,7 +2943,7 @@ public interface BehaviorPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int BINARY_EXPRESSION__RIGHT_EXPR = EXPRESSION_CHILD_FEATURE_COUNT + 2;
+	int BINARY_EXPRESSION__RIGHT_EXPR = EXPRESSION_FEATURE_COUNT + 2;
 
 	/**
 	 * The number of structural features of the '<em>Binary Expression</em>' class.
@@ -2934,7 +2952,7 @@ public interface BehaviorPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int BINARY_EXPRESSION_FEATURE_COUNT = EXPRESSION_CHILD_FEATURE_COUNT + 3;
+	int BINARY_EXPRESSION_FEATURE_COUNT = EXPRESSION_FEATURE_COUNT + 3;
 
 	/**
 	 * The number of operations of the '<em>Binary Expression</em>' class.
@@ -2943,7 +2961,7 @@ public interface BehaviorPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int BINARY_EXPRESSION_OPERATION_COUNT = EXPRESSION_CHILD_OPERATION_COUNT + 0;
+	int BINARY_EXPRESSION_OPERATION_COUNT = EXPRESSION_OPERATION_COUNT + 0;
 
 	/**
 	 * The meta object id for the '{@link lemma.adapted.xcore.behavior.impl.NotExpressionImpl <em>Not Expression</em>}' class.
@@ -2962,7 +2980,7 @@ public interface BehaviorPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int NOT_EXPRESSION__NAME = EXPRESSION_CHILD__NAME;
+	int NOT_EXPRESSION__NAME = EXPRESSION__NAME;
 
 	/**
 	 * The feature id for the '<em><b>Expr</b></em>' containment reference.
@@ -2971,7 +2989,7 @@ public interface BehaviorPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int NOT_EXPRESSION__EXPR = EXPRESSION_CHILD_FEATURE_COUNT + 0;
+	int NOT_EXPRESSION__EXPR = EXPRESSION_FEATURE_COUNT + 0;
 
 	/**
 	 * The number of structural features of the '<em>Not Expression</em>' class.
@@ -2980,7 +2998,7 @@ public interface BehaviorPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int NOT_EXPRESSION_FEATURE_COUNT = EXPRESSION_CHILD_FEATURE_COUNT + 1;
+	int NOT_EXPRESSION_FEATURE_COUNT = EXPRESSION_FEATURE_COUNT + 1;
 
 	/**
 	 * The number of operations of the '<em>Not Expression</em>' class.
@@ -2989,7 +3007,7 @@ public interface BehaviorPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int NOT_EXPRESSION_OPERATION_COUNT = EXPRESSION_CHILD_OPERATION_COUNT + 0;
+	int NOT_EXPRESSION_OPERATION_COUNT = EXPRESSION_OPERATION_COUNT + 0;
 
 	/**
 	 * The meta object id for the '{@link lemma.adapted.xcore.behavior.impl.OperatorImpl <em>Operator</em>}' class.
@@ -3572,25 +3590,68 @@ public interface BehaviorPackage extends EPackage {
 	EAttribute getNamedElement_Name();
 
 	/**
-	 * Returns the meta object for class '{@link lemma.adapted.xcore.behavior.InvariantDataOperation <em>Invariant Data Operation</em>}'.
+	 * Returns the meta object for class '{@link lemma.adapted.xcore.behavior.SpecDataOperation <em>Spec Data Operation</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @return the meta object for class '<em>Invariant Data Operation</em>'.
-	 * @see lemma.adapted.xcore.behavior.InvariantDataOperation
+	 * @return the meta object for class '<em>Spec Data Operation</em>'.
+	 * @see lemma.adapted.xcore.behavior.SpecDataOperation
 	 * @generated
 	 */
-	EClass getInvariantDataOperation();
+	EClass getSpecDataOperation();
 
 	/**
-	 * Returns the meta object for the containment reference list '{@link lemma.adapted.xcore.behavior.InvariantDataOperation#getExpr <em>Expr</em>}'.
+	 * Returns the meta object for the attribute '{@link lemma.adapted.xcore.behavior.SpecDataOperation#getIsInvariant <em>Is Invariant</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @return the meta object for the containment reference list '<em>Expr</em>'.
-	 * @see lemma.adapted.xcore.behavior.InvariantDataOperation#getExpr()
-	 * @see #getInvariantDataOperation()
+	 * @return the meta object for the attribute '<em>Is Invariant</em>'.
+	 * @see lemma.adapted.xcore.behavior.SpecDataOperation#getIsInvariant()
+	 * @see #getSpecDataOperation()
 	 * @generated
 	 */
-	EReference getInvariantDataOperation_Expr();
+	EAttribute getSpecDataOperation_IsInvariant();
+
+	/**
+	 * Returns the meta object for the containment reference list '{@link lemma.adapted.xcore.behavior.SpecDataOperation#getOwnedRules <em>Owned Rules</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the containment reference list '<em>Owned Rules</em>'.
+	 * @see lemma.adapted.xcore.behavior.SpecDataOperation#getOwnedRules()
+	 * @see #getSpecDataOperation()
+	 * @generated
+	 */
+	EReference getSpecDataOperation_OwnedRules();
+
+	/**
+	 * Returns the meta object for class '{@link lemma.adapted.xcore.behavior.SpecRule <em>Spec Rule</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for class '<em>Spec Rule</em>'.
+	 * @see lemma.adapted.xcore.behavior.SpecRule
+	 * @generated
+	 */
+	EClass getSpecRule();
+
+	/**
+	 * Returns the meta object for the attribute '{@link lemma.adapted.xcore.behavior.SpecRule#getRawString <em>Raw String</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the attribute '<em>Raw String</em>'.
+	 * @see lemma.adapted.xcore.behavior.SpecRule#getRawString()
+	 * @see #getSpecRule()
+	 * @generated
+	 */
+	EAttribute getSpecRule_RawString();
+
+	/**
+	 * Returns the meta object for the containment reference '{@link lemma.adapted.xcore.behavior.SpecRule#getExpr <em>Expr</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the containment reference '<em>Expr</em>'.
+	 * @see lemma.adapted.xcore.behavior.SpecRule#getExpr()
+	 * @see #getSpecRule()
+	 * @generated
+	 */
+	EReference getSpecRule_Expr();
 
 	/**
 	 * Returns the meta object for class '{@link lemma.adapted.xcore.behavior.ImportedOperation <em>Imported Operation</em>}'.
@@ -4636,27 +4697,6 @@ public interface BehaviorPackage extends EPackage {
 	EClass getExpression();
 
 	/**
-	 * Returns the meta object for the containment reference '{@link lemma.adapted.xcore.behavior.Expression#getChild <em>Child</em>}'.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @return the meta object for the containment reference '<em>Child</em>'.
-	 * @see lemma.adapted.xcore.behavior.Expression#getChild()
-	 * @see #getExpression()
-	 * @generated
-	 */
-	EReference getExpression_Child();
-
-	/**
-	 * Returns the meta object for class '{@link lemma.adapted.xcore.behavior.ExpressionChild <em>Expression Child</em>}'.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @return the meta object for class '<em>Expression Child</em>'.
-	 * @see lemma.adapted.xcore.behavior.ExpressionChild
-	 * @generated
-	 */
-	EClass getExpressionChild();
-
-	/**
 	 * Returns the meta object for class '{@link lemma.adapted.xcore.behavior.UnaryExpression <em>Unary Expression</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -5060,22 +5100,56 @@ public interface BehaviorPackage extends EPackage {
 		EAttribute NAMED_ELEMENT__NAME = eINSTANCE.getNamedElement_Name();
 
 		/**
-		 * The meta object literal for the '{@link lemma.adapted.xcore.behavior.impl.InvariantDataOperationImpl <em>Invariant Data Operation</em>}' class.
+		 * The meta object literal for the '{@link lemma.adapted.xcore.behavior.impl.SpecDataOperationImpl <em>Spec Data Operation</em>}' class.
 		 * <!-- begin-user-doc -->
 		 * <!-- end-user-doc -->
-		 * @see lemma.adapted.xcore.behavior.impl.InvariantDataOperationImpl
-		 * @see lemma.adapted.xcore.behavior.impl.BehaviorPackageImpl#getInvariantDataOperation()
+		 * @see lemma.adapted.xcore.behavior.impl.SpecDataOperationImpl
+		 * @see lemma.adapted.xcore.behavior.impl.BehaviorPackageImpl#getSpecDataOperation()
 		 * @generated
 		 */
-		EClass INVARIANT_DATA_OPERATION = eINSTANCE.getInvariantDataOperation();
+		EClass SPEC_DATA_OPERATION = eINSTANCE.getSpecDataOperation();
 
 		/**
-		 * The meta object literal for the '<em><b>Expr</b></em>' containment reference list feature.
+		 * The meta object literal for the '<em><b>Is Invariant</b></em>' attribute feature.
 		 * <!-- begin-user-doc -->
 		 * <!-- end-user-doc -->
 		 * @generated
 		 */
-		EReference INVARIANT_DATA_OPERATION__EXPR = eINSTANCE.getInvariantDataOperation_Expr();
+		EAttribute SPEC_DATA_OPERATION__IS_INVARIANT = eINSTANCE.getSpecDataOperation_IsInvariant();
+
+		/**
+		 * The meta object literal for the '<em><b>Owned Rules</b></em>' containment reference list feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EReference SPEC_DATA_OPERATION__OWNED_RULES = eINSTANCE.getSpecDataOperation_OwnedRules();
+
+		/**
+		 * The meta object literal for the '{@link lemma.adapted.xcore.behavior.impl.SpecRuleImpl <em>Spec Rule</em>}' class.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @see lemma.adapted.xcore.behavior.impl.SpecRuleImpl
+		 * @see lemma.adapted.xcore.behavior.impl.BehaviorPackageImpl#getSpecRule()
+		 * @generated
+		 */
+		EClass SPEC_RULE = eINSTANCE.getSpecRule();
+
+		/**
+		 * The meta object literal for the '<em><b>Raw String</b></em>' attribute feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EAttribute SPEC_RULE__RAW_STRING = eINSTANCE.getSpecRule_RawString();
+
+		/**
+		 * The meta object literal for the '<em><b>Expr</b></em>' containment reference feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EReference SPEC_RULE__EXPR = eINSTANCE.getSpecRule_Expr();
 
 		/**
 		 * The meta object literal for the '{@link lemma.adapted.xcore.behavior.impl.ImportedOperationImpl <em>Imported Operation</em>}' class.
@@ -5930,24 +6004,6 @@ public interface BehaviorPackage extends EPackage {
 		 * @generated
 		 */
 		EClass EXPRESSION = eINSTANCE.getExpression();
-
-		/**
-		 * The meta object literal for the '<em><b>Child</b></em>' containment reference feature.
-		 * <!-- begin-user-doc -->
-		 * <!-- end-user-doc -->
-		 * @generated
-		 */
-		EReference EXPRESSION__CHILD = eINSTANCE.getExpression_Child();
-
-		/**
-		 * The meta object literal for the '{@link lemma.adapted.xcore.behavior.impl.ExpressionChildImpl <em>Expression Child</em>}' class.
-		 * <!-- begin-user-doc -->
-		 * <!-- end-user-doc -->
-		 * @see lemma.adapted.xcore.behavior.impl.ExpressionChildImpl
-		 * @see lemma.adapted.xcore.behavior.impl.BehaviorPackageImpl#getExpressionChild()
-		 * @generated
-		 */
-		EClass EXPRESSION_CHILD = eINSTANCE.getExpressionChild();
 
 		/**
 		 * The meta object literal for the '{@link lemma.adapted.xcore.behavior.impl.UnaryExpressionImpl <em>Unary Expression</em>}' class.

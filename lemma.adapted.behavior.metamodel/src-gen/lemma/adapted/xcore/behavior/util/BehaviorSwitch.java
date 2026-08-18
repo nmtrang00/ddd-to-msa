@@ -86,10 +86,17 @@ public class BehaviorSwitch<T> extends Switch<T> {
 				if (result == null) result = defaultCase(theEObject);
 				return result;
 			}
-			case BehaviorPackage.INVARIANT_DATA_OPERATION: {
-				InvariantDataOperation invariantDataOperation = (InvariantDataOperation)theEObject;
-				T result = caseInvariantDataOperation(invariantDataOperation);
-				if (result == null) result = caseDataOperation(invariantDataOperation);
+			case BehaviorPackage.SPEC_DATA_OPERATION: {
+				SpecDataOperation specDataOperation = (SpecDataOperation)theEObject;
+				T result = caseSpecDataOperation(specDataOperation);
+				if (result == null) result = caseDataOperation(specDataOperation);
+				if (result == null) result = defaultCase(theEObject);
+				return result;
+			}
+			case BehaviorPackage.SPEC_RULE: {
+				SpecRule specRule = (SpecRule)theEObject;
+				T result = caseSpecRule(specRule);
+				if (result == null) result = caseNamedElement(specRule);
 				if (result == null) result = defaultCase(theEObject);
 				return result;
 			}
@@ -375,17 +382,10 @@ public class BehaviorSwitch<T> extends Switch<T> {
 				if (result == null) result = defaultCase(theEObject);
 				return result;
 			}
-			case BehaviorPackage.EXPRESSION_CHILD: {
-				ExpressionChild expressionChild = (ExpressionChild)theEObject;
-				T result = caseExpressionChild(expressionChild);
-				if (result == null) result = caseNamedElement(expressionChild);
-				if (result == null) result = defaultCase(theEObject);
-				return result;
-			}
 			case BehaviorPackage.UNARY_EXPRESSION: {
 				UnaryExpression unaryExpression = (UnaryExpression)theEObject;
 				T result = caseUnaryExpression(unaryExpression);
-				if (result == null) result = caseExpressionChild(unaryExpression);
+				if (result == null) result = caseExpression(unaryExpression);
 				if (result == null) result = caseNamedElement(unaryExpression);
 				if (result == null) result = defaultCase(theEObject);
 				return result;
@@ -393,7 +393,7 @@ public class BehaviorSwitch<T> extends Switch<T> {
 			case BehaviorPackage.BINARY_EXPRESSION: {
 				BinaryExpression binaryExpression = (BinaryExpression)theEObject;
 				T result = caseBinaryExpression(binaryExpression);
-				if (result == null) result = caseExpressionChild(binaryExpression);
+				if (result == null) result = caseExpression(binaryExpression);
 				if (result == null) result = caseNamedElement(binaryExpression);
 				if (result == null) result = defaultCase(theEObject);
 				return result;
@@ -401,7 +401,7 @@ public class BehaviorSwitch<T> extends Switch<T> {
 			case BehaviorPackage.NOT_EXPRESSION: {
 				NotExpression notExpression = (NotExpression)theEObject;
 				T result = caseNotExpression(notExpression);
-				if (result == null) result = caseExpressionChild(notExpression);
+				if (result == null) result = caseExpression(notExpression);
 				if (result == null) result = caseNamedElement(notExpression);
 				if (result == null) result = defaultCase(theEObject);
 				return result;
@@ -578,17 +578,32 @@ public class BehaviorSwitch<T> extends Switch<T> {
 	}
 
 	/**
-	 * Returns the result of interpreting the object as an instance of '<em>Invariant Data Operation</em>'.
+	 * Returns the result of interpreting the object as an instance of '<em>Spec Data Operation</em>'.
 	 * <!-- begin-user-doc -->
 	 * This implementation returns null;
 	 * returning a non-null result will terminate the switch.
 	 * <!-- end-user-doc -->
 	 * @param object the target of the switch.
-	 * @return the result of interpreting the object as an instance of '<em>Invariant Data Operation</em>'.
+	 * @return the result of interpreting the object as an instance of '<em>Spec Data Operation</em>'.
 	 * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
 	 * @generated
 	 */
-	public T caseInvariantDataOperation(InvariantDataOperation object) {
+	public T caseSpecDataOperation(SpecDataOperation object) {
+		return null;
+	}
+
+	/**
+	 * Returns the result of interpreting the object as an instance of '<em>Spec Rule</em>'.
+	 * <!-- begin-user-doc -->
+	 * This implementation returns null;
+	 * returning a non-null result will terminate the switch.
+	 * <!-- end-user-doc -->
+	 * @param object the target of the switch.
+	 * @return the result of interpreting the object as an instance of '<em>Spec Rule</em>'.
+	 * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
+	 * @generated
+	 */
+	public T caseSpecRule(SpecRule object) {
 		return null;
 	}
 
@@ -1114,21 +1129,6 @@ public class BehaviorSwitch<T> extends Switch<T> {
 	 * @generated
 	 */
 	public T caseExpression(Expression object) {
-		return null;
-	}
-
-	/**
-	 * Returns the result of interpreting the object as an instance of '<em>Expression Child</em>'.
-	 * <!-- begin-user-doc -->
-	 * This implementation returns null;
-	 * returning a non-null result will terminate the switch.
-	 * <!-- end-user-doc -->
-	 * @param object the target of the switch.
-	 * @return the result of interpreting the object as an instance of '<em>Expression Child</em>'.
-	 * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
-	 * @generated
-	 */
-	public T caseExpressionChild(ExpressionChild object) {
 		return null;
 	}
 

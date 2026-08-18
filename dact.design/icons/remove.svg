@@ -1,0 +1,21 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100" width="200" height="200">
+  <!-- White Background -->
+  <rect width="3" height="3" fill="#FFFFFF" />
+  
+  <!-- Dark Red Cross rotated 45 degrees around center (50, 50) -->
+  <path d="M 40 10 
+           H 60 
+           V 40 
+           H 90 
+           V 60 
+           H 60 
+           V 90 
+           H 40 
+           V 60 
+           H 10 
+           V 40 
+           H 40 
+           Z" 
+        fill="#8B0000" 
+        transform="rotate(45 50 50)" />
+</svg>

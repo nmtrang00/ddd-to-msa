@@ -13,6 +13,11 @@ query DACT::NamedElement::findPrimitiveType(in name: String): DACT::PrimitiveTyp
         ->selectOne(t | t.name = name);
 }
 
+query DACT::Root::findPrimitiveType(in name: String): DACT::PrimitiveType{
+	return self.primitivesTypes
+        ->selectOne(t | t.name = name);
+}
+
 -- Helper to print info of a NamedElement
 query DACT::NamedElement::printInfo(ntabs: Integer): String{
 	return self.printInfo(ntabs,'');
@@ -98,26 +103,13 @@ helper DACT::Scope::printScopeVariables() {
  * Main helper to serialize an Expression node to a readable String.
  */
 query DACT::Expression::toString() : String {
-    if (self.oclIsUndefined()){
-        return "null"
-    };
-
-    if (not self.child.oclIsUndefined()) {
-        return self.child.print()
-    };
-
-    return "";
-}
-
-
-query DACT::ExpressionChild::print(): String {
-	return "<?>";
+    return "<?>";
 }
 
 /**
  * Serializes Unary Expressions (Identifiers or Literal values).
  */
-query DACT::UnaryExpression::print() : String {
+query DACT::UnaryExpression::toString() : String {
     -- Print identifier if present (e.g., "self.customerId")
     if (not self.identifier.oclIsUndefined() and self.identifier.name.size() > 0){
     	return self.identifier.name;
@@ -151,7 +143,7 @@ query DACT::Literal::toString() : String {
     return "null";
 }
  
-query DACT::BinaryExpression::print() : String {
+query DACT::BinaryExpression::toString() : String {
     var leftStr : String := self.leftExpr.toString();
     var opStr : String := self.operator.operatorToString();
     var rightStr : String := self.rightExpr.toString();
@@ -159,7 +151,7 @@ query DACT::BinaryExpression::print() : String {
     return "(" + leftStr + " " + opStr + " " + rightStr + ")";
 }
 
-query DACT::NotExpression::print() : String {
+query DACT::NotExpression::toString() : String {
     var mainStr : String := self.expr.toString();
     
     return "!(" + mainStr + ")";

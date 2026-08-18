@@ -27,7 +27,7 @@ import org.eclipse.emf.ecore.impl.ENotificationImpl;
  *
  * @generated
  */
-public class NotExpressionImpl extends ExpressionChildImpl implements NotExpression {
+public class NotExpressionImpl extends ExpressionImpl implements NotExpression {
 	/**
 	 * The cached value of the '{@link #getExpr() <em>Expr</em>}' containment reference.
 	 * <!-- begin-user-doc -->

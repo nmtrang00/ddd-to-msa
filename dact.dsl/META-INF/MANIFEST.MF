@@ -1,0 +1,25 @@
+Manifest-Version: 1.0
+Automatic-Module-Name: dact.dsl
+Bundle-ManifestVersion: 2
+Bundle-Name: dact.dsl
+Bundle-Vendor: My Company
+Bundle-Version: 1.0.0.qualifier
+Bundle-SymbolicName: dact.dsl; singleton:=true
+Bundle-ActivationPolicy: lazy
+Require-Bundle: dact.metamodel,
+ org.eclipse.xtext,
+ org.eclipse.xtext.xbase,
+ org.eclipse.equinox.common;bundle-version="3.19.0",
+ org.eclipse.xtext.xbase.lib;bundle-version="2.43.0",
+ org.antlr.runtime;bundle-version="[3.2.0,3.2.1)"
+Bundle-RequiredExecutionEnvironment: JavaSE-21
+Export-Package: dact.dsl.formatting2,
+ dact.dsl.validation,
+ dact.dsl.scoping,
+ dact.dsl.parser.antlr.internal,
+ dact.dsl,
+ dact.dsl.parser.antlr,
+ dact.dsl.serializer,
+ dact.dsl.services,
+ dact.dsl.generator
+Import-Package: org.apache.log4j

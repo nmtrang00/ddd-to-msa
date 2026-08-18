@@ -332,11 +332,9 @@ helper BEHA::CallOperationAction::createCallControllerOperationAction(
 				name := newRequestVariable.name+"."+f.name + "=" + f.name;	
 				assignment := object BEHA::VariableAssignment{
 					identifier := object Identifier {name := newRequestVariable.name+"."+f.name};
-					expr := object Expression{
-						child := object BEHA::UnaryExpression{
+					expr := object BEHA::UnaryExpression{
 							identifier:=object Identifier{name:=f.name}
 						}
-					}
 				};
 			};
 			newNodes += newVariableAssignment;
@@ -408,11 +406,9 @@ helper BEHA::CallOperationAction::createCallControllerOperationAction(
 				upperBound := f.upperBound;
 				declaration := object BEHA::VariableAssignment{
 					identifier := object Identifier {name:= newResultVariable.name};
-					expr := object Expression{
-						child := object BEHA::UnaryExpression{
+					expr := object BEHA::UnaryExpression{
 							identifier:= object BEHA::Identifier{name:= newResponseVariable.name+"."+f.name};
 						}
-					}
 				}
 			};
 			if (f.primitiveType <> null){

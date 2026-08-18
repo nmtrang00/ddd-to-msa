@@ -2,17 +2,12 @@
  */
 package dact.impl;
 
-import dact.DactFactory;
 import dact.DactPackage;
 import dact.Expression;
 import dact.NotExpression;
 
-import java.lang.reflect.InvocationTargetException;
-
 import org.eclipse.emf.common.notify.Notification;
 import org.eclipse.emf.common.notify.NotificationChain;
-
-import org.eclipse.emf.common.util.EList;
 
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.InternalEObject;
@@ -32,7 +27,7 @@ import org.eclipse.emf.ecore.impl.ENotificationImpl;
  *
  * @generated
  */
-public class NotExpressionImpl extends ExpressionChildImpl implements NotExpression {
+public class NotExpressionImpl extends ExpressionImpl implements NotExpression {
 	/**
 	 * The cached value of the '{@link #getExpr() <em>Expr</em>}' containment reference.
 	 * <!-- begin-user-doc -->
@@ -113,18 +108,6 @@ public class NotExpressionImpl extends ExpressionChildImpl implements NotExpress
 	 * @generated
 	 */
 	@Override
-	public void init() {
-		final Expression expr = DactFactory.eINSTANCE.createExpression();
-		expr.setName("Expr");
-		this.setExpr(expr);
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	@Override
 	public NotificationChain eInverseRemove(InternalEObject otherEnd, int featureID, NotificationChain msgs) {
 		switch (featureID) {
 			case DactPackage.NOT_EXPRESSION__EXPR:
@@ -189,21 +172,6 @@ public class NotExpressionImpl extends ExpressionChildImpl implements NotExpress
 				return expr != null;
 		}
 		return super.eIsSet(featureID);
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	@Override
-	public Object eInvoke(int operationID, EList<?> arguments) throws InvocationTargetException {
-		switch (operationID) {
-			case DactPackage.NOT_EXPRESSION___INIT:
-				init();
-				return null;
-		}
-		return super.eInvoke(operationID, arguments);
 	}
 
 } //NotExpressionImpl

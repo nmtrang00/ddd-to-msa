@@ -20,7 +20,7 @@
       	  [let filePath: String = domainDir + complexType.name.toUpperFirst()+'.java']
           [if (complexType.isNotFoundException())]
           [complexType.oclAsType(data::DataStructure).generateNotFoundException(filePath, serviceName)/]
-		  [else/]
+		  [else]
 		  [complexType.oclAsType(data::DataStructure).generateDefaultException(filePath, serviceName)/]      
       	  [/if]
 		  [/let]
@@ -77,7 +77,8 @@ public class [e.name.toUpperFirst()/] extends EntityNotFoundException {
   import org.springframework.web.bind.annotation.ControllerAdvice;
   import org.springframework.web.bind.annotation.ExceptionHandler;
   import org.springframework.web.client.HttpClientErrorException;
-
+  import org.springframework.dao.InvalidDataAccessApiUsageException;
+  
   @ControllerAdvice
   public class GlobalExceptionHandler {
 [for (complexType: data::ComplexType | context.complexTypes -> select(t|t.isException()))]
@@ -89,6 +90,7 @@ public class [e.name.toUpperFirst()/] extends EntityNotFoundException {
 
 [/for]
 [context.generateHttpClientErrorException()/]
+[context.generateBadRequestExceptionHandler()/]
   }
 [/file]
 [/template]
@@ -119,10 +121,32 @@ public class [e.name.toUpperFirst()/] extends EntityNotFoundException {
 
 [template public generateHttpClientErrorException(context: data::Context)]
     @ExceptionHandler(HttpClientErrorException.class)
-        public ResponseEntity<String> handleHttpClientErrorException(HttpClientErrorException ex) {
+    public ResponseEntity<String> handleHttpClientErrorException(HttpClientErrorException ex) {
             return ResponseEntity
                 .status(ex.getStatusCode())
                 .contentType(MediaType.APPLICATION_JSON)
                 .body(ex.getResponseBodyAsString());
+    }
+[/template]
+
+[template public generateBadRequestExceptionHandler(context: data::Context)]
+    @ExceptionHandler(IllegalArgumentException.class)
+    public ResponseEntity<MessageResponse> handleIllegalArgumentException(IllegalArgumentException ex) {
+        MessageResponse errorResponse = new MessageResponse(
+            "BAD_REQUEST",
+            false,
+            ex.getMessage()
+        );
+        return new ResponseEntity<>(errorResponse, HttpStatus.BAD_REQUEST);
+    }
+
+    @ExceptionHandler(InvalidDataAccessApiUsageException.class)
+    public ResponseEntity<MessageResponse> handleInvalidDataAccessApiUsageException(InvalidDataAccessApiUsageException ex) {
+         MessageResponse errorResponse = new MessageResponse(
+             "BAD_REQUEST",
+             false,
+             ex.getMessage()
+         );
+         return new ResponseEntity<>(errorResponse, HttpStatus.BAD_REQUEST);
     }
 [/template]

@@ -1,0 +1,381 @@
+/**
+ */
+package lemma.adapted.xcore.data.provider;
+
+
+import java.util.Collection;
+import java.util.List;
+
+import lemma.adapted.xcore.data.DataFactory;
+import lemma.adapted.xcore.data.DataOperationParameter;
+import lemma.adapted.xcore.data.DataPackage;
+
+import org.eclipse.emf.common.notify.AdapterFactory;
+import org.eclipse.emf.common.notify.Notification;
+
+import org.eclipse.emf.common.util.ResourceLocator;
+
+import org.eclipse.emf.ecore.EStructuralFeature;
+
+import org.eclipse.emf.edit.provider.ComposeableAdapterFactory;
+import org.eclipse.emf.edit.provider.IEditingDomainItemProvider;
+import org.eclipse.emf.edit.provider.IItemLabelProvider;
+import org.eclipse.emf.edit.provider.IItemPropertyDescriptor;
+import org.eclipse.emf.edit.provider.IItemPropertySource;
+import org.eclipse.emf.edit.provider.IStructuredItemContentProvider;
+import org.eclipse.emf.edit.provider.ITreeItemContentProvider;
+import org.eclipse.emf.edit.provider.ItemPropertyDescriptor;
+import org.eclipse.emf.edit.provider.ItemProviderAdapter;
+import org.eclipse.emf.edit.provider.ViewerNotification;
+
+/**
+ * This is the item provider adapter for a {@link lemma.adapted.xcore.data.DataOperationParameter} object.
+ * <!-- begin-user-doc -->
+ * <!-- end-user-doc -->
+ * @generated
+ */
+public class DataOperationParameterItemProvider 
+	extends ItemProviderAdapter
+	implements
+		IEditingDomainItemProvider,
+		IStructuredItemContentProvider,
+		ITreeItemContentProvider,
+		IItemLabelProvider,
+		IItemPropertySource {
+	/**
+	 * This constructs an instance from a factory and a notifier.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public DataOperationParameterItemProvider(AdapterFactory adapterFactory) {
+		super(adapterFactory);
+	}
+
+	/**
+	 * This returns the property descriptors for the adapted class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	@Override
+	public List<IItemPropertyDescriptor> getPropertyDescriptors(Object object) {
+		if (itemPropertyDescriptors == null) {
+			super.getPropertyDescriptors(object);
+
+			addNamePropertyDescriptor(object);
+			addLowerBoundPropertyDescriptor(object);
+			addUpperBoundPropertyDescriptor(object);
+			addExchangePatternPropertyDescriptor(object);
+			addComplexTypePropertyDescriptor(object);
+			addOperationPropertyDescriptor(object);
+		}
+		return itemPropertyDescriptors;
+	}
+
+	/**
+	 * This adds a property descriptor for the Name feature.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	protected void addNamePropertyDescriptor(Object object) {
+		itemPropertyDescriptors.add
+			(createItemPropertyDescriptor
+				(((ComposeableAdapterFactory)adapterFactory).getRootAdapterFactory(),
+				 getResourceLocator(),
+				 getString("_UI_DataOperationParameter_name_feature"),
+				 getString("_UI_PropertyDescriptor_description", "_UI_DataOperationParameter_name_feature", "_UI_DataOperationParameter_type"),
+				 DataPackage.Literals.DATA_OPERATION_PARAMETER__NAME,
+				 true,
+				 false,
+				 false,
+				 ItemPropertyDescriptor.GENERIC_VALUE_IMAGE,
+				 null,
+				 null));
+	}
+
+	/**
+	 * This adds a property descriptor for the Lower Bound feature.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	protected void addLowerBoundPropertyDescriptor(Object object) {
+		itemPropertyDescriptors.add
+			(createItemPropertyDescriptor
+				(((ComposeableAdapterFactory)adapterFactory).getRootAdapterFactory(),
+				 getResourceLocator(),
+				 getString("_UI_DataOperationParameter_lowerBound_feature"),
+				 getString("_UI_PropertyDescriptor_description", "_UI_DataOperationParameter_lowerBound_feature", "_UI_DataOperationParameter_type"),
+				 DataPackage.Literals.DATA_OPERATION_PARAMETER__LOWER_BOUND,
+				 true,
+				 false,
+				 false,
+				 ItemPropertyDescriptor.GENERIC_VALUE_IMAGE,
+				 null,
+				 null));
+	}
+
+	/**
+	 * This adds a property descriptor for the Upper Bound feature.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	protected void addUpperBoundPropertyDescriptor(Object object) {
+		itemPropertyDescriptors.add
+			(createItemPropertyDescriptor
+				(((ComposeableAdapterFactory)adapterFactory).getRootAdapterFactory(),
+				 getResourceLocator(),
+				 getString("_UI_DataOperationParameter_upperBound_feature"),
+				 getString("_UI_PropertyDescriptor_description", "_UI_DataOperationParameter_upperBound_feature", "_UI_DataOperationParameter_type"),
+				 DataPackage.Literals.DATA_OPERATION_PARAMETER__UPPER_BOUND,
+				 true,
+				 false,
+				 false,
+				 ItemPropertyDescriptor.GENERIC_VALUE_IMAGE,
+				 null,
+				 null));
+	}
+
+	/**
+	 * This adds a property descriptor for the Exchange Pattern feature.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	protected void addExchangePatternPropertyDescriptor(Object object) {
+		itemPropertyDescriptors.add
+			(createItemPropertyDescriptor
+				(((ComposeableAdapterFactory)adapterFactory).getRootAdapterFactory(),
+				 getResourceLocator(),
+				 getString("_UI_DataOperationParameter_exchangePattern_feature"),
+				 getString("_UI_PropertyDescriptor_description", "_UI_DataOperationParameter_exchangePattern_feature", "_UI_DataOperationParameter_type"),
+				 DataPackage.Literals.DATA_OPERATION_PARAMETER__EXCHANGE_PATTERN,
+				 true,
+				 false,
+				 false,
+				 ItemPropertyDescriptor.GENERIC_VALUE_IMAGE,
+				 null,
+				 null));
+	}
+
+	/**
+	 * This adds a property descriptor for the Complex Type feature.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	protected void addComplexTypePropertyDescriptor(Object object) {
+		itemPropertyDescriptors.add
+			(createItemPropertyDescriptor
+				(((ComposeableAdapterFactory)adapterFactory).getRootAdapterFactory(),
+				 getResourceLocator(),
+				 getString("_UI_DataOperationParameter_complexType_feature"),
+				 getString("_UI_PropertyDescriptor_description", "_UI_DataOperationParameter_complexType_feature", "_UI_DataOperationParameter_type"),
+				 DataPackage.Literals.DATA_OPERATION_PARAMETER__COMPLEX_TYPE,
+				 true,
+				 false,
+				 true,
+				 null,
+				 null,
+				 null));
+	}
+
+	/**
+	 * This adds a property descriptor for the Operation feature.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	protected void addOperationPropertyDescriptor(Object object) {
+		itemPropertyDescriptors.add
+			(createItemPropertyDescriptor
+				(((ComposeableAdapterFactory)adapterFactory).getRootAdapterFactory(),
+				 getResourceLocator(),
+				 getString("_UI_DataOperationParameter_operation_feature"),
+				 getString("_UI_PropertyDescriptor_description", "_UI_DataOperationParameter_operation_feature", "_UI_DataOperationParameter_type"),
+				 DataPackage.Literals.DATA_OPERATION_PARAMETER__OPERATION,
+				 true,
+				 false,
+				 true,
+				 null,
+				 null,
+				 null));
+	}
+
+	/**
+	 * This specifies how to implement {@link #getChildren} and is used to deduce an appropriate feature for an
+	 * {@link org.eclipse.emf.edit.command.AddCommand}, {@link org.eclipse.emf.edit.command.RemoveCommand} or
+	 * {@link org.eclipse.emf.edit.command.MoveCommand} in {@link #createCommand}.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	@Override
+	public Collection<? extends EStructuralFeature> getChildrenFeatures(Object object) {
+		if (childrenFeatures == null) {
+			super.getChildrenFeatures(object);
+			childrenFeatures.add(DataPackage.Literals.DATA_OPERATION_PARAMETER__IMPORTED_COMPLEX_TYPE);
+			childrenFeatures.add(DataPackage.Literals.DATA_OPERATION_PARAMETER__PRIMITIVE_TYPE);
+			childrenFeatures.add(DataPackage.Literals.DATA_OPERATION_PARAMETER__INITIALIZATION_VALUE);
+		}
+		return childrenFeatures;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	@Override
+	protected EStructuralFeature getChildFeature(Object object, Object child) {
+		// Check the type of the specified child object and return the proper feature to use for
+		// adding (see {@link AddCommand}) it as a child.
+
+		return super.getChildFeature(object, child);
+	}
+
+	/**
+	 * This returns DataOperationParameter.gif.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	@Override
+	public Object getImage(Object object) {
+		return overlayImage(object, getResourceLocator().getImage("full/obj16/DataOperationParameter"));
+	}
+
+	/**
+	 * This returns the label text for the adapted class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	@Override
+	public String getText(Object object) {
+		String label = ((DataOperationParameter)object).getName();
+		return label == null || label.length() == 0 ?
+			getString("_UI_DataOperationParameter_type") :
+			getString("_UI_DataOperationParameter_type") + " " + label;
+	}
+
+
+	/**
+	 * This handles model notifications by calling {@link #updateChildren} to update any cached
+	 * children and by creating a viewer notification, which it passes to {@link #fireNotifyChanged}.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	@Override
+	public void notifyChanged(Notification notification) {
+		updateChildren(notification);
+
+		switch (notification.getFeatureID(DataOperationParameter.class)) {
+			case DataPackage.DATA_OPERATION_PARAMETER__NAME:
+			case DataPackage.DATA_OPERATION_PARAMETER__LOWER_BOUND:
+			case DataPackage.DATA_OPERATION_PARAMETER__UPPER_BOUND:
+			case DataPackage.DATA_OPERATION_PARAMETER__EXCHANGE_PATTERN:
+				fireNotifyChanged(new ViewerNotification(notification, notification.getNotifier(), false, true));
+				return;
+			case DataPackage.DATA_OPERATION_PARAMETER__IMPORTED_COMPLEX_TYPE:
+			case DataPackage.DATA_OPERATION_PARAMETER__PRIMITIVE_TYPE:
+			case DataPackage.DATA_OPERATION_PARAMETER__INITIALIZATION_VALUE:
+				fireNotifyChanged(new ViewerNotification(notification, notification.getNotifier(), true, false));
+				return;
+		}
+		super.notifyChanged(notification);
+	}
+
+	/**
+	 * This adds {@link org.eclipse.emf.edit.command.CommandParameter}s describing the children
+	 * that can be created under this object.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	@Override
+	protected void collectNewChildDescriptors(Collection<Object> newChildDescriptors, Object object) {
+		super.collectNewChildDescriptors(newChildDescriptors, object);
+
+		newChildDescriptors.add
+			(createChildParameter
+				(DataPackage.Literals.DATA_OPERATION_PARAMETER__IMPORTED_COMPLEX_TYPE,
+				 DataFactory.eINSTANCE.createImportedComplexType()));
+
+		newChildDescriptors.add
+			(createChildParameter
+				(DataPackage.Literals.DATA_OPERATION_PARAMETER__PRIMITIVE_TYPE,
+				 DataFactory.eINSTANCE.createPrimitiveBoolean()));
+
+		newChildDescriptors.add
+			(createChildParameter
+				(DataPackage.Literals.DATA_OPERATION_PARAMETER__PRIMITIVE_TYPE,
+				 DataFactory.eINSTANCE.createPrimitiveByte()));
+
+		newChildDescriptors.add
+			(createChildParameter
+				(DataPackage.Literals.DATA_OPERATION_PARAMETER__PRIMITIVE_TYPE,
+				 DataFactory.eINSTANCE.createPrimitiveCharacter()));
+
+		newChildDescriptors.add
+			(createChildParameter
+				(DataPackage.Literals.DATA_OPERATION_PARAMETER__PRIMITIVE_TYPE,
+				 DataFactory.eINSTANCE.createPrimitiveDate()));
+
+		newChildDescriptors.add
+			(createChildParameter
+				(DataPackage.Literals.DATA_OPERATION_PARAMETER__PRIMITIVE_TYPE,
+				 DataFactory.eINSTANCE.createPrimitiveDouble()));
+
+		newChildDescriptors.add
+			(createChildParameter
+				(DataPackage.Literals.DATA_OPERATION_PARAMETER__PRIMITIVE_TYPE,
+				 DataFactory.eINSTANCE.createPrimitiveFloat()));
+
+		newChildDescriptors.add
+			(createChildParameter
+				(DataPackage.Literals.DATA_OPERATION_PARAMETER__PRIMITIVE_TYPE,
+				 DataFactory.eINSTANCE.createPrimitiveInteger()));
+
+		newChildDescriptors.add
+			(createChildParameter
+				(DataPackage.Literals.DATA_OPERATION_PARAMETER__PRIMITIVE_TYPE,
+				 DataFactory.eINSTANCE.createPrimitiveLong()));
+
+		newChildDescriptors.add
+			(createChildParameter
+				(DataPackage.Literals.DATA_OPERATION_PARAMETER__PRIMITIVE_TYPE,
+				 DataFactory.eINSTANCE.createPrimitiveShort()));
+
+		newChildDescriptors.add
+			(createChildParameter
+				(DataPackage.Literals.DATA_OPERATION_PARAMETER__PRIMITIVE_TYPE,
+				 DataFactory.eINSTANCE.createPrimitiveString()));
+
+		newChildDescriptors.add
+			(createChildParameter
+				(DataPackage.Literals.DATA_OPERATION_PARAMETER__PRIMITIVE_TYPE,
+				 DataFactory.eINSTANCE.createPrimitiveUnspecified()));
+
+		newChildDescriptors.add
+			(createChildParameter
+				(DataPackage.Literals.DATA_OPERATION_PARAMETER__INITIALIZATION_VALUE,
+				 DataFactory.eINSTANCE.createPrimitiveValue()));
+	}
+
+	/**
+	 * Return the resource locator for this item provider's resources.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	@Override
+	public ResourceLocator getResourceLocator() {
+		return DataEditPlugin.INSTANCE;
+	}
+
+}

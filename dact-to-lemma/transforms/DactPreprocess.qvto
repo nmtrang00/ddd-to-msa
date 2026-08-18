@@ -7,6 +7,10 @@ transformation DactPreprocess(in dact: DACT, out preprocessedDact: DACT);
 property CURRENT_ACTIVITY_MODEL : DACT::ActivityModel;
 property CURRENT_ACTIVITY : DACT::Activity;
 property CACHED_REQUIRED_PROPERTIES : Sequence(DACT::Property);
+property INT : DACT::PrimitiveType;
+property REAL : DACT::PrimitiveType;
+property BOOL : DACT::PrimitiveType;
+property STR : DACT::PrimitiveType;
 
 main() {
 	dact.rootObjects()[DACT::Root]->map RootToRoot();
@@ -19,6 +23,11 @@ main() {
 		var ddd := root.ddd;
 		var activity := root.activity;
 		
+		INT := root.findPrimitiveType("Integer");
+		REAL := root.findPrimitiveType("Real");
+		BOOL := root.findPrimitiveType("Boolean");
+		STR := root.findPrimitiveType("String");
+
 		// Add missing Id for Entities and Property name
 		log("1.1. Adding missing Id and DomainObject-typed Property Name for Entities: Start parsing");
 		ddd.addMissingStructuralInfo(ddd);
@@ -31,10 +40,16 @@ main() {
 		log("1.2. Localizing SharedValueObjects: End parsing");
 		log("************************************************");
 		
+		// Validate SpecRule
+		log("1.3. Validating SpecRule: Start parsing");
+		root.validateSpecRule(root);
+		log("1.3. Validating SpecRule: End parsing");
+		log("************************************************");
+		
 		// Validate Varibale and Derive Operations
-		log("1.3. Validating Variable and Deriving required Operations: Start parsing");
+		log("1.4. Validating Variable and Deriving required Operations: Start parsing");
 		root.validateVariablesAndDeriveOperations(root);
-		log("1.3. Validating Variable and Deriving required Operations: End parsing");
+		log("1.4. Validating Variable and Deriving required Operations: End parsing");
 		log("************************************************");
 	};
 	log("-------------------------------------");
@@ -54,7 +69,7 @@ helper DACT::DddModel::addMissingStructuralInfo(inout model: DACT::DddModel){
 	
 	boundedContexts -> forEach(b){
 		b.printInfo(1);
-		var stringType := self.findPrimitiveType("String");
+		
 		var domainObjects := b.ownedElements[DACT::InternalDomainObject];
 
 		domainObjects -> forEach(o){
@@ -74,14 +89,13 @@ helper DACT::Entity::addMissingId(inout entity: DACT::Entity){
 	if (entity.hasIdProperty()){
 		log(indent(3)+"Entity has Id -> Skip!");
 	} else {
-		var newType: DACT::PrimitiveType := self.findPrimitiveType('String');
 		if (entity.hasIdOperation()) {
 		   // TODO: Implement DefinesIdentity for Operation
 		};
 
 		var newIdAttr := object DACT::Property {
 			name := entity.name.toCamel() + "Id";
-			type := newType;
+			type := STR;
 			lowerBound := 1;
 			upperBound := 1;
 			definesIdentity := true;
@@ -187,7 +201,7 @@ helper DACT::Root::validateVariablesAndDeriveOperations(inout root: DACT::Root){
 				log(indent(2)+"Has specification");
 				var inParamMappings := activity.parameterMappings->select(p|p.type = DACT::ParameterMappingType::ACTIVITY_IN);
 				if (inParamMappings -> size() > 0){
-					log(indent(3)+"Has mappings");
+					log(indent(2)+"Has mappings");
 					//Parameter Mapping exists -> Add mapped identifier to variable set
 					inParamMappings -> forEach(m){
 						m.validate(rootScope);
@@ -306,7 +320,6 @@ helper DACT::Activity::assignSpecification(inout activity : DACT::Activity){
 	var newOperation := object DACT::Operation{
 		name := self.name;
 		type := OperationType::S0_DOMAIN_SERVICE;
-		sideEffectFree := targetSideEffectFree;
 	};
 	matchedService.ownedOperations+=newOperation;
 	activity.specification := newOperation;
@@ -520,7 +533,9 @@ helper DACT::FlowFinalNode::processNode(){
 helper DACT::ConditionalNode::processNode(){
 	var currentScope := self.group.scope;
 	self.test.printExpr(2);
-	self.test.validate(currentScope);
+	var testType = self.test.validate(currentScope);
+	assert fatal(testType = BOOL)
+		with log("Compile Error: Test expression must return Boolean type.", testType);
 	
 	// Generate new scope here!!!!
 	var localScope := object DACT::Scope{
@@ -611,7 +626,7 @@ helper DACT::DomainNode::processNode(){
 	availableVars += self.group.scope.inheritedVariables;
 	var resultIsDeclared := availableVars -> exists(v|v.name=self.result.name);
 
-	self.group.scope.printScopeVariables();
+//	self.group.scope.printScopeVariables();
 	
 	var inMp := self.generateMainMappings(self.group.scope);
     var outMp := self.generateOutputMappings(self.group.scope);
@@ -638,18 +653,9 @@ helper DACT::DomainNode::processNode(){
 	    	case (self.oclIsTypeOf(DACT::DomainDeleteAction)) OperationType::R3_REPOSITORY_DELETE;
 	    };
 	    
-	    var sideEffectFreeCheck = switch{
-	    	case (self.oclIsTypeOf(DACT::DomainExistAction)) true;
-	    	case (self.oclIsTypeOf(DACT::DomainFindAction)) true;
-	    	case (self.oclIsTypeOf(DACT::DomainUpdateAction)) false;
-	    	case (self.oclIsTypeOf(DACT::DomainCreateAction)) false;
-	    	case (self.oclIsTypeOf(DACT::DomainDeleteAction)) false;
-	    };
-	    
 		var newOperation := object DACT::Operation{
 			name := inMp.newName;
 			type := operationType;
-			sideEffectFree := sideEffectFreeCheck;
 		};
 		
 		newOperation.ownedParameters := inMp.parameters;
@@ -723,7 +729,7 @@ helper DACT::DomainNode::generateOutputMappings(inout scope : DACT::Scope): Tupl
 		// Exists: Always return a single boolean
 		outParam := object Parameter{
 			name := "result";
-			type := self.findPrimitiveType("Boolean");
+			type := BOOL;
 			lowerBound := 1;
 			upperBound := 1;
 			role:=ParameterRole::CORE;
@@ -788,69 +794,69 @@ helper DACT::DomainFindAction::generateMainMappings(inout scope : DACT::Scope): 
 	var mappings : Sequence(ParameterMapping);
 	var queriedProperties : Sequence(DACT::Property);
 	var identifiersToProcess : Sequence(String); // Use to construct the Query Name
-	
+	var newName : String;
 	var targetEntity : DACT::DomainObject := if self.entity <> null then self.entity else self.aggregate endif;
 	// Input
 	//// Main Query
-	self.mainExpr -> forEach(e){
-		e.printExpr(2);
-		assert fatal(e.child.oclIsKindOf(DACT::BinaryExpression) )
-			with log("Type Error: The Domain Node expression must be a Binary Expression", e.child);
+	if (self.mainExpr -> size() = 0){
+		newName := 'findAll';
+	}else{
+		self.mainExpr -> forEach(e){
+			e.printExpr(2);
 			
-		// Left is the property -> Check if actually exists 
-		var leftExpr := e.child.oclAsType(DACT::BinaryExpression).leftExpr.child;
-
-		assert fatal(leftExpr.oclIsKindOf(DACT::UnaryExpression) and leftExpr.oclAsType(DACT::UnaryExpression).identifier<>null)
-			with log("Type Error: The left side of Domain Node expression must be identifier of property, but provided: ", leftExpr.toString());
+			// Left is the property -> Check if actually exists 
+			var leftExpr := e.oclAsType(DACT::BinaryExpression).leftExpr;
 			
-		var identifierName := leftExpr.oclAsType(DACT::UnaryExpression).identifier.name;
-	
-		-- Resolve property against the selected targetContext (Sub-Entity or AggregateRoot)
-		var rel := targetEntity.getPropertyFromIdentifier(identifierName);
-		var matchedProperty := rel.matchedProperty;
-		
-		assert fatal(matchedProperty.upperBound = 1)
-			with log("Compile Error: Currently multiplicity fields are not supported for query!");
-		assert fatal(matchedProperty.type.oclIsKindOf(DACT::PrimitiveType))
-			with log("Compile Error: Currently only primitive fields can be queried");
-		
-		queriedProperties += matchedProperty;
-		identifiersToProcess += identifierName.toPascalCase();
-		var newParameter := object Parameter{
-			name := matchedProperty.name;
-			type := matchedProperty.type;
-			lowerBound := matchedProperty.lowerBound;
-			upperBound := matchedProperty.upperBound;
-			role:=ParameterRole::CORE;
+			var identifierName := leftExpr.oclAsType(DACT::UnaryExpression).identifier.name;
+			
+			-- Resolve property against the selected targetContext (Sub-Entity or AggregateRoot)
+			var rel := targetEntity.getPropertyFromIdentifier(identifierName);
+			var matchedProperty := rel.matchedProperty;
+			
+			assert fatal(matchedProperty.upperBound = 1)
+				with log("Compile Error: Currently multiplicity fields are not supported for query!");
+			assert fatal(matchedProperty.type.oclIsKindOf(DACT::PrimitiveType))
+				with log("Compile Error: Currently only primitive fields can be queried");
+			
+			queriedProperties += matchedProperty;
+			identifiersToProcess += identifierName.replace("self.","").toPascalCase();
+			var newParameter := object Parameter{
+				name := matchedProperty.name;
+				type := matchedProperty.type;
+				lowerBound := matchedProperty.lowerBound;
+				upperBound := matchedProperty.upperBound;
+				role:=ParameterRole::CORE;
+			};
+				
+			// Right is the identifier or value -> Check if actually exists and match type
+			var rightExpr := e.oclAsType(DACT::BinaryExpression).rightExpr;
+			assert fatal(rightExpr.oclIsKindOf(DACT::UnaryExpression) and rightExpr.oclAsType(DACT::UnaryExpression).identifier<>null)
+				with log("Type Error: The right side of Domain Node expression must be identifier, but provided: ", rightExpr.toString());
+			var identifierToCheck := rightExpr.oclAsType(DACT::UnaryExpression).identifier;
+			
+			var newMapping := object ParameterMapping{
+				operationParameter := newParameter;
+				identifier := identifierToCheck.deepclone();
+				type := ParameterMappingType::ACTION_IN;
+			};
+			
+			newMapping.validate(scope);
+			
+			parameters += newParameter;
+			mappings += newMapping;
 		};
-			
-		// Right is the identifier or value -> Check if actually exists and match type
-		var rightExpr := e.child.oclAsType(DACT::BinaryExpression).rightExpr.child;
-		assert fatal(rightExpr.oclIsKindOf(DACT::UnaryExpression) and rightExpr.oclAsType(DACT::UnaryExpression).identifier<>null)
-			with log("Type Error: The right side of Domain Node expression must be identifier, but provided: ", rightExpr.toString());
-		var identifierToCheck := rightExpr.oclAsType(DACT::UnaryExpression).identifier;
 		
-		var newMapping := object ParameterMapping{
-			operationParameter := newParameter;
-			identifier := identifierToCheck.deepclone();
-			type := ParameterMappingType::ACTION_IN;
-		};
-		newMapping.validate(scope);
-		
-		parameters += newParameter;
-		mappings += newMapping;
-	};
+		// Name Generation
+		newName := if self.oclIsTypeOf(DACT::DomainExistAction) then "existsBy" else "findBy" endif;
 	
-	// Name Generation
-	var newName: String := if self.oclIsTypeOf(DACT::DomainExistAction) then "existsBy" else "findBy" endif;
-
-	var isFirst := true;
-	identifiersToProcess->forEach(p) {
-		if (isFirst) {
-			newName := newName + p;
-			isFirst := false;
-		} else {
-			newName := newName + "And" + p;
+		var isFirst := true;
+		identifiersToProcess->forEach(p) {
+			if (isFirst) {
+				newName := newName + p;
+				isFirst := false;
+			} else {
+				newName := newName + "And" + p;
+			};
 		};
 	};
 	CACHED_REQUIRED_PROPERTIES := queriedProperties;
@@ -874,21 +880,11 @@ helper DACT::DomainCreateAction::generateMainMappings(inout scope : DACT::Scope)
 
 	mainExpr.printExpr(2);
 	
-	assert fatal(mainExpr.child.oclIsKindOf(DACT::BinaryExpression) )
-			with log("Type Error: The Domain Node expression must be a Binary Expression", mainExpr.child);
-			
 	// Left is the entity itself -> Check if actually exists 
-	var leftExpr := mainExpr.child.oclAsType(DACT::BinaryExpression).leftExpr.child;
-	assert fatal(leftExpr.oclIsKindOf(DACT::UnaryExpression) and leftExpr.oclAsType(DACT::UnaryExpression).identifier<>null)
-		with log("Type Error: The left side of Domain Create Node expression must be identifier, but provided: ", leftExpr.toString());
-		
+	var leftExpr := mainExpr.oclAsType(DACT::BinaryExpression).leftExpr;
 	var identifierName := leftExpr.oclAsType(DACT::UnaryExpression).identifier.name;
 	
-	var newMainParameter : DACT::Parameter;
-	var requiredIdEntities : Sequence(DACT::Entity);
-
-	// Create Root case
-	newMainParameter := object Parameter{
+	var newMainParameter := object Parameter{
 		name:= targetEntity.name.toCamel();
 		type:= targetEntity;
 		lowerBound:=1;
@@ -899,7 +895,7 @@ helper DACT::DomainCreateAction::generateMainMappings(inout scope : DACT::Scope)
 	newName := if self.oclIsKindOf(DACT::DomainUpdateAction) then "update" else "create" endif + targetEntity.name.toUpperCamel();
 	
 	// Right is the identifier or value -> Check if actually exists and match type
-	var rightExpr := mainExpr.child.oclAsType(DACT::BinaryExpression).rightExpr.child;
+	var rightExpr := mainExpr.oclAsType(DACT::BinaryExpression).rightExpr;
 	assert fatal(rightExpr.oclIsKindOf(DACT::UnaryExpression) and rightExpr.oclAsType(DACT::UnaryExpression).identifier<>null)
 		with log("Type Error: The right side of Domain Node expression must be identifier, but provided: ", rightExpr.toString());
 	var identifierToCheck := rightExpr.oclAsType(DACT::UnaryExpression).identifier;
@@ -925,59 +921,41 @@ helper DACT::DomainDeleteAction::generateMainMappings(inout scope : DACT::Scope)
 	
 	var targetEntity : DACT::DomainObject := if self.entity <> null then self.entity else self.aggregate endif;
 	
-//	// Main: EntityPath = Identifier
-//	var mainExpr := self.mainExpr->at(1);
-//	
-//	assert fatal(mainExpr.child.oclIsKindOf(DACT::BinaryExpression))
-//			with log("Type Error: The Domain Node expression must be a Binary Expression", mainExpr.child.toString());
-//			
-//	// Left is the entity itself -> Check if actually exists 
-//	var leftExpr := mainExpr.child.oclAsType(DACT::BinaryExpression).leftExpr.child;
-//	assert fatal(leftExpr.oclIsKindOf(DACT::UnaryExpression) and leftExpr.oclAsType(DACT::UnaryExpression).identifier <> null)
-//		with log("Type Error: The left side of Domain Node expression must be identifier, but provided: ", leftExpr.toString());
-//		
-//	var identifierName := leftExpr.oclAsType(DACT::UnaryExpression).identifier.name;
-//	assert fatal(identifierName.startsWith("self"))
-//		with log("Compile Error: The left side of Domain Node expression must be identifier of property starting with 'self.', but provided:", identifierName);
-//	
-//	var newMainParameter : DACT::Parameter;
-//	var pathSegments := identifierName.tokenize(".");
-//
 	var idProperty := targetEntity.ownedProperties->selectOne(p | p.definesIdentity);
 	assert fatal(idProperty <> null)
 		with log("Compile Error: Entity '" + self.aggregate.name + "' has no property defining identity.");
-//
-//	newMainParameter := object Parameter{
-//		name := idProperty.name.toCamel();
-//		type := idProperty.type;
-//		lowerBound := 1;
-//		upperBound := 1;
-//		role := ParameterRole::CORE;
-//	};
-//	
+	
+	var mainParam := object Parameter{
+		name:= idProperty.name.toCamel();
+		type:= idProperty.type;
+		lowerBound:=idProperty.lowerBound;
+		upperBound:=idProperty.upperBound;
+		role:=ParameterRole::CORE;
+	};
+	
+	// Right is the identifier or value -> Check if actually exists and match type
+	var rightExpr := self.mainExpr-> first().oclAsType(DACT::BinaryExpression).rightExpr;
+	assert fatal(rightExpr.oclIsKindOf(DACT::UnaryExpression) and rightExpr.oclAsType(DACT::UnaryExpression).identifier<>null)
+		with log("Type Error: The right side of Domain Node expression must be identifier, but provided: ", rightExpr.toString());
+	
+	var identifierToCheck := rightExpr.oclAsType(DACT::UnaryExpression).identifier;
+	
+		
+	var mainMapping := object ParameterMapping{
+		operationParameter := mainParam;
+		identifier := identifierToCheck.deepclone();
+		type := ParameterMappingType::ACTION_IN;
+	};
+	
+	parameters+=mainParam;
+	mappings+=mainMapping;
+		
 	if (targetEntity = self.aggregate) {
 		newName := "deleteBy" + idProperty.name.toUpperCamel();
 		
 	} else {
 		newName := "delete" + targetEntity.name.toUpperCamel() + "By" + idProperty.name.toUpperCamel();
 	};
-//			
-//	// Right side is the input variable/expression identifier
-//	var rightExpr := mainExpr.child.oclAsType(DACT::BinaryExpression).rightExpr.child;
-//	assert fatal(rightExpr.oclIsKindOf(DACT::UnaryExpression) and rightExpr.oclAsType(DACT::UnaryExpression).identifier <> null)
-//		with log("Type Error: The right side of Domain Node expression must be an identifier, but provided: ", rightExpr.toString());
-//	var identifierToCheck := rightExpr.oclAsType(DACT::UnaryExpression).identifier;
-//	
-//	var newMainMapping := object ParameterMapping{
-//		operationParameter := newMainParameter;
-//		identifier := identifierToCheck;
-//		type := ParameterMappingType::ACTION_IN;
-//	};
-//	newMainMapping.validate(scope);
-//	
-//	parameters += newMainParameter;
-//	mappings += newMainMapping;
-//	
 	return Tuple{newName = newName, parameters = parameters, mappings = mappings};
 }
 
@@ -1011,8 +989,8 @@ query DACT::ValueSpecification::hasType(type: DACT::Type): Boolean{
 }
 
 query DACT::VariableAssignment::validate(scope : DACT::Scope, sourceVar: DACT::Variable){
-	if (self.expr.child.oclIsKindOf(DACT::UnaryExpression)){
-		var childExpr := self.expr.child.oclAsType(DACT::UnaryExpression);
+	if (self.expr.oclIsKindOf(DACT::UnaryExpression)){
+		var childExpr := self.expr.oclAsType(DACT::UnaryExpression);
 		if (childExpr.identifier <> null){
 			// Check if identifier exist in the scope
 			var matchedVar := scope.getVariableWithName(childExpr.identifier.name);
@@ -1044,8 +1022,8 @@ query DACT::VariableAssignment::validate(scope : DACT::Scope, sourceVar: DACT::V
 
 
 query DACT::VariableAssignment::validate(scope : DACT::Scope, sourceProperty: DACT::Property){
-	if (self.expr.child.oclIsKindOf(DACT::UnaryExpression)){
-		var childExpr := self.expr.child.oclAsType(DACT::UnaryExpression);
+	if (self.expr.oclIsKindOf(DACT::UnaryExpression)){
+		var childExpr := self.expr.oclAsType(DACT::UnaryExpression);
 		if (childExpr.identifier <> null){
 			// Check if identifier exist in the scope
 			var matchedVar := scope.getVariableWithName(childExpr.identifier.name);
@@ -1140,29 +1118,33 @@ query DACT::ParameterMapping::validate(scope : DACT::Scope){
 	};	
 }
 
-query DACT::Expression::validate(scope: DACT::Scope){
+query DACT::Expression::validate(scope: DACT::Scope): DACT::Type{
 	-- Currently works for non-collection only!!!!
-	self.child.validate(scope);	
+	return null;
 }
 
-query DACT::ExpressionChild::validate(scope: DACT::Scope): DACT::Type{return null}
 
 query DACT::UnaryExpression::validate(scope: DACT::Scope): DACT::Type{
+	var scopeName := "";
+	if (scope.group <> null){
+		scopeName := scope.group.name;
+	};
+	
 	if (self.identifier <> null){
 		var matchedVar := scope.getVariableWithName(self.identifier.name);
 				
 		assert fatal (matchedVar <> null)
-			with log("Compile Error: Variable '" + self.identifier.name + "' has NOT been defined in scope '" + scope.group.name + "'.");
+			with log("Compile Error: Variable '" + self.identifier.name + "' has NOT been defined in scope '" + scopeName + "'.");
 		
 		return matchedVar.type;
 	};
 	if (self.value <> null){
 		return switch {
 			case (self.value.oclIsKindOf(DACT::LiteralNull)) null;
-			case (self.value.oclIsKindOf(DACT::LiteralInteger)) self.findPrimitiveType("Integer");
-			case (self.value.oclIsKindOf(DACT::LiteralReal)) self.findPrimitiveType("Real");
-			case (self.value.oclIsKindOf(DACT::LiteralString))self.findPrimitiveType("String");
-			case (self.value.oclIsKindOf(DACT::LiteralBoolean)) self.findPrimitiveType("Boolean");
+			case (self.value.oclIsKindOf(DACT::LiteralInteger)) INT;
+			case (self.value.oclIsKindOf(DACT::LiteralReal)) REAL;
+			case (self.value.oclIsKindOf(DACT::LiteralString)) STR;
+			case (self.value.oclIsKindOf(DACT::LiteralBoolean)) BOOL;
 		}
 	};
 	assert fatal(true)
@@ -1174,36 +1156,39 @@ query DACT::BinaryExpression::validate(scope: DACT::Scope): DACT::Type{
 	// Type matching and operator compatible
 	var leftType := self.leftExpr.validate(scope);
 	var rightType := self.rightExpr.validate(scope);
-	
-	assert fatal(leftType = rightType)
-		with log("Compile Error: Left and right of the expression are of different type!");
-	
-	var booleanType :=  self.findPrimitiveType("Boolean");
-    var integerType :=  self.findPrimitiveType("Intger");
-    var realType := self.findPrimitiveType("Real");
-	var stringType := self.findPrimitiveType("String");
+
+	assert fatal(
+		(leftType = rightType) or 
+		(rightType = null) or 
+		(leftType = INT and rightType = REAL) or
+		(leftType = REAL and rightType = INT)
+	)
+		with log("Compile Error: Left and right of the expression are of different type: "+ 
+			leftType.toString() +" vs " + rightType.toString());
     
-	if (self.operator.oclIsKindOf(DACT::Eq)) {
+	if (self.operator.oclIsKindOf(DACT::Eq) or self.operator.oclIsKindOf(DACT::Ne)) {
         -- Equality operators work on any matching types.
         -- They always yield a Boolean result type
-        return booleanType;
+        return BOOL;
     };
     
     if (self.operator.oclIsKindOf(DACT::Gt) or self.operator.oclIsKindOf(DACT::Lt) or 
         self.operator.oclIsKindOf(DACT::Ge) or self.operator.oclIsKindOf(DACT::Le)) {
         -- Relational operators require numeric values (Integer or Real).
-        assert fatal (leftType = integerType or leftType = realType)
-            with log("Type Error: Relational operators can only compare numeric types.");
+        assert fatal (leftType = INT or leftType = REAL)
+            with log("Type Error: Relational operators can only compare numeric types: "+ 
+			leftType.toString() +" vs " + rightType.toString());
             
         -- They always return a Boolean result type.
-        return booleanType;
+        return BOOL;
     };
     
     if (self.operator.oclIsKindOf(DACT::Plus) or self.operator.oclIsKindOf(DACT::Minus) or 
         self.operator.oclIsKindOf(DACT::Times) or self.operator.oclIsKindOf(DACT::Divide)) {
         -- Arithmetic operators require numeric values.
-        assert fatal (leftType = integerType or leftType = realType)
-            with log("Type Error: Arithmetic operators require numeric operands.");
+        assert fatal (leftType = INT or leftType = REAL)
+            with log("Type Error: Arithmetic operators require numeric operands: "+ 
+			leftType.toString() +" vs " + rightType.toString());
             
         -- They return the same type as the operands (e.g., Integer + Integer = Integer).
         return leftType;
@@ -1215,18 +1200,17 @@ query DACT::BinaryExpression::validate(scope: DACT::Scope): DACT::Type{
 
 query DACT::NotExpression::validate(scope: DACT::Scope):  DACT::Type{
 	var exprType := self.expr.validate(scope);
-	var booleanType :=  self.findPrimitiveType("Boolean");
 	
-	assert fatal (exprType = booleanType)
-		with log("Type Error: Not operator require Boolean expr.");
+	assert fatal (exprType = BOOL)
+		with log("Type Error: Not operator require Boolean expr: ", exprType);
 		
-	return booleanType;
+	return BOOL;
 }
 
 // Helper to construct the property chain from nested identifier
 helper DACT::DomainObject::getPropertyFromIdentifier(identifier: String): Tuple(matchedProperty : DACT::Property, propertyChain: Sequence(DACT::Property)) {
 	-- 1. Split the string into a sequence of individual property names using the '.' delimiter
-    var segments := identifier.tokenize(".");
+    var segments := identifier.replace('self.','').tokenize(".");
     
     -- 2. Initialize tracking variables for the loop context
     var currentType := self; -- Start at the root context
@@ -1341,4 +1325,33 @@ query DACT::Entity::getPropertyPath(root: DACT::AggregateRoot): Sequence(DACT::P
 	
 	-- Return null if root was unreachable from this entity
 	return null;
+}
+
+helper DACT::Root::validateSpecRule(inout root: DACT::Root){
+	root.ddd.boundedContexts -> forEach(context){
+		context.printInfo(1);
+		context.ownedElements[DACT::InternalDomainObject] -> forEach(ob){
+			ob.printInfo(2);
+			// Use Domain Object as scope with self.{property} as variable
+			var domainScope = object DACT::Scope{};
+			ob.ownedProperties -> forEach(p){
+				p.printInfo(3);
+				var newVar = object DACT::Variable{
+					name := "self." + p.name;
+					type := p.type;
+					lowerBound := p.lowerBound;
+					upperBound := p.upperBound;
+				};
+				domainScope.ownedVariables += newVar;
+			};
+			
+			ob.ownedOperations[DACT::SpecOperation] -> forEach(op){
+				op.printInfo(3);
+				op.ownedRules -> forEach(rule){
+					rule.expr.printExpr(4);
+					rule.expr.validate(domainScope);
+				}
+			}
+		}
+	}
 }

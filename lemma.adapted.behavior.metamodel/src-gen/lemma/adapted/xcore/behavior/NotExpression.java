@@ -19,7 +19,7 @@ package lemma.adapted.xcore.behavior;
  * @model
  * @generated
  */
-public interface NotExpression extends ExpressionChild {
+public interface NotExpression extends Expression {
 	/**
 	 * Returns the value of the '<em><b>Expr</b></em>' containment reference.
 	 * <!-- begin-user-doc -->

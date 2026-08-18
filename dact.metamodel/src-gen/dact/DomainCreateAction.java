@@ -14,12 +14,4 @@ package dact;
  * @generated
  */
 public interface DomainCreateAction extends DomainNode {
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @model
-	 * @generated
-	 */
-	void init();
-
 } // DomainCreateAction

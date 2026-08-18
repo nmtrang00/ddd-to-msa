@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?eclipse version="3.0"?>
+
+<!--
+-->
+
+<plugin>
+
+   <extension point="org.eclipse.ui.newWizards">
+      <!-- @generated TechnologyDefinitionModel -->
+      <category
+            id="org.eclipse.emf.ecore.Wizard.category.ID"
+            name="%_UI_Wizard_category"/>
+      <wizard
+            id="lemma.adapted.xcore.technology.presentation.TechnologyModelWizardID"
+            name="%_UI_TechnologyModelWizard_label"
+            class="lemma.adapted.xcore.technology.presentation.TechnologyModelWizard"
+            category="org.eclipse.emf.ecore.Wizard.category.ID"
+            icon="icons/full/obj16/TechnologyModelFile.gif">
+         <description>%_UI_TechnologyModelWizard_description</description>
+         <selection class="org.eclipse.core.resources.IResource"/>
+      </wizard>
+   </extension>
+
+   <extension point="org.eclipse.ui.editors">
+      <!-- @generated TechnologyDefinitionModel -->
+      <editor
+            id="lemma.adapted.xcore.technology.presentation.TechnologyEditorID"
+            name="%_UI_TechnologyEditor_label"
+            icon="icons/full/obj16/TechnologyModelFile.gif"
+            extensions="technology"
+            class="lemma.adapted.xcore.technology.presentation.TechnologyEditor"
+            contributorClass="lemma.adapted.xcore.technology.presentation.TechnologyActionBarContributor">
+      </editor>
+   </extension>
+
+</plugin>

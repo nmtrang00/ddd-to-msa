@@ -104,12 +104,44 @@ public class DactValidator extends EObjectValidator {
 	public static final int PROPERTY__PRIMITIVE_PROPERTY_REQUIRES_NAME = 8;
 
 	/**
-	 * The {@link org.eclipse.emf.common.util.Diagnostic#getCode() code} for constraint 'Behavior Xor Specification' of 'Operation'.
+	 * The {@link org.eclipse.emf.common.util.Diagnostic#getCode() code} for constraint 'Behavior Xor Specification' of 'Spec Operation'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public static final int OPERATION__BEHAVIOR_XOR_SPECIFICATION = 9;
+	public static final int SPEC_OPERATION__BEHAVIOR_XOR_SPECIFICATION = 9;
+
+	/**
+	 * The {@link org.eclipse.emf.common.util.Diagnostic#getCode() code} for constraint 'No Input Parameters' of 'Spec Operation'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public static final int SPEC_OPERATION__NO_INPUT_PARAMETERS = 10;
+
+	/**
+	 * The {@link org.eclipse.emf.common.util.Diagnostic#getCode() code} for constraint 'Owned By Domain Object Only' of 'Spec Operation'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public static final int SPEC_OPERATION__OWNED_BY_DOMAIN_OBJECT_ONLY = 11;
+
+	/**
+	 * The {@link org.eclipse.emf.common.util.Diagnostic#getCode() code} for constraint 'Unique Rule Names' of 'Spec Operation'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public static final int SPEC_OPERATION__UNIQUE_RULE_NAMES = 12;
+
+	/**
+	 * The {@link org.eclipse.emf.common.util.Diagnostic#getCode() code} for constraint 'Single Bool Out Parameter' of 'Spec Operation'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public static final int SPEC_OPERATION__SINGLE_BOOL_OUT_PARAMETER = 13;
 
 	/**
 	 * The {@link org.eclipse.emf.common.util.Diagnostic#getCode() code} for constraint 'Unique Operation Names' of 'Interface'.
@@ -117,7 +149,7 @@ public class DactValidator extends EObjectValidator {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public static final int INTERFACE__UNIQUE_OPERATION_NAMES = 10;
+	public static final int INTERFACE__UNIQUE_OPERATION_NAMES = 14;
 
 	/**
 	 * The {@link org.eclipse.emf.common.util.Diagnostic#getCode() code} for constraint 'Unique Operation Names' of 'Domain Object'.
@@ -125,7 +157,7 @@ public class DactValidator extends EObjectValidator {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public static final int DOMAIN_OBJECT__UNIQUE_OPERATION_NAMES = 11;
+	public static final int DOMAIN_OBJECT__UNIQUE_OPERATION_NAMES = 15;
 
 	/**
 	 * The {@link org.eclipse.emf.common.util.Diagnostic#getCode() code} for constraint 'Unique Property Names' of 'Domain Object'.
@@ -133,7 +165,15 @@ public class DactValidator extends EObjectValidator {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public static final int DOMAIN_OBJECT__UNIQUE_PROPERTY_NAMES = 12;
+	public static final int DOMAIN_OBJECT__UNIQUE_PROPERTY_NAMES = 16;
+
+	/**
+	 * The {@link org.eclipse.emf.common.util.Diagnostic#getCode() code} for constraint 'Single Invariant Operation' of 'Domain Object'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public static final int DOMAIN_OBJECT__SINGLE_INVARIANT_OPERATION = 17;
 
 	/**
 	 * The {@link org.eclipse.emf.common.util.Diagnostic#getCode() code} for constraint 'Matched Parameter Mappings' of 'Activity'.
@@ -141,7 +181,7 @@ public class DactValidator extends EObjectValidator {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public static final int ACTIVITY__MATCHED_PARAMETER_MAPPINGS = 13;
+	public static final int ACTIVITY__MATCHED_PARAMETER_MAPPINGS = 18;
 
 	/**
 	 * The {@link org.eclipse.emf.common.util.Diagnostic#getCode() code} for constraint 'Single Initial Node' of 'Activity Group'.
@@ -149,7 +189,7 @@ public class DactValidator extends EObjectValidator {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public static final int ACTIVITY_GROUP__SINGLE_INITIAL_NODE = 14;
+	public static final int ACTIVITY_GROUP__SINGLE_INITIAL_NODE = 19;
 
 	/**
 	 * The {@link org.eclipse.emf.common.util.Diagnostic#getCode() code} for constraint 'Single Final Node' of 'Activity Group'.
@@ -157,7 +197,7 @@ public class DactValidator extends EObjectValidator {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public static final int ACTIVITY_GROUP__SINGLE_FINAL_NODE = 15;
+	public static final int ACTIVITY_GROUP__SINGLE_FINAL_NODE = 20;
 
 	/**
 	 * The {@link org.eclipse.emf.common.util.Diagnostic#getCode() code} for constraint 'Non Empty Group' of 'Activity Group'.
@@ -165,7 +205,7 @@ public class DactValidator extends EObjectValidator {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public static final int ACTIVITY_GROUP__NON_EMPTY_GROUP = 16;
+	public static final int ACTIVITY_GROUP__NON_EMPTY_GROUP = 21;
 
 	/**
 	 * The {@link org.eclipse.emf.common.util.Diagnostic#getCode() code} for constraint 'No Edge Into Initial Node' of 'Activity Edge'.
@@ -173,7 +213,7 @@ public class DactValidator extends EObjectValidator {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public static final int ACTIVITY_EDGE__NO_EDGE_INTO_INITIAL_NODE = 17;
+	public static final int ACTIVITY_EDGE__NO_EDGE_INTO_INITIAL_NODE = 22;
 
 	/**
 	 * The {@link org.eclipse.emf.common.util.Diagnostic#getCode() code} for constraint 'No Edge Out Of Final Node' of 'Activity Edge'.
@@ -181,7 +221,15 @@ public class DactValidator extends EObjectValidator {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public static final int ACTIVITY_EDGE__NO_EDGE_OUT_OF_FINAL_NODE = 18;
+	public static final int ACTIVITY_EDGE__NO_EDGE_OUT_OF_FINAL_NODE = 23;
+
+	/**
+	 * The {@link org.eclipse.emf.common.util.Diagnostic#getCode() code} for constraint 'Endpoints In Same Group' of 'Activity Edge'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public static final int ACTIVITY_EDGE__ENDPOINTS_IN_SAME_GROUP = 24;
 
 	/**
 	 * The {@link org.eclipse.emf.common.util.Diagnostic#getCode() code} for constraint 'Requires Main Expression' of 'Domain Node'.
@@ -189,7 +237,7 @@ public class DactValidator extends EObjectValidator {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public static final int DOMAIN_NODE__REQUIRES_MAIN_EXPRESSION = 19;
+	public static final int DOMAIN_NODE__REQUIRES_MAIN_EXPRESSION = 25;
 
 	/**
 	 * The {@link org.eclipse.emf.common.util.Diagnostic#getCode() code} for constraint 'Self Anchored Binary Expression' of 'Domain Node'.
@@ -197,7 +245,7 @@ public class DactValidator extends EObjectValidator {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public static final int DOMAIN_NODE__SELF_ANCHORED_BINARY_EXPRESSION = 20;
+	public static final int DOMAIN_NODE__SELF_ANCHORED_BINARY_EXPRESSION = 26;
 
 	/**
 	 * The {@link org.eclipse.emf.common.util.Diagnostic#getCode() code} for constraint 'Exclusive Event Source' of 'Signal Action'.
@@ -205,7 +253,7 @@ public class DactValidator extends EObjectValidator {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public static final int SIGNAL_ACTION__EXCLUSIVE_EVENT_SOURCE = 21;
+	public static final int SIGNAL_ACTION__EXCLUSIVE_EVENT_SOURCE = 27;
 
 	/**
 	 * The {@link org.eclipse.emf.common.util.Diagnostic#getCode() code} for constraint 'Conforming Activity Operation Parameter' of 'Parameter Mapping'.
@@ -213,7 +261,7 @@ public class DactValidator extends EObjectValidator {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public static final int PARAMETER_MAPPING__CONFORMING_ACTIVITY_OPERATION_PARAMETER = 22;
+	public static final int PARAMETER_MAPPING__CONFORMING_ACTIVITY_OPERATION_PARAMETER = 28;
 
 	/**
 	 * The {@link org.eclipse.emf.common.util.Diagnostic#getCode() code} for constraint 'Exclusive Mapping Source' of 'Parameter Mapping'.
@@ -221,7 +269,7 @@ public class DactValidator extends EObjectValidator {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public static final int PARAMETER_MAPPING__EXCLUSIVE_MAPPING_SOURCE = 23;
+	public static final int PARAMETER_MAPPING__EXCLUSIVE_MAPPING_SOURCE = 29;
 
 	/**
 	 * The {@link org.eclipse.emf.common.util.Diagnostic#getCode() code} for constraint 'Value Only In Action' of 'Parameter Mapping'.
@@ -229,7 +277,7 @@ public class DactValidator extends EObjectValidator {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public static final int PARAMETER_MAPPING__VALUE_ONLY_IN_ACTION = 24;
+	public static final int PARAMETER_MAPPING__VALUE_ONLY_IN_ACTION = 30;
 
 	/**
 	 * A constant with a fixed name that can be used as the base value for additional hand written constants.
@@ -237,7 +285,7 @@ public class DactValidator extends EObjectValidator {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	private static final int GENERATED_DIAGNOSTIC_CODE_COUNT = 24;
+	private static final int GENERATED_DIAGNOSTIC_CODE_COUNT = 30;
 
 	/**
 	 * A constant with a fixed name that can be used as the base value for additional hand written constants in a derived class.
@@ -313,8 +361,10 @@ public class DactValidator extends EObjectValidator {
 				return validateProperty((Property)value, diagnostics, context);
 			case DactPackage.OPERATION:
 				return validateOperation((Operation)value, diagnostics, context);
-			case DactPackage.INVARIANT_OPERATION:
-				return validateInvariantOperation((InvariantOperation)value, diagnostics, context);
+			case DactPackage.SPEC_OPERATION:
+				return validateSpecOperation((SpecOperation)value, diagnostics, context);
+			case DactPackage.SPEC_RULE:
+				return validateSpecRule((SpecRule)value, diagnostics, context);
 			case DactPackage.INTERNAL_DOMAIN_OBJECT:
 				return validateInternalDomainObject((InternalDomainObject)value, diagnostics, context);
 			case DactPackage.INTERFACE:
@@ -395,8 +445,6 @@ public class DactValidator extends EObjectValidator {
 				return validateConditionalNode((ConditionalNode)value, diagnostics, context);
 			case DactPackage.LOOP_NODE:
 				return validateLoopNode((LoopNode)value, diagnostics, context);
-			case DactPackage.OCL_EXPRESSION:
-				return validateOCLExpression((OCLExpression)value, diagnostics, context);
 			case DactPackage.BEHAVIOR:
 				return validateBehavior((Behavior)value, diagnostics, context);
 			case DactPackage.CALL_OPERATION_ACTION:
@@ -437,8 +485,6 @@ public class DactValidator extends EObjectValidator {
 				return validateParameterMapping((ParameterMapping)value, diagnostics, context);
 			case DactPackage.EXPRESSION:
 				return validateExpression((Expression)value, diagnostics, context);
-			case DactPackage.EXPRESSION_CHILD:
-				return validateExpressionChild((ExpressionChild)value, diagnostics, context);
 			case DactPackage.UNARY_EXPRESSION:
 				return validateUnaryExpression((UnaryExpression)value, diagnostics, context);
 			case DactPackage.BINARY_EXPRESSION:
@@ -666,6 +712,7 @@ public class DactValidator extends EObjectValidator {
 		if (result || diagnostics != null) result &= validate_EveryMapEntryUnique(entity, diagnostics, context);
 		if (result || diagnostics != null) result &= validateDomainObject_UniqueOperationNames(entity, diagnostics, context);
 		if (result || diagnostics != null) result &= validateDomainObject_UniquePropertyNames(entity, diagnostics, context);
+		if (result || diagnostics != null) result &= validateDomainObject_SingleInvariantOperation(entity, diagnostics, context);
 		return result;
 	}
 
@@ -686,6 +733,7 @@ public class DactValidator extends EObjectValidator {
 		if (result || diagnostics != null) result &= validate_EveryMapEntryUnique(valueObject, diagnostics, context);
 		if (result || diagnostics != null) result &= validateDomainObject_UniqueOperationNames(valueObject, diagnostics, context);
 		if (result || diagnostics != null) result &= validateDomainObject_UniquePropertyNames(valueObject, diagnostics, context);
+		if (result || diagnostics != null) result &= validateDomainObject_SingleInvariantOperation(valueObject, diagnostics, context);
 		return result;
 	}
 
@@ -706,6 +754,7 @@ public class DactValidator extends EObjectValidator {
 		if (result || diagnostics != null) result &= validate_EveryMapEntryUnique(sharedValueObject, diagnostics, context);
 		if (result || diagnostics != null) result &= validateDomainObject_UniqueOperationNames(sharedValueObject, diagnostics, context);
 		if (result || diagnostics != null) result &= validateDomainObject_UniquePropertyNames(sharedValueObject, diagnostics, context);
+		if (result || diagnostics != null) result &= validateDomainObject_SingleInvariantOperation(sharedValueObject, diagnostics, context);
 		return result;
 	}
 
@@ -726,6 +775,7 @@ public class DactValidator extends EObjectValidator {
 		if (result || diagnostics != null) result &= validate_EveryMapEntryUnique(aggregateRoot, diagnostics, context);
 		if (result || diagnostics != null) result &= validateDomainObject_UniqueOperationNames(aggregateRoot, diagnostics, context);
 		if (result || diagnostics != null) result &= validateDomainObject_UniquePropertyNames(aggregateRoot, diagnostics, context);
+		if (result || diagnostics != null) result &= validateDomainObject_SingleInvariantOperation(aggregateRoot, diagnostics, context);
 		return result;
 	}
 
@@ -835,27 +885,7 @@ public class DactValidator extends EObjectValidator {
 	 * @generated
 	 */
 	public boolean validateOperation(Operation operation, DiagnosticChain diagnostics, Map<Object, Object> context) {
-		if (!validate_NoCircularContainment(operation, diagnostics, context)) return false;
-		boolean result = validate_EveryMultiplicityConforms(operation, diagnostics, context);
-		if (result || diagnostics != null) result &= validate_EveryDataValueConforms(operation, diagnostics, context);
-		if (result || diagnostics != null) result &= validate_EveryReferenceIsContained(operation, diagnostics, context);
-		if (result || diagnostics != null) result &= validate_EveryBidirectionalReferenceIsPaired(operation, diagnostics, context);
-		if (result || diagnostics != null) result &= validate_EveryProxyResolves(operation, diagnostics, context);
-		if (result || diagnostics != null) result &= validate_UniqueID(operation, diagnostics, context);
-		if (result || diagnostics != null) result &= validate_EveryKeyUnique(operation, diagnostics, context);
-		if (result || diagnostics != null) result &= validate_EveryMapEntryUnique(operation, diagnostics, context);
-		if (result || diagnostics != null) result &= validateOperation_BehaviorXorSpecification(operation, diagnostics, context);
-		return result;
-	}
-
-	/**
-	 * Validates the BehaviorXorSpecification constraint of '<em>Operation</em>'.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public boolean validateOperation_BehaviorXorSpecification(Operation operation, DiagnosticChain diagnostics, Map<Object, Object> context) {
-		return operation.BehaviorXorSpecification(diagnostics, context);
+		return validate_EveryDefaultConstraint(operation, diagnostics, context);
 	}
 
 	/**
@@ -863,18 +893,81 @@ public class DactValidator extends EObjectValidator {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public boolean validateInvariantOperation(InvariantOperation invariantOperation, DiagnosticChain diagnostics, Map<Object, Object> context) {
-		if (!validate_NoCircularContainment(invariantOperation, diagnostics, context)) return false;
-		boolean result = validate_EveryMultiplicityConforms(invariantOperation, diagnostics, context);
-		if (result || diagnostics != null) result &= validate_EveryDataValueConforms(invariantOperation, diagnostics, context);
-		if (result || diagnostics != null) result &= validate_EveryReferenceIsContained(invariantOperation, diagnostics, context);
-		if (result || diagnostics != null) result &= validate_EveryBidirectionalReferenceIsPaired(invariantOperation, diagnostics, context);
-		if (result || diagnostics != null) result &= validate_EveryProxyResolves(invariantOperation, diagnostics, context);
-		if (result || diagnostics != null) result &= validate_UniqueID(invariantOperation, diagnostics, context);
-		if (result || diagnostics != null) result &= validate_EveryKeyUnique(invariantOperation, diagnostics, context);
-		if (result || diagnostics != null) result &= validate_EveryMapEntryUnique(invariantOperation, diagnostics, context);
-		if (result || diagnostics != null) result &= validateOperation_BehaviorXorSpecification(invariantOperation, diagnostics, context);
+	public boolean validateSpecOperation(SpecOperation specOperation, DiagnosticChain diagnostics, Map<Object, Object> context) {
+		if (!validate_NoCircularContainment(specOperation, diagnostics, context)) return false;
+		boolean result = validate_EveryMultiplicityConforms(specOperation, diagnostics, context);
+		if (result || diagnostics != null) result &= validate_EveryDataValueConforms(specOperation, diagnostics, context);
+		if (result || diagnostics != null) result &= validate_EveryReferenceIsContained(specOperation, diagnostics, context);
+		if (result || diagnostics != null) result &= validate_EveryBidirectionalReferenceIsPaired(specOperation, diagnostics, context);
+		if (result || diagnostics != null) result &= validate_EveryProxyResolves(specOperation, diagnostics, context);
+		if (result || diagnostics != null) result &= validate_UniqueID(specOperation, diagnostics, context);
+		if (result || diagnostics != null) result &= validate_EveryKeyUnique(specOperation, diagnostics, context);
+		if (result || diagnostics != null) result &= validate_EveryMapEntryUnique(specOperation, diagnostics, context);
+		if (result || diagnostics != null) result &= validateSpecOperation_BehaviorXorSpecification(specOperation, diagnostics, context);
+		if (result || diagnostics != null) result &= validateSpecOperation_NoInputParameters(specOperation, diagnostics, context);
+		if (result || diagnostics != null) result &= validateSpecOperation_OwnedByDomainObjectOnly(specOperation, diagnostics, context);
+		if (result || diagnostics != null) result &= validateSpecOperation_UniqueRuleNames(specOperation, diagnostics, context);
+		if (result || diagnostics != null) result &= validateSpecOperation_SingleBoolOutParameter(specOperation, diagnostics, context);
 		return result;
+	}
+
+	/**
+	 * Validates the BehaviorXorSpecification constraint of '<em>Spec Operation</em>'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public boolean validateSpecOperation_BehaviorXorSpecification(SpecOperation specOperation, DiagnosticChain diagnostics, Map<Object, Object> context) {
+		return specOperation.BehaviorXorSpecification(diagnostics, context);
+	}
+
+	/**
+	 * Validates the NoInputParameters constraint of '<em>Spec Operation</em>'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public boolean validateSpecOperation_NoInputParameters(SpecOperation specOperation, DiagnosticChain diagnostics, Map<Object, Object> context) {
+		return specOperation.NoInputParameters(diagnostics, context);
+	}
+
+	/**
+	 * Validates the OwnedByDomainObjectOnly constraint of '<em>Spec Operation</em>'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public boolean validateSpecOperation_OwnedByDomainObjectOnly(SpecOperation specOperation, DiagnosticChain diagnostics, Map<Object, Object> context) {
+		return specOperation.OwnedByDomainObjectOnly(diagnostics, context);
+	}
+
+	/**
+	 * Validates the UniqueRuleNames constraint of '<em>Spec Operation</em>'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public boolean validateSpecOperation_UniqueRuleNames(SpecOperation specOperation, DiagnosticChain diagnostics, Map<Object, Object> context) {
+		return specOperation.UniqueRuleNames(diagnostics, context);
+	}
+
+	/**
+	 * Validates the SingleBoolOutParameter constraint of '<em>Spec Operation</em>'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public boolean validateSpecOperation_SingleBoolOutParameter(SpecOperation specOperation, DiagnosticChain diagnostics, Map<Object, Object> context) {
+		return specOperation.SingleBoolOutParameter(diagnostics, context);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public boolean validateSpecRule(SpecRule specRule, DiagnosticChain diagnostics, Map<Object, Object> context) {
+		return validate_EveryDefaultConstraint(specRule, diagnostics, context);
 	}
 
 	/**
@@ -894,6 +987,7 @@ public class DactValidator extends EObjectValidator {
 		if (result || diagnostics != null) result &= validate_EveryMapEntryUnique(internalDomainObject, diagnostics, context);
 		if (result || diagnostics != null) result &= validateDomainObject_UniqueOperationNames(internalDomainObject, diagnostics, context);
 		if (result || diagnostics != null) result &= validateDomainObject_UniquePropertyNames(internalDomainObject, diagnostics, context);
+		if (result || diagnostics != null) result &= validateDomainObject_SingleInvariantOperation(internalDomainObject, diagnostics, context);
 		return result;
 	}
 
@@ -952,6 +1046,7 @@ public class DactValidator extends EObjectValidator {
 		if (result || diagnostics != null) result &= validate_EveryMapEntryUnique(domainObject, diagnostics, context);
 		if (result || diagnostics != null) result &= validateDomainObject_UniqueOperationNames(domainObject, diagnostics, context);
 		if (result || diagnostics != null) result &= validateDomainObject_UniquePropertyNames(domainObject, diagnostics, context);
+		if (result || diagnostics != null) result &= validateDomainObject_SingleInvariantOperation(domainObject, diagnostics, context);
 		return result;
 	}
 
@@ -976,6 +1071,16 @@ public class DactValidator extends EObjectValidator {
 	}
 
 	/**
+	 * Validates the SingleInvariantOperation constraint of '<em>Domain Object</em>'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public boolean validateDomainObject_SingleInvariantOperation(DomainObject domainObject, DiagnosticChain diagnostics, Map<Object, Object> context) {
+		return domainObject.SingleInvariantOperation(diagnostics, context);
+	}
+
+	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
@@ -992,6 +1097,7 @@ public class DactValidator extends EObjectValidator {
 		if (result || diagnostics != null) result &= validate_EveryMapEntryUnique(sharedDomainObject, diagnostics, context);
 		if (result || diagnostics != null) result &= validateDomainObject_UniqueOperationNames(sharedDomainObject, diagnostics, context);
 		if (result || diagnostics != null) result &= validateDomainObject_UniquePropertyNames(sharedDomainObject, diagnostics, context);
+		if (result || diagnostics != null) result &= validateDomainObject_SingleInvariantOperation(sharedDomainObject, diagnostics, context);
 		return result;
 	}
 
@@ -1147,6 +1253,7 @@ public class DactValidator extends EObjectValidator {
 		if (result || diagnostics != null) result &= validate_EveryMapEntryUnique(domainEvent, diagnostics, context);
 		if (result || diagnostics != null) result &= validateDomainObject_UniqueOperationNames(domainEvent, diagnostics, context);
 		if (result || diagnostics != null) result &= validateDomainObject_UniquePropertyNames(domainEvent, diagnostics, context);
+		if (result || diagnostics != null) result &= validateDomainObject_SingleInvariantOperation(domainEvent, diagnostics, context);
 		return result;
 	}
 
@@ -1310,6 +1417,7 @@ public class DactValidator extends EObjectValidator {
 		if (result || diagnostics != null) result &= validate_EveryMapEntryUnique(activityEdge, diagnostics, context);
 		if (result || diagnostics != null) result &= validateActivityEdge_NoEdgeIntoInitialNode(activityEdge, diagnostics, context);
 		if (result || diagnostics != null) result &= validateActivityEdge_NoEdgeOutOfFinalNode(activityEdge, diagnostics, context);
+		if (result || diagnostics != null) result &= validateActivityEdge_EndpointsInSameGroup(activityEdge, diagnostics, context);
 		return result;
 	}
 
@@ -1331,6 +1439,16 @@ public class DactValidator extends EObjectValidator {
 	 */
 	public boolean validateActivityEdge_NoEdgeOutOfFinalNode(ActivityEdge activityEdge, DiagnosticChain diagnostics, Map<Object, Object> context) {
 		return activityEdge.NoEdgeOutOfFinalNode(diagnostics, context);
+	}
+
+	/**
+	 * Validates the EndpointsInSameGroup constraint of '<em>Activity Edge</em>'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public boolean validateActivityEdge_EndpointsInSameGroup(ActivityEdge activityEdge, DiagnosticChain diagnostics, Map<Object, Object> context) {
+		return activityEdge.EndpointsInSameGroup(diagnostics, context);
 	}
 
 	/**
@@ -1412,15 +1530,6 @@ public class DactValidator extends EObjectValidator {
 	 */
 	public boolean validateLoopNode(LoopNode loopNode, DiagnosticChain diagnostics, Map<Object, Object> context) {
 		return validate_EveryDefaultConstraint(loopNode, diagnostics, context);
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public boolean validateOCLExpression(OCLExpression oclExpression, DiagnosticChain diagnostics, Map<Object, Object> context) {
-		return validate_EveryDefaultConstraint(oclExpression, diagnostics, context);
 	}
 
 	/**
@@ -1769,15 +1878,6 @@ public class DactValidator extends EObjectValidator {
 	 */
 	public boolean validateExpression(Expression expression, DiagnosticChain diagnostics, Map<Object, Object> context) {
 		return validate_EveryDefaultConstraint(expression, diagnostics, context);
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public boolean validateExpressionChild(ExpressionChild expressionChild, DiagnosticChain diagnostics, Map<Object, Object> context) {
-		return validate_EveryDefaultConstraint(expressionChild, diagnostics, context);
 	}
 
 	/**

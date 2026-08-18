@@ -10,7 +10,6 @@ import dact.DomainFindAction;
 import dact.DomainNode;
 import dact.Entity;
 import dact.Expression;
-import dact.ExpressionChild;
 import dact.Identifier;
 import dact.Property;
 import dact.UnaryExpression;
@@ -307,11 +306,7 @@ public abstract class DomainNodeImpl extends ExecutableNodeImpl implements Domai
 		EList<Expression> _mainExpr = this.getMainExpr();
 		for (final Expression expr : _mainExpr) {
 			{
-				ExpressionChild _child = null;
-				if (expr!=null) {
-					_child=expr.getChild();
-				}
-				final ExpressionChild binary = _child;
+				final Expression binary = expr;
 				if ((!(binary instanceof BinaryExpression))) {
 					String _name = null;
 					if (expr!=null) {
@@ -326,12 +321,7 @@ public abstract class DomainNodeImpl extends ExecutableNodeImpl implements Domai
 					isValid = this.report(diagnostics, _plus_3);
 				}
 				else {
-					Expression _leftExpr = ((BinaryExpression) binary).getLeftExpr();
-					ExpressionChild _child_1 = null;
-					if (_leftExpr!=null) {
-						_child_1=_leftExpr.getChild();
-					}
-					final ExpressionChild left = _child_1;
+					final Expression left = ((BinaryExpression) binary).getLeftExpr();
 					if ((!(left instanceof UnaryExpression))) {
 						String _name_2 = null;
 						if (expr!=null) {

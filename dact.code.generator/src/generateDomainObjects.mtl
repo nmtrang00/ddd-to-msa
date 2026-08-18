@@ -9,6 +9,7 @@
 
 [import stringUtils/]
 [import lemmaUtils/]
+[import lemmaExprTemplates/]
 
 [comment @main/]
 [template public generateDomainObjects(dataModel: data::DataModel)]
@@ -333,11 +334,11 @@
 
 [template public generateInvariantOperation(d: data::DataStructure)]
     public void validate(){
-[let inv : behavior::InvariantDataOperation = d.getInvariantOperation()][if (inv <> null)]
-[for (e | inv.expr)]
-[let exprString: String = e.generateExpression().toSingleLine()]
+[let inv : behavior::SpecDataOperation = d.getInvariantOperation()][if (inv <> null)]
+[for (rule | inv.ownedRules)]
+[let exprString: String = rule.expr.generateExpression().toSingleLine()]
         if (!([exprString/])) {
-           throw new IllegalArgumentException("Violating rule '[e.name/]'");
+           throw new IllegalArgumentException("Violating rule '[rule.name/]'");
          }
 [/let]
 [/for]
@@ -352,20 +353,3 @@
 [/for]
     }
 [/template]
-
-
-[template public generateExpression(expr : behavior::Expression)]
-[expr.child.generateExpressionChild()/]
-[/template]
-
-[template public generateExpressionChild(expr : behavior::ExpressionChild)]
-[/template]
-
-[template public generateExpressionChild(expr : behavior::UnaryExpression)]
-[if (expr.identifier <> null)]this.[expr.identifier.name/][else][if (expr.value <> null)][if (expr.value.oclIsKindOf(data::PrimitiveValue))][let value = expr.value.oclAsType(data::PrimitiveValue)][if (value.stringValue <> null)]"[value.stringValue/]"[elseif (value.booleanValue <> null)][value.booleanValue/][elseif (value.numericValue <> null)][value.numericValue/][else]null[/if][/let][/if][/if][/if]
-[/template]
-
-[template public generateExpressionChild(expr : behavior::BinaryExpression)][expr.leftExpr.generateExpression()/] [expr.operator.getOperatorPresentation()/] [expr.rightExpr.generateExpression()/][/template]
-
-[template public generateExpressionChild(expr : behavior::NotExpression)]!([expr.expr.generateExpression()/])[/template]
-

@@ -8,21 +8,25 @@
 [import lemmaUtils/]
 
 [template public generateExpression(expr : behavior::Expression)]
-[expr.child.generateExpressionChild()/]
 [/template]
 
-[template public generateExpressionChild(expr : behavior::ExpressionChild)]
+[comment In orginal syntax, self identifier starts with self. must replace by this. for Java/]
+[template public generateExpression(expr : behavior::UnaryExpression)]
+[if (expr.identifier <> null)][expr.identifier.formatIdentifierName()/][else][if (expr.value <> null)][if (expr.value.oclIsKindOf(data::PrimitiveValue))][let value = expr.value.oclAsType(data::PrimitiveValue)][if (value.stringValue <> null)]"[value.stringValue/]"[elseif (value.booleanValue <> null)][value.booleanValue/][elseif (value.numericValue <> null)][value.numericValue/][else]null[/if][/let][/if][/if][/if]
 [/template]
 
-[template public generateExpressionChild(expr : behavior::UnaryExpression)]
-[if (expr.identifier <> null)][expr.identifier.name/][else][if (expr.value <> null)][if (expr.value.oclIsKindOf(data::PrimitiveValue))][let value = expr.value.oclAsType(data::PrimitiveValue)][if (value.stringValue <> null)]"[value.stringValue/]"[elseif (value.booleanValue <> null)][value.booleanValue/][elseif (value.numericValue <> null)][value.numericValue/][else]null[/if][/let][/if][/if][/if]
-[/template]
+[template public generateExpression(expr : behavior::BinaryExpression)][expr.leftExpr.generateExpression()/] [expr.operator.getOperatorPresentation()/] [expr.rightExpr.generateExpression()/][/template]
 
-[template public generateExpressionChild(expr : behavior::BinaryExpression)][expr.leftExpr.generateExpression()/] [expr.operator.getOperatorPresentation()/] [expr.rightExpr.generateExpression()/][/template]
+[template public generateExpression(expr : behavior::NotExpression)]!([expr.expr.generateExpression()/])[/template]
 
-[template public generateExpressionChild(expr : behavior::NotExpression)]!([expr.expr.generateExpression()/])[/template]
+[query public formatIdentifierName(identifier: behavior::Identifier) : String =  
+	if identifier.name.startsWith('self.') then 
+		'this.' + identifier.name.substring(6)
+	else 
+		identifier.name
+	endif
+/]
 
-  
 [query public generateGetterChain(name : String) : String =
   let parts : Sequence(String) = name.tokenize('.') in
     parts->first() + 

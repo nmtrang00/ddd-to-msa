@@ -60,7 +60,7 @@ mapping DACT::Root::DactToLact(): BEHA::BehaviorModel{
 	
 	// Generate LEMMA model from DACT and DATA
 	log("4.1. Extracting Domain Object Invariants: Start parsing");
-	self.ddd.map ExtractDomainObjectInvariants();
+	self.ddd.map ExtractDomainObjectSpecOperations();
 	log("4.1. Extracting Domain Object Invariants: End parsing");
 	log("************************************************");
 	
@@ -78,34 +78,35 @@ mapping DACT::Root::DactToLact(): BEHA::BehaviorModel{
 	
 }
 
-mapping DACT::DddModel::ExtractDomainObjectInvariants(){
+mapping DACT::DddModel::ExtractDomainObjectSpecOperations(){
 	self.boundedContexts -> forEach(b){
 		b.printInfo(1);
 		b.ownedElements[DACT::DomainObject]->forEach(d){
 			d.printInfo(2);
-			d.ownedOperations[DACT::InvariantOperation]->map InvariantOperationToInvariantDataOperation(); 
+			d.ownedOperations[DACT::SpecOperation]->map SpecOperationToSpecDataOperation(); 
 		}
 	}		
 }
 
-mapping DACT::InvariantOperation::InvariantOperationToInvariantDataOperation(): BEHA::InvariantDataOperation{
+mapping DACT::SpecOperation::SpecOperationToSpecDataOperation(): BEHA::SpecDataOperation{
 	self.printInfo(3);
 	
 	// No input parameter here
 	name := self.name;
+	isInvariant := self.isInvariant;
 	operationType := self.type.GetCorrespondingOperationType();
 	features := self.GetCorrespondingDataFieldFeatures();
-	expr := self.validatesSpecExpr -> map ExpressionToExpression();
+	ownedRules := self.ownedRules -> map RuleToRule();
 	parameters := self.ownedParameters -> map ParameterToDataOperationParameter();
 	dataStructure := self.domainObject.resolveoneIn(DACT::DomainObject::DomainObjectToDataStructure, DATA::DataStructure);
 }
 
-mapping DACT::Expression::ExpressionToExpression(): BEHA::Expression{
+mapping DACT::SpecRule::RuleToRule(): BEHA::SpecRule{
 	name := self.name;
-	child := self.child.map ExpressionChildToExpressionChild();
+	expr := self.expr.map ExpressionToExpression();
 }
 
-mapping DACT::ExpressionChild::ExpressionChildToExpressionChild(): BEHA::ExpressionChild
+mapping DACT::Expression::ExpressionToExpression(): BEHA::Expression
 	disjuncts DACT::UnaryExpression::UnaryExpressionToUnaryExpression,
 		DACT::BinaryExpression::BinaryExpressionToBinaryExpression,
 		DACT::NotExpression::NotExpressionToNotExpression {}
@@ -388,22 +389,28 @@ mapping DACT::RaiseExceptionAction::NodeToNode(): BEHA::RaiseExceptionAction{
 	var context := self.getBoundedContext().resolveoneIn(DACT::BoundedContext::BoundedContextToContext, DATA::Context);
 	assert warning(context <> null)
 		with log ("Compile error: Could not find bounded context to add the exception");
-	var newException := object DataStructure{
-		name := self.name;
-		features := DATA::ComplexTypeFeature::RUNTIME_EXCEPTION;
-		dataFields := object DataField{
-			name := "description";
-			primitiveType := object DATA::PrimitiveString{};
-			lowerBound := 1;
-			upperBound := 1;
-			initializationValue := object DATA::PrimitiveValue{stringValue := self.description};
-		}
+	var matchedException := context.complexTypes 
+		-> selectOne(t|
+			(t.features->includes(DATA::ComplexTypeFeature::RUNTIME_EXCEPTION) or 
+			t.features->includes(DATA::ComplexTypeFeature::NOTFOUND_EXCEPTION)) and 
+			t.name = self.name);
+	if (matchedException.oclIsUndefined()){
+		matchedException := object DataStructure{
+			name := self.name;
+			features := DATA::ComplexTypeFeature::RUNTIME_EXCEPTION;
+			dataFields := object DataField{
+				name := "description";
+				primitiveType := object DATA::PrimitiveString{};
+				lowerBound := 1;
+				upperBound := 1;
+				initializationValue := object DATA::PrimitiveValue{stringValue := self.description};
+			}
+		};
+		context.complexTypes += matchedException;
 	};
-	context.complexTypes += newException;
-	
 	_exception := object ImportedType{
 		_import := DATA_IMPORT;
-		type := newException;
+		type := matchedException;
 	}
 }
 
@@ -419,8 +426,8 @@ mapping DACT::RaiseEntityNotFoundExceptionAction::NodeToNode(): BEHA::RaiseEntit
 	
 	var matchedException := context.complexTypes 
 		-> selectOne(t|
-			t.features->includes(DATA::ComplexTypeFeature::RUNTIME_EXCEPTION) or 
-			t.features->includes(DATA::ComplexTypeFeature::NOTFOUND_EXCEPTION) and 
+			(t.features->includes(DATA::ComplexTypeFeature::RUNTIME_EXCEPTION) or 
+			t.features->includes(DATA::ComplexTypeFeature::NOTFOUND_EXCEPTION)) and 
 			t.name = self.name);
 	if (matchedException.oclIsUndefined()){
 		var newException := object DataStructure{

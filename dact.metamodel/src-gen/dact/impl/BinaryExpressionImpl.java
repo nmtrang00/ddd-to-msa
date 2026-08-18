@@ -3,17 +3,12 @@
 package dact.impl;
 
 import dact.BinaryExpression;
-import dact.DactFactory;
 import dact.DactPackage;
 import dact.Expression;
 import dact.Operator;
 
-import java.lang.reflect.InvocationTargetException;
-
 import org.eclipse.emf.common.notify.Notification;
 import org.eclipse.emf.common.notify.NotificationChain;
-
-import org.eclipse.emf.common.util.EList;
 
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.InternalEObject;
@@ -35,7 +30,7 @@ import org.eclipse.emf.ecore.impl.ENotificationImpl;
  *
  * @generated
  */
-public class BinaryExpressionImpl extends ExpressionChildImpl implements BinaryExpression {
+public class BinaryExpressionImpl extends ExpressionImpl implements BinaryExpression {
 	/**
 	 * The cached value of the '{@link #getOperator() <em>Operator</em>}' containment reference.
 	 * <!-- begin-user-doc -->
@@ -226,21 +221,6 @@ public class BinaryExpressionImpl extends ExpressionChildImpl implements BinaryE
 	 * @generated
 	 */
 	@Override
-	public void init() {
-		final Expression leftExpr = DactFactory.eINSTANCE.createExpression();
-		leftExpr.setName("LeftExpr");
-		this.setLeftExpr(leftExpr);
-		final Expression rightExpr = DactFactory.eINSTANCE.createExpression();
-		rightExpr.setName("RightExpr");
-		this.setRightExpr(rightExpr);
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	@Override
 	public NotificationChain eInverseRemove(InternalEObject otherEnd, int featureID, NotificationChain msgs) {
 		switch (featureID) {
 			case DactPackage.BINARY_EXPRESSION__OPERATOR:
@@ -329,21 +309,6 @@ public class BinaryExpressionImpl extends ExpressionChildImpl implements BinaryE
 				return rightExpr != null;
 		}
 		return super.eIsSet(featureID);
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	@Override
-	public Object eInvoke(int operationID, EList<?> arguments) throws InvocationTargetException {
-		switch (operationID) {
-			case DactPackage.BINARY_EXPRESSION___INIT:
-				init();
-				return null;
-		}
-		return super.eInvoke(operationID, arguments);
 	}
 
 } //BinaryExpressionImpl

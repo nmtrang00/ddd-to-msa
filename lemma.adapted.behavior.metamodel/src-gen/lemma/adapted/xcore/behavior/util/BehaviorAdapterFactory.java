@@ -82,8 +82,12 @@ public class BehaviorAdapterFactory extends AdapterFactoryImpl {
 				return createNamedElementAdapter();
 			}
 			@Override
-			public Adapter caseInvariantDataOperation(InvariantDataOperation object) {
-				return createInvariantDataOperationAdapter();
+			public Adapter caseSpecDataOperation(SpecDataOperation object) {
+				return createSpecDataOperationAdapter();
+			}
+			@Override
+			public Adapter caseSpecRule(SpecRule object) {
+				return createSpecRuleAdapter();
 			}
 			@Override
 			public Adapter caseImportedOperation(ImportedOperation object) {
@@ -224,10 +228,6 @@ public class BehaviorAdapterFactory extends AdapterFactoryImpl {
 			@Override
 			public Adapter caseExpression(Expression object) {
 				return createExpressionAdapter();
-			}
-			@Override
-			public Adapter caseExpressionChild(ExpressionChild object) {
-				return createExpressionChildAdapter();
 			}
 			@Override
 			public Adapter caseUnaryExpression(UnaryExpression object) {
@@ -372,16 +372,30 @@ public class BehaviorAdapterFactory extends AdapterFactoryImpl {
 	}
 
 	/**
-	 * Creates a new adapter for an object of class '{@link lemma.adapted.xcore.behavior.InvariantDataOperation <em>Invariant Data Operation</em>}'.
+	 * Creates a new adapter for an object of class '{@link lemma.adapted.xcore.behavior.SpecDataOperation <em>Spec Data Operation</em>}'.
 	 * <!-- begin-user-doc -->
 	 * This default implementation returns null so that we can easily ignore cases;
 	 * it's useful to ignore a case when inheritance will catch all the cases anyway.
 	 * <!-- end-user-doc -->
 	 * @return the new adapter.
-	 * @see lemma.adapted.xcore.behavior.InvariantDataOperation
+	 * @see lemma.adapted.xcore.behavior.SpecDataOperation
 	 * @generated
 	 */
-	public Adapter createInvariantDataOperationAdapter() {
+	public Adapter createSpecDataOperationAdapter() {
+		return null;
+	}
+
+	/**
+	 * Creates a new adapter for an object of class '{@link lemma.adapted.xcore.behavior.SpecRule <em>Spec Rule</em>}'.
+	 * <!-- begin-user-doc -->
+	 * This default implementation returns null so that we can easily ignore cases;
+	 * it's useful to ignore a case when inheritance will catch all the cases anyway.
+	 * <!-- end-user-doc -->
+	 * @return the new adapter.
+	 * @see lemma.adapted.xcore.behavior.SpecRule
+	 * @generated
+	 */
+	public Adapter createSpecRuleAdapter() {
 		return null;
 	}
 
@@ -872,20 +886,6 @@ public class BehaviorAdapterFactory extends AdapterFactoryImpl {
 	 * @generated
 	 */
 	public Adapter createExpressionAdapter() {
-		return null;
-	}
-
-	/**
-	 * Creates a new adapter for an object of class '{@link lemma.adapted.xcore.behavior.ExpressionChild <em>Expression Child</em>}'.
-	 * <!-- begin-user-doc -->
-	 * This default implementation returns null so that we can easily ignore cases;
-	 * it's useful to ignore a case when inheritance will catch all the cases anyway.
-	 * <!-- end-user-doc -->
-	 * @return the new adapter.
-	 * @see lemma.adapted.xcore.behavior.ExpressionChild
-	 * @generated
-	 */
-	public Adapter createExpressionChildAdapter() {
 		return null;
 	}
 

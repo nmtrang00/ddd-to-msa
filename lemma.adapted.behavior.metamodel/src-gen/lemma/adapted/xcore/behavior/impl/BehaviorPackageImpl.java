@@ -21,7 +21,6 @@ import lemma.adapted.xcore.behavior.Divide;
 import lemma.adapted.xcore.behavior.Eq;
 import lemma.adapted.xcore.behavior.ExecutableNode;
 import lemma.adapted.xcore.behavior.Expression;
-import lemma.adapted.xcore.behavior.ExpressionChild;
 import lemma.adapted.xcore.behavior.FinalNode;
 import lemma.adapted.xcore.behavior.FlowFinalNode;
 import lemma.adapted.xcore.behavior.Ge;
@@ -35,7 +34,6 @@ import lemma.adapted.xcore.behavior.ImportedOperation;
 import lemma.adapted.xcore.behavior.ImportedParameter;
 import lemma.adapted.xcore.behavior.InitialNode;
 import lemma.adapted.xcore.behavior.IntegerOperator;
-import lemma.adapted.xcore.behavior.InvariantDataOperation;
 import lemma.adapted.xcore.behavior.Le;
 import lemma.adapted.xcore.behavior.LogicalOperator;
 import lemma.adapted.xcore.behavior.LoopNode;
@@ -56,6 +54,8 @@ import lemma.adapted.xcore.behavior.ReceiveSignalAction;
 import lemma.adapted.xcore.behavior.Scope;
 import lemma.adapted.xcore.behavior.SendSignalAction;
 import lemma.adapted.xcore.behavior.SignalAction;
+import lemma.adapted.xcore.behavior.SpecDataOperation;
+import lemma.adapted.xcore.behavior.SpecRule;
 import lemma.adapted.xcore.behavior.StructuredActivityNode;
 import lemma.adapted.xcore.behavior.Times;
 import lemma.adapted.xcore.behavior.TypedMultiplicityElement;
@@ -113,7 +113,14 @@ public class BehaviorPackageImpl extends EPackageImpl implements BehaviorPackage
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	private EClass invariantDataOperationEClass = null;
+	private EClass specDataOperationEClass = null;
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	private EClass specRuleEClass = null;
 
 	/**
 	 * <!-- begin-user-doc -->
@@ -359,13 +366,6 @@ public class BehaviorPackageImpl extends EPackageImpl implements BehaviorPackage
 	 * @generated
 	 */
 	private EClass expressionEClass = null;
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	private EClass expressionChildEClass = null;
 
 	/**
 	 * <!-- begin-user-doc -->
@@ -659,8 +659,8 @@ public class BehaviorPackageImpl extends EPackageImpl implements BehaviorPackage
 	 * @generated
 	 */
 	@Override
-	public EClass getInvariantDataOperation() {
-		return invariantDataOperationEClass;
+	public EClass getSpecDataOperation() {
+		return specDataOperationEClass;
 	}
 
 	/**
@@ -669,8 +669,48 @@ public class BehaviorPackageImpl extends EPackageImpl implements BehaviorPackage
 	 * @generated
 	 */
 	@Override
-	public EReference getInvariantDataOperation_Expr() {
-		return (EReference)invariantDataOperationEClass.getEStructuralFeatures().get(0);
+	public EAttribute getSpecDataOperation_IsInvariant() {
+		return (EAttribute)specDataOperationEClass.getEStructuralFeatures().get(0);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	@Override
+	public EReference getSpecDataOperation_OwnedRules() {
+		return (EReference)specDataOperationEClass.getEStructuralFeatures().get(1);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	@Override
+	public EClass getSpecRule() {
+		return specRuleEClass;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	@Override
+	public EAttribute getSpecRule_RawString() {
+		return (EAttribute)specRuleEClass.getEStructuralFeatures().get(0);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	@Override
+	public EReference getSpecRule_Expr() {
+		return (EReference)specRuleEClass.getEStructuralFeatures().get(1);
 	}
 
 	/**
@@ -1659,26 +1699,6 @@ public class BehaviorPackageImpl extends EPackageImpl implements BehaviorPackage
 	 * @generated
 	 */
 	@Override
-	public EReference getExpression_Child() {
-		return (EReference)expressionEClass.getEStructuralFeatures().get(0);
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	@Override
-	public EClass getExpressionChild() {
-		return expressionChildEClass;
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	@Override
 	public EClass getUnaryExpression() {
 		return unaryExpressionEClass;
 	}
@@ -2013,8 +2033,13 @@ public class BehaviorPackageImpl extends EPackageImpl implements BehaviorPackage
 		namedElementEClass = createEClass(NAMED_ELEMENT);
 		createEAttribute(namedElementEClass, NAMED_ELEMENT__NAME);
 
-		invariantDataOperationEClass = createEClass(INVARIANT_DATA_OPERATION);
-		createEReference(invariantDataOperationEClass, INVARIANT_DATA_OPERATION__EXPR);
+		specDataOperationEClass = createEClass(SPEC_DATA_OPERATION);
+		createEAttribute(specDataOperationEClass, SPEC_DATA_OPERATION__IS_INVARIANT);
+		createEReference(specDataOperationEClass, SPEC_DATA_OPERATION__OWNED_RULES);
+
+		specRuleEClass = createEClass(SPEC_RULE);
+		createEAttribute(specRuleEClass, SPEC_RULE__RAW_STRING);
+		createEReference(specRuleEClass, SPEC_RULE__EXPR);
 
 		importedOperationEClass = createEClass(IMPORTED_OPERATION);
 		createEReference(importedOperationEClass, IMPORTED_OPERATION__IMPORT);
@@ -2148,9 +2173,6 @@ public class BehaviorPackageImpl extends EPackageImpl implements BehaviorPackage
 		createEReference(parameterMappingEClass, PARAMETER_MAPPING__ACTIVITY);
 
 		expressionEClass = createEClass(EXPRESSION);
-		createEReference(expressionEClass, EXPRESSION__CHILD);
-
-		expressionChildEClass = createEClass(EXPRESSION_CHILD);
 
 		unaryExpressionEClass = createEClass(UNARY_EXPRESSION);
 		createEReference(unaryExpressionEClass, UNARY_EXPRESSION__VALUE);
@@ -2237,7 +2259,8 @@ public class BehaviorPackageImpl extends EPackageImpl implements BehaviorPackage
 		// Set bounds for type parameters
 
 		// Add supertypes to classes
-		invariantDataOperationEClass.getESuperTypes().add(theDataPackage.getDataOperation());
+		specDataOperationEClass.getESuperTypes().add(theDataPackage.getDataOperation());
+		specRuleEClass.getESuperTypes().add(this.getNamedElement());
 		importedInterfaceOperationEClass.getESuperTypes().add(this.getImportedOperation());
 		importedDataOperationEClass.getESuperTypes().add(this.getImportedOperation());
 		importedInterfaceParameterEClass.getESuperTypes().add(this.getImportedParameter());
@@ -2269,10 +2292,9 @@ public class BehaviorPackageImpl extends EPackageImpl implements BehaviorPackage
 		parallelNodeEClass.getESuperTypes().add(this.getControlNode());
 		signalActionEClass.getESuperTypes().add(this.getExecutableNode());
 		expressionEClass.getESuperTypes().add(this.getNamedElement());
-		expressionChildEClass.getESuperTypes().add(this.getNamedElement());
-		unaryExpressionEClass.getESuperTypes().add(this.getExpressionChild());
-		binaryExpressionEClass.getESuperTypes().add(this.getExpressionChild());
-		notExpressionEClass.getESuperTypes().add(this.getExpressionChild());
+		unaryExpressionEClass.getESuperTypes().add(this.getExpression());
+		binaryExpressionEClass.getESuperTypes().add(this.getExpression());
+		notExpressionEClass.getESuperTypes().add(this.getExpression());
 		integerOperatorEClass.getESuperTypes().add(this.getOperator());
 		divideEClass.getESuperTypes().add(this.getIntegerOperator());
 		timesEClass.getESuperTypes().add(this.getIntegerOperator());
@@ -2300,8 +2322,13 @@ public class BehaviorPackageImpl extends EPackageImpl implements BehaviorPackage
 		initEClass(namedElementEClass, NamedElement.class, "NamedElement", IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
 		initEAttribute(getNamedElement_Name(), theEcorePackage.getEString(), "name", null, 0, 1, NamedElement.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, !IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
-		initEClass(invariantDataOperationEClass, InvariantDataOperation.class, "InvariantDataOperation", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
-		initEReference(getInvariantDataOperation_Expr(), this.getExpression(), null, "expr", null, 0, -1, InvariantDataOperation.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+		initEClass(specDataOperationEClass, SpecDataOperation.class, "SpecDataOperation", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
+		initEAttribute(getSpecDataOperation_IsInvariant(), theEcorePackage.getEBooleanObject(), "isInvariant", "false", 0, 1, SpecDataOperation.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, !IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+		initEReference(getSpecDataOperation_OwnedRules(), this.getSpecRule(), null, "ownedRules", null, 0, -1, SpecDataOperation.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+
+		initEClass(specRuleEClass, SpecRule.class, "SpecRule", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
+		initEAttribute(getSpecRule_RawString(), theEcorePackage.getEString(), "rawString", null, 0, 1, SpecRule.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, !IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+		initEReference(getSpecRule_Expr(), this.getExpression(), null, "expr", null, 0, 1, SpecRule.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
 		initEClass(importedOperationEClass, ImportedOperation.class, "ImportedOperation", IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
 		initEReference(getImportedOperation_Import(), theServicePackage.getImport(), null, "import", null, 0, 1, ImportedOperation.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
@@ -2434,10 +2461,7 @@ public class BehaviorPackageImpl extends EPackageImpl implements BehaviorPackage
 		initEReference(getParameterMapping_Action(), this.getCallOperationAction(), this.getCallOperationAction_ParameterMappings(), "action", null, 0, 1, ParameterMapping.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 		initEReference(getParameterMapping_Activity(), this.getActivity(), this.getActivity_ParameterMappings(), "activity", null, 0, 1, ParameterMapping.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
-		initEClass(expressionEClass, Expression.class, "Expression", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
-		initEReference(getExpression_Child(), this.getExpressionChild(), null, "child", null, 0, 1, Expression.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-
-		initEClass(expressionChildEClass, ExpressionChild.class, "ExpressionChild", IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
+		initEClass(expressionEClass, Expression.class, "Expression", IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
 
 		initEClass(unaryExpressionEClass, UnaryExpression.class, "UnaryExpression", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
 		initEReference(getUnaryExpression_Value(), theDataPackage.getValueSpecification(), null, "value", null, 0, 1, UnaryExpression.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);

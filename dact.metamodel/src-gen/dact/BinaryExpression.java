@@ -21,7 +21,7 @@ package dact;
  * @model
  * @generated
  */
-public interface BinaryExpression extends ExpressionChild {
+public interface BinaryExpression extends Expression {
 	/**
 	 * Returns the value of the '<em><b>Operator</b></em>' containment reference.
 	 * <!-- begin-user-doc -->
@@ -87,13 +87,5 @@ public interface BinaryExpression extends ExpressionChild {
 	 * @generated
 	 */
 	void setRightExpr(Expression value);
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @model
-	 * @generated
-	 */
-	void init();
 
 } // BinaryExpression

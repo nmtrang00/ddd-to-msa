@@ -39,9 +39,6 @@
 [if (interface.hasCollectionTypeParameter())]
   import java.util.List;
 [/if]
-[if (interface.hasOptionalOutParam())]
-  import java.util.Optional;
-[/if]
 [if (aggregateIdType == 'UUID')]
   import java.util.UUID;
 [/if]

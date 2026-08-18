@@ -21,7 +21,7 @@ import lemma.adapted.xcore.data.ValueSpecification;
  * @model
  * @generated
  */
-public interface UnaryExpression extends ExpressionChild {
+public interface UnaryExpression extends Expression {
 	/**
 	 * Returns the value of the '<em><b>Value</b></em>' containment reference.
 	 * <!-- begin-user-doc -->

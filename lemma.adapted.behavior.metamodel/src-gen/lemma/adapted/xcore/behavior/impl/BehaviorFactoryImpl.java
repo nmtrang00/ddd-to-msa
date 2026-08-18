@@ -59,7 +59,8 @@ public class BehaviorFactoryImpl extends EFactoryImpl implements BehaviorFactory
 		switch (eClass.getClassifierID()) {
 			case BehaviorPackage.BEHAVIOR_MODEL: return createBehaviorModel();
 			case BehaviorPackage.ACTIVITY_MODEL: return createActivityModel();
-			case BehaviorPackage.INVARIANT_DATA_OPERATION: return createInvariantDataOperation();
+			case BehaviorPackage.SPEC_DATA_OPERATION: return createSpecDataOperation();
+			case BehaviorPackage.SPEC_RULE: return createSpecRule();
 			case BehaviorPackage.IMPORTED_INTERFACE_OPERATION: return createImportedInterfaceOperation();
 			case BehaviorPackage.IMPORTED_DATA_OPERATION: return createImportedDataOperation();
 			case BehaviorPackage.IMPORTED_INTERFACE_PARAMETER: return createImportedInterfaceParameter();
@@ -86,7 +87,6 @@ public class BehaviorFactoryImpl extends EFactoryImpl implements BehaviorFactory
 			case BehaviorPackage.RECEIVE_SIGNAL_ACTION: return createReceiveSignalAction();
 			case BehaviorPackage.PARALLEL_NODE: return createParallelNode();
 			case BehaviorPackage.PARAMETER_MAPPING: return createParameterMapping();
-			case BehaviorPackage.EXPRESSION: return createExpression();
 			case BehaviorPackage.UNARY_EXPRESSION: return createUnaryExpression();
 			case BehaviorPackage.BINARY_EXPRESSION: return createBinaryExpression();
 			case BehaviorPackage.NOT_EXPRESSION: return createNotExpression();
@@ -165,9 +165,20 @@ public class BehaviorFactoryImpl extends EFactoryImpl implements BehaviorFactory
 	 * @generated
 	 */
 	@Override
-	public InvariantDataOperation createInvariantDataOperation() {
-		InvariantDataOperationImpl invariantDataOperation = new InvariantDataOperationImpl();
-		return invariantDataOperation;
+	public SpecDataOperation createSpecDataOperation() {
+		SpecDataOperationImpl specDataOperation = new SpecDataOperationImpl();
+		return specDataOperation;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	@Override
+	public SpecRule createSpecRule() {
+		SpecRuleImpl specRule = new SpecRuleImpl();
+		return specRule;
 	}
 
 	/**
@@ -454,17 +465,6 @@ public class BehaviorFactoryImpl extends EFactoryImpl implements BehaviorFactory
 	public ParameterMapping createParameterMapping() {
 		ParameterMappingImpl parameterMapping = new ParameterMappingImpl();
 		return parameterMapping;
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	@Override
-	public Expression createExpression() {
-		ExpressionImpl expression = new ExpressionImpl();
-		return expression;
 	}
 
 	/**

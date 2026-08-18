@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?eclipse version="3.0"?>
+
+<!--
+-->
+
+<plugin>
+
+   <extension point="org.eclipse.ui.newWizards">
+      <!-- @generated DataViewpointModel -->
+      <category
+            id="org.eclipse.emf.ecore.Wizard.category.ID"
+            name="%_UI_Wizard_category"/>
+      <wizard
+            id="lemma.adapted.xcore.data.presentation.DataModelWizardID"
+            name="%_UI_DataModelWizard_label"
+            class="lemma.adapted.xcore.data.presentation.DataModelWizard"
+            category="org.eclipse.emf.ecore.Wizard.category.ID"
+            icon="icons/full/obj16/DataModelFile.gif">
+         <description>%_UI_DataModelWizard_description</description>
+         <selection class="org.eclipse.core.resources.IResource"/>
+      </wizard>
+   </extension>
+
+   <extension point="org.eclipse.ui.editors">
+      <!-- @generated DataViewpointModel -->
+      <editor
+            id="lemma.adapted.xcore.data.presentation.DataEditorID"
+            name="%_UI_DataEditor_label"
+            icon="icons/full/obj16/DataModelFile.gif"
+            extensions="data"
+            class="lemma.adapted.xcore.data.presentation.DataEditor"
+            contributorClass="lemma.adapted.xcore.data.presentation.DataActionBarContributor">
+      </editor>
+   </extension>
+
+</plugin>

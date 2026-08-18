@@ -7,7 +7,6 @@
     editorPluginID="lemma.adapted.behavior.metamodel.editor"
 )
 package lemma.adapted.xcore.behavior
-
 import lemma.adapted.xcore.data.PrimitiveType
 import lemma.adapted.xcore.data.DataStructure
 import lemma.adapted.xcore.data.ValueSpecification
@@ -17,7 +16,6 @@ import lemma.adapted.xcore.service.Operation
 import lemma.adapted.xcore.service.Parameter
 import lemma.adapted.xcore.service.Import
 import lemma.adapted.xcore.service.ImportedType
-
 
 // The initialization of Complex Type is not yet supported
 class BehaviorModel {
@@ -34,9 +32,14 @@ abstract class NamedElement{
 	String name
 }
 
-class InvariantDataOperation extends DataOperation{
-	// No Parameter -> just validate using the property or nested property: chain of identifier -> Only allow nested if no one-to-many
-	contains Expression[] expr
+class SpecDataOperation extends DataOperation{
+	Boolean isInvariant = 'false'
+	contains SpecRule[] ownedRules
+}
+
+class SpecRule extends NamedElement{
+	String rawString
+	contains Expression expr	
 }
 
 abstract class ImportedOperation{
@@ -217,26 +220,23 @@ enum ParameterMappingType{
 	ACTIVITY_OUT
 }
 
-class Expression extends NamedElement{
-	contains ExpressionChild child 
+abstract class Expression extends NamedElement{
 	
 }
- 
-abstract class ExpressionChild extends NamedElement{}
 
-class UnaryExpression extends ExpressionChild {
+class UnaryExpression extends Expression {
 	contains ValueSpecification[0..1] value
 	contains Identifier[0..1] identifier
 }
 
-class BinaryExpression extends ExpressionChild
+class BinaryExpression extends Expression
 {
 	contains Operator operator
 	contains Expression leftExpr
 	contains Expression rightExpr
 }
 
-class NotExpression extends ExpressionChild
+class NotExpression extends Expression
 {
 	contains Expression expr
 }

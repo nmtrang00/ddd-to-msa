@@ -52,8 +52,8 @@
 	and f.complexType.oclAsType(data::DataStructure).getInvariantOperation() <> null
 /]
 
-[query public getInvariantOperation(d : data::DataStructure) : behavior::InvariantDataOperation =
-	d.operations -> select(o|o.oclIsTypeOf(behavior::InvariantDataOperation))
+[query public getInvariantOperation(d : data::DataStructure) : behavior::SpecDataOperation =
+	d.operations -> select(o|o.oclIsTypeOf(behavior::SpecDataOperation) and o.isInvariant)
 		->asSequence()->first()
 /]
 [query public hasCollectionField(d : data::DataStructure) : Boolean = 
