@@ -83,7 +83,6 @@ Package dact <http://www.example.org/xcore/dact>
     Attribute isInvariant : EBooleanObject
     Reference ownedRules : SpecRule<<0..*>>
     Operation BehaviorXorSpecification(EDiagnosticChain, EMap) : EBoolean
-    Operation NoInputParameters(EDiagnosticChain, EMap) : EBoolean
     Operation OwnedByDomainObjectOnly(EDiagnosticChain, EMap) : EBoolean
     Operation UniqueRuleNames(EDiagnosticChain, EMap) : EBoolean
     Operation SingleBoolOutParameter(EDiagnosticChain, EMap) : EBoolean

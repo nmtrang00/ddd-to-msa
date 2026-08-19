@@ -174,37 +174,6 @@ public class SpecOperationImpl extends OperationImpl implements SpecOperation {
 	 * @generated
 	 */
 	@Override
-	public boolean NoInputParameters(final DiagnosticChain diagnostics, final Map<Object, Object> context) {
-		Boolean _isInvariant = this.getIsInvariant();
-		boolean _not = (!(_isInvariant).booleanValue());
-		if (_not) {
-			return true;
-		}
-		final Function1<Parameter, Boolean> _function = new Function1<Parameter, Boolean>() {
-			public Boolean apply(final Parameter p) {
-				ParameterDirection _direction = p.getDirection();
-				return Boolean.valueOf(Objects.equals(_direction, ParameterDirection.IN));
-			}
-		};
-		final Iterable<Parameter> inputParameters = IterableExtensions.<Parameter>filter(this.getOwnedParameters(), _function);
-		int _size = IterableExtensions.size(inputParameters);
-		boolean _equals = (_size == 0);
-		if (_equals) {
-			return true;
-		}
-		String _name = this.getName();
-		String _plus = ("Specification Validation Operation \'" + _name);
-		String _plus_1 = (_plus + 
-			"\' must not have extra parameters rather than self.");
-		return this.report(diagnostics, _plus_1);
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	@Override
 	public boolean OwnedByDomainObjectOnly(final DiagnosticChain diagnostics, final Map<Object, Object> context) {
 		if (((this.getDomainObject() != null) && (this.getInterface() == null))) {
 			return true;
@@ -421,8 +390,6 @@ public class SpecOperationImpl extends OperationImpl implements SpecOperation {
 		switch (operationID) {
 			case DactPackage.SPEC_OPERATION___BEHAVIOR_XOR_SPECIFICATION__DIAGNOSTICCHAIN_MAP:
 				return BehaviorXorSpecification((DiagnosticChain)arguments.get(0), (Map<Object, Object>)arguments.get(1));
-			case DactPackage.SPEC_OPERATION___NO_INPUT_PARAMETERS__DIAGNOSTICCHAIN_MAP:
-				return NoInputParameters((DiagnosticChain)arguments.get(0), (Map<Object, Object>)arguments.get(1));
 			case DactPackage.SPEC_OPERATION___OWNED_BY_DOMAIN_OBJECT_ONLY__DIAGNOSTICCHAIN_MAP:
 				return OwnedByDomainObjectOnly((DiagnosticChain)arguments.get(0), (Map<Object, Object>)arguments.get(1));
 			case DactPackage.SPEC_OPERATION___UNIQUE_RULE_NAMES__DIAGNOSTICCHAIN_MAP:

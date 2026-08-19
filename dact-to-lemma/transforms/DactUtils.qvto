@@ -2,22 +2,6 @@ modeltype DACT uses 'http://www.example.org/xcore/dact';
 
 library DactUtils;
 
-
-query DACT::Model::findPrimitiveType(in name: String): DACT::PrimitiveType{
-	return DACT::PrimitiveType.allInstances()
-        ->selectOne(t | t.name = name);
-}
-
-query DACT::NamedElement::findPrimitiveType(in name: String): DACT::PrimitiveType{
-	return DACT::PrimitiveType.allInstances()
-        ->selectOne(t | t.name = name);
-}
-
-query DACT::Root::findPrimitiveType(in name: String): DACT::PrimitiveType{
-	return self.primitivesTypes
-        ->selectOne(t | t.name = name);
-}
-
 -- Helper to print info of a NamedElement
 query DACT::NamedElement::printInfo(ntabs: Integer): String{
 	return self.printInfo(ntabs,'');

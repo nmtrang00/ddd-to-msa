@@ -206,12 +206,13 @@ public class DactModelWizard extends Wizard implements INewWizard {
 	 * Create a new model.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @generated
+	 * @generated NOT
 	 */
 	protected EObject createInitialModel() {
-		EClass eClass = (EClass)dactPackage.getEClassifier(initialObjectCreationPage.getInitialObjectName());
-		EObject rootObject = dactFactory.create(eClass);
-		return rootObject;
+//		EClass eClass = (EClass)dactPackage.getEClassifier(initialObjectCreationPage.getInitialObjectName());
+//		EObject rootObject = dactFactory.create(eClass);
+//		return rootObject;
+		return dactFactory.createInitializedRoot();
 	}
 
 	/**

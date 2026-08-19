@@ -21,7 +21,7 @@ import org.eclipse.emf.common.util.EList;
  * </ul>
  *
  * @see dact.DactPackage#getSpecOperation()
- * @model annotation="http://www.eclipse.org/emf/2002/Ecore constraints='BehaviorXorSpecification NoInputParameters OwnedByDomainObjectOnly UniqueRuleNames SingleBoolOutParameter'"
+ * @model annotation="http://www.eclipse.org/emf/2002/Ecore constraints='BehaviorXorSpecification OwnedByDomainObjectOnly UniqueRuleNames SingleBoolOutParameter'"
  * @generated
  */
 public interface SpecOperation extends Operation, DiagnosticSupported {
@@ -69,14 +69,6 @@ public interface SpecOperation extends Operation, DiagnosticSupported {
 	 * @generated
 	 */
 	boolean BehaviorXorSpecification(DiagnosticChain diagnostics, Map<Object, Object> context);
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @model unique="false" diagnosticsUnique="false" contextUnique="false"
-	 * @generated
-	 */
-	boolean NoInputParameters(DiagnosticChain diagnostics, Map<Object, Object> context);
 
 	/**
 	 * <!-- begin-user-doc -->

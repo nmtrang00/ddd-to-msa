@@ -23,10 +23,10 @@ main() {
 		var ddd := root.ddd;
 		var activity := root.activity;
 		
-		INT := root.findPrimitiveType("Integer");
-		REAL := root.findPrimitiveType("Real");
-		BOOL := root.findPrimitiveType("Boolean");
-		STR := root.findPrimitiveType("String");
+		INT := root.primitivesTypes[DACT::IntegerType]->first();
+		REAL := root.primitivesTypes[DACT::RealType]->first();
+		BOOL := root.primitivesTypes[DACT::BooleanType]->first();
+		STR := root.primitivesTypes[DACT::StringType]->first();
 
 		// Add missing Id for Entities and Property name
 		log("1.1. Adding missing Id and DomainObject-typed Property Name for Entities: Start parsing");

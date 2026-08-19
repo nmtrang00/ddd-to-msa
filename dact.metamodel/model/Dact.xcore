@@ -208,7 +208,7 @@ class Operation extends NamedElement, DefinesIdentityObject,DiagnosticSupported{
 	container DomainObject domainObject opposite ownedOperations
 }
 
-@Ecore(constraints="BehaviorXorSpecification NoInputParameters OwnedByDomainObjectOnly UniqueRuleNames SingleBoolOutParameter")
+@Ecore(constraints="BehaviorXorSpecification OwnedByDomainObjectOnly UniqueRuleNames SingleBoolOutParameter")
 class SpecOperation extends Operation,DiagnosticSupported{
 	Boolean isInvariant = 'false'
 	
@@ -235,18 +235,6 @@ class SpecOperation extends Operation,DiagnosticSupported{
 	    return true
 	}
 	
-	op boolean NoInputParameters(EDiagnosticChain diagnostics,
-                                    EMap<Object, Object> context) {
-        if (!isInvariant) return true
-        
-        val inputParameters = ownedParameters.filter(p|p.direction == ParameterDirection::IN)
-    	if (inputParameters.size() == 0) return true
-    	
-    	return report(diagnostics,
-	            "Specification Validation Operation '" + name + 
-	            "' must not have extra parameters rather than self.")                                	
-    }
-    
     op boolean OwnedByDomainObjectOnly(EDiagnosticChain diagnostics,
                                     EMap<Object, Object> context){
         if (domainObject !== null && interface === null) return true
@@ -517,24 +505,6 @@ class Scope{
 }
 
 class Identifier extends NamedElement{}
-
-//abstract class RootIdentifier extends Identifier{}
-//
-//class VariableIdentifier extends RootIdentifier{
-//	// Present variable name
-//}
-//
-//class SelfIdentifier extends RootIdentifier{
-//	// Present 	"self" 
-//}
-//
-//class NavigationExpression extends Identifier {
-//    // Left side: can be a SimpleIdentifier or another NavigationExpression
-//    contains Identifier target 
-//    
-//    // Right side: cross-reference to a EStructuralFeature/Property
-//	refers Property property
-//}
 
 @Ecore(constraints="SingleInitialNode SingleFinalNode NonEmptyGroup")
 class ActivityGroup extends NamedElement, DiagnosticSupported{

@@ -112,20 +112,12 @@ public class DactValidator extends EObjectValidator {
 	public static final int SPEC_OPERATION__BEHAVIOR_XOR_SPECIFICATION = 9;
 
 	/**
-	 * The {@link org.eclipse.emf.common.util.Diagnostic#getCode() code} for constraint 'No Input Parameters' of 'Spec Operation'.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public static final int SPEC_OPERATION__NO_INPUT_PARAMETERS = 10;
-
-	/**
 	 * The {@link org.eclipse.emf.common.util.Diagnostic#getCode() code} for constraint 'Owned By Domain Object Only' of 'Spec Operation'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public static final int SPEC_OPERATION__OWNED_BY_DOMAIN_OBJECT_ONLY = 11;
+	public static final int SPEC_OPERATION__OWNED_BY_DOMAIN_OBJECT_ONLY = 10;
 
 	/**
 	 * The {@link org.eclipse.emf.common.util.Diagnostic#getCode() code} for constraint 'Unique Rule Names' of 'Spec Operation'.
@@ -133,7 +125,7 @@ public class DactValidator extends EObjectValidator {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public static final int SPEC_OPERATION__UNIQUE_RULE_NAMES = 12;
+	public static final int SPEC_OPERATION__UNIQUE_RULE_NAMES = 11;
 
 	/**
 	 * The {@link org.eclipse.emf.common.util.Diagnostic#getCode() code} for constraint 'Single Bool Out Parameter' of 'Spec Operation'.
@@ -141,7 +133,7 @@ public class DactValidator extends EObjectValidator {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public static final int SPEC_OPERATION__SINGLE_BOOL_OUT_PARAMETER = 13;
+	public static final int SPEC_OPERATION__SINGLE_BOOL_OUT_PARAMETER = 12;
 
 	/**
 	 * The {@link org.eclipse.emf.common.util.Diagnostic#getCode() code} for constraint 'Unique Operation Names' of 'Interface'.
@@ -149,7 +141,7 @@ public class DactValidator extends EObjectValidator {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public static final int INTERFACE__UNIQUE_OPERATION_NAMES = 14;
+	public static final int INTERFACE__UNIQUE_OPERATION_NAMES = 13;
 
 	/**
 	 * The {@link org.eclipse.emf.common.util.Diagnostic#getCode() code} for constraint 'Unique Operation Names' of 'Domain Object'.
@@ -157,7 +149,7 @@ public class DactValidator extends EObjectValidator {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public static final int DOMAIN_OBJECT__UNIQUE_OPERATION_NAMES = 15;
+	public static final int DOMAIN_OBJECT__UNIQUE_OPERATION_NAMES = 14;
 
 	/**
 	 * The {@link org.eclipse.emf.common.util.Diagnostic#getCode() code} for constraint 'Unique Property Names' of 'Domain Object'.
@@ -165,7 +157,7 @@ public class DactValidator extends EObjectValidator {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public static final int DOMAIN_OBJECT__UNIQUE_PROPERTY_NAMES = 16;
+	public static final int DOMAIN_OBJECT__UNIQUE_PROPERTY_NAMES = 15;
 
 	/**
 	 * The {@link org.eclipse.emf.common.util.Diagnostic#getCode() code} for constraint 'Single Invariant Operation' of 'Domain Object'.
@@ -173,7 +165,7 @@ public class DactValidator extends EObjectValidator {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public static final int DOMAIN_OBJECT__SINGLE_INVARIANT_OPERATION = 17;
+	public static final int DOMAIN_OBJECT__SINGLE_INVARIANT_OPERATION = 16;
 
 	/**
 	 * The {@link org.eclipse.emf.common.util.Diagnostic#getCode() code} for constraint 'Matched Parameter Mappings' of 'Activity'.
@@ -181,7 +173,7 @@ public class DactValidator extends EObjectValidator {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public static final int ACTIVITY__MATCHED_PARAMETER_MAPPINGS = 18;
+	public static final int ACTIVITY__MATCHED_PARAMETER_MAPPINGS = 17;
 
 	/**
 	 * The {@link org.eclipse.emf.common.util.Diagnostic#getCode() code} for constraint 'Single Initial Node' of 'Activity Group'.
@@ -189,7 +181,7 @@ public class DactValidator extends EObjectValidator {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public static final int ACTIVITY_GROUP__SINGLE_INITIAL_NODE = 19;
+	public static final int ACTIVITY_GROUP__SINGLE_INITIAL_NODE = 18;
 
 	/**
 	 * The {@link org.eclipse.emf.common.util.Diagnostic#getCode() code} for constraint 'Single Final Node' of 'Activity Group'.
@@ -197,7 +189,7 @@ public class DactValidator extends EObjectValidator {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public static final int ACTIVITY_GROUP__SINGLE_FINAL_NODE = 20;
+	public static final int ACTIVITY_GROUP__SINGLE_FINAL_NODE = 19;
 
 	/**
 	 * The {@link org.eclipse.emf.common.util.Diagnostic#getCode() code} for constraint 'Non Empty Group' of 'Activity Group'.
@@ -205,7 +197,7 @@ public class DactValidator extends EObjectValidator {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public static final int ACTIVITY_GROUP__NON_EMPTY_GROUP = 21;
+	public static final int ACTIVITY_GROUP__NON_EMPTY_GROUP = 20;
 
 	/**
 	 * The {@link org.eclipse.emf.common.util.Diagnostic#getCode() code} for constraint 'No Edge Into Initial Node' of 'Activity Edge'.
@@ -213,7 +205,7 @@ public class DactValidator extends EObjectValidator {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public static final int ACTIVITY_EDGE__NO_EDGE_INTO_INITIAL_NODE = 22;
+	public static final int ACTIVITY_EDGE__NO_EDGE_INTO_INITIAL_NODE = 21;
 
 	/**
 	 * The {@link org.eclipse.emf.common.util.Diagnostic#getCode() code} for constraint 'No Edge Out Of Final Node' of 'Activity Edge'.
@@ -221,7 +213,7 @@ public class DactValidator extends EObjectValidator {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public static final int ACTIVITY_EDGE__NO_EDGE_OUT_OF_FINAL_NODE = 23;
+	public static final int ACTIVITY_EDGE__NO_EDGE_OUT_OF_FINAL_NODE = 22;
 
 	/**
 	 * The {@link org.eclipse.emf.common.util.Diagnostic#getCode() code} for constraint 'Endpoints In Same Group' of 'Activity Edge'.
@@ -229,7 +221,7 @@ public class DactValidator extends EObjectValidator {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public static final int ACTIVITY_EDGE__ENDPOINTS_IN_SAME_GROUP = 24;
+	public static final int ACTIVITY_EDGE__ENDPOINTS_IN_SAME_GROUP = 23;
 
 	/**
 	 * The {@link org.eclipse.emf.common.util.Diagnostic#getCode() code} for constraint 'Requires Main Expression' of 'Domain Node'.
@@ -237,7 +229,7 @@ public class DactValidator extends EObjectValidator {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public static final int DOMAIN_NODE__REQUIRES_MAIN_EXPRESSION = 25;
+	public static final int DOMAIN_NODE__REQUIRES_MAIN_EXPRESSION = 24;
 
 	/**
 	 * The {@link org.eclipse.emf.common.util.Diagnostic#getCode() code} for constraint 'Self Anchored Binary Expression' of 'Domain Node'.
@@ -245,7 +237,7 @@ public class DactValidator extends EObjectValidator {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public static final int DOMAIN_NODE__SELF_ANCHORED_BINARY_EXPRESSION = 26;
+	public static final int DOMAIN_NODE__SELF_ANCHORED_BINARY_EXPRESSION = 25;
 
 	/**
 	 * The {@link org.eclipse.emf.common.util.Diagnostic#getCode() code} for constraint 'Exclusive Event Source' of 'Signal Action'.
@@ -253,7 +245,7 @@ public class DactValidator extends EObjectValidator {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public static final int SIGNAL_ACTION__EXCLUSIVE_EVENT_SOURCE = 27;
+	public static final int SIGNAL_ACTION__EXCLUSIVE_EVENT_SOURCE = 26;
 
 	/**
 	 * The {@link org.eclipse.emf.common.util.Diagnostic#getCode() code} for constraint 'Conforming Activity Operation Parameter' of 'Parameter Mapping'.
@@ -261,7 +253,7 @@ public class DactValidator extends EObjectValidator {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public static final int PARAMETER_MAPPING__CONFORMING_ACTIVITY_OPERATION_PARAMETER = 28;
+	public static final int PARAMETER_MAPPING__CONFORMING_ACTIVITY_OPERATION_PARAMETER = 27;
 
 	/**
 	 * The {@link org.eclipse.emf.common.util.Diagnostic#getCode() code} for constraint 'Exclusive Mapping Source' of 'Parameter Mapping'.
@@ -269,7 +261,7 @@ public class DactValidator extends EObjectValidator {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public static final int PARAMETER_MAPPING__EXCLUSIVE_MAPPING_SOURCE = 29;
+	public static final int PARAMETER_MAPPING__EXCLUSIVE_MAPPING_SOURCE = 28;
 
 	/**
 	 * The {@link org.eclipse.emf.common.util.Diagnostic#getCode() code} for constraint 'Value Only In Action' of 'Parameter Mapping'.
@@ -277,7 +269,7 @@ public class DactValidator extends EObjectValidator {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public static final int PARAMETER_MAPPING__VALUE_ONLY_IN_ACTION = 30;
+	public static final int PARAMETER_MAPPING__VALUE_ONLY_IN_ACTION = 29;
 
 	/**
 	 * A constant with a fixed name that can be used as the base value for additional hand written constants.
@@ -285,7 +277,7 @@ public class DactValidator extends EObjectValidator {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	private static final int GENERATED_DIAGNOSTIC_CODE_COUNT = 30;
+	private static final int GENERATED_DIAGNOSTIC_CODE_COUNT = 29;
 
 	/**
 	 * A constant with a fixed name that can be used as the base value for additional hand written constants in a derived class.
@@ -904,7 +896,6 @@ public class DactValidator extends EObjectValidator {
 		if (result || diagnostics != null) result &= validate_EveryKeyUnique(specOperation, diagnostics, context);
 		if (result || diagnostics != null) result &= validate_EveryMapEntryUnique(specOperation, diagnostics, context);
 		if (result || diagnostics != null) result &= validateSpecOperation_BehaviorXorSpecification(specOperation, diagnostics, context);
-		if (result || diagnostics != null) result &= validateSpecOperation_NoInputParameters(specOperation, diagnostics, context);
 		if (result || diagnostics != null) result &= validateSpecOperation_OwnedByDomainObjectOnly(specOperation, diagnostics, context);
 		if (result || diagnostics != null) result &= validateSpecOperation_UniqueRuleNames(specOperation, diagnostics, context);
 		if (result || diagnostics != null) result &= validateSpecOperation_SingleBoolOutParameter(specOperation, diagnostics, context);
@@ -919,16 +910,6 @@ public class DactValidator extends EObjectValidator {
 	 */
 	public boolean validateSpecOperation_BehaviorXorSpecification(SpecOperation specOperation, DiagnosticChain diagnostics, Map<Object, Object> context) {
 		return specOperation.BehaviorXorSpecification(diagnostics, context);
-	}
-
-	/**
-	 * Validates the NoInputParameters constraint of '<em>Spec Operation</em>'.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public boolean validateSpecOperation_NoInputParameters(SpecOperation specOperation, DiagnosticChain diagnostics, Map<Object, Object> context) {
-		return specOperation.NoInputParameters(diagnostics, context);
 	}
 
 	/**
