@@ -21,7 +21,7 @@ import org.eclipse.emf.common.util.EList;
  * </ul>
  *
  * @see dact.DactPackage#getSpecOperation()
- * @model annotation="http://www.eclipse.org/emf/2002/Ecore constraints='BehaviorXorSpecification OwnedByDomainObjectOnly UniqueRuleNames SingleBoolOutParameter'"
+ * @model annotation="http://www.eclipse.org/emf/2002/Ecore constraints='NoBehaviorSpecification BehaviorXorSpecification OwnedByDomainObjectOnly UniqueRuleNames SingleBoolOutParameter'"
  * @generated
  */
 public interface SpecOperation extends Operation, DiagnosticSupported {
@@ -57,10 +57,18 @@ public interface SpecOperation extends Operation, DiagnosticSupported {
 	 * @return the value of the '<em>Owned Rules</em>' containment reference list.
 	 * @see dact.DactPackage#getSpecOperation_OwnedRules()
 	 * @see dact.SpecRule#getOperation
-	 * @model opposite="operation" containment="true"
+	 * @model opposite="operation" containment="true" ordered="false"
 	 * @generated
 	 */
 	EList<SpecRule> getOwnedRules();
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @model unique="false" diagnosticsUnique="false" contextUnique="false"
+	 * @generated
+	 */
+	boolean NoBehaviorSpecification(DiagnosticChain diagnostics, Map<Object, Object> context);
 
 	/**
 	 * <!-- begin-user-doc -->

@@ -20,7 +20,7 @@
 [comment @main/]
 [template public generateServices(behaviorModel : behavior::BehaviorModel)]
 [let serviceModel = behaviorModel.getServiceModel().oclAsType(service::ServiceModel), dataModel = behaviorModel.getDataModel().oclAsType(data::DataModel)]
-[for (microservice : service::Microservice | serviceModel.microservices)]
+[for (microservice : service::Microservice | serviceModel.microservices->select(ms|ms.type = service::MicroserviceType::FUNCTIONAL))]
   	[let serviceName : String = microservice.name.toCamelCase(), 
   		interfaceDir : String = serviceName+'-service/src/main/java/com/example/'+serviceName+'/service/']
     [for (interface: service::Interface | microservice.interfaces -> select(i|i.isService()))]

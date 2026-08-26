@@ -10,8 +10,8 @@ import dact.ActivityGroup;
 import dact.UnaryExpression;
 import dact.LiteralBoolean;
 import dact.LoopNode;
+import dact.Scope;
 import dact.StructuredActivityNode;
-import dact.VariableDeclarationAction;
 
 /**
  * The services class used by VSM.
@@ -46,10 +46,16 @@ public class StructuredActivityNodeServices {
     	// Create 2 new bodies
     	ActivityGroup body = DactFactory.eINSTANCE.createActivityGroup();
     	body.setName("Body (True)");
+    	Scope bodyScope = DactFactory.eINSTANCE.createScope();
+    	bodyScope.setParent(group.getScope());
+    	body.setScope(bodyScope);
     	cnode.setBody(body);
     	
     	ActivityGroup elseBody = DactFactory.eINSTANCE.createActivityGroup();
-    	body.setName("ElseBody (False)");
+    	elseBody.setName("ElseBody (False)");
+    	Scope elseScope = DactFactory.eINSTANCE.createScope();
+    	elseScope.setParent(group.getScope());
+    	elseBody.setScope(elseScope);
     	cnode.setElseBody(elseBody);
     }
     

@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<dact:Root xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:dact="http://www.example.org/xcore/dact">
+  <ddd/>
+  <activity>
+    <activities name="TestActivity">
+      <ownedParameters name="x" type="//@primitivesTypes.2" direction="OUT"/>
+      <root name="Root">
+        <ownedNodes xsi:type="dact:InitialNode" name="InitialNode1" sEdge="//@activity/@activities.0/@root/@ownedEdges.0"/>
+        <ownedNodes xsi:type="dact:VariableDeclarationAction" name="VariableDeclarationAction1" sEdge="//@activity/@activities.0/@root/@ownedEdges.1" tEdge="//@activity/@activities.0/@root/@ownedEdges.0" type="//@primitivesTypes.2">
+          <declaration>
+            <identifier name="x"/>
+          </declaration>
+        </ownedNodes>
+        <ownedNodes xsi:type="dact:ActivityFinalNode" name="ActivityFinalNode4" tEdge="//@activity/@activities.0/@root/@ownedEdges.2">
+          <variablesToReturn name="y"/>
+        </ownedNodes>
+        <ownedNodes xsi:type="dact:ConditionalNode" name="NewConditionalNode3" sEdge="//@activity/@activities.0/@root/@ownedEdges.2" tEdge="//@activity/@activities.0/@root/@ownedEdges.1">
+          <test xsi:type="dact:UnaryExpression">
+            <value xsi:type="dact:LiteralBoolean" value="true"/>
+          </test>
+          <body name="Body (True)">
+            <ownedNodes xsi:type="dact:InitialNode" name="InitialNode2" sEdge="//@activity/@activities.0/@root/@ownedNodes.3/@body/@ownedEdges.0"/>
+            <ownedNodes xsi:type="dact:FlowFinalNode" name="FlowFinalNode2" tEdge="//@activity/@activities.0/@root/@ownedNodes.3/@body/@ownedEdges.1"/>
+            <ownedNodes xsi:type="dact:VariableDeclarationAction" name="VariableDeclarationAction2" sEdge="//@activity/@activities.0/@root/@ownedNodes.3/@body/@ownedEdges.1" tEdge="//@activity/@activities.0/@root/@ownedNodes.3/@body/@ownedEdges.0" type="//@primitivesTypes.2">
+              <declaration>
+                <identifier name="y"/>
+              </declaration>
+            </ownedNodes>
+            <ownedEdges edgeName="ActivityEdge1" source="//@activity/@activities.0/@root/@ownedNodes.3/@body/@ownedNodes.0" target="//@activity/@activities.0/@root/@ownedNodes.3/@body/@ownedNodes.2"/>
+            <ownedEdges edgeName="ActivityEdge2" source="//@activity/@activities.0/@root/@ownedNodes.3/@body/@ownedNodes.2" target="//@activity/@activities.0/@root/@ownedNodes.3/@body/@ownedNodes.1"/>
+            <scope parent="//@activity/@activities.0/@root/@scope"/>
+          </body>
+          <elseBody name="ElseBody (False)">
+            <scope parent="//@activity/@activities.0/@root/@scope"/>
+          </elseBody>
+        </ownedNodes>
+        <ownedEdges edgeName="Edge1" source="//@activity/@activities.0/@root/@ownedNodes.0" target="//@activity/@activities.0/@root/@ownedNodes.1"/>
+        <ownedEdges edgeName="Edge2" source="//@activity/@activities.0/@root/@ownedNodes.1" target="//@activity/@activities.0/@root/@ownedNodes.3"/>
+        <ownedEdges edgeName="Edge3" source="//@activity/@activities.0/@root/@ownedNodes.3" target="//@activity/@activities.0/@root/@ownedNodes.2"/>
+        <scope children="//@activity/@activities.0/@root/@ownedNodes.3/@body/@scope //@activity/@activities.0/@root/@ownedNodes.3/@elseBody/@scope"/>
+      </root>
+    </activities>
+  </activity>
+  <primitivesTypes xsi:type="dact:StringType" name="String"/>
+  <primitivesTypes xsi:type="dact:BooleanType" name="Boolean"/>
+  <primitivesTypes xsi:type="dact:IntegerType" name="Integer"/>
+  <primitivesTypes xsi:type="dact:RealType" name="Real"/>
+</dact:Root>

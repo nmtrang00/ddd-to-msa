@@ -1,0 +1,161 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xmi:XMI xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:dact="http://www.example.org/xcore/dact" xmlns:description="http://www.eclipse.org/sirius/description/1.1.0" xmlns:description_1="http://www.eclipse.org/sirius/diagram/description/1.1.0" xmlns:diagram="http://www.eclipse.org/sirius/diagram/1.1.0" xmlns:notation="http://www.eclipse.org/gmf/runtime/1.0.3/notation" xmlns:style="http://www.eclipse.org/sirius/diagram/description/style/1.1.0" xmlns:viewpoint="http://www.eclipse.org/sirius/1.1.0" xsi:schemaLocation="http://www.eclipse.org/sirius/description/1.1.0 http://www.eclipse.org/sirius/1.1.0#//description http://www.eclipse.org/sirius/diagram/description/1.1.0 http://www.eclipse.org/sirius/diagram/1.1.0#//description http://www.eclipse.org/sirius/diagram/description/style/1.1.0 http://www.eclipse.org/sirius/diagram/1.1.0#//description/style">
+  <viewpoint:DAnalysis uid="_-85oQKBnEfG3IM_JfFwvhw" selectedViews="__fAPwKBnEfG3IM_JfFwvhw" version="15.4.3.202406261640">
+    <semanticResources>SpecificationRuleHappy.dact</semanticResources>
+    <ownedViews xmi:type="viewpoint:DView" uid="__fAPwKBnEfG3IM_JfFwvhw">
+      <viewpoint xmi:type="description:Viewpoint" href="platform:/resource/dact.design/description/ddd.odesign#//@ownedViewpoints[name='Domain']"/>
+      <ownedRepresentationDescriptors xmi:type="viewpoint:DRepresentationDescriptor" uid="__fCsAKBnEfG3IM_JfFwvhw" name="DDD Diagram" repPath="#__fBd4KBnEfG3IM_JfFwvhw" changeId="1787651007028">
+        <description xmi:type="description_1:DiagramDescription" href="platform:/resource/dact.design/description/ddd.odesign#//@ownedViewpoints[name='Domain']/@ownedRepresentations[name='DDD%20Diagram']"/>
+        <target xmi:type="dact:DddModel" href="SpecificationRuleHappy.dact#//@ddd"/>
+      </ownedRepresentationDescriptors>
+    </ownedViews>
+  </viewpoint:DAnalysis>
+  <diagram:DSemanticDiagram uid="__fBd4KBnEfG3IM_JfFwvhw" synchronized="false">
+    <ownedAnnotationEntries xmi:type="description:AnnotationEntry" uid="__fEhMKBnEfG3IM_JfFwvhw" source="GMF_DIAGRAMS">
+      <data xmi:type="notation:Diagram" xmi:id="__fEhMaBnEfG3IM_JfFwvhw" type="Sirius" element="__fBd4KBnEfG3IM_JfFwvhw" measurementUnit="Pixel">
+        <children xmi:type="notation:Node" xmi:id="_nmrTQKBoEfG3IM_JfFwvhw" type="2002" element="_nmlMoKBoEfG3IM_JfFwvhw">
+          <children xmi:type="notation:Node" xmi:id="_nmshYKBoEfG3IM_JfFwvhw" type="5006"/>
+          <children xmi:type="notation:Node" xmi:id="_nmtIcKBoEfG3IM_JfFwvhw" type="7001">
+            <children xmi:type="notation:Node" xmi:id="_A8tHYKBpEfG3IM_JfFwvhw" type="3008" element="_A8qrIKBpEfG3IM_JfFwvhw">
+              <children xmi:type="notation:Node" xmi:id="_A8tHY6BpEfG3IM_JfFwvhw" type="5005"/>
+              <children xmi:type="notation:Node" xmi:id="_A8tHZKBpEfG3IM_JfFwvhw" type="7002">
+                <children xmi:type="notation:Node" xmi:id="_CYLm4KBpEfG3IM_JfFwvhw" type="3008" element="_CYH8gKBpEfG3IM_JfFwvhw">
+                  <children xmi:type="notation:Node" xmi:id="_CYMN8KBpEfG3IM_JfFwvhw" type="5005"/>
+                  <children xmi:type="notation:Node" xmi:id="_CYMN8aBpEfG3IM_JfFwvhw" type="7002">
+                    <styles xmi:type="notation:SortingStyle" xmi:id="_CYMN8qBpEfG3IM_JfFwvhw"/>
+                    <styles xmi:type="notation:FilteringStyle" xmi:id="_CYMN86BpEfG3IM_JfFwvhw"/>
+                    <styles xmi:type="notation:DrawerStyle" xmi:id="_CYMN9KBpEfG3IM_JfFwvhw"/>
+                  </children>
+                  <styles xmi:type="notation:ShapeStyle" xmi:id="_CYLm4aBpEfG3IM_JfFwvhw" fontName=".AppleSystemUIFont" fontHeight="12"/>
+                  <layoutConstraint xmi:type="notation:Bounds" xmi:id="_CYLm4qBpEfG3IM_JfFwvhw"/>
+                </children>
+                <children xmi:type="notation:Node" xmi:id="_Vdpb4KBpEfG3IM_JfFwvhw" type="3008" element="_VdnmuKBpEfG3IM_JfFwvhw">
+                  <children xmi:type="notation:Node" xmi:id="_Vdpb46BpEfG3IM_JfFwvhw" type="5005"/>
+                  <children xmi:type="notation:Node" xmi:id="_Vdpb5KBpEfG3IM_JfFwvhw" type="7002">
+                    <styles xmi:type="notation:SortingStyle" xmi:id="_Vdpb5aBpEfG3IM_JfFwvhw"/>
+                    <styles xmi:type="notation:FilteringStyle" xmi:id="_Vdpb5qBpEfG3IM_JfFwvhw"/>
+                    <styles xmi:type="notation:DrawerStyle" xmi:id="_Vdpb56BpEfG3IM_JfFwvhw"/>
+                  </children>
+                  <styles xmi:type="notation:ShapeStyle" xmi:id="_Vdpb4aBpEfG3IM_JfFwvhw" fontName=".AppleSystemUIFont" fontHeight="12"/>
+                  <layoutConstraint xmi:type="notation:Bounds" xmi:id="_Vdpb4qBpEfG3IM_JfFwvhw" y="40"/>
+                </children>
+                <children xmi:type="notation:Node" xmi:id="_aNG0oKBpEfG3IM_JfFwvhw" type="3008" element="_aNB8IKBpEfG3IM_JfFwvhw">
+                  <children xmi:type="notation:Node" xmi:id="_aNHbsKBpEfG3IM_JfFwvhw" type="5005"/>
+                  <children xmi:type="notation:Node" xmi:id="_aNHbsaBpEfG3IM_JfFwvhw" type="7002">
+                    <styles xmi:type="notation:SortingStyle" xmi:id="_aNHbsqBpEfG3IM_JfFwvhw"/>
+                    <styles xmi:type="notation:FilteringStyle" xmi:id="_aNHbs6BpEfG3IM_JfFwvhw"/>
+                    <styles xmi:type="notation:DrawerStyle" xmi:id="_aNHbtKBpEfG3IM_JfFwvhw"/>
+                  </children>
+                  <styles xmi:type="notation:ShapeStyle" xmi:id="_aNG0oaBpEfG3IM_JfFwvhw" fontName=".AppleSystemUIFont" fontHeight="12"/>
+                  <layoutConstraint xmi:type="notation:Bounds" xmi:id="_aNG0oqBpEfG3IM_JfFwvhw" y="80"/>
+                </children>
+                <styles xmi:type="notation:SortingStyle" xmi:id="_A8tHZaBpEfG3IM_JfFwvhw"/>
+                <styles xmi:type="notation:FilteringStyle" xmi:id="_A8tHZqBpEfG3IM_JfFwvhw"/>
+              </children>
+              <styles xmi:type="notation:ShapeStyle" xmi:id="_A8tHYaBpEfG3IM_JfFwvhw" fontName=".AppleSystemUIFont" fontHeight="12" italic="true"/>
+              <layoutConstraint xmi:type="notation:Bounds" xmi:id="_A8tHYqBpEfG3IM_JfFwvhw" x="18" y="9"/>
+            </children>
+            <children xmi:type="notation:Node" xmi:id="_RwMSsKBpEfG3IM_JfFwvhw" type="3008" element="_RwJ2cKBpEfG3IM_JfFwvhw">
+              <children xmi:type="notation:Node" xmi:id="_RwMSs6BpEfG3IM_JfFwvhw" type="5005"/>
+              <children xmi:type="notation:Node" xmi:id="_RwMStKBpEfG3IM_JfFwvhw" type="7002">
+                <styles xmi:type="notation:SortingStyle" xmi:id="_RwMStaBpEfG3IM_JfFwvhw"/>
+                <styles xmi:type="notation:FilteringStyle" xmi:id="_RwMStqBpEfG3IM_JfFwvhw"/>
+              </children>
+              <styles xmi:type="notation:ShapeStyle" xmi:id="_RwMSsaBpEfG3IM_JfFwvhw" fontName=".AppleSystemUIFont" fontHeight="12" italic="true"/>
+              <layoutConstraint xmi:type="notation:Bounds" xmi:id="_RwMSsqBpEfG3IM_JfFwvhw" x="270" y="37"/>
+            </children>
+            <styles xmi:type="notation:SortingStyle" xmi:id="_nmtIcaBoEfG3IM_JfFwvhw"/>
+            <styles xmi:type="notation:FilteringStyle" xmi:id="_nmtIcqBoEfG3IM_JfFwvhw"/>
+          </children>
+          <styles xmi:type="notation:ShapeStyle" xmi:id="_nmrTQaBoEfG3IM_JfFwvhw" fontName=".AppleSystemUIFont" fontHeight="12" bold="true" italic="true"/>
+          <layoutConstraint xmi:type="notation:Bounds" xmi:id="_nmrTQqBoEfG3IM_JfFwvhw" x="244" y="112"/>
+        </children>
+        <styles xmi:type="notation:DiagramStyle" xmi:id="__fEhMqBnEfG3IM_JfFwvhw"/>
+        <edges xmi:type="notation:Edge" xmi:id="_VdqC8KBpEfG3IM_JfFwvhw" type="4001" element="_VdkjYKBpEfG3IM_JfFwvhw" source="_A8tHYKBpEfG3IM_JfFwvhw" target="_RwMSsKBpEfG3IM_JfFwvhw">
+          <children xmi:type="notation:Node" xmi:id="_VdqC9KBpEfG3IM_JfFwvhw" type="6001">
+            <layoutConstraint xmi:type="notation:Bounds" xmi:id="_VdqC9aBpEfG3IM_JfFwvhw" x="36" y="-10"/>
+          </children>
+          <children xmi:type="notation:Node" xmi:id="_VdqC9qBpEfG3IM_JfFwvhw" type="6002">
+            <layoutConstraint xmi:type="notation:Bounds" xmi:id="_VdqC96BpEfG3IM_JfFwvhw" x="-7" y="7"/>
+          </children>
+          <children xmi:type="notation:Node" xmi:id="_VdqC-KBpEfG3IM_JfFwvhw" type="6003">
+            <layoutConstraint xmi:type="notation:Bounds" xmi:id="_VdqC-aBpEfG3IM_JfFwvhw" x="10"/>
+          </children>
+          <styles xmi:type="notation:ConnectorStyle" xmi:id="_VdqC8aBpEfG3IM_JfFwvhw" routing="Rectilinear"/>
+          <styles xmi:type="notation:FontStyle" xmi:id="_VdqC8qBpEfG3IM_JfFwvhw" fontName=".AppleSystemUIFont" fontHeight="12"/>
+          <bendpoints xmi:type="notation:RelativeBendpoints" xmi:id="_VdqC86BpEfG3IM_JfFwvhw" points="[0, -84, -27, -28]$[0, -126, -27, -70]$[152, -126, 125, -70]$[152, -56, 125, 0]"/>
+          <sourceAnchor xmi:type="notation:IdentityAnchor" xmi:id="_VdqC-qBpEfG3IM_JfFwvhw" id="(1.0,0.6885245901639344)"/>
+          <targetAnchor xmi:type="notation:IdentityAnchor" xmi:id="_VdqC-6BpEfG3IM_JfFwvhw" id="(0.0,0.0)"/>
+        </edges>
+      </data>
+    </ownedAnnotationEntries>
+    <ownedAnnotationEntries xmi:type="description:AnnotationEntry" uid="__fwdsKBnEfG3IM_JfFwvhw" source="DANNOTATION_CUSTOMIZATION_KEY">
+      <data xmi:type="diagram:ComputedStyleDescriptionRegistry" uid="__fwdsaBnEfG3IM_JfFwvhw"/>
+    </ownedAnnotationEntries>
+    <ownedDiagramElements xmi:type="diagram:DNodeContainer" uid="_nmlMoKBoEfG3IM_JfFwvhw" name="Cargo">
+      <target xmi:type="dact:BoundedContext" href="SpecificationRuleHappy.dact#//@ddd/@boundedContexts.0"/>
+      <semanticElements xmi:type="dact:BoundedContext" href="SpecificationRuleHappy.dact#//@ddd/@boundedContexts.0"/>
+      <ownedStyle xmi:type="diagram:FlatContainerStyle" uid="_nmmawKBoEfG3IM_JfFwvhw" labelSize="12" showIcon="false" borderSize="2" borderSizeComputationExpression="2" foregroundColor="255,255,255">
+        <labelFormat>italic</labelFormat>
+        <labelFormat>bold</labelFormat>
+        <description xmi:type="style:FlatContainerStyleDescription" href="platform:/resource/dact.design/description/ddd.odesign#//@ownedViewpoints[name='Domain']/@ownedRepresentations[name='DDD%20Diagram']/@defaultLayer/@containerMappings[name='BoundedContextNode']/@style"/>
+      </ownedStyle>
+      <actualMapping xmi:type="description_1:ContainerMapping" href="platform:/resource/dact.design/description/ddd.odesign#//@ownedViewpoints[name='Domain']/@ownedRepresentations[name='DDD%20Diagram']/@defaultLayer/@containerMappings[name='BoundedContextNode']"/>
+      <ownedDiagramElements xmi:type="diagram:DNodeContainer" uid="_A8qrIKBpEfG3IM_JfFwvhw" name="&lt;&lt;ValueObject>>&#xA; DeliverySpecification " outgoingEdges="_VdkjYKBpEfG3IM_JfFwvhw" childrenPresentation="VerticalStack">
+        <target xmi:type="dact:ValueObject" href="SpecificationRuleHappy.dact#//@ddd/@boundedContexts.0/@ownedElements.0"/>
+        <semanticElements xmi:type="dact:ValueObject" href="SpecificationRuleHappy.dact#//@ddd/@boundedContexts.0/@ownedElements.0"/>
+        <ownedStyle xmi:type="diagram:FlatContainerStyle" uid="_A8qrIaBpEfG3IM_JfFwvhw" labelSize="12" borderSize="1" borderSizeComputationExpression="1" foregroundColor="255,255,255">
+          <labelFormat>italic</labelFormat>
+          <description xmi:type="style:FlatContainerStyleDescription" href="platform:/resource/dact.design/description/ddd.odesign#//@ownedViewpoints[name='Domain']/@ownedRepresentations[name='DDD%20Diagram']/@defaultLayer/@containerMappings[name='BoundedContextNode']/@subContainerMappings[name='InternalDomainObjectNode']/@style"/>
+        </ownedStyle>
+        <actualMapping xmi:type="description_1:ContainerMapping" href="platform:/resource/dact.design/description/ddd.odesign#//@ownedViewpoints[name='Domain']/@ownedRepresentations[name='DDD%20Diagram']/@defaultLayer/@containerMappings[name='BoundedContextNode']/@subContainerMappings[name='InternalDomainObjectNode']"/>
+        <ownedDiagramElements xmi:type="diagram:DNodeContainer" uid="_CYH8gKBpEfG3IM_JfFwvhw" name="arrivalTime: Integer" childrenPresentation="VerticalStack">
+          <target xmi:type="dact:Property" href="SpecificationRuleHappy.dact#//@ddd/@boundedContexts.0/@ownedElements.0/@ownedProperties.0"/>
+          <semanticElements xmi:type="dact:Property" href="SpecificationRuleHappy.dact#//@ddd/@boundedContexts.0/@ownedElements.0/@ownedProperties.0"/>
+          <ownedStyle xmi:type="diagram:FlatContainerStyle" uid="_CYJKoKBpEfG3IM_JfFwvhw" labelSize="12" labelAlignment="LEFT" foregroundColor="255,255,255">
+            <description xmi:type="style:FlatContainerStyleDescription" href="platform:/resource/dact.design/description/ddd.odesign#//@ownedViewpoints[name='Domain']/@ownedRepresentations[name='DDD%20Diagram']/@defaultLayer/@containerMappings[name='BoundedContextNode']/@subContainerMappings[name='InternalDomainObjectNode']/@subContainerMappings[name='DomainObjectProperties']/@style"/>
+          </ownedStyle>
+          <actualMapping xmi:type="description_1:ContainerMapping" href="platform:/resource/dact.design/description/ddd.odesign#//@ownedViewpoints[name='Domain']/@ownedRepresentations[name='DDD%20Diagram']/@defaultLayer/@containerMappings[name='BoundedContextNode']/@subContainerMappings[name='InternalDomainObjectNode']/@subContainerMappings[name='DomainObjectProperties']"/>
+        </ownedDiagramElements>
+        <ownedDiagramElements xmi:type="diagram:DNodeContainer" uid="_VdnmuKBpEfG3IM_JfFwvhw" name="destination: LocationSnapshot [0..1]" childrenPresentation="VerticalStack">
+          <target xmi:type="dact:Property" href="SpecificationRuleHappy.dact#//@ddd/@boundedContexts.0/@ownedElements.0/@ownedProperties.1"/>
+          <semanticElements xmi:type="dact:Property" href="SpecificationRuleHappy.dact#//@ddd/@boundedContexts.0/@ownedElements.0/@ownedProperties.1"/>
+          <ownedStyle xmi:type="diagram:FlatContainerStyle" uid="_VdnmuaBpEfG3IM_JfFwvhw" labelSize="12" labelAlignment="LEFT" foregroundColor="255,255,255">
+            <description xmi:type="style:FlatContainerStyleDescription" href="platform:/resource/dact.design/description/ddd.odesign#//@ownedViewpoints[name='Domain']/@ownedRepresentations[name='DDD%20Diagram']/@defaultLayer/@containerMappings[name='BoundedContextNode']/@subContainerMappings[name='InternalDomainObjectNode']/@subContainerMappings[name='DomainObjectProperties']/@style"/>
+          </ownedStyle>
+          <actualMapping xmi:type="description_1:ContainerMapping" href="platform:/resource/dact.design/description/ddd.odesign#//@ownedViewpoints[name='Domain']/@ownedRepresentations[name='DDD%20Diagram']/@defaultLayer/@containerMappings[name='BoundedContextNode']/@subContainerMappings[name='InternalDomainObjectNode']/@subContainerMappings[name='DomainObjectProperties']"/>
+        </ownedDiagramElements>
+        <ownedDiagramElements xmi:type="diagram:DNodeContainer" uid="_aNB8IKBpEfG3IM_JfFwvhw" name="isValid(): Boolean" childrenPresentation="VerticalStack">
+          <target xmi:type="dact:SpecOperation" href="SpecificationRuleHappy.dact#//@ddd/@boundedContexts.0/@ownedElements.0/@ownedOperations.0"/>
+          <semanticElements xmi:type="dact:SpecOperation" href="SpecificationRuleHappy.dact#//@ddd/@boundedContexts.0/@ownedElements.0/@ownedOperations.0"/>
+          <ownedStyle xmi:type="diagram:FlatContainerStyle" uid="_aNEYYKBpEfG3IM_JfFwvhw" labelSize="12" showIcon="false" labelAlignment="LEFT" foregroundColor="255,255,255">
+            <description xmi:type="style:FlatContainerStyleDescription" href="platform:/resource/dact.design/description/ddd.odesign#//@ownedViewpoints[name='Domain']/@ownedRepresentations[name='DDD%20Diagram']/@defaultLayer/@containerMappings[name='BoundedContextNode']/@subContainerMappings[name='InternalDomainObjectNode']/@subContainerMappings[name='DomainObjectOperations']/@style"/>
+          </ownedStyle>
+          <actualMapping xmi:type="description_1:ContainerMapping" href="platform:/resource/dact.design/description/ddd.odesign#//@ownedViewpoints[name='Domain']/@ownedRepresentations[name='DDD%20Diagram']/@defaultLayer/@containerMappings[name='BoundedContextNode']/@subContainerMappings[name='InternalDomainObjectNode']/@subContainerMappings[name='DomainObjectOperations']"/>
+        </ownedDiagramElements>
+      </ownedDiagramElements>
+      <ownedDiagramElements xmi:type="diagram:DNodeContainer" uid="_RwJ2cKBpEfG3IM_JfFwvhw" name="&lt;&lt;ValueObject>>&#xA; LocationSnapshot " incomingEdges="_VdkjYKBpEfG3IM_JfFwvhw" childrenPresentation="VerticalStack">
+        <target xmi:type="dact:ValueObject" href="SpecificationRuleHappy.dact#//@ddd/@boundedContexts.0/@ownedElements.1"/>
+        <semanticElements xmi:type="dact:ValueObject" href="SpecificationRuleHappy.dact#//@ddd/@boundedContexts.0/@ownedElements.1"/>
+        <ownedStyle xmi:type="diagram:FlatContainerStyle" uid="_RwKdgKBpEfG3IM_JfFwvhw" labelSize="12" borderSize="1" borderSizeComputationExpression="1" foregroundColor="255,255,255">
+          <labelFormat>italic</labelFormat>
+          <description xmi:type="style:FlatContainerStyleDescription" href="platform:/resource/dact.design/description/ddd.odesign#//@ownedViewpoints[name='Domain']/@ownedRepresentations[name='DDD%20Diagram']/@defaultLayer/@containerMappings[name='BoundedContextNode']/@subContainerMappings[name='InternalDomainObjectNode']/@style"/>
+        </ownedStyle>
+        <actualMapping xmi:type="description_1:ContainerMapping" href="platform:/resource/dact.design/description/ddd.odesign#//@ownedViewpoints[name='Domain']/@ownedRepresentations[name='DDD%20Diagram']/@defaultLayer/@containerMappings[name='BoundedContextNode']/@subContainerMappings[name='InternalDomainObjectNode']"/>
+      </ownedDiagramElements>
+    </ownedDiagramElements>
+    <ownedDiagramElements xmi:type="diagram:DEdge" uid="_VdkjYKBpEfG3IM_JfFwvhw" name="destination [0..1]" sourceNode="_A8qrIKBpEfG3IM_JfFwvhw" targetNode="_RwJ2cKBpEfG3IM_JfFwvhw">
+      <target xmi:type="dact:Property" href="SpecificationRuleHappy.dact#//@ddd/@boundedContexts.0/@ownedElements.0/@ownedProperties.1"/>
+      <semanticElements xmi:type="dact:Property" href="SpecificationRuleHappy.dact#//@ddd/@boundedContexts.0/@ownedElements.0/@ownedProperties.1"/>
+      <ownedStyle xmi:type="diagram:EdgeStyle" uid="_VdkjYaBpEfG3IM_JfFwvhw" size="2" routingStyle="manhattan">
+        <description xmi:type="style:EdgeStyleDescription" href="platform:/resource/dact.design/description/ddd.odesign#//@ownedViewpoints[name='Domain']/@ownedRepresentations[name='DDD%20Diagram']/@defaultLayer/@edgeMappings[name='ReferenceEdge']/@style"/>
+        <centerLabelStyle xmi:type="diagram:CenterLabelStyle" uid="_VdkjYqBpEfG3IM_JfFwvhw" labelSize="12" showIcon="false"/>
+      </ownedStyle>
+      <actualMapping xmi:type="description_1:EdgeMapping" href="platform:/resource/dact.design/description/ddd.odesign#//@ownedViewpoints[name='Domain']/@ownedRepresentations[name='DDD%20Diagram']/@defaultLayer/@edgeMappings[name='ReferenceEdge']"/>
+    </ownedDiagramElements>
+    <description xmi:type="description_1:DiagramDescription" href="platform:/resource/dact.design/description/ddd.odesign#//@ownedViewpoints[name='Domain']/@ownedRepresentations[name='DDD%20Diagram']"/>
+    <filterVariableHistory xmi:type="diagram:FilterVariableHistory" uid="__fBd4aBnEfG3IM_JfFwvhw"/>
+    <activatedLayers xmi:type="description_1:Layer" href="platform:/resource/dact.design/description/ddd.odesign#//@ownedViewpoints[name='Domain']/@ownedRepresentations[name='DDD%20Diagram']/@defaultLayer"/>
+    <target xmi:type="dact:DddModel" href="SpecificationRuleHappy.dact#//@ddd"/>
+  </diagram:DSemanticDiagram>
+</xmi:XMI>

@@ -144,6 +144,28 @@ public class SpecOperationImpl extends OperationImpl implements SpecOperation {
 	 * @generated
 	 */
 	@Override
+	public boolean NoBehaviorSpecification(final DiagnosticChain diagnostics, final Map<Object, Object> context) {
+		Behavior _behavior = this.getBehavior();
+		final boolean hasBehavior = (_behavior != null);
+		boolean _isEmpty = this.getOwnedRules().isEmpty();
+		final boolean hasSpec = (!_isEmpty);
+		if (((!hasBehavior) && (!hasSpec))) {
+			String _name = this.getName();
+			String _plus = ("Operation \'" + _name);
+			String _plus_1 = (_plus + "\' defines neither a behavior nor a ");
+			String _plus_2 = (_plus_1 + 
+				"specification; a default body will be generated.");
+			return this.warn(diagnostics, _plus_2);
+		}
+		return true;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	@Override
 	public boolean BehaviorXorSpecification(final DiagnosticChain diagnostics, final Map<Object, Object> context) {
 		Behavior _behavior = this.getBehavior();
 		final boolean hasBehavior = (_behavior != null);
@@ -156,14 +178,6 @@ public class SpecOperationImpl extends OperationImpl implements SpecOperation {
 			String _plus_2 = (_plus_1 + 
 				"specification; only one is allowed.");
 			return this.report(diagnostics, _plus_2);
-		}
-		if (((!hasBehavior) && (!hasSpec))) {
-			String _name_1 = this.getName();
-			String _plus_3 = ("Operation \'" + _name_1);
-			String _plus_4 = (_plus_3 + "\' defines neither a behavior nor a ");
-			String _plus_5 = (_plus_4 + 
-				"specification; a default body will be generated.");
-			return this.warn(diagnostics, _plus_5);
 		}
 		return true;
 	}
@@ -388,6 +402,8 @@ public class SpecOperationImpl extends OperationImpl implements SpecOperation {
 	@SuppressWarnings("unchecked")
 	public Object eInvoke(int operationID, EList<?> arguments) throws InvocationTargetException {
 		switch (operationID) {
+			case DactPackage.SPEC_OPERATION___NO_BEHAVIOR_SPECIFICATION__DIAGNOSTICCHAIN_MAP:
+				return NoBehaviorSpecification((DiagnosticChain)arguments.get(0), (Map<Object, Object>)arguments.get(1));
 			case DactPackage.SPEC_OPERATION___BEHAVIOR_XOR_SPECIFICATION__DIAGNOSTICCHAIN_MAP:
 				return BehaviorXorSpecification((DiagnosticChain)arguments.get(0), (Map<Object, Object>)arguments.get(1));
 			case DactPackage.SPEC_OPERATION___OWNED_BY_DOMAIN_OBJECT_ONLY__DIAGNOSTICCHAIN_MAP:

@@ -1,0 +1,66 @@
+============================================================
+           QVTO TRACE SUMMARY REPORT
+============================================================
+Total Trace Records: 244
+Unique Modules:      6
+Unique Operations:   48
+------------------------------------------------------------
+
+Executions by Module:
+  - DactToLemmaBehavior      : 147
+  - DactToLemmaData          : 61
+  - DactToLemmaService       : 30
+  - DactToLemmaUtils         : 4
+  - DactPreprocess           : 1
+  - LemmaRefine              : 1
+
+Executions by Mapping Operation:
+  - NodeToNode                                   : 25
+  - IdentifierToIdentifier                       : 22
+  - EdgeToEdge                                   : 20
+  - ParameterToParameter                         : 16
+  - PropertyToDataField                          : 15
+  - ExpressionToExpression                       : 14
+  - ParameterMappingToParameterMapping           : 13
+  - UnaryExpressionToUnaryExpression             : 10
+  - PrimitivePropertyToDataField                 : 8
+  - DomainElementToComplexType                   : 8
+  - VariableToVariable                           : 8
+  - DomainObjectToDataStructure                  : 7
+  - ActivityGroupToActivityGroup                 : 7
+  - ScopeToScope                                 : 7
+  - EnumerationLiteralToEnumerationField         : 5
+  - AssociationPropertyToDataField               : 5
+  - VariableAssignmentToVariableAssignment       : 5
+  - InterfaceToInterface                         : 4
+  - InterfaceOperationToOperation                : 4
+  - BoundedContextToContext                      : 3
+  - ParameterToDataOperationParameter            : 3
+  - BoundedContextToMicroservice                 : 3
+  - EnumerationPropertyToDataField               : 2
+  - BinaryExpressionToBinaryExpression           : 2
+  - OperatorToOperator                           : 2
+  - LiteralToPrimitiveValue                      : 2
+  - ValueSpecificationToValueSpecification       : 2
+  - NotExpressionToNotExpression                 : 2
+  - RootToRoot                                   : 1
+  - DddModelToDataModel                          : 1
+  - EnumerationToEnumeration                     : 1
+  - DomainElementsToComplexTypeCollection        : 1
+  - OperationToDataOperation                     : 1
+  - PrimitiveTypesToPrimitiveTypeCollection      : 1
+  - DddModelToServiceModel                       : 1
+  - ServiceToDefaultController                   : 1
+  - ServiceOperationsToDefaultControllerOperations: 1
+  - DactToLact                                   : 1
+  - ExtractDomainObjectSpecOperations            : 1
+  - SpecOperationToSpecDataOperation             : 1
+  - RuleToRule                                   : 1
+  - GeToGe                                       : 1
+  - LogicalOperatorToLogicalOperator             : 1
+  - PlusToPlus                                   : 1
+  - IntegerOperatorToIntegerOperator             : 1
+  - DomainActivityModelToServiceActivityModel    : 1
+  - DomainActivityToServiceActivity              : 1
+  - ModelToModel                                 : 1
+============================================================

@@ -6,6 +6,7 @@ import dact.AggregateRoot;
 import dact.BinaryExpression;
 import dact.DactPackage;
 import dact.DiagnosticSupported;
+import dact.DomainExistAction;
 import dact.DomainFindAction;
 import dact.DomainNode;
 import dact.Entity;
@@ -281,7 +282,7 @@ public abstract class DomainNodeImpl extends ExecutableNodeImpl implements Domai
 	 */
 	@Override
 	public boolean RequiresMainExpression(final DiagnosticChain diagnostics, final Map<Object, Object> context) {
-		final boolean isValid = ((this instanceof DomainFindAction) || (!this.getMainExpr().isEmpty()));
+		final boolean isValid = (((this instanceof DomainFindAction) && (!(this instanceof DomainExistAction))) || (!this.getMainExpr().isEmpty()));
 		if (((!isValid) && (diagnostics != null))) {
 			String _name = this.getName();
 			String _plus = ("Domain node \'" + _name);

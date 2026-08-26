@@ -379,3 +379,11 @@ endif/]
 	rootPart.getMatchedVariableByName(scope).getType()
 /]
 
+[query public getInternalFunctionalContexts(dataModel: data::DataModel, serviceModel: service::ServiceModel): Sequence(data::Context) = 
+	let internalFunctionalMicroservices : Sequence(String) = serviceModel.microservices
+			->select(ms|ms.type = service::MicroserviceType::FUNCTIONAL)
+			->collect(ms|ms.name)
+	in dataModel.contexts -> select(context | internalFunctionalMicroservices -> includes(context.name))
+/]
+
+

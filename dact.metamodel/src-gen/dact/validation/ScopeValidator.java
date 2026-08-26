@@ -19,6 +19,12 @@ import org.eclipse.emf.common.util.EList;
 public interface ScopeValidator {
 	boolean validate();
 
+	boolean validateName(String value);
+
+	boolean validateTName(String value);
+
+	boolean validateEName(String value);
+
 	boolean validateParent(Scope value);
 	boolean validateChildren(EList<Scope> value);
 	boolean validateInheritedVariables(EList<Variable> value);

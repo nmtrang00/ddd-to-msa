@@ -16,6 +16,14 @@ import dact.ActivityNode;
 public interface ActivityEdgeValidator {
 	boolean validate();
 
+	boolean validateName(String value);
+
+	boolean validateEdgeName(String value);
+
+	boolean validateTName(String value);
+
+	boolean validateEName(String value);
+
 	boolean validateSource(ActivityNode value);
 	boolean validateTarget(ActivityNode value);
 	boolean validateGroup(ActivityGroup value);

@@ -265,6 +265,7 @@ Package service <http://www.example.org/xcore/service>
     Literal FUNCTIONAL = 0
     Literal UTILITY = 0
     Literal INFRASTRUCTURE = 0
+    Literal EXTERNAL = 0
 
   Enum Visibility
     Literal NONE = 0

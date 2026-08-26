@@ -1,0 +1,24 @@
+import DactToLemmaData;
+
+modeltype DACT uses 'http://www.example.org/xcore/dact';
+modeltype DATA uses 'http://www.example.org/xcore/data';
+
+
+transformation index(
+	in dact : DACT, 
+	out data : DATA
+);
+configuration property PROJECT_NAME : String;
+
+main() {
+	log("PROJECT " + PROJECT_NAME +": Start parsing");
+
+	// Transform DACT to LEMMA Data
+	var dactToLemmaData := new DactToLemmaData(dact,data);
+	dactToLemmaData.PROJECT_NAME := PROJECT_NAME;
+	var dactToLemmaDataTrans := dactToLemmaData.transform();
+	assert fatal (dactToLemmaDataTrans.failed() = false) 
+        with log("Stopping pipeline due to error in DactToLemmaData");
+    
+    log("DONE!");
+}

@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<dact:Root xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:dact="http://www.example.org/xcore/dact">
+  <ddd>
+    <boundedContexts name="Cargo">
+      <ownedElements xsi:type="dact:ValueObject" name="DeliverySpecification">
+        <ownedProperties name="arrivalTime" type="//@primitivesTypes.2" lowerBound="1"/>
+        <ownedProperties name="destination" type="//@ddd/@boundedContexts.0/@ownedElements.1"/>
+        <ownedOperations xsi:type="dact:SpecOperation" name="isValid" type="D5_SPECIFICATION" isInvariant="true">
+          <ownedParameters name="result" type="//@primitivesTypes.1" lowerBound="1" direction="OUT"/>
+          <ownedRules name="Arrival Time must be positive" rawString="self.arrivalTime + 1">
+            <expr xsi:type="dact:BinaryExpression">
+              <operator xsi:type="dact:Plus"/>
+              <leftExpr xsi:type="dact:UnaryExpression">
+                <identifier name="self.arrivalTime"/>
+              </leftExpr>
+              <rightExpr xsi:type="dact:UnaryExpression">
+                <value xsi:type="dact:LiteralInteger" value="1"/>
+              </rightExpr>
+            </expr>
+          </ownedRules>
+          <ownedRules name="Destination must be defined" rawString="self.destination != null">
+            <expr xsi:type="dact:BinaryExpression">
+              <operator xsi:type="dact:Ne"/>
+              <leftExpr xsi:type="dact:UnaryExpression">
+                <identifier name="self.destination"/>
+              </leftExpr>
+              <rightExpr xsi:type="dact:UnaryExpression">
+                <value xsi:type="dact:LiteralNull"/>
+              </rightExpr>
+            </expr>
+          </ownedRules>
+          <ownedRules name="Combined Rule" rawString="(self.arrivalTime >0) and (self.destination != null)">
+            <expr xsi:type="dact:BinaryExpression">
+              <operator xsi:type="dact:And"/>
+              <leftExpr xsi:type="dact:BinaryExpression">
+                <operator xsi:type="dact:Gt"/>
+                <leftExpr xsi:type="dact:UnaryExpression">
+                  <identifier name="self.arrivalTime"/>
+                </leftExpr>
+                <rightExpr xsi:type="dact:UnaryExpression">
+                  <value xsi:type="dact:LiteralInteger" value="0"/>
+                </rightExpr>
+              </leftExpr>
+              <rightExpr xsi:type="dact:BinaryExpression">
+                <operator xsi:type="dact:Ne"/>
+                <leftExpr xsi:type="dact:UnaryExpression">
+                  <identifier name="self.destination"/>
+                </leftExpr>
+                <rightExpr xsi:type="dact:UnaryExpression">
+                  <value xsi:type="dact:LiteralNull"/>
+                </rightExpr>
+              </rightExpr>
+            </expr>
+          </ownedRules>
+        </ownedOperations>
+      </ownedElements>
+      <ownedElements xsi:type="dact:ValueObject" name="LocationSnapshot"/>
+    </boundedContexts>
+  </ddd>
+  <activity/>
+  <primitivesTypes xsi:type="dact:StringType" name="String"/>
+  <primitivesTypes xsi:type="dact:BooleanType" name="Boolean"/>
+  <primitivesTypes xsi:type="dact:IntegerType" name="Integer"/>
+  <primitivesTypes xsi:type="dact:RealType" name="Real"/>
+</dact:Root>

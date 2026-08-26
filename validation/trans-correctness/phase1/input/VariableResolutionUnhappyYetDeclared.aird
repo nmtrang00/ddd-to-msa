@@ -1,0 +1,131 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xmi:XMI xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:dact="http://www.example.org/xcore/dact" xmlns:description="http://www.eclipse.org/sirius/description/1.1.0" xmlns:description_1="http://www.eclipse.org/sirius/diagram/description/1.1.0" xmlns:diagram="http://www.eclipse.org/sirius/diagram/1.1.0" xmlns:notation="http://www.eclipse.org/gmf/runtime/1.0.3/notation" xmlns:style="http://www.eclipse.org/sirius/diagram/description/style/1.1.0" xmlns:viewpoint="http://www.eclipse.org/sirius/1.1.0" xsi:schemaLocation="http://www.eclipse.org/sirius/description/1.1.0 http://www.eclipse.org/sirius/1.1.0#//description http://www.eclipse.org/sirius/diagram/description/1.1.0 http://www.eclipse.org/sirius/diagram/1.1.0#//description http://www.eclipse.org/sirius/diagram/description/style/1.1.0 http://www.eclipse.org/sirius/diagram/1.1.0#//description/style">
+  <viewpoint:DAnalysis uid="_I7L2gKCNEfGrbvnPnvyPdQ" selectedViews="_KwYdkKCNEfGrbvnPnvyPdQ" version="15.4.3.202406261640">
+    <semanticResources>VariableResolutionUnhappyYetDeclared.dact</semanticResources>
+    <eAnnotations xmi:type="description:DAnnotationEntry" uid="_K5f9UKCNEfGrbvnPnvyPdQ" source="ImagesDependencies">
+      <details>_KwrYgKCNEfGrbvnPnvyPdQ:dact.design</details>
+    </eAnnotations>
+    <ownedViews xmi:type="viewpoint:DView" uid="_KwYdkKCNEfGrbvnPnvyPdQ">
+      <viewpoint xmi:type="description:Viewpoint" href="platform:/resource/dact.design/description/activity.odesign#//@ownedViewpoints[name='Activity']"/>
+      <ownedRepresentationDescriptors xmi:type="viewpoint:DRepresentationDescriptor" uid="_KxLHwKCNEfGrbvnPnvyPdQ" name="Activity Diagram" repPath="#_KwrYgKCNEfGrbvnPnvyPdQ" changeId="1787666696912">
+        <description xmi:type="description_1:DiagramDescription" href="platform:/resource/dact.design/description/activity.odesign#//@ownedViewpoints[name='Activity']/@ownedRepresentations[name='Activity%20Diagram']"/>
+        <target xmi:type="dact:ActivityModel" href="VariableResolutionUnhappyYetDeclared.dact#//@activity"/>
+      </ownedRepresentationDescriptors>
+    </ownedViews>
+  </viewpoint:DAnalysis>
+  <diagram:DSemanticDiagram uid="_KwrYgKCNEfGrbvnPnvyPdQ" synchronized="false">
+    <ownedAnnotationEntries xmi:type="description:AnnotationEntry" uid="_KyHi8KCNEfGrbvnPnvyPdQ" source="GMF_DIAGRAMS">
+      <data xmi:type="notation:Diagram" xmi:id="_KyHi8aCNEfGrbvnPnvyPdQ" type="Sirius" element="_KwrYgKCNEfGrbvnPnvyPdQ" measurementUnit="Pixel">
+        <children xmi:type="notation:Node" xmi:id="_K0b3IKCNEfGrbvnPnvyPdQ" type="2002" element="_KzCwAKCNEfGrbvnPnvyPdQ">
+          <children xmi:type="notation:Node" xmi:id="_K0vZIKCNEfGrbvnPnvyPdQ" type="5006"/>
+          <children xmi:type="notation:Node" xmi:id="_K0zDgKCNEfGrbvnPnvyPdQ" type="7001">
+            <children xmi:type="notation:Node" xmi:id="_K06YQKCNEfGrbvnPnvyPdQ" type="3008" element="_KzSnoKCNEfGrbvnPnvyPdQ">
+              <children xmi:type="notation:Node" xmi:id="_K06_UKCNEfGrbvnPnvyPdQ" type="5005"/>
+              <children xmi:type="notation:Node" xmi:id="_K07mYKCNEfGrbvnPnvyPdQ" type="7002">
+                <children xmi:type="notation:Node" xmi:id="_K1JBwKCNEfGrbvnPnvyPdQ" type="3007" element="_Kzp0AKCNEfGrbvnPnvyPdQ">
+                  <children xmi:type="notation:Node" xmi:id="_K1Jo0KCNEfGrbvnPnvyPdQ" visible="false" type="5003">
+                    <layoutConstraint xmi:type="notation:Location" xmi:id="_K1Jo0aCNEfGrbvnPnvyPdQ" x="33" y="6"/>
+                  </children>
+                  <children xmi:type="notation:Node" xmi:id="_K4QAIKCNEfGrbvnPnvyPdQ" type="3002" element="_Kzp0AaCNEfGrbvnPnvyPdQ">
+                    <styles xmi:type="notation:ShapeStyle" xmi:id="_K4QAIaCNEfGrbvnPnvyPdQ" fontName=".AppleSystemUIFont"/>
+                    <layoutConstraint xmi:type="notation:Bounds" xmi:id="_K4QAIqCNEfGrbvnPnvyPdQ"/>
+                  </children>
+                  <styles xmi:type="notation:ShapeStyle" xmi:id="_K1JBwaCNEfGrbvnPnvyPdQ" fontName=".AppleSystemUIFont" fontHeight="12"/>
+                  <layoutConstraint xmi:type="notation:Bounds" xmi:id="_K1JBwqCNEfGrbvnPnvyPdQ" x="3" y="102" width="32" height="32"/>
+                </children>
+                <children xmi:type="notation:Node" xmi:id="_K1KP4KCNEfGrbvnPnvyPdQ" type="3007" element="_KzqbEKCNEfGrbvnPnvyPdQ">
+                  <children xmi:type="notation:Node" xmi:id="_K1K28KCNEfGrbvnPnvyPdQ" visible="false" type="5003">
+                    <layoutConstraint xmi:type="notation:Location" xmi:id="_K1K28aCNEfGrbvnPnvyPdQ" x="-5" y="-21"/>
+                  </children>
+                  <children xmi:type="notation:Node" xmi:id="_K4QnMKCNEfGrbvnPnvyPdQ" type="3005" element="_KzqbEaCNEfGrbvnPnvyPdQ">
+                    <styles xmi:type="notation:ShapeStyle" xmi:id="_K4QnMaCNEfGrbvnPnvyPdQ" fontName=".AppleSystemUIFont"/>
+                    <layoutConstraint xmi:type="notation:Bounds" xmi:id="_K4QnMqCNEfGrbvnPnvyPdQ"/>
+                  </children>
+                  <styles xmi:type="notation:ShapeStyle" xmi:id="_K1KP4aCNEfGrbvnPnvyPdQ" fontName=".AppleSystemUIFont" fontHeight="12"/>
+                  <layoutConstraint xmi:type="notation:Bounds" xmi:id="_K1KP4qCNEfGrbvnPnvyPdQ" x="31" y="30" width="40" height="40"/>
+                </children>
+                <styles xmi:type="notation:SortingStyle" xmi:id="_K07mYaCNEfGrbvnPnvyPdQ"/>
+                <styles xmi:type="notation:FilteringStyle" xmi:id="_K07mYqCNEfGrbvnPnvyPdQ"/>
+              </children>
+              <styles xmi:type="notation:ShapeStyle" xmi:id="_K06YQaCNEfGrbvnPnvyPdQ" fontColor="13750737" fontName=".AppleSystemUIFont" fontHeight="12" italic="true"/>
+              <layoutConstraint xmi:type="notation:Bounds" xmi:id="_K06YQqCNEfGrbvnPnvyPdQ" x="31" y="30"/>
+            </children>
+            <styles xmi:type="notation:SortingStyle" xmi:id="_K0zDgaCNEfGrbvnPnvyPdQ"/>
+            <styles xmi:type="notation:FilteringStyle" xmi:id="_K0zDgqCNEfGrbvnPnvyPdQ"/>
+          </children>
+          <styles xmi:type="notation:ShapeStyle" xmi:id="_K0b3IaCNEfGrbvnPnvyPdQ" fontName=".AppleSystemUIFont" fontHeight="12" bold="true"/>
+          <layoutConstraint xmi:type="notation:Bounds" xmi:id="_K0b3IqCNEfGrbvnPnvyPdQ"/>
+        </children>
+        <styles xmi:type="notation:DiagramStyle" xmi:id="_KyHi8qCNEfGrbvnPnvyPdQ"/>
+        <edges xmi:type="notation:Edge" xmi:id="_8_fEEKCNEfGrbvnPnvyPdQ" type="4001" element="_8_MJIKCNEfGrbvnPnvyPdQ" source="_K1JBwKCNEfGrbvnPnvyPdQ" target="_K1KP4KCNEfGrbvnPnvyPdQ">
+          <children xmi:type="notation:Node" xmi:id="_8_frIKCNEfGrbvnPnvyPdQ" type="6001">
+            <layoutConstraint xmi:type="notation:Bounds" xmi:id="_8_frIaCNEfGrbvnPnvyPdQ" y="-10"/>
+          </children>
+          <children xmi:type="notation:Node" xmi:id="_8_frIqCNEfGrbvnPnvyPdQ" type="6002">
+            <layoutConstraint xmi:type="notation:Bounds" xmi:id="_8_frI6CNEfGrbvnPnvyPdQ" y="10"/>
+          </children>
+          <children xmi:type="notation:Node" xmi:id="_8_frJKCNEfGrbvnPnvyPdQ" type="6003">
+            <layoutConstraint xmi:type="notation:Bounds" xmi:id="_8_frJaCNEfGrbvnPnvyPdQ" y="10"/>
+          </children>
+          <styles xmi:type="notation:ConnectorStyle" xmi:id="_8_fEEaCNEfGrbvnPnvyPdQ" routing="Rectilinear"/>
+          <styles xmi:type="notation:FontStyle" xmi:id="_8_fEEqCNEfGrbvnPnvyPdQ" fontName=".AppleSystemUIFont" fontHeight="12"/>
+          <bendpoints xmi:type="notation:RelativeBendpoints" xmi:id="_8_fEE6CNEfGrbvnPnvyPdQ" points="[7, 0, -25, 68]$[14, 0, -18, 68]$[14, -68, -18, 0]$[22, -68, -10, 0]"/>
+          <sourceAnchor xmi:type="notation:IdentityAnchor" xmi:id="_8_gSMKCNEfGrbvnPnvyPdQ" id="(0.5,0.5)"/>
+          <targetAnchor xmi:type="notation:IdentityAnchor" xmi:id="_8_gSMaCNEfGrbvnPnvyPdQ" id="(0.5,0.5)"/>
+        </edges>
+      </data>
+    </ownedAnnotationEntries>
+    <ownedAnnotationEntries xmi:type="description:AnnotationEntry" uid="_Kz_LMKCNEfGrbvnPnvyPdQ" source="DANNOTATION_CUSTOMIZATION_KEY">
+      <data xmi:type="diagram:ComputedStyleDescriptionRegistry" uid="_Kz_yQKCNEfGrbvnPnvyPdQ"/>
+    </ownedAnnotationEntries>
+    <ownedDiagramElements xmi:type="diagram:DNodeContainer" uid="_KzCwAKCNEfGrbvnPnvyPdQ" name="TestActivity">
+      <target xmi:type="dact:Activity" href="VariableResolutionUnhappyYetDeclared.dact#//@activity/@activities.0"/>
+      <semanticElements xmi:type="dact:Activity" href="VariableResolutionUnhappyYetDeclared.dact#//@activity/@activities.0"/>
+      <ownedStyle xmi:type="diagram:FlatContainerStyle" uid="_KzIPkKCNEfGrbvnPnvyPdQ" labelSize="12" showIcon="false" borderSize="1" borderSizeComputationExpression="1" foregroundColor="255,255,255">
+        <labelFormat>bold</labelFormat>
+        <description xmi:type="style:FlatContainerStyleDescription" href="platform:/resource/dact.design/description/activity.odesign#//@ownedViewpoints[name='Activity']/@ownedRepresentations[name='Activity%20Diagram']/@defaultLayer/@containerMappings[name='ActivityContainer']/@style"/>
+      </ownedStyle>
+      <actualMapping xmi:type="description_1:ContainerMapping" href="platform:/resource/dact.design/description/activity.odesign#//@ownedViewpoints[name='Activity']/@ownedRepresentations[name='Activity%20Diagram']/@defaultLayer/@containerMappings[name='ActivityContainer']"/>
+      <ownedDiagramElements xmi:type="diagram:DNodeContainer" uid="_KzSnoKCNEfGrbvnPnvyPdQ" name="Root" width="22" height="6">
+        <target xmi:type="dact:ActivityGroup" href="VariableResolutionUnhappyYetDeclared.dact#//@activity/@activities.0/@root"/>
+        <semanticElements xmi:type="dact:ActivityGroup" href="VariableResolutionUnhappyYetDeclared.dact#//@activity/@activities.0/@root"/>
+        <ownedStyle xmi:type="diagram:FlatContainerStyle" uid="_KzSnoaCNEfGrbvnPnvyPdQ" labelSize="12" showIcon="false" labelColor="209,209,209" borderSize="1" borderSizeComputationExpression="1" borderColor="209,209,209" borderLineStyle="dash" foregroundColor="255,255,255">
+          <labelFormat>italic</labelFormat>
+          <description xmi:type="style:FlatContainerStyleDescription" href="platform:/resource/dact.design/description/activity.odesign#//@ownedViewpoints[name='Activity']/@ownedRepresentations[name='Activity%20Diagram']/@defaultLayer/@containerMappings[name='ActivityContainer']/@subContainerMappings[name='ActivityGroup']/@style"/>
+        </ownedStyle>
+        <actualMapping xmi:type="description_1:ContainerMapping" href="platform:/resource/dact.design/description/activity.odesign#//@ownedViewpoints[name='Activity']/@ownedRepresentations[name='Activity%20Diagram']/@defaultLayer/@containerMappings[name='ActivityContainer']/@subContainerMappings[name='ActivityGroup']"/>
+        <ownedDiagramElements xmi:type="diagram:DNode" uid="_Kzp0AKCNEfGrbvnPnvyPdQ" name="InitialNode1" outgoingEdges="_8_MJIKCNEfGrbvnPnvyPdQ" width="3" height="3" resizeKind="NSEW">
+          <target xmi:type="dact:InitialNode" href="VariableResolutionUnhappyYetDeclared.dact#//@activity/@activities.0/@root/@ownedNodes.0"/>
+          <semanticElements xmi:type="dact:InitialNode" href="VariableResolutionUnhappyYetDeclared.dact#//@activity/@activities.0/@root/@ownedNodes.0"/>
+          <graphicalFilters xmi:type="diagram:HideLabelFilter" uid="_Kzp0A6CNEfGrbvnPnvyPdQ"/>
+          <ownedStyle xmi:type="diagram:Dot" uid="_Kzp0AaCNEfGrbvnPnvyPdQ" labelSize="12" showIcon="false" hideLabelByDefault="true" backgroundColor="0,0,0">
+            <description xmi:type="style:DotDescription" href="platform:/resource/dact.design/description/activity.odesign#//@ownedViewpoints[name='Activity']/@ownedRepresentations[name='Activity%20Diagram']/@defaultLayer/@containerMappings[name='ActivityContainer']/@subContainerMappings[name='ActivityGroup']/@subNodeMappings[name='InitialNode']/@style"/>
+          </ownedStyle>
+          <actualMapping xmi:type="description_1:NodeMapping" href="platform:/resource/dact.design/description/activity.odesign#//@ownedViewpoints[name='Activity']/@ownedRepresentations[name='Activity%20Diagram']/@defaultLayer/@containerMappings[name='ActivityContainer']/@subContainerMappings[name='ActivityGroup']/@subNodeMappings[name='InitialNode']"/>
+        </ownedDiagramElements>
+        <ownedDiagramElements xmi:type="diagram:DNode" uid="_KzqbEKCNEfGrbvnPnvyPdQ" name="ActivityFinalNode4" incomingEdges="_8_MJIKCNEfGrbvnPnvyPdQ" width="4" height="4" resizeKind="NSEW">
+          <target xmi:type="dact:ActivityFinalNode" href="VariableResolutionUnhappyYetDeclared.dact#//@activity/@activities.0/@root/@ownedNodes.1"/>
+          <semanticElements xmi:type="dact:ActivityFinalNode" href="VariableResolutionUnhappyYetDeclared.dact#//@activity/@activities.0/@root/@ownedNodes.1"/>
+          <graphicalFilters xmi:type="diagram:HideLabelFilter" uid="_KzrCIKCNEfGrbvnPnvyPdQ"/>
+          <ownedStyle xmi:type="diagram:WorkspaceImage" uid="_KzqbEaCNEfGrbvnPnvyPdQ" labelSize="12" showIcon="false" hideLabelByDefault="true" workspacePath="dact.design/icons/activityFinalNode.svg">
+            <description xmi:type="style:WorkspaceImageDescription" href="platform:/resource/dact.design/description/activity.odesign#//@ownedViewpoints[name='Activity']/@ownedRepresentations[name='Activity%20Diagram']/@defaultLayer/@containerMappings[name='ActivityContainer']/@subContainerMappings[name='ActivityGroup']/@subNodeMappings[name='ActivityFinalNode']/@style"/>
+          </ownedStyle>
+          <actualMapping xmi:type="description_1:NodeMapping" href="platform:/resource/dact.design/description/activity.odesign#//@ownedViewpoints[name='Activity']/@ownedRepresentations[name='Activity%20Diagram']/@defaultLayer/@containerMappings[name='ActivityContainer']/@subContainerMappings[name='ActivityGroup']/@subNodeMappings[name='ActivityFinalNode']"/>
+        </ownedDiagramElements>
+      </ownedDiagramElements>
+    </ownedDiagramElements>
+    <ownedDiagramElements xmi:type="diagram:DEdge" uid="_8_MJIKCNEfGrbvnPnvyPdQ" sourceNode="_Kzp0AKCNEfGrbvnPnvyPdQ" targetNode="_KzqbEKCNEfGrbvnPnvyPdQ">
+      <target xmi:type="dact:ActivityEdge" href="VariableResolutionUnhappyYetDeclared.dact#//@activity/@activities.0/@root/@ownedEdges.0"/>
+      <semanticElements xmi:type="dact:ActivityEdge" href="VariableResolutionUnhappyYetDeclared.dact#//@activity/@activities.0/@root/@ownedEdges.0"/>
+      <ownedStyle xmi:type="diagram:EdgeStyle" uid="_8_MJIaCNEfGrbvnPnvyPdQ" size="2" routingStyle="manhattan">
+        <description xmi:type="style:EdgeStyleDescription" href="platform:/resource/dact.design/description/activity.odesign#//@ownedViewpoints[name='Activity']/@ownedRepresentations[name='Activity%20Diagram']/@defaultLayer/@edgeMappings[name='ActivityEdge']/@style"/>
+        <centerLabelStyle xmi:type="diagram:CenterLabelStyle" uid="_8_MJIqCNEfGrbvnPnvyPdQ" labelSize="12" showIcon="false"/>
+      </ownedStyle>
+      <actualMapping xmi:type="description_1:EdgeMapping" href="platform:/resource/dact.design/description/activity.odesign#//@ownedViewpoints[name='Activity']/@ownedRepresentations[name='Activity%20Diagram']/@defaultLayer/@edgeMappings[name='ActivityEdge']"/>
+    </ownedDiagramElements>
+    <description xmi:type="description_1:DiagramDescription" href="platform:/resource/dact.design/description/activity.odesign#//@ownedViewpoints[name='Activity']/@ownedRepresentations[name='Activity%20Diagram']"/>
+    <filterVariableHistory xmi:type="diagram:FilterVariableHistory" uid="_Kw6CAKCNEfGrbvnPnvyPdQ"/>
+    <activatedLayers xmi:type="description_1:Layer" href="platform:/resource/dact.design/description/activity.odesign#//@ownedViewpoints[name='Activity']/@ownedRepresentations[name='Activity%20Diagram']/@defaultLayer"/>
+    <target xmi:type="dact:ActivityModel" href="VariableResolutionUnhappyYetDeclared.dact#//@activity"/>
+  </diagram:DSemanticDiagram>
+</xmi:XMI>

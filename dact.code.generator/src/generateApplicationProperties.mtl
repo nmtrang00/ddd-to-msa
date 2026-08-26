@@ -13,7 +13,7 @@
 [template public generateApplicationProperties(serviceModel : service::ServiceModel)]
 [let microservices : Sequence(service::Microservice) = serviceModel.microservices
 ]
-[for (ms : service::Microservice| microservices)]
+[for (ms : service::Microservice| microservices->select(ms|ms.type = service::MicroserviceType::FUNCTIONAL))]
 [ms.generateApplicationPropertiesPerService(microservices)/]
 [/for]
 [serviceModel.generateReadme(microservices)/]

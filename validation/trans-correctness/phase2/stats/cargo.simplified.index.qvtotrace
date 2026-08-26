@@ -1,0 +1,4389 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<trace:Trace xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:trace="http:///www.eclipse.org/m2m/qvt/operational/trace.ecore">
+  <traceRecords>
+    <mappingOperation name="RootToRoot" package="DactPreprocess" module="DactPreprocess"/>
+    <context>
+      <context name="self" type="Root">
+        <value>
+          <modelElement href="../input/cargo.simplified.dact#/"/>
+        </value>
+      </context>
+    </context>
+    <parameters/>
+    <result>
+      <result kind="OUT" name="result" type="Root">
+        <value>
+          <modelElement href="../input/cargo.simplified.preprocessed.dact#/"/>
+        </value>
+      </result>
+    </result>
+  </traceRecords>
+  <traceRecords>
+    <mappingOperation name="DddModelToDataModel" package="DactToLemmaData" module="DactToLemmaData"/>
+    <context>
+      <context name="self" type="DddModel">
+        <value>
+          <modelElement href="../input/cargo.simplified.preprocessed.dact#//@ddd"/>
+        </value>
+      </context>
+    </context>
+    <parameters/>
+    <result>
+      <result kind="OUT" name="result" type="DataModel">
+        <value>
+          <modelElement href="../output_expected/cargo.simplified.data#/"/>
+        </value>
+      </result>
+    </result>
+  </traceRecords>
+  <traceRecords>
+    <mappingOperation name="BoundedContextToContext" package="DactToLemmaData" module="DactToLemmaData"/>
+    <context>
+      <context name="self" type="BoundedContext">
+        <value>
+          <modelElement href="../input/cargo.simplified.preprocessed.dact#//@ddd/@boundedContexts.1"/>
+        </value>
+      </context>
+    </context>
+    <parameters/>
+    <result>
+      <result kind="OUT" name="result" type="Context">
+        <value>
+          <modelElement href="../output_expected/cargo.simplified.data#//@contexts.2"/>
+        </value>
+      </result>
+    </result>
+  </traceRecords>
+  <traceRecords>
+    <mappingOperation name="DomainObjectToDataStructure" package="DactToLemmaData" module="DactToLemmaData"/>
+    <context>
+      <context name="self" type="DomainObject">
+        <value>
+          <modelElement href="../input/cargo.simplified.preprocessed.dact#//@ddd/@boundedContexts.1/@ownedElements.0"/>
+        </value>
+      </context>
+    </context>
+    <parameters/>
+    <result>
+      <result kind="OUT" name="result" type="DataStructure">
+        <value>
+          <modelElement href="../output_expected/cargo.simplified.data#//@contexts.2/@complexTypes.0"/>
+        </value>
+      </result>
+    </result>
+  </traceRecords>
+  <traceRecords>
+    <mappingOperation name="PrimitivePropertyToDataField" package="DactToLemmaData" module="DactToLemmaData"/>
+    <context>
+      <context name="self" type="Property">
+        <value>
+          <modelElement href="../input/cargo.simplified.preprocessed.dact#//@ddd/@boundedContexts.1/@ownedElements.0/@ownedProperties.0"/>
+        </value>
+      </context>
+    </context>
+    <parameters/>
+    <result>
+      <result kind="OUT" name="result" type="DataField">
+        <value>
+          <modelElement href="../output_expected/cargo.simplified.data#//@contexts.2/@complexTypes.0/@dataFields.0"/>
+        </value>
+      </result>
+    </result>
+  </traceRecords>
+  <traceRecords>
+    <mappingOperation name="PropertyToDataField" package="DactToLemmaData" module="DactToLemmaData"/>
+    <context>
+      <context name="self" type="Property">
+        <value>
+          <modelElement href="../input/cargo.simplified.preprocessed.dact#//@ddd/@boundedContexts.1/@ownedElements.0/@ownedProperties.0"/>
+        </value>
+      </context>
+    </context>
+    <parameters/>
+    <result>
+      <result kind="OUT" name="result" type="DataField">
+        <value>
+          <modelElement href="../output_expected/cargo.simplified.data#//@contexts.2/@complexTypes.0/@dataFields.0"/>
+        </value>
+      </result>
+    </result>
+  </traceRecords>
+  <traceRecords>
+    <mappingOperation name="DomainElementToComplexType" package="DactToLemmaData" module="DactToLemmaData"/>
+    <context>
+      <context name="self" type="DomainElement">
+        <value>
+          <modelElement href="../input/cargo.simplified.preprocessed.dact#//@ddd/@boundedContexts.1/@ownedElements.0"/>
+        </value>
+      </context>
+    </context>
+    <parameters/>
+    <result>
+      <result kind="OUT" name="result" type="ComplexType">
+        <value>
+          <modelElement href="../output_expected/cargo.simplified.data#//@contexts.2/@complexTypes.0"/>
+        </value>
+      </result>
+    </result>
+  </traceRecords>
+  <traceRecords>
+    <mappingOperation name="BoundedContextToContext" package="DactToLemmaData" module="DactToLemmaData"/>
+    <context>
+      <context name="self" type="BoundedContext">
+        <value>
+          <modelElement href="../input/cargo.simplified.preprocessed.dact#//@ddd/@boundedContexts.2"/>
+        </value>
+      </context>
+    </context>
+    <parameters/>
+    <result>
+      <result kind="OUT" name="result" type="Context">
+        <value>
+          <modelElement href="../output_expected/cargo.simplified.data#//@contexts.0"/>
+        </value>
+      </result>
+    </result>
+  </traceRecords>
+  <traceRecords>
+    <mappingOperation name="DomainObjectToDataStructure" package="DactToLemmaData" module="DactToLemmaData"/>
+    <context>
+      <context name="self" type="DomainObject">
+        <value>
+          <modelElement href="../input/cargo.simplified.preprocessed.dact#//@ddd/@boundedContexts.2/@ownedElements.0"/>
+        </value>
+      </context>
+    </context>
+    <parameters/>
+    <result>
+      <result kind="OUT" name="result" type="DataStructure">
+        <value>
+          <modelElement href="../output_expected/cargo.simplified.data#//@contexts.0/@complexTypes.0"/>
+        </value>
+      </result>
+    </result>
+  </traceRecords>
+  <traceRecords>
+    <mappingOperation name="PrimitivePropertyToDataField" package="DactToLemmaData" module="DactToLemmaData"/>
+    <context>
+      <context name="self" type="Property">
+        <value>
+          <modelElement href="../input/cargo.simplified.preprocessed.dact#//@ddd/@boundedContexts.2/@ownedElements.0/@ownedProperties.0"/>
+        </value>
+      </context>
+    </context>
+    <parameters/>
+    <result>
+      <result kind="OUT" name="result" type="DataField">
+        <value>
+          <modelElement href="../output_expected/cargo.simplified.data#//@contexts.0/@complexTypes.0/@dataFields.1"/>
+        </value>
+      </result>
+    </result>
+  </traceRecords>
+  <traceRecords>
+    <mappingOperation name="PropertyToDataField" package="DactToLemmaData" module="DactToLemmaData"/>
+    <context>
+      <context name="self" type="Property">
+        <value>
+          <modelElement href="../input/cargo.simplified.preprocessed.dact#//@ddd/@boundedContexts.2/@ownedElements.0/@ownedProperties.0"/>
+        </value>
+      </context>
+    </context>
+    <parameters/>
+    <result>
+      <result kind="OUT" name="result" type="DataField">
+        <value>
+          <modelElement href="../output_expected/cargo.simplified.data#//@contexts.0/@complexTypes.0/@dataFields.1"/>
+        </value>
+      </result>
+    </result>
+  </traceRecords>
+  <traceRecords>
+    <mappingOperation name="PrimitivePropertyToDataField" package="DactToLemmaData" module="DactToLemmaData"/>
+    <context>
+      <context name="self" type="Property">
+        <value>
+          <modelElement href="../input/cargo.simplified.preprocessed.dact#//@ddd/@boundedContexts.2/@ownedElements.0/@ownedProperties.1"/>
+        </value>
+      </context>
+    </context>
+    <parameters/>
+    <result>
+      <result kind="OUT" name="result" type="DataField">
+        <value>
+          <modelElement href="../output_expected/cargo.simplified.data#//@contexts.0/@complexTypes.0/@dataFields.0"/>
+        </value>
+      </result>
+    </result>
+  </traceRecords>
+  <traceRecords>
+    <mappingOperation name="PropertyToDataField" package="DactToLemmaData" module="DactToLemmaData"/>
+    <context>
+      <context name="self" type="Property">
+        <value>
+          <modelElement href="../input/cargo.simplified.preprocessed.dact#//@ddd/@boundedContexts.2/@ownedElements.0/@ownedProperties.1"/>
+        </value>
+      </context>
+    </context>
+    <parameters/>
+    <result>
+      <result kind="OUT" name="result" type="DataField">
+        <value>
+          <modelElement href="../output_expected/cargo.simplified.data#//@contexts.0/@complexTypes.0/@dataFields.0"/>
+        </value>
+      </result>
+    </result>
+  </traceRecords>
+  <traceRecords>
+    <mappingOperation name="DomainElementToComplexType" package="DactToLemmaData" module="DactToLemmaData"/>
+    <context>
+      <context name="self" type="DomainElement">
+        <value>
+          <modelElement href="../input/cargo.simplified.preprocessed.dact#//@ddd/@boundedContexts.2/@ownedElements.0"/>
+        </value>
+      </context>
+    </context>
+    <parameters/>
+    <result>
+      <result kind="OUT" name="result" type="ComplexType">
+        <value>
+          <modelElement href="../output_expected/cargo.simplified.data#//@contexts.0/@complexTypes.0"/>
+        </value>
+      </result>
+    </result>
+  </traceRecords>
+  <traceRecords>
+    <mappingOperation name="BoundedContextToContext" package="DactToLemmaData" module="DactToLemmaData"/>
+    <context>
+      <context name="self" type="BoundedContext">
+        <value>
+          <modelElement href="../input/cargo.simplified.preprocessed.dact#//@ddd/@boundedContexts.0"/>
+        </value>
+      </context>
+    </context>
+    <parameters/>
+    <result>
+      <result kind="OUT" name="result" type="Context">
+        <value>
+          <modelElement href="../output_expected/cargo.simplified.data#//@contexts.1"/>
+        </value>
+      </result>
+    </result>
+  </traceRecords>
+  <traceRecords>
+    <mappingOperation name="DomainObjectToDataStructure" package="DactToLemmaData" module="DactToLemmaData"/>
+    <context>
+      <context name="self" type="DomainObject">
+        <value>
+          <modelElement href="../input/cargo.simplified.preprocessed.dact#//@ddd/@boundedContexts.0/@ownedElements.1"/>
+        </value>
+      </context>
+    </context>
+    <parameters/>
+    <result>
+      <result kind="OUT" name="result" type="DataStructure">
+        <value>
+          <modelElement href="../output_expected/cargo.simplified.data#//@contexts.1/@complexTypes.6"/>
+        </value>
+      </result>
+    </result>
+  </traceRecords>
+  <traceRecords>
+    <mappingOperation name="PrimitivePropertyToDataField" package="DactToLemmaData" module="DactToLemmaData"/>
+    <context>
+      <context name="self" type="Property">
+        <value>
+          <modelElement href="../input/cargo.simplified.preprocessed.dact#//@ddd/@boundedContexts.0/@ownedElements.1/@ownedProperties.0"/>
+        </value>
+      </context>
+    </context>
+    <parameters/>
+    <result>
+      <result kind="OUT" name="result" type="DataField">
+        <value>
+          <modelElement href="../output_expected/cargo.simplified.data#//@contexts.1/@complexTypes.6/@dataFields.0"/>
+        </value>
+      </result>
+    </result>
+  </traceRecords>
+  <traceRecords>
+    <mappingOperation name="PropertyToDataField" package="DactToLemmaData" module="DactToLemmaData"/>
+    <context>
+      <context name="self" type="Property">
+        <value>
+          <modelElement href="../input/cargo.simplified.preprocessed.dact#//@ddd/@boundedContexts.0/@ownedElements.1/@ownedProperties.0"/>
+        </value>
+      </context>
+    </context>
+    <parameters/>
+    <result>
+      <result kind="OUT" name="result" type="DataField">
+        <value>
+          <modelElement href="../output_expected/cargo.simplified.data#//@contexts.1/@complexTypes.6/@dataFields.0"/>
+        </value>
+      </result>
+    </result>
+  </traceRecords>
+  <traceRecords>
+    <mappingOperation name="DomainElementToComplexType" package="DactToLemmaData" module="DactToLemmaData"/>
+    <context>
+      <context name="self" type="DomainElement">
+        <value>
+          <modelElement href="../input/cargo.simplified.preprocessed.dact#//@ddd/@boundedContexts.0/@ownedElements.1"/>
+        </value>
+      </context>
+    </context>
+    <parameters/>
+    <result>
+      <result kind="OUT" name="result" type="ComplexType">
+        <value>
+          <modelElement href="../output_expected/cargo.simplified.data#//@contexts.1/@complexTypes.6"/>
+        </value>
+      </result>
+    </result>
+  </traceRecords>
+  <traceRecords>
+    <mappingOperation name="DomainObjectToDataStructure" package="DactToLemmaData" module="DactToLemmaData"/>
+    <context>
+      <context name="self" type="DomainObject">
+        <value>
+          <modelElement href="../input/cargo.simplified.preprocessed.dact#//@ddd/@boundedContexts.0/@ownedElements.4"/>
+        </value>
+      </context>
+    </context>
+    <parameters/>
+    <result>
+      <result kind="OUT" name="result" type="DataStructure">
+        <value>
+          <modelElement href="../output_expected/cargo.simplified.data#//@contexts.1/@complexTypes.2"/>
+        </value>
+      </result>
+    </result>
+  </traceRecords>
+  <traceRecords>
+    <mappingOperation name="PrimitivePropertyToDataField" package="DactToLemmaData" module="DactToLemmaData"/>
+    <context>
+      <context name="self" type="Property">
+        <value>
+          <modelElement href="../input/cargo.simplified.preprocessed.dact#//@ddd/@boundedContexts.0/@ownedElements.4/@ownedProperties.2"/>
+        </value>
+      </context>
+    </context>
+    <parameters/>
+    <result>
+      <result kind="OUT" name="result" type="DataField">
+        <value>
+          <modelElement href="../output_expected/cargo.simplified.data#//@contexts.1/@complexTypes.2/@dataFields.1"/>
+        </value>
+      </result>
+    </result>
+  </traceRecords>
+  <traceRecords>
+    <mappingOperation name="PropertyToDataField" package="DactToLemmaData" module="DactToLemmaData"/>
+    <context>
+      <context name="self" type="Property">
+        <value>
+          <modelElement href="../input/cargo.simplified.preprocessed.dact#//@ddd/@boundedContexts.0/@ownedElements.4/@ownedProperties.2"/>
+        </value>
+      </context>
+    </context>
+    <parameters/>
+    <result>
+      <result kind="OUT" name="result" type="DataField">
+        <value>
+          <modelElement href="../output_expected/cargo.simplified.data#//@contexts.1/@complexTypes.2/@dataFields.1"/>
+        </value>
+      </result>
+    </result>
+  </traceRecords>
+  <traceRecords>
+    <mappingOperation name="AssociationPropertyToDataField" package="DactToLemmaData" module="DactToLemmaData"/>
+    <context>
+      <context name="self" type="Property">
+        <value>
+          <modelElement href="../input/cargo.simplified.preprocessed.dact#//@ddd/@boundedContexts.0/@ownedElements.4/@ownedProperties.1"/>
+        </value>
+      </context>
+    </context>
+    <parameters/>
+    <result>
+      <result kind="OUT" name="result" type="DataField">
+        <value>
+          <modelElement href="../output_expected/cargo.simplified.data#//@contexts.1/@complexTypes.2/@dataFields.2"/>
+        </value>
+      </result>
+    </result>
+  </traceRecords>
+  <traceRecords>
+    <mappingOperation name="DomainObjectToDataStructure" package="DactToLemmaData" module="DactToLemmaData"/>
+    <context>
+      <context name="self" type="DomainObject">
+        <value>
+          <modelElement href="../input/cargo.simplified.preprocessed.dact#//@ddd/@boundedContexts.0/@ownedElements.6"/>
+        </value>
+      </context>
+    </context>
+    <parameters/>
+    <result>
+      <result kind="OUT" name="result" type="DataStructure">
+        <value>
+          <modelElement href="../output_expected/cargo.simplified.data#//@contexts.1/@complexTypes.1"/>
+        </value>
+      </result>
+    </result>
+  </traceRecords>
+  <traceRecords>
+    <mappingOperation name="PrimitivePropertyToDataField" package="DactToLemmaData" module="DactToLemmaData"/>
+    <context>
+      <context name="self" type="Property">
+        <value>
+          <modelElement href="../input/cargo.simplified.preprocessed.dact#//@ddd/@boundedContexts.0/@ownedElements.6/@ownedProperties.0"/>
+        </value>
+      </context>
+    </context>
+    <parameters/>
+    <result>
+      <result kind="OUT" name="result" type="DataField">
+        <value>
+          <modelElement href="../output_expected/cargo.simplified.data#//@contexts.1/@complexTypes.1/@dataFields.0"/>
+        </value>
+      </result>
+    </result>
+  </traceRecords>
+  <traceRecords>
+    <mappingOperation name="PropertyToDataField" package="DactToLemmaData" module="DactToLemmaData"/>
+    <context>
+      <context name="self" type="Property">
+        <value>
+          <modelElement href="../input/cargo.simplified.preprocessed.dact#//@ddd/@boundedContexts.0/@ownedElements.6/@ownedProperties.0"/>
+        </value>
+      </context>
+    </context>
+    <parameters/>
+    <result>
+      <result kind="OUT" name="result" type="DataField">
+        <value>
+          <modelElement href="../output_expected/cargo.simplified.data#//@contexts.1/@complexTypes.1/@dataFields.0"/>
+        </value>
+      </result>
+    </result>
+  </traceRecords>
+  <traceRecords>
+    <mappingOperation name="DomainElementToComplexType" package="DactToLemmaData" module="DactToLemmaData"/>
+    <context>
+      <context name="self" type="DomainElement">
+        <value>
+          <modelElement href="../input/cargo.simplified.preprocessed.dact#//@ddd/@boundedContexts.0/@ownedElements.6"/>
+        </value>
+      </context>
+    </context>
+    <parameters/>
+    <result>
+      <result kind="OUT" name="result" type="ComplexType">
+        <value>
+          <modelElement href="../output_expected/cargo.simplified.data#//@contexts.1/@complexTypes.1"/>
+        </value>
+      </result>
+    </result>
+  </traceRecords>
+  <traceRecords>
+    <mappingOperation name="PropertyToDataField" package="DactToLemmaData" module="DactToLemmaData"/>
+    <context>
+      <context name="self" type="Property">
+        <value>
+          <modelElement href="../input/cargo.simplified.preprocessed.dact#//@ddd/@boundedContexts.0/@ownedElements.4/@ownedProperties.1"/>
+        </value>
+      </context>
+    </context>
+    <parameters/>
+    <result>
+      <result kind="OUT" name="result" type="DataField">
+        <value>
+          <modelElement href="../output_expected/cargo.simplified.data#//@contexts.1/@complexTypes.2/@dataFields.2"/>
+        </value>
+      </result>
+    </result>
+  </traceRecords>
+  <traceRecords>
+    <mappingOperation name="AssociationPropertyToDataField" package="DactToLemmaData" module="DactToLemmaData"/>
+    <context>
+      <context name="self" type="Property">
+        <value>
+          <modelElement href="../input/cargo.simplified.preprocessed.dact#//@ddd/@boundedContexts.0/@ownedElements.4/@ownedProperties.0"/>
+        </value>
+      </context>
+    </context>
+    <parameters/>
+    <result>
+      <result kind="OUT" name="result" type="DataField">
+        <value>
+          <modelElement href="../output_expected/cargo.simplified.data#//@contexts.1/@complexTypes.2/@dataFields.0"/>
+        </value>
+      </result>
+    </result>
+  </traceRecords>
+  <traceRecords>
+    <mappingOperation name="PropertyToDataField" package="DactToLemmaData" module="DactToLemmaData"/>
+    <context>
+      <context name="self" type="Property">
+        <value>
+          <modelElement href="../input/cargo.simplified.preprocessed.dact#//@ddd/@boundedContexts.0/@ownedElements.4/@ownedProperties.0"/>
+        </value>
+      </context>
+    </context>
+    <parameters/>
+    <result>
+      <result kind="OUT" name="result" type="DataField">
+        <value>
+          <modelElement href="../output_expected/cargo.simplified.data#//@contexts.1/@complexTypes.2/@dataFields.0"/>
+        </value>
+      </result>
+    </result>
+  </traceRecords>
+  <traceRecords>
+    <mappingOperation name="DomainElementToComplexType" package="DactToLemmaData" module="DactToLemmaData"/>
+    <context>
+      <context name="self" type="DomainElement">
+        <value>
+          <modelElement href="../input/cargo.simplified.preprocessed.dact#//@ddd/@boundedContexts.0/@ownedElements.4"/>
+        </value>
+      </context>
+    </context>
+    <parameters/>
+    <result>
+      <result kind="OUT" name="result" type="ComplexType">
+        <value>
+          <modelElement href="../output_expected/cargo.simplified.data#//@contexts.1/@complexTypes.2"/>
+        </value>
+      </result>
+    </result>
+  </traceRecords>
+  <traceRecords>
+    <mappingOperation name="DomainObjectToDataStructure" package="DactToLemmaData" module="DactToLemmaData"/>
+    <context>
+      <context name="self" type="DomainObject">
+        <value>
+          <modelElement href="../input/cargo.simplified.preprocessed.dact#//@ddd/@boundedContexts.0/@ownedElements.5"/>
+        </value>
+      </context>
+    </context>
+    <parameters/>
+    <result>
+      <result kind="OUT" name="result" type="DataStructure">
+        <value>
+          <modelElement href="../output_expected/cargo.simplified.data#//@contexts.1/@complexTypes.5"/>
+        </value>
+      </result>
+    </result>
+  </traceRecords>
+  <traceRecords>
+    <mappingOperation name="PrimitivePropertyToDataField" package="DactToLemmaData" module="DactToLemmaData"/>
+    <context>
+      <context name="self" type="Property">
+        <value>
+          <modelElement href="../input/cargo.simplified.preprocessed.dact#//@ddd/@boundedContexts.0/@ownedElements.5/@ownedProperties.0"/>
+        </value>
+      </context>
+    </context>
+    <parameters/>
+    <result>
+      <result kind="OUT" name="result" type="DataField">
+        <value>
+          <modelElement href="../output_expected/cargo.simplified.data#//@contexts.1/@complexTypes.5/@dataFields.0"/>
+        </value>
+      </result>
+    </result>
+  </traceRecords>
+  <traceRecords>
+    <mappingOperation name="PropertyToDataField" package="DactToLemmaData" module="DactToLemmaData"/>
+    <context>
+      <context name="self" type="Property">
+        <value>
+          <modelElement href="../input/cargo.simplified.preprocessed.dact#//@ddd/@boundedContexts.0/@ownedElements.5/@ownedProperties.0"/>
+        </value>
+      </context>
+    </context>
+    <parameters/>
+    <result>
+      <result kind="OUT" name="result" type="DataField">
+        <value>
+          <modelElement href="../output_expected/cargo.simplified.data#//@contexts.1/@complexTypes.5/@dataFields.0"/>
+        </value>
+      </result>
+    </result>
+  </traceRecords>
+  <traceRecords>
+    <mappingOperation name="DomainElementToComplexType" package="DactToLemmaData" module="DactToLemmaData"/>
+    <context>
+      <context name="self" type="DomainElement">
+        <value>
+          <modelElement href="../input/cargo.simplified.preprocessed.dact#//@ddd/@boundedContexts.0/@ownedElements.5"/>
+        </value>
+      </context>
+    </context>
+    <parameters/>
+    <result>
+      <result kind="OUT" name="result" type="ComplexType">
+        <value>
+          <modelElement href="../output_expected/cargo.simplified.data#//@contexts.1/@complexTypes.5"/>
+        </value>
+      </result>
+    </result>
+  </traceRecords>
+  <traceRecords>
+    <mappingOperation name="DomainObjectToDataStructure" package="DactToLemmaData" module="DactToLemmaData"/>
+    <context>
+      <context name="self" type="DomainObject">
+        <value>
+          <modelElement href="../input/cargo.simplified.preprocessed.dact#//@ddd/@boundedContexts.0/@ownedElements.0"/>
+        </value>
+      </context>
+    </context>
+    <parameters/>
+    <result>
+      <result kind="OUT" name="result" type="DataStructure">
+        <value>
+          <modelElement href="../output_expected/cargo.simplified.data#//@contexts.1/@complexTypes.4"/>
+        </value>
+      </result>
+    </result>
+  </traceRecords>
+  <traceRecords>
+    <mappingOperation name="EnumerationPropertyToDataField" package="DactToLemmaData" module="DactToLemmaData"/>
+    <context>
+      <context name="self" type="Property">
+        <value>
+          <modelElement href="../input/cargo.simplified.preprocessed.dact#//@ddd/@boundedContexts.0/@ownedElements.0/@ownedProperties.3"/>
+        </value>
+      </context>
+    </context>
+    <parameters/>
+    <result>
+      <result kind="OUT" name="result" type="DataField">
+        <value>
+          <modelElement href="../output_expected/cargo.simplified.data#//@contexts.1/@complexTypes.4/@dataFields.2"/>
+        </value>
+      </result>
+    </result>
+  </traceRecords>
+  <traceRecords>
+    <mappingOperation name="DomainElementsToComplexTypeCollection" package="DactToLemmaData" module="DactToLemmaData"/>
+    <context>
+      <context name="self" type="DomainElement">
+        <value>
+          <modelElement href="../input/cargo.simplified.preprocessed.dact#//@ddd/@boundedContexts.0/@ownedElements.2"/>
+        </value>
+      </context>
+    </context>
+    <parameters/>
+    <result>
+      <result kind="OUT" name="result" type="CollectionType">
+        <value>
+          <modelElement href="../output_expected/cargo.simplified.data#//@contexts.1/@complexTypes.0"/>
+        </value>
+      </result>
+    </result>
+  </traceRecords>
+  <traceRecords>
+    <mappingOperation name="EnumerationToEnumeration" package="DactToLemmaData" module="DactToLemmaData"/>
+    <context>
+      <context name="self" type="Enumeration">
+        <value>
+          <modelElement href="../input/cargo.simplified.preprocessed.dact#//@ddd/@boundedContexts.0/@ownedElements.2"/>
+        </value>
+      </context>
+    </context>
+    <parameters/>
+    <result>
+      <result kind="OUT" name="result" type="Enumeration">
+        <value>
+          <modelElement href="../output_expected/cargo.simplified.data#//@contexts.1/@complexTypes.3"/>
+        </value>
+      </result>
+    </result>
+  </traceRecords>
+  <traceRecords>
+    <mappingOperation name="EnumerationLiteralToEnumerationField" package="DactToLemmaData" module="DactToLemmaData"/>
+    <context>
+      <context name="self" type="EnumerationLiteral">
+        <value>
+          <modelElement href="../input/cargo.simplified.preprocessed.dact#//@ddd/@boundedContexts.0/@ownedElements.2/@ownedLiterals.0"/>
+        </value>
+      </context>
+    </context>
+    <parameters/>
+    <result>
+      <result kind="OUT" name="result" type="EnumerationField">
+        <value>
+          <modelElement href="../output_expected/cargo.simplified.data#//@contexts.1/@complexTypes.3/@fields.0"/>
+        </value>
+      </result>
+    </result>
+  </traceRecords>
+  <traceRecords>
+    <mappingOperation name="EnumerationLiteralToEnumerationField" package="DactToLemmaData" module="DactToLemmaData"/>
+    <context>
+      <context name="self" type="EnumerationLiteral">
+        <value>
+          <modelElement href="../input/cargo.simplified.preprocessed.dact#//@ddd/@boundedContexts.0/@ownedElements.2/@ownedLiterals.1"/>
+        </value>
+      </context>
+    </context>
+    <parameters/>
+    <result>
+      <result kind="OUT" name="result" type="EnumerationField">
+        <value>
+          <modelElement href="../output_expected/cargo.simplified.data#//@contexts.1/@complexTypes.3/@fields.1"/>
+        </value>
+      </result>
+    </result>
+  </traceRecords>
+  <traceRecords>
+    <mappingOperation name="EnumerationLiteralToEnumerationField" package="DactToLemmaData" module="DactToLemmaData"/>
+    <context>
+      <context name="self" type="EnumerationLiteral">
+        <value>
+          <modelElement href="../input/cargo.simplified.preprocessed.dact#//@ddd/@boundedContexts.0/@ownedElements.2/@ownedLiterals.2"/>
+        </value>
+      </context>
+    </context>
+    <parameters/>
+    <result>
+      <result kind="OUT" name="result" type="EnumerationField">
+        <value>
+          <modelElement href="../output_expected/cargo.simplified.data#//@contexts.1/@complexTypes.3/@fields.2"/>
+        </value>
+      </result>
+    </result>
+  </traceRecords>
+  <traceRecords>
+    <mappingOperation name="EnumerationLiteralToEnumerationField" package="DactToLemmaData" module="DactToLemmaData"/>
+    <context>
+      <context name="self" type="EnumerationLiteral">
+        <value>
+          <modelElement href="../input/cargo.simplified.preprocessed.dact#//@ddd/@boundedContexts.0/@ownedElements.2/@ownedLiterals.3"/>
+        </value>
+      </context>
+    </context>
+    <parameters/>
+    <result>
+      <result kind="OUT" name="result" type="EnumerationField">
+        <value>
+          <modelElement href="../output_expected/cargo.simplified.data#//@contexts.1/@complexTypes.3/@fields.3"/>
+        </value>
+      </result>
+    </result>
+  </traceRecords>
+  <traceRecords>
+    <mappingOperation name="EnumerationLiteralToEnumerationField" package="DactToLemmaData" module="DactToLemmaData"/>
+    <context>
+      <context name="self" type="EnumerationLiteral">
+        <value>
+          <modelElement href="../input/cargo.simplified.preprocessed.dact#//@ddd/@boundedContexts.0/@ownedElements.2/@ownedLiterals.4"/>
+        </value>
+      </context>
+    </context>
+    <parameters/>
+    <result>
+      <result kind="OUT" name="result" type="EnumerationField">
+        <value>
+          <modelElement href="../output_expected/cargo.simplified.data#//@contexts.1/@complexTypes.3/@fields.4"/>
+        </value>
+      </result>
+    </result>
+  </traceRecords>
+  <traceRecords>
+    <mappingOperation name="DomainElementToComplexType" package="DactToLemmaData" module="DactToLemmaData"/>
+    <context>
+      <context name="self" type="DomainElement">
+        <value>
+          <modelElement href="../input/cargo.simplified.preprocessed.dact#//@ddd/@boundedContexts.0/@ownedElements.2"/>
+        </value>
+      </context>
+    </context>
+    <parameters/>
+    <result>
+      <result kind="OUT" name="result" type="ComplexType">
+        <value>
+          <modelElement href="../output_expected/cargo.simplified.data#//@contexts.1/@complexTypes.3"/>
+        </value>
+      </result>
+    </result>
+  </traceRecords>
+  <traceRecords>
+    <mappingOperation name="PropertyToDataField" package="DactToLemmaData" module="DactToLemmaData"/>
+    <context>
+      <context name="self" type="Property">
+        <value>
+          <modelElement href="../input/cargo.simplified.preprocessed.dact#//@ddd/@boundedContexts.0/@ownedElements.0/@ownedProperties.3"/>
+        </value>
+      </context>
+    </context>
+    <parameters/>
+    <result>
+      <result kind="OUT" name="result" type="DataField">
+        <value>
+          <modelElement href="../output_expected/cargo.simplified.data#//@contexts.1/@complexTypes.4/@dataFields.2"/>
+        </value>
+      </result>
+    </result>
+  </traceRecords>
+  <traceRecords>
+    <mappingOperation name="AssociationPropertyToDataField" package="DactToLemmaData" module="DactToLemmaData"/>
+    <context>
+      <context name="self" type="Property">
+        <value>
+          <modelElement href="../input/cargo.simplified.preprocessed.dact#//@ddd/@boundedContexts.0/@ownedElements.0/@ownedProperties.5"/>
+        </value>
+      </context>
+    </context>
+    <parameters/>
+    <result>
+      <result kind="OUT" name="result" type="DataField">
+        <value>
+          <modelElement href="../output_expected/cargo.simplified.data#//@contexts.1/@complexTypes.4/@dataFields.4"/>
+        </value>
+      </result>
+    </result>
+  </traceRecords>
+  <traceRecords>
+    <mappingOperation name="PropertyToDataField" package="DactToLemmaData" module="DactToLemmaData"/>
+    <context>
+      <context name="self" type="Property">
+        <value>
+          <modelElement href="../input/cargo.simplified.preprocessed.dact#//@ddd/@boundedContexts.0/@ownedElements.0/@ownedProperties.5"/>
+        </value>
+      </context>
+    </context>
+    <parameters/>
+    <result>
+      <result kind="OUT" name="result" type="DataField">
+        <value>
+          <modelElement href="../output_expected/cargo.simplified.data#//@contexts.1/@complexTypes.4/@dataFields.4"/>
+        </value>
+      </result>
+    </result>
+  </traceRecords>
+  <traceRecords>
+    <mappingOperation name="AssociationPropertyToDataField" package="DactToLemmaData" module="DactToLemmaData"/>
+    <context>
+      <context name="self" type="Property">
+        <value>
+          <modelElement href="../input/cargo.simplified.preprocessed.dact#//@ddd/@boundedContexts.0/@ownedElements.0/@ownedProperties.4"/>
+        </value>
+      </context>
+    </context>
+    <parameters/>
+    <result>
+      <result kind="OUT" name="result" type="DataField">
+        <value>
+          <modelElement href="../output_expected/cargo.simplified.data#//@contexts.1/@complexTypes.4/@dataFields.5"/>
+        </value>
+      </result>
+    </result>
+  </traceRecords>
+  <traceRecords>
+    <mappingOperation name="PropertyToDataField" package="DactToLemmaData" module="DactToLemmaData"/>
+    <context>
+      <context name="self" type="Property">
+        <value>
+          <modelElement href="../input/cargo.simplified.preprocessed.dact#//@ddd/@boundedContexts.0/@ownedElements.0/@ownedProperties.4"/>
+        </value>
+      </context>
+    </context>
+    <parameters/>
+    <result>
+      <result kind="OUT" name="result" type="DataField">
+        <value>
+          <modelElement href="../output_expected/cargo.simplified.data#//@contexts.1/@complexTypes.4/@dataFields.5"/>
+        </value>
+      </result>
+    </result>
+  </traceRecords>
+  <traceRecords>
+    <mappingOperation name="AssociationPropertyToDataField" package="DactToLemmaData" module="DactToLemmaData"/>
+    <context>
+      <context name="self" type="Property">
+        <value>
+          <modelElement href="../input/cargo.simplified.preprocessed.dact#//@ddd/@boundedContexts.0/@ownedElements.0/@ownedProperties.1"/>
+        </value>
+      </context>
+    </context>
+    <parameters/>
+    <result>
+      <result kind="OUT" name="result" type="DataField">
+        <value>
+          <modelElement href="../output_expected/cargo.simplified.data#//@contexts.1/@complexTypes.4/@dataFields.0"/>
+        </value>
+      </result>
+    </result>
+  </traceRecords>
+  <traceRecords>
+    <mappingOperation name="PropertyToDataField" package="DactToLemmaData" module="DactToLemmaData"/>
+    <context>
+      <context name="self" type="Property">
+        <value>
+          <modelElement href="../input/cargo.simplified.preprocessed.dact#//@ddd/@boundedContexts.0/@ownedElements.0/@ownedProperties.1"/>
+        </value>
+      </context>
+    </context>
+    <parameters/>
+    <result>
+      <result kind="OUT" name="result" type="DataField">
+        <value>
+          <modelElement href="../output_expected/cargo.simplified.data#//@contexts.1/@complexTypes.4/@dataFields.0"/>
+        </value>
+      </result>
+    </result>
+  </traceRecords>
+  <traceRecords>
+    <mappingOperation name="PrimitivePropertyToDataField" package="DactToLemmaData" module="DactToLemmaData"/>
+    <context>
+      <context name="self" type="Property">
+        <value>
+          <modelElement href="../input/cargo.simplified.preprocessed.dact#//@ddd/@boundedContexts.0/@ownedElements.0/@ownedProperties.0"/>
+        </value>
+      </context>
+    </context>
+    <parameters/>
+    <result>
+      <result kind="OUT" name="result" type="DataField">
+        <value>
+          <modelElement href="../output_expected/cargo.simplified.data#//@contexts.1/@complexTypes.4/@dataFields.1"/>
+        </value>
+      </result>
+    </result>
+  </traceRecords>
+  <traceRecords>
+    <mappingOperation name="PropertyToDataField" package="DactToLemmaData" module="DactToLemmaData"/>
+    <context>
+      <context name="self" type="Property">
+        <value>
+          <modelElement href="../input/cargo.simplified.preprocessed.dact#//@ddd/@boundedContexts.0/@ownedElements.0/@ownedProperties.0"/>
+        </value>
+      </context>
+    </context>
+    <parameters/>
+    <result>
+      <result kind="OUT" name="result" type="DataField">
+        <value>
+          <modelElement href="../output_expected/cargo.simplified.data#//@contexts.1/@complexTypes.4/@dataFields.1"/>
+        </value>
+      </result>
+    </result>
+  </traceRecords>
+  <traceRecords>
+    <mappingOperation name="EnumerationPropertyToDataField" package="DactToLemmaData" module="DactToLemmaData"/>
+    <context>
+      <context name="self" type="Property">
+        <value>
+          <modelElement href="../input/cargo.simplified.preprocessed.dact#//@ddd/@boundedContexts.0/@ownedElements.0/@ownedProperties.2"/>
+        </value>
+      </context>
+    </context>
+    <parameters/>
+    <result>
+      <result kind="OUT" name="result" type="DataField">
+        <value>
+          <modelElement href="../output_expected/cargo.simplified.data#//@contexts.1/@complexTypes.4/@dataFields.3"/>
+        </value>
+      </result>
+    </result>
+  </traceRecords>
+  <traceRecords>
+    <mappingOperation name="PropertyToDataField" package="DactToLemmaData" module="DactToLemmaData"/>
+    <context>
+      <context name="self" type="Property">
+        <value>
+          <modelElement href="../input/cargo.simplified.preprocessed.dact#//@ddd/@boundedContexts.0/@ownedElements.0/@ownedProperties.2"/>
+        </value>
+      </context>
+    </context>
+    <parameters/>
+    <result>
+      <result kind="OUT" name="result" type="DataField">
+        <value>
+          <modelElement href="../output_expected/cargo.simplified.data#//@contexts.1/@complexTypes.4/@dataFields.3"/>
+        </value>
+      </result>
+    </result>
+  </traceRecords>
+  <traceRecords>
+    <mappingOperation name="OperationToDataOperation" package="DactToLemmaData" module="DactToLemmaData"/>
+    <context>
+      <context name="self" type="Operation">
+        <value>
+          <modelElement href="../input/cargo.simplified.preprocessed.dact#//@ddd/@boundedContexts.0/@ownedElements.0/@ownedOperations.0"/>
+        </value>
+      </context>
+    </context>
+    <parameters/>
+    <result>
+      <result kind="OUT" name="result" type="DataOperation">
+        <value>
+          <modelElement href="../output_expected/cargo.simplified.data#//@contexts.1/@complexTypes.4/@operations.0"/>
+        </value>
+      </result>
+    </result>
+  </traceRecords>
+  <traceRecords>
+    <mappingOperation name="ParameterToDataOperationParameter" package="DactToLemmaData" module="DactToLemmaData"/>
+    <context>
+      <context name="self" type="Parameter">
+        <value>
+          <modelElement href="../input/cargo.simplified.preprocessed.dact#//@ddd/@boundedContexts.0/@ownedElements.0/@ownedOperations.0/@ownedParameters.0"/>
+        </value>
+      </context>
+    </context>
+    <parameters/>
+    <result>
+      <result kind="OUT" name="result" type="DataOperationParameter">
+        <value>
+          <modelElement href="../output_expected/cargo.simplified.data#//@contexts.1/@complexTypes.4/@operations.0/@parameters.0"/>
+        </value>
+      </result>
+    </result>
+  </traceRecords>
+  <traceRecords>
+    <mappingOperation name="ParameterToDataOperationParameter" package="DactToLemmaData" module="DactToLemmaData"/>
+    <context>
+      <context name="self" type="Parameter">
+        <value>
+          <modelElement href="../input/cargo.simplified.preprocessed.dact#//@ddd/@boundedContexts.0/@ownedElements.0/@ownedOperations.0/@ownedParameters.1"/>
+        </value>
+      </context>
+    </context>
+    <parameters/>
+    <result>
+      <result kind="OUT" name="result" type="DataOperationParameter">
+        <value>
+          <modelElement href="../output_expected/cargo.simplified.data#//@contexts.1/@complexTypes.4/@operations.0/@parameters.1"/>
+        </value>
+      </result>
+    </result>
+  </traceRecords>
+  <traceRecords>
+    <mappingOperation name="PrimitiveTypesToPrimitiveTypeCollection" package="DactToLemmaData" module="DactToLemmaData"/>
+    <context>
+      <context name="self" type="PrimitiveType">
+        <value>
+          <modelElement href="../input/cargo.simplified.preprocessed.dact#//@primitivesTypes.1"/>
+        </value>
+      </context>
+    </context>
+    <parameters/>
+    <result>
+      <result kind="OUT" name="result" type="CollectionType">
+        <value>
+          <modelElement href="../output_expected/cargo.simplified.data#//@complexTypes.0"/>
+        </value>
+      </result>
+    </result>
+  </traceRecords>
+  <traceRecords>
+    <mappingOperation name="DomainElementToComplexType" package="DactToLemmaData" module="DactToLemmaData"/>
+    <context>
+      <context name="self" type="DomainElement">
+        <value>
+          <modelElement href="../input/cargo.simplified.preprocessed.dact#//@ddd/@boundedContexts.0/@ownedElements.0"/>
+        </value>
+      </context>
+    </context>
+    <parameters/>
+    <result>
+      <result kind="OUT" name="result" type="ComplexType">
+        <value>
+          <modelElement href="../output_expected/cargo.simplified.data#//@contexts.1/@complexTypes.4"/>
+        </value>
+      </result>
+    </result>
+  </traceRecords>
+  <traceRecords>
+    <mappingOperation name="DddModelToServiceModel" package="DactToLemmaService" module="DactToLemmaService"/>
+    <context>
+      <context name="self" type="DddModel">
+        <value>
+          <modelElement href="../input/cargo.simplified.preprocessed.dact#//@ddd"/>
+        </value>
+      </context>
+    </context>
+    <parameters/>
+    <result>
+      <result kind="OUT" name="result" type="ServiceModel">
+        <value>
+          <modelElement href="../output_expected/cargo.simplified.service#/"/>
+        </value>
+      </result>
+    </result>
+  </traceRecords>
+  <traceRecords>
+    <mappingOperation name="BoundedContextToMicroservice" package="DactToLemmaService" module="DactToLemmaService"/>
+    <context>
+      <context name="self" type="BoundedContext">
+        <value>
+          <modelElement href="../input/cargo.simplified.preprocessed.dact#//@ddd/@boundedContexts.1"/>
+        </value>
+      </context>
+    </context>
+    <parameters/>
+    <result>
+      <result kind="OUT" name="result" type="Microservice">
+        <value>
+          <modelElement href="../output_expected/cargo.simplified.service#//@microservices.2"/>
+        </value>
+      </result>
+    </result>
+  </traceRecords>
+  <traceRecords>
+    <mappingOperation name="InterfaceToInterface" package="DactToLemmaService" module="DactToLemmaService"/>
+    <context>
+      <context name="self" type="Interface">
+        <value>
+          <modelElement href="../input/cargo.simplified.preprocessed.dact#//@ddd/@boundedContexts.1/@ownedElements.1"/>
+        </value>
+      </context>
+    </context>
+    <parameters/>
+    <result>
+      <result kind="OUT" name="result" type="Interface">
+        <value>
+          <modelElement href="../output_expected/cargo.simplified.service#//@microservices.2/@interfaces.0"/>
+        </value>
+      </result>
+    </result>
+  </traceRecords>
+  <traceRecords>
+    <mappingOperation name="InterfaceOperationToOperation" package="DactToLemmaService" module="DactToLemmaService"/>
+    <context>
+      <context name="self" type="Operation">
+        <value>
+          <modelElement href="../input/cargo.simplified.preprocessed.dact#//@ddd/@boundedContexts.1/@ownedElements.1/@ownedOperations.0"/>
+        </value>
+      </context>
+    </context>
+    <parameters/>
+    <result>
+      <result kind="OUT" name="result" type="Operation">
+        <value>
+          <modelElement href="../output_expected/cargo.simplified.service#//@microservices.2/@interfaces.0/@operations.0"/>
+        </value>
+      </result>
+    </result>
+  </traceRecords>
+  <traceRecords>
+    <mappingOperation name="ParameterToParameter" package="DactToLemmaService" module="DactToLemmaService"/>
+    <context>
+      <context name="self" type="Parameter">
+        <value>
+          <modelElement href="../input/cargo.simplified.preprocessed.dact#//@ddd/@boundedContexts.1/@ownedElements.1/@ownedOperations.0/@ownedParameters.1"/>
+        </value>
+      </context>
+    </context>
+    <parameters/>
+    <result>
+      <result kind="OUT" name="result" type="Parameter">
+        <value>
+          <modelElement href="../output_expected/cargo.simplified.service#//@microservices.2/@interfaces.0/@operations.0/@parameters.0"/>
+        </value>
+      </result>
+    </result>
+  </traceRecords>
+  <traceRecords>
+    <mappingOperation name="ParameterToParameter" package="DactToLemmaService" module="DactToLemmaService"/>
+    <context>
+      <context name="self" type="Parameter">
+        <value>
+          <modelElement href="../input/cargo.simplified.preprocessed.dact#//@ddd/@boundedContexts.1/@ownedElements.1/@ownedOperations.0/@ownedParameters.0"/>
+        </value>
+      </context>
+    </context>
+    <parameters/>
+    <result>
+      <result kind="OUT" name="result" type="Parameter">
+        <value>
+          <modelElement href="../output_expected/cargo.simplified.service#//@microservices.2/@interfaces.0/@operations.0/@parameters.1"/>
+        </value>
+      </result>
+    </result>
+  </traceRecords>
+  <traceRecords>
+    <mappingOperation name="BoundedContextToMicroservice" package="DactToLemmaService" module="DactToLemmaService"/>
+    <context>
+      <context name="self" type="BoundedContext">
+        <value>
+          <modelElement href="../input/cargo.simplified.preprocessed.dact#//@ddd/@boundedContexts.2"/>
+        </value>
+      </context>
+    </context>
+    <parameters/>
+    <result>
+      <result kind="OUT" name="result" type="Microservice">
+        <value>
+          <modelElement href="../output_expected/cargo.simplified.service#//@microservices.0"/>
+        </value>
+      </result>
+    </result>
+  </traceRecords>
+  <traceRecords>
+    <mappingOperation name="InterfaceToInterface" package="DactToLemmaService" module="DactToLemmaService"/>
+    <context>
+      <context name="self" type="Interface">
+        <value>
+          <modelElement href="../input/cargo.simplified.preprocessed.dact#//@ddd/@boundedContexts.2/@ownedElements.1"/>
+        </value>
+      </context>
+    </context>
+    <parameters/>
+    <result>
+      <result kind="OUT" name="result" type="Interface">
+        <value>
+          <modelElement href="../output_expected/cargo.simplified.service#//@microservices.0/@interfaces.0"/>
+        </value>
+      </result>
+    </result>
+  </traceRecords>
+  <traceRecords>
+    <mappingOperation name="InterfaceOperationToOperation" package="DactToLemmaService" module="DactToLemmaService"/>
+    <context>
+      <context name="self" type="Operation">
+        <value>
+          <modelElement href="../input/cargo.simplified.preprocessed.dact#//@ddd/@boundedContexts.2/@ownedElements.1/@ownedOperations.0"/>
+        </value>
+      </context>
+    </context>
+    <parameters/>
+    <result>
+      <result kind="OUT" name="result" type="Operation">
+        <value>
+          <modelElement href="../output_expected/cargo.simplified.service#//@microservices.0/@interfaces.0/@operations.0"/>
+        </value>
+      </result>
+    </result>
+  </traceRecords>
+  <traceRecords>
+    <mappingOperation name="ParameterToParameter" package="DactToLemmaService" module="DactToLemmaService"/>
+    <context>
+      <context name="self" type="Parameter">
+        <value>
+          <modelElement href="../input/cargo.simplified.preprocessed.dact#//@ddd/@boundedContexts.2/@ownedElements.1/@ownedOperations.0/@ownedParameters.0"/>
+        </value>
+      </context>
+    </context>
+    <parameters/>
+    <result>
+      <result kind="OUT" name="result" type="Parameter">
+        <value>
+          <modelElement href="../output_expected/cargo.simplified.service#//@microservices.0/@interfaces.0/@operations.0/@parameters.0"/>
+        </value>
+      </result>
+    </result>
+  </traceRecords>
+  <traceRecords>
+    <mappingOperation name="ParameterToParameter" package="DactToLemmaService" module="DactToLemmaService"/>
+    <context>
+      <context name="self" type="Parameter">
+        <value>
+          <modelElement href="../input/cargo.simplified.preprocessed.dact#//@ddd/@boundedContexts.2/@ownedElements.1/@ownedOperations.0/@ownedParameters.1"/>
+        </value>
+      </context>
+    </context>
+    <parameters/>
+    <result>
+      <result kind="OUT" name="result" type="Parameter">
+        <value>
+          <modelElement href="../output_expected/cargo.simplified.service#//@microservices.0/@interfaces.0/@operations.0/@parameters.1"/>
+        </value>
+      </result>
+    </result>
+  </traceRecords>
+  <traceRecords>
+    <mappingOperation name="BoundedContextToMicroservice" package="DactToLemmaService" module="DactToLemmaService"/>
+    <context>
+      <context name="self" type="BoundedContext">
+        <value>
+          <modelElement href="../input/cargo.simplified.preprocessed.dact#//@ddd/@boundedContexts.0"/>
+        </value>
+      </context>
+    </context>
+    <parameters/>
+    <result>
+      <result kind="OUT" name="result" type="Microservice">
+        <value>
+          <modelElement href="../output_expected/cargo.simplified.service#//@microservices.1"/>
+        </value>
+      </result>
+    </result>
+  </traceRecords>
+  <traceRecords>
+    <mappingOperation name="InterfaceToInterface" package="DactToLemmaService" module="DactToLemmaService"/>
+    <context>
+      <context name="self" type="Interface">
+        <value>
+          <modelElement href="../input/cargo.simplified.preprocessed.dact#//@ddd/@boundedContexts.0/@ownedElements.7"/>
+        </value>
+      </context>
+    </context>
+    <parameters/>
+    <result>
+      <result kind="OUT" name="result" type="Interface">
+        <value>
+          <modelElement href="../output_expected/cargo.simplified.service#//@microservices.1/@interfaces.0"/>
+        </value>
+      </result>
+    </result>
+  </traceRecords>
+  <traceRecords>
+    <mappingOperation name="InterfaceOperationToOperation" package="DactToLemmaService" module="DactToLemmaService"/>
+    <context>
+      <context name="self" type="Operation">
+        <value>
+          <modelElement href="../input/cargo.simplified.preprocessed.dact#//@ddd/@boundedContexts.0/@ownedElements.7/@ownedOperations.0"/>
+        </value>
+      </context>
+    </context>
+    <parameters/>
+    <result>
+      <result kind="OUT" name="result" type="Operation">
+        <value>
+          <modelElement href="../output_expected/cargo.simplified.service#//@microservices.1/@interfaces.0/@operations.0"/>
+        </value>
+      </result>
+    </result>
+  </traceRecords>
+  <traceRecords>
+    <mappingOperation name="ParameterToParameter" package="DactToLemmaService" module="DactToLemmaService"/>
+    <context>
+      <context name="self" type="Parameter">
+        <value>
+          <modelElement href="../input/cargo.simplified.preprocessed.dact#//@ddd/@boundedContexts.0/@ownedElements.7/@ownedOperations.0/@ownedParameters.0"/>
+        </value>
+      </context>
+    </context>
+    <parameters/>
+    <result>
+      <result kind="OUT" name="result" type="Parameter">
+        <value>
+          <modelElement href="../output_expected/cargo.simplified.service#//@microservices.1/@interfaces.0/@operations.0/@parameters.1"/>
+        </value>
+      </result>
+    </result>
+  </traceRecords>
+  <traceRecords>
+    <mappingOperation name="ParameterToParameter" package="DactToLemmaService" module="DactToLemmaService"/>
+    <context>
+      <context name="self" type="Parameter">
+        <value>
+          <modelElement href="../input/cargo.simplified.preprocessed.dact#//@ddd/@boundedContexts.0/@ownedElements.7/@ownedOperations.0/@ownedParameters.1"/>
+        </value>
+      </context>
+    </context>
+    <parameters/>
+    <result>
+      <result kind="OUT" name="result" type="Parameter">
+        <value>
+          <modelElement href="../output_expected/cargo.simplified.service#//@microservices.1/@interfaces.0/@operations.0/@parameters.0"/>
+        </value>
+      </result>
+    </result>
+  </traceRecords>
+  <traceRecords>
+    <mappingOperation name="InterfaceToInterface" package="DactToLemmaService" module="DactToLemmaService"/>
+    <context>
+      <context name="self" type="Interface">
+        <value>
+          <modelElement href="../input/cargo.simplified.preprocessed.dact#//@ddd/@boundedContexts.0/@ownedElements.3"/>
+        </value>
+      </context>
+    </context>
+    <parameters/>
+    <result>
+      <result kind="OUT" name="result" type="Interface">
+        <value>
+          <modelElement href="../output_expected/cargo.simplified.service#//@microservices.1/@interfaces.1"/>
+        </value>
+      </result>
+    </result>
+  </traceRecords>
+  <traceRecords>
+    <mappingOperation name="InterfaceOperationToOperation" package="DactToLemmaService" module="DactToLemmaService"/>
+    <context>
+      <context name="self" type="Operation">
+        <value>
+          <modelElement href="../input/cargo.simplified.preprocessed.dact#//@ddd/@boundedContexts.0/@ownedElements.3/@ownedOperations.0"/>
+        </value>
+      </context>
+    </context>
+    <parameters/>
+    <result>
+      <result kind="OUT" name="result" type="Operation">
+        <value>
+          <modelElement href="../output_expected/cargo.simplified.service#//@microservices.1/@interfaces.1/@operations.0"/>
+        </value>
+      </result>
+    </result>
+  </traceRecords>
+  <traceRecords>
+    <mappingOperation name="ParameterToParameter" package="DactToLemmaService" module="DactToLemmaService"/>
+    <context>
+      <context name="self" type="Parameter">
+        <value>
+          <modelElement href="../input/cargo.simplified.preprocessed.dact#//@ddd/@boundedContexts.0/@ownedElements.3/@ownedOperations.0/@ownedParameters.0"/>
+        </value>
+      </context>
+    </context>
+    <parameters/>
+    <result>
+      <result kind="OUT" name="result" type="Parameter">
+        <value>
+          <modelElement href="../output_expected/cargo.simplified.service#//@microservices.1/@interfaces.1/@operations.0/@parameters.4"/>
+        </value>
+      </result>
+    </result>
+  </traceRecords>
+  <traceRecords>
+    <mappingOperation name="ParameterToParameter" package="DactToLemmaService" module="DactToLemmaService"/>
+    <context>
+      <context name="self" type="Parameter">
+        <value>
+          <modelElement href="../input/cargo.simplified.preprocessed.dact#//@ddd/@boundedContexts.0/@ownedElements.3/@ownedOperations.0/@ownedParameters.2"/>
+        </value>
+      </context>
+    </context>
+    <parameters/>
+    <result>
+      <result kind="OUT" name="result" type="Parameter">
+        <value>
+          <modelElement href="../output_expected/cargo.simplified.service#//@microservices.1/@interfaces.1/@operations.0/@parameters.2"/>
+        </value>
+      </result>
+    </result>
+  </traceRecords>
+  <traceRecords>
+    <mappingOperation name="ParameterToParameter" package="DactToLemmaService" module="DactToLemmaService"/>
+    <context>
+      <context name="self" type="Parameter">
+        <value>
+          <modelElement href="../input/cargo.simplified.preprocessed.dact#//@ddd/@boundedContexts.0/@ownedElements.3/@ownedOperations.0/@ownedParameters.3"/>
+        </value>
+      </context>
+    </context>
+    <parameters/>
+    <result>
+      <result kind="OUT" name="result" type="Parameter">
+        <value>
+          <modelElement href="../output_expected/cargo.simplified.service#//@microservices.1/@interfaces.1/@operations.0/@parameters.0"/>
+        </value>
+      </result>
+    </result>
+  </traceRecords>
+  <traceRecords>
+    <mappingOperation name="ParameterToParameter" package="DactToLemmaService" module="DactToLemmaService"/>
+    <context>
+      <context name="self" type="Parameter">
+        <value>
+          <modelElement href="../input/cargo.simplified.preprocessed.dact#//@ddd/@boundedContexts.0/@ownedElements.3/@ownedOperations.0/@ownedParameters.4"/>
+        </value>
+      </context>
+    </context>
+    <parameters/>
+    <result>
+      <result kind="OUT" name="result" type="Parameter">
+        <value>
+          <modelElement href="../output_expected/cargo.simplified.service#//@microservices.1/@interfaces.1/@operations.0/@parameters.3"/>
+        </value>
+      </result>
+    </result>
+  </traceRecords>
+  <traceRecords>
+    <mappingOperation name="ParameterToParameter" package="DactToLemmaService" module="DactToLemmaService"/>
+    <context>
+      <context name="self" type="Parameter">
+        <value>
+          <modelElement href="../input/cargo.simplified.preprocessed.dact#//@ddd/@boundedContexts.0/@ownedElements.3/@ownedOperations.0/@ownedParameters.1"/>
+        </value>
+      </context>
+    </context>
+    <parameters/>
+    <result>
+      <result kind="OUT" name="result" type="Parameter">
+        <value>
+          <modelElement href="../output_expected/cargo.simplified.service#//@microservices.1/@interfaces.1/@operations.0/@parameters.1"/>
+        </value>
+      </result>
+    </result>
+  </traceRecords>
+  <traceRecords>
+    <mappingOperation name="ServiceToDefaultController" package="DactToLemmaService" module="DactToLemmaService"/>
+    <context>
+      <context name="self" type="Service">
+        <value>
+          <modelElement href="../input/cargo.simplified.preprocessed.dact#//@ddd/@boundedContexts.0/@ownedElements.3"/>
+        </value>
+      </context>
+    </context>
+    <parameters/>
+    <result>
+      <result kind="OUT" name="result" type="Interface">
+        <value>
+          <modelElement href="../output_expected/cargo.simplified.service#//@microservices.1/@interfaces.2"/>
+        </value>
+      </result>
+    </result>
+  </traceRecords>
+  <traceRecords>
+    <mappingOperation name="ServiceOperationsToDefaultControllerOperations" package="DactToLemmaService" module="DactToLemmaService"/>
+    <context>
+      <context name="self" type="Operation">
+        <value>
+          <modelElement href="../input/cargo.simplified.preprocessed.dact#//@ddd/@boundedContexts.0/@ownedElements.3/@ownedOperations.0"/>
+        </value>
+      </context>
+    </context>
+    <parameters/>
+    <result>
+      <result kind="OUT" name="result" type="Operation">
+        <value>
+          <modelElement href="../output_expected/cargo.simplified.service#//@microservices.1/@interfaces.2/@operations.0"/>
+        </value>
+      </result>
+    </result>
+  </traceRecords>
+  <traceRecords>
+    <mappingOperation name="DactToLact" package="DactToLemmaBehavior" module="DactToLemmaBehavior"/>
+    <context>
+      <context name="self" type="Root">
+        <value>
+          <modelElement href="../input/cargo.simplified.preprocessed.dact#/"/>
+        </value>
+      </context>
+    </context>
+    <parameters/>
+    <result>
+      <result kind="OUT" name="result" type="BehaviorModel">
+        <value>
+          <modelElement href="../output_expected/cargo.simplified.behavior#/"/>
+        </value>
+      </result>
+    </result>
+  </traceRecords>
+  <traceRecords>
+    <mappingOperation name="ExtractDomainObjectSpecOperations" package="DactToLemmaBehavior" module="DactToLemmaBehavior"/>
+    <context>
+      <context name="self" type="DddModel">
+        <value>
+          <modelElement href="../input/cargo.simplified.preprocessed.dact#//@ddd"/>
+        </value>
+      </context>
+    </context>
+    <parameters/>
+    <result/>
+  </traceRecords>
+  <traceRecords>
+    <mappingOperation name="SpecOperationToSpecDataOperation" package="DactToLemmaBehavior" module="DactToLemmaBehavior"/>
+    <context>
+      <context name="self" type="SpecOperation">
+        <value>
+          <modelElement href="../input/cargo.simplified.preprocessed.dact#//@ddd/@boundedContexts.0/@ownedElements.4/@ownedOperations.0"/>
+        </value>
+      </context>
+    </context>
+    <parameters/>
+    <result>
+      <result kind="OUT" name="result" type="SpecDataOperation">
+        <value>
+          <modelElement href="../output_expected/cargo.simplified.data#//@contexts.1/@complexTypes.2/@operations.0"/>
+        </value>
+      </result>
+    </result>
+  </traceRecords>
+  <traceRecords>
+    <mappingOperation name="RuleToRule" package="DactToLemmaBehavior" module="DactToLemmaBehavior"/>
+    <context>
+      <context name="self" type="SpecRule">
+        <value>
+          <modelElement href="../input/cargo.simplified.preprocessed.dact#//@ddd/@boundedContexts.0/@ownedElements.4/@ownedOperations.0/@ownedRules.0"/>
+        </value>
+      </context>
+    </context>
+    <parameters/>
+    <result>
+      <result kind="OUT" name="result" type="SpecRule">
+        <value>
+          <modelElement href="../output_expected/cargo.simplified.data#//@contexts.1/@complexTypes.2/@operations.0/@ownedRules.0"/>
+        </value>
+      </result>
+    </result>
+  </traceRecords>
+  <traceRecords>
+    <mappingOperation name="BinaryExpressionToBinaryExpression" package="DactToLemmaBehavior" module="DactToLemmaBehavior"/>
+    <context>
+      <context name="self" type="BinaryExpression">
+        <value>
+          <modelElement href="../input/cargo.simplified.preprocessed.dact#//@ddd/@boundedContexts.0/@ownedElements.4/@ownedOperations.0/@ownedRules.0/@expr"/>
+        </value>
+      </context>
+    </context>
+    <parameters/>
+    <result>
+      <result kind="OUT" name="result" type="BinaryExpression">
+        <value>
+          <modelElement href="../output_expected/cargo.simplified.data#//@contexts.1/@complexTypes.2/@operations.0/@ownedRules.0/@expr"/>
+        </value>
+      </result>
+    </result>
+  </traceRecords>
+  <traceRecords>
+    <mappingOperation name="UnaryExpressionToUnaryExpression" package="DactToLemmaBehavior" module="DactToLemmaBehavior"/>
+    <context>
+      <context name="self" type="UnaryExpression">
+        <value>
+          <modelElement href="../input/cargo.simplified.preprocessed.dact#//@ddd/@boundedContexts.0/@ownedElements.4/@ownedOperations.0/@ownedRules.0/@expr/@leftExpr"/>
+        </value>
+      </context>
+    </context>
+    <parameters/>
+    <result>
+      <result kind="OUT" name="result" type="UnaryExpression">
+        <value>
+          <modelElement href="../output_expected/cargo.simplified.data#//@contexts.1/@complexTypes.2/@operations.0/@ownedRules.0/@expr/@leftExpr"/>
+        </value>
+      </result>
+    </result>
+  </traceRecords>
+  <traceRecords>
+    <mappingOperation name="IdentifierToIdentifier" package="DactToLemmaBehavior" module="DactToLemmaBehavior"/>
+    <context>
+      <context name="self" type="Identifier">
+        <value>
+          <modelElement href="../input/cargo.simplified.preprocessed.dact#//@ddd/@boundedContexts.0/@ownedElements.4/@ownedOperations.0/@ownedRules.0/@expr/@leftExpr/@identifier"/>
+        </value>
+      </context>
+    </context>
+    <parameters/>
+    <result>
+      <result kind="OUT" name="result" type="Identifier">
+        <value>
+          <modelElement href="../output_expected/cargo.simplified.data#//@contexts.1/@complexTypes.2/@operations.0/@ownedRules.0/@expr/@leftExpr/@identifier"/>
+        </value>
+      </result>
+    </result>
+  </traceRecords>
+  <traceRecords>
+    <mappingOperation name="ExpressionToExpression" package="DactToLemmaBehavior" module="DactToLemmaBehavior"/>
+    <context>
+      <context name="self" type="Expression">
+        <value>
+          <modelElement href="../input/cargo.simplified.preprocessed.dact#//@ddd/@boundedContexts.0/@ownedElements.4/@ownedOperations.0/@ownedRules.0/@expr/@leftExpr"/>
+        </value>
+      </context>
+    </context>
+    <parameters/>
+    <result>
+      <result kind="OUT" name="result" type="Expression">
+        <value>
+          <modelElement href="../output_expected/cargo.simplified.data#//@contexts.1/@complexTypes.2/@operations.0/@ownedRules.0/@expr/@leftExpr"/>
+        </value>
+      </result>
+    </result>
+  </traceRecords>
+  <traceRecords>
+    <mappingOperation name="GeToGe" package="DactToLemmaBehavior" module="DactToLemmaBehavior"/>
+    <context>
+      <context name="self" type="Ge">
+        <value>
+          <modelElement href="../input/cargo.simplified.preprocessed.dact#//@ddd/@boundedContexts.0/@ownedElements.4/@ownedOperations.0/@ownedRules.0/@expr/@operator"/>
+        </value>
+      </context>
+    </context>
+    <parameters/>
+    <result>
+      <result kind="OUT" name="result" type="Ge">
+        <value>
+          <modelElement href="../output_expected/cargo.simplified.data#//@contexts.1/@complexTypes.2/@operations.0/@ownedRules.0/@expr/@operator"/>
+        </value>
+      </result>
+    </result>
+  </traceRecords>
+  <traceRecords>
+    <mappingOperation name="LogicalOperatorToLogicalOperator" package="DactToLemmaBehavior" module="DactToLemmaBehavior"/>
+    <context>
+      <context name="self" type="LogicalOperator">
+        <value>
+          <modelElement href="../input/cargo.simplified.preprocessed.dact#//@ddd/@boundedContexts.0/@ownedElements.4/@ownedOperations.0/@ownedRules.0/@expr/@operator"/>
+        </value>
+      </context>
+    </context>
+    <parameters/>
+    <result>
+      <result kind="OUT" name="result" type="LogicalOperator">
+        <value>
+          <modelElement href="../output_expected/cargo.simplified.data#//@contexts.1/@complexTypes.2/@operations.0/@ownedRules.0/@expr/@operator"/>
+        </value>
+      </result>
+    </result>
+  </traceRecords>
+  <traceRecords>
+    <mappingOperation name="OperatorToOperator" package="DactToLemmaBehavior" module="DactToLemmaBehavior"/>
+    <context>
+      <context name="self" type="Operator">
+        <value>
+          <modelElement href="../input/cargo.simplified.preprocessed.dact#//@ddd/@boundedContexts.0/@ownedElements.4/@ownedOperations.0/@ownedRules.0/@expr/@operator"/>
+        </value>
+      </context>
+    </context>
+    <parameters/>
+    <result>
+      <result kind="OUT" name="result" type="Operator">
+        <value>
+          <modelElement href="../output_expected/cargo.simplified.data#//@contexts.1/@complexTypes.2/@operations.0/@ownedRules.0/@expr/@operator"/>
+        </value>
+      </result>
+    </result>
+  </traceRecords>
+  <traceRecords>
+    <mappingOperation name="BinaryExpressionToBinaryExpression" package="DactToLemmaBehavior" module="DactToLemmaBehavior"/>
+    <context>
+      <context name="self" type="BinaryExpression">
+        <value>
+          <modelElement href="../input/cargo.simplified.preprocessed.dact#//@ddd/@boundedContexts.0/@ownedElements.4/@ownedOperations.0/@ownedRules.0/@expr/@rightExpr"/>
+        </value>
+      </context>
+    </context>
+    <parameters/>
+    <result>
+      <result kind="OUT" name="result" type="BinaryExpression">
+        <value>
+          <modelElement href="../output_expected/cargo.simplified.data#//@contexts.1/@complexTypes.2/@operations.0/@ownedRules.0/@expr/@rightExpr"/>
+        </value>
+      </result>
+    </result>
+  </traceRecords>
+  <traceRecords>
+    <mappingOperation name="UnaryExpressionToUnaryExpression" package="DactToLemmaBehavior" module="DactToLemmaBehavior"/>
+    <context>
+      <context name="self" type="UnaryExpression">
+        <value>
+          <modelElement href="../input/cargo.simplified.preprocessed.dact#//@ddd/@boundedContexts.0/@ownedElements.4/@ownedOperations.0/@ownedRules.0/@expr/@rightExpr/@leftExpr"/>
+        </value>
+      </context>
+    </context>
+    <parameters/>
+    <result>
+      <result kind="OUT" name="result" type="UnaryExpression">
+        <value>
+          <modelElement href="../output_expected/cargo.simplified.data#//@contexts.1/@complexTypes.2/@operations.0/@ownedRules.0/@expr/@rightExpr/@leftExpr"/>
+        </value>
+      </result>
+    </result>
+  </traceRecords>
+  <traceRecords>
+    <mappingOperation name="LiteralToPrimitiveValue" package="DactToLemmaUtils" module="DactToLemmaUtils"/>
+    <context>
+      <context name="self" type="Literal">
+        <value>
+          <modelElement href="../input/cargo.simplified.preprocessed.dact#//@ddd/@boundedContexts.0/@ownedElements.4/@ownedOperations.0/@ownedRules.0/@expr/@rightExpr/@leftExpr/@value"/>
+        </value>
+      </context>
+    </context>
+    <parameters/>
+    <result>
+      <result kind="OUT" name="result" type="PrimitiveValue">
+        <value>
+          <modelElement href="../output_expected/cargo.simplified.data#//@contexts.1/@complexTypes.2/@operations.0/@ownedRules.0/@expr/@rightExpr/@leftExpr/@value"/>
+        </value>
+      </result>
+    </result>
+  </traceRecords>
+  <traceRecords>
+    <mappingOperation name="ValueSpecificationToValueSpecification" package="DactToLemmaUtils" module="DactToLemmaUtils"/>
+    <context>
+      <context name="self" type="ValueSpecification">
+        <value>
+          <modelElement href="../input/cargo.simplified.preprocessed.dact#//@ddd/@boundedContexts.0/@ownedElements.4/@ownedOperations.0/@ownedRules.0/@expr/@rightExpr/@leftExpr/@value"/>
+        </value>
+      </context>
+    </context>
+    <parameters/>
+    <result>
+      <result kind="OUT" name="result" type="ValueSpecification">
+        <value>
+          <modelElement href="../output_expected/cargo.simplified.data#//@contexts.1/@complexTypes.2/@operations.0/@ownedRules.0/@expr/@rightExpr/@leftExpr/@value"/>
+        </value>
+      </result>
+    </result>
+  </traceRecords>
+  <traceRecords>
+    <mappingOperation name="ExpressionToExpression" package="DactToLemmaBehavior" module="DactToLemmaBehavior"/>
+    <context>
+      <context name="self" type="Expression">
+        <value>
+          <modelElement href="../input/cargo.simplified.preprocessed.dact#//@ddd/@boundedContexts.0/@ownedElements.4/@ownedOperations.0/@ownedRules.0/@expr/@rightExpr/@leftExpr"/>
+        </value>
+      </context>
+    </context>
+    <parameters/>
+    <result>
+      <result kind="OUT" name="result" type="Expression">
+        <value>
+          <modelElement href="../output_expected/cargo.simplified.data#//@contexts.1/@complexTypes.2/@operations.0/@ownedRules.0/@expr/@rightExpr/@leftExpr"/>
+        </value>
+      </result>
+    </result>
+  </traceRecords>
+  <traceRecords>
+    <mappingOperation name="PlusToPlus" package="DactToLemmaBehavior" module="DactToLemmaBehavior"/>
+    <context>
+      <context name="self" type="Plus">
+        <value>
+          <modelElement href="../input/cargo.simplified.preprocessed.dact#//@ddd/@boundedContexts.0/@ownedElements.4/@ownedOperations.0/@ownedRules.0/@expr/@rightExpr/@operator"/>
+        </value>
+      </context>
+    </context>
+    <parameters/>
+    <result>
+      <result kind="OUT" name="result" type="Plus">
+        <value>
+          <modelElement href="../output_expected/cargo.simplified.data#//@contexts.1/@complexTypes.2/@operations.0/@ownedRules.0/@expr/@rightExpr/@operator"/>
+        </value>
+      </result>
+    </result>
+  </traceRecords>
+  <traceRecords>
+    <mappingOperation name="IntegerOperatorToIntegerOperator" package="DactToLemmaBehavior" module="DactToLemmaBehavior"/>
+    <context>
+      <context name="self" type="IntegerOperator">
+        <value>
+          <modelElement href="../input/cargo.simplified.preprocessed.dact#//@ddd/@boundedContexts.0/@ownedElements.4/@ownedOperations.0/@ownedRules.0/@expr/@rightExpr/@operator"/>
+        </value>
+      </context>
+    </context>
+    <parameters/>
+    <result>
+      <result kind="OUT" name="result" type="IntegerOperator">
+        <value>
+          <modelElement href="../output_expected/cargo.simplified.data#//@contexts.1/@complexTypes.2/@operations.0/@ownedRules.0/@expr/@rightExpr/@operator"/>
+        </value>
+      </result>
+    </result>
+  </traceRecords>
+  <traceRecords>
+    <mappingOperation name="OperatorToOperator" package="DactToLemmaBehavior" module="DactToLemmaBehavior"/>
+    <context>
+      <context name="self" type="Operator">
+        <value>
+          <modelElement href="../input/cargo.simplified.preprocessed.dact#//@ddd/@boundedContexts.0/@ownedElements.4/@ownedOperations.0/@ownedRules.0/@expr/@rightExpr/@operator"/>
+        </value>
+      </context>
+    </context>
+    <parameters/>
+    <result>
+      <result kind="OUT" name="result" type="Operator">
+        <value>
+          <modelElement href="../output_expected/cargo.simplified.data#//@contexts.1/@complexTypes.2/@operations.0/@ownedRules.0/@expr/@rightExpr/@operator"/>
+        </value>
+      </result>
+    </result>
+  </traceRecords>
+  <traceRecords>
+    <mappingOperation name="UnaryExpressionToUnaryExpression" package="DactToLemmaBehavior" module="DactToLemmaBehavior"/>
+    <context>
+      <context name="self" type="UnaryExpression">
+        <value>
+          <modelElement href="../input/cargo.simplified.preprocessed.dact#//@ddd/@boundedContexts.0/@ownedElements.4/@ownedOperations.0/@ownedRules.0/@expr/@rightExpr/@rightExpr"/>
+        </value>
+      </context>
+    </context>
+    <parameters/>
+    <result>
+      <result kind="OUT" name="result" type="UnaryExpression">
+        <value>
+          <modelElement href="../output_expected/cargo.simplified.data#//@contexts.1/@complexTypes.2/@operations.0/@ownedRules.0/@expr/@rightExpr/@rightExpr"/>
+        </value>
+      </result>
+    </result>
+  </traceRecords>
+  <traceRecords>
+    <mappingOperation name="LiteralToPrimitiveValue" package="DactToLemmaUtils" module="DactToLemmaUtils"/>
+    <context>
+      <context name="self" type="Literal">
+        <value>
+          <modelElement href="../input/cargo.simplified.preprocessed.dact#//@ddd/@boundedContexts.0/@ownedElements.4/@ownedOperations.0/@ownedRules.0/@expr/@rightExpr/@rightExpr/@value"/>
+        </value>
+      </context>
+    </context>
+    <parameters/>
+    <result>
+      <result kind="OUT" name="result" type="PrimitiveValue">
+        <value>
+          <modelElement href="../output_expected/cargo.simplified.data#//@contexts.1/@complexTypes.2/@operations.0/@ownedRules.0/@expr/@rightExpr/@rightExpr/@value"/>
+        </value>
+      </result>
+    </result>
+  </traceRecords>
+  <traceRecords>
+    <mappingOperation name="ValueSpecificationToValueSpecification" package="DactToLemmaUtils" module="DactToLemmaUtils"/>
+    <context>
+      <context name="self" type="ValueSpecification">
+        <value>
+          <modelElement href="../input/cargo.simplified.preprocessed.dact#//@ddd/@boundedContexts.0/@ownedElements.4/@ownedOperations.0/@ownedRules.0/@expr/@rightExpr/@rightExpr/@value"/>
+        </value>
+      </context>
+    </context>
+    <parameters/>
+    <result>
+      <result kind="OUT" name="result" type="ValueSpecification">
+        <value>
+          <modelElement href="../output_expected/cargo.simplified.data#//@contexts.1/@complexTypes.2/@operations.0/@ownedRules.0/@expr/@rightExpr/@rightExpr/@value"/>
+        </value>
+      </result>
+    </result>
+  </traceRecords>
+  <traceRecords>
+    <mappingOperation name="ExpressionToExpression" package="DactToLemmaBehavior" module="DactToLemmaBehavior"/>
+    <context>
+      <context name="self" type="Expression">
+        <value>
+          <modelElement href="../input/cargo.simplified.preprocessed.dact#//@ddd/@boundedContexts.0/@ownedElements.4/@ownedOperations.0/@ownedRules.0/@expr/@rightExpr/@rightExpr"/>
+        </value>
+      </context>
+    </context>
+    <parameters/>
+    <result>
+      <result kind="OUT" name="result" type="Expression">
+        <value>
+          <modelElement href="../output_expected/cargo.simplified.data#//@contexts.1/@complexTypes.2/@operations.0/@ownedRules.0/@expr/@rightExpr/@rightExpr"/>
+        </value>
+      </result>
+    </result>
+  </traceRecords>
+  <traceRecords>
+    <mappingOperation name="ExpressionToExpression" package="DactToLemmaBehavior" module="DactToLemmaBehavior"/>
+    <context>
+      <context name="self" type="Expression">
+        <value>
+          <modelElement href="../input/cargo.simplified.preprocessed.dact#//@ddd/@boundedContexts.0/@ownedElements.4/@ownedOperations.0/@ownedRules.0/@expr/@rightExpr"/>
+        </value>
+      </context>
+    </context>
+    <parameters/>
+    <result>
+      <result kind="OUT" name="result" type="Expression">
+        <value>
+          <modelElement href="../output_expected/cargo.simplified.data#//@contexts.1/@complexTypes.2/@operations.0/@ownedRules.0/@expr/@rightExpr"/>
+        </value>
+      </result>
+    </result>
+  </traceRecords>
+  <traceRecords>
+    <mappingOperation name="ExpressionToExpression" package="DactToLemmaBehavior" module="DactToLemmaBehavior"/>
+    <context>
+      <context name="self" type="Expression">
+        <value>
+          <modelElement href="../input/cargo.simplified.preprocessed.dact#//@ddd/@boundedContexts.0/@ownedElements.4/@ownedOperations.0/@ownedRules.0/@expr"/>
+        </value>
+      </context>
+    </context>
+    <parameters/>
+    <result>
+      <result kind="OUT" name="result" type="Expression">
+        <value>
+          <modelElement href="../output_expected/cargo.simplified.data#//@contexts.1/@complexTypes.2/@operations.0/@ownedRules.0/@expr"/>
+        </value>
+      </result>
+    </result>
+  </traceRecords>
+  <traceRecords>
+    <mappingOperation name="ParameterToDataOperationParameter" package="DactToLemmaData" module="DactToLemmaData"/>
+    <context>
+      <context name="self" type="Parameter">
+        <value>
+          <modelElement href="../input/cargo.simplified.preprocessed.dact#//@ddd/@boundedContexts.0/@ownedElements.4/@ownedOperations.0/@ownedParameters.0"/>
+        </value>
+      </context>
+    </context>
+    <parameters/>
+    <result>
+      <result kind="OUT" name="result" type="DataOperationParameter">
+        <value>
+          <modelElement href="../output_expected/cargo.simplified.data#//@contexts.1/@complexTypes.2/@operations.0/@parameters.0"/>
+        </value>
+      </result>
+    </result>
+  </traceRecords>
+  <traceRecords>
+    <mappingOperation name="DomainActivityModelToServiceActivityModel" package="DactToLemmaBehavior" module="DactToLemmaBehavior"/>
+    <context>
+      <context name="self" type="ActivityModel">
+        <value>
+          <modelElement href="../input/cargo.simplified.preprocessed.dact#//@activity"/>
+        </value>
+      </context>
+    </context>
+    <parameters/>
+    <result>
+      <result kind="OUT" name="result" type="ActivityModel">
+        <value>
+          <modelElement href="../output_expected/cargo.simplified.behavior#//@activityModel"/>
+        </value>
+      </result>
+    </result>
+  </traceRecords>
+  <traceRecords>
+    <mappingOperation name="DomainActivityToServiceActivity" package="DactToLemmaBehavior" module="DactToLemmaBehavior"/>
+    <context>
+      <context name="self" type="Activity">
+        <value>
+          <modelElement href="../input/cargo.simplified.preprocessed.dact#//@activity/@activities.0"/>
+        </value>
+      </context>
+    </context>
+    <parameters/>
+    <result>
+      <result kind="OUT" name="result" type="Activity">
+        <value>
+          <modelElement href="../output_expected/cargo.simplified.behavior#//@activityModel/@activities.0"/>
+        </value>
+      </result>
+    </result>
+  </traceRecords>
+  <traceRecords>
+    <mappingOperation name="ParameterToParameter" package="DactToLemmaService" module="DactToLemmaService"/>
+    <context>
+      <context name="self" type="Parameter">
+        <value>
+          <modelElement href="../input/cargo.simplified.preprocessed.dact#//@activity/@activities.0/@ownedParameters.1"/>
+        </value>
+      </context>
+    </context>
+    <parameters/>
+    <result>
+      <result kind="OUT" name="result" type="Parameter">
+        <value>
+          <modelElement href="../output_expected/cargo.simplified.behavior#//@activityModel/@activities.0/@ownedParameters.2"/>
+        </value>
+      </result>
+    </result>
+  </traceRecords>
+  <traceRecords>
+    <mappingOperation name="ParameterToParameter" package="DactToLemmaService" module="DactToLemmaService"/>
+    <context>
+      <context name="self" type="Parameter">
+        <value>
+          <modelElement href="../input/cargo.simplified.preprocessed.dact#//@activity/@activities.0/@ownedParameters.2"/>
+        </value>
+      </context>
+    </context>
+    <parameters/>
+    <result>
+      <result kind="OUT" name="result" type="Parameter">
+        <value>
+          <modelElement href="../output_expected/cargo.simplified.behavior#//@activityModel/@activities.0/@ownedParameters.1"/>
+        </value>
+      </result>
+    </result>
+  </traceRecords>
+  <traceRecords>
+    <mappingOperation name="ParameterToParameter" package="DactToLemmaService" module="DactToLemmaService"/>
+    <context>
+      <context name="self" type="Parameter">
+        <value>
+          <modelElement href="../input/cargo.simplified.preprocessed.dact#//@activity/@activities.0/@ownedParameters.3"/>
+        </value>
+      </context>
+    </context>
+    <parameters/>
+    <result>
+      <result kind="OUT" name="result" type="Parameter">
+        <value>
+          <modelElement href="../output_expected/cargo.simplified.behavior#//@activityModel/@activities.0/@ownedParameters.3"/>
+        </value>
+      </result>
+    </result>
+  </traceRecords>
+  <traceRecords>
+    <mappingOperation name="ParameterToParameter" package="DactToLemmaService" module="DactToLemmaService"/>
+    <context>
+      <context name="self" type="Parameter">
+        <value>
+          <modelElement href="../input/cargo.simplified.preprocessed.dact#//@activity/@activities.0/@ownedParameters.4"/>
+        </value>
+      </context>
+    </context>
+    <parameters/>
+    <result>
+      <result kind="OUT" name="result" type="Parameter">
+        <value>
+          <modelElement href="../output_expected/cargo.simplified.behavior#//@activityModel/@activities.0/@ownedParameters.4"/>
+        </value>
+      </result>
+    </result>
+  </traceRecords>
+  <traceRecords>
+    <mappingOperation name="ParameterToParameter" package="DactToLemmaService" module="DactToLemmaService"/>
+    <context>
+      <context name="self" type="Parameter">
+        <value>
+          <modelElement href="../input/cargo.simplified.preprocessed.dact#//@activity/@activities.0/@ownedParameters.0"/>
+        </value>
+      </context>
+    </context>
+    <parameters/>
+    <result>
+      <result kind="OUT" name="result" type="Parameter">
+        <value>
+          <modelElement href="../output_expected/cargo.simplified.behavior#//@activityModel/@activities.0/@ownedParameters.0"/>
+        </value>
+      </result>
+    </result>
+  </traceRecords>
+  <traceRecords>
+    <mappingOperation name="ParameterMappingToParameterMapping" package="DactToLemmaBehavior" module="DactToLemmaBehavior"/>
+    <context>
+      <context name="self" type="ParameterMapping">
+        <value>
+          <modelElement href="../input/cargo.simplified.preprocessed.dact#//@activity/@activities.0/@parameterMappings.0"/>
+        </value>
+      </context>
+    </context>
+    <parameters/>
+    <result>
+      <result kind="OUT" name="result" type="ParameterMapping">
+        <value>
+          <modelElement href="../output_expected/cargo.simplified.behavior#//@activityModel/@activities.0/@parameterMappings.1"/>
+        </value>
+      </result>
+    </result>
+  </traceRecords>
+  <traceRecords>
+    <mappingOperation name="ParameterMappingToParameterMapping" package="DactToLemmaBehavior" module="DactToLemmaBehavior"/>
+    <context>
+      <context name="self" type="ParameterMapping">
+        <value>
+          <modelElement href="../input/cargo.simplified.preprocessed.dact#//@activity/@activities.0/@parameterMappings.4"/>
+        </value>
+      </context>
+    </context>
+    <parameters/>
+    <result>
+      <result kind="OUT" name="result" type="ParameterMapping">
+        <value>
+          <modelElement href="../output_expected/cargo.simplified.behavior#//@activityModel/@activities.0/@parameterMappings.2"/>
+        </value>
+      </result>
+    </result>
+  </traceRecords>
+  <traceRecords>
+    <mappingOperation name="ParameterMappingToParameterMapping" package="DactToLemmaBehavior" module="DactToLemmaBehavior"/>
+    <context>
+      <context name="self" type="ParameterMapping">
+        <value>
+          <modelElement href="../input/cargo.simplified.preprocessed.dact#//@activity/@activities.0/@parameterMappings.1"/>
+        </value>
+      </context>
+    </context>
+    <parameters/>
+    <result>
+      <result kind="OUT" name="result" type="ParameterMapping">
+        <value>
+          <modelElement href="../output_expected/cargo.simplified.behavior#//@activityModel/@activities.0/@parameterMappings.0"/>
+        </value>
+      </result>
+    </result>
+  </traceRecords>
+  <traceRecords>
+    <mappingOperation name="ParameterMappingToParameterMapping" package="DactToLemmaBehavior" module="DactToLemmaBehavior"/>
+    <context>
+      <context name="self" type="ParameterMapping">
+        <value>
+          <modelElement href="../input/cargo.simplified.preprocessed.dact#//@activity/@activities.0/@parameterMappings.3"/>
+        </value>
+      </context>
+    </context>
+    <parameters/>
+    <result>
+      <result kind="OUT" name="result" type="ParameterMapping">
+        <value>
+          <modelElement href="../output_expected/cargo.simplified.behavior#//@activityModel/@activities.0/@parameterMappings.4"/>
+        </value>
+      </result>
+    </result>
+  </traceRecords>
+  <traceRecords>
+    <mappingOperation name="ParameterMappingToParameterMapping" package="DactToLemmaBehavior" module="DactToLemmaBehavior"/>
+    <context>
+      <context name="self" type="ParameterMapping">
+        <value>
+          <modelElement href="../input/cargo.simplified.preprocessed.dact#//@activity/@activities.0/@parameterMappings.2"/>
+        </value>
+      </context>
+    </context>
+    <parameters/>
+    <result>
+      <result kind="OUT" name="result" type="ParameterMapping">
+        <value>
+          <modelElement href="../output_expected/cargo.simplified.behavior#//@activityModel/@activities.0/@parameterMappings.3"/>
+        </value>
+      </result>
+    </result>
+  </traceRecords>
+  <traceRecords>
+    <mappingOperation name="ActivityGroupToActivityGroup" package="DactToLemmaBehavior" module="DactToLemmaBehavior"/>
+    <context>
+      <context name="self" type="ActivityGroup">
+        <value>
+          <modelElement href="../input/cargo.simplified.preprocessed.dact#//@activity/@activities.0/@root"/>
+        </value>
+      </context>
+    </context>
+    <parameters/>
+    <result>
+      <result kind="OUT" name="result" type="ActivityGroup">
+        <value>
+          <modelElement href="../output_expected/cargo.simplified.behavior#//@activityModel/@activities.0/@root"/>
+        </value>
+      </result>
+    </result>
+  </traceRecords>
+  <traceRecords>
+    <mappingOperation name="NodeToNode" package="DactToLemmaBehavior" module="DactToLemmaBehavior"/>
+    <context>
+      <context name="self" type="CallOperationAction">
+        <value>
+          <modelElement href="../input/cargo.simplified.preprocessed.dact#//@activity/@activities.0/@root/@ownedNodes.0"/>
+        </value>
+      </context>
+    </context>
+    <parameters/>
+    <result>
+      <result kind="OUT" name="result" type="CallOperationAction">
+        <value>
+          <modelElement href="../output_expected/cargo.simplified.behavior#//@activityModel/@activities.0/@root/@ownedNodes.3"/>
+        </value>
+      </result>
+    </result>
+  </traceRecords>
+  <traceRecords>
+    <mappingOperation name="ParameterMappingToParameterMapping" package="DactToLemmaBehavior" module="DactToLemmaBehavior"/>
+    <context>
+      <context name="self" type="ParameterMapping">
+        <value>
+          <modelElement href="../input/cargo.simplified.preprocessed.dact#//@activity/@activities.0/@root/@ownedNodes.0/@parameterMappings.1"/>
+        </value>
+      </context>
+    </context>
+    <parameters/>
+    <result>
+      <result kind="OUT" name="result" type="ParameterMapping">
+        <value>
+          <modelElement href="../output_expected/cargo.simplified.behavior#//@activityModel/@activities.0/@root/@ownedNodes.3/@parameterMappings.0"/>
+        </value>
+      </result>
+    </result>
+  </traceRecords>
+  <traceRecords>
+    <mappingOperation name="IdentifierToIdentifier" package="DactToLemmaBehavior" module="DactToLemmaBehavior"/>
+    <context>
+      <context name="self" type="Identifier">
+        <value>
+          <modelElement href="../input/cargo.simplified.preprocessed.dact#//@activity/@activities.0/@root/@ownedNodes.0/@parameterMappings.1/@identifier"/>
+        </value>
+      </context>
+    </context>
+    <parameters/>
+    <result>
+      <result kind="OUT" name="result" type="Identifier">
+        <value>
+          <modelElement href="../output_expected/cargo.simplified.behavior#//@activityModel/@activities.0/@root/@ownedNodes.3/@parameterMappings.0/@identifier"/>
+        </value>
+      </result>
+    </result>
+  </traceRecords>
+  <traceRecords>
+    <mappingOperation name="ParameterMappingToParameterMapping" package="DactToLemmaBehavior" module="DactToLemmaBehavior"/>
+    <context>
+      <context name="self" type="ParameterMapping">
+        <value>
+          <modelElement href="../input/cargo.simplified.preprocessed.dact#//@activity/@activities.0/@root/@ownedNodes.0/@parameterMappings.0"/>
+        </value>
+      </context>
+    </context>
+    <parameters/>
+    <result>
+      <result kind="OUT" name="result" type="ParameterMapping">
+        <value>
+          <modelElement href="../output_expected/cargo.simplified.behavior#//@activityModel/@activities.0/@root/@ownedNodes.3/@parameterMappings.1"/>
+        </value>
+      </result>
+    </result>
+  </traceRecords>
+  <traceRecords>
+    <mappingOperation name="IdentifierToIdentifier" package="DactToLemmaBehavior" module="DactToLemmaBehavior"/>
+    <context>
+      <context name="self" type="Identifier">
+        <value>
+          <modelElement href="../input/cargo.simplified.preprocessed.dact#//@activity/@activities.0/@root/@ownedNodes.0/@parameterMappings.0/@identifier"/>
+        </value>
+      </context>
+    </context>
+    <parameters/>
+    <result>
+      <result kind="OUT" name="result" type="Identifier">
+        <value>
+          <modelElement href="../output_expected/cargo.simplified.behavior#//@activityModel/@activities.0/@root/@ownedNodes.3/@parameterMappings.1/@identifier"/>
+        </value>
+      </result>
+    </result>
+  </traceRecords>
+  <traceRecords>
+    <mappingOperation name="NodeToNode" package="DactToLemmaBehavior" module="DactToLemmaBehavior"/>
+    <context>
+      <context name="self" type="ConditionalNode">
+        <value>
+          <modelElement href="../input/cargo.simplified.preprocessed.dact#//@activity/@activities.0/@root/@ownedNodes.1"/>
+        </value>
+      </context>
+    </context>
+    <parameters/>
+    <result>
+      <result kind="OUT" name="result" type="ConditionalNode">
+        <value>
+          <modelElement href="../output_expected/cargo.simplified.behavior#//@activityModel/@activities.0/@root/@ownedNodes.1"/>
+        </value>
+      </result>
+    </result>
+  </traceRecords>
+  <traceRecords>
+    <mappingOperation name="UnaryExpressionToUnaryExpression" package="DactToLemmaBehavior" module="DactToLemmaBehavior"/>
+    <context>
+      <context name="self" type="UnaryExpression">
+        <value>
+          <modelElement href="../input/cargo.simplified.preprocessed.dact#//@activity/@activities.0/@root/@ownedNodes.1/@test"/>
+        </value>
+      </context>
+    </context>
+    <parameters/>
+    <result>
+      <result kind="OUT" name="result" type="UnaryExpression">
+        <value>
+          <modelElement href="../output_expected/cargo.simplified.behavior#//@activityModel/@activities.0/@root/@ownedNodes.1/@test"/>
+        </value>
+      </result>
+    </result>
+  </traceRecords>
+  <traceRecords>
+    <mappingOperation name="IdentifierToIdentifier" package="DactToLemmaBehavior" module="DactToLemmaBehavior"/>
+    <context>
+      <context name="self" type="Identifier">
+        <value>
+          <modelElement href="../input/cargo.simplified.preprocessed.dact#//@activity/@activities.0/@root/@ownedNodes.1/@test/@identifier"/>
+        </value>
+      </context>
+    </context>
+    <parameters/>
+    <result>
+      <result kind="OUT" name="result" type="Identifier">
+        <value>
+          <modelElement href="../output_expected/cargo.simplified.behavior#//@activityModel/@activities.0/@root/@ownedNodes.1/@test/@identifier"/>
+        </value>
+      </result>
+    </result>
+  </traceRecords>
+  <traceRecords>
+    <mappingOperation name="ExpressionToExpression" package="DactToLemmaBehavior" module="DactToLemmaBehavior"/>
+    <context>
+      <context name="self" type="Expression">
+        <value>
+          <modelElement href="../input/cargo.simplified.preprocessed.dact#//@activity/@activities.0/@root/@ownedNodes.1/@test"/>
+        </value>
+      </context>
+    </context>
+    <parameters/>
+    <result>
+      <result kind="OUT" name="result" type="Expression">
+        <value>
+          <modelElement href="../output_expected/cargo.simplified.behavior#//@activityModel/@activities.0/@root/@ownedNodes.1/@test"/>
+        </value>
+      </result>
+    </result>
+  </traceRecords>
+  <traceRecords>
+    <mappingOperation name="ActivityGroupToActivityGroup" package="DactToLemmaBehavior" module="DactToLemmaBehavior"/>
+    <context>
+      <context name="self" type="ActivityGroup">
+        <value>
+          <modelElement href="../input/cargo.simplified.preprocessed.dact#//@activity/@activities.0/@root/@ownedNodes.1/@body"/>
+        </value>
+      </context>
+    </context>
+    <parameters/>
+    <result>
+      <result kind="OUT" name="result" type="ActivityGroup">
+        <value>
+          <modelElement href="../output_expected/cargo.simplified.behavior#//@activityModel/@activities.0/@root/@ownedNodes.1/@body"/>
+        </value>
+      </result>
+    </result>
+  </traceRecords>
+  <traceRecords>
+    <mappingOperation name="NodeToNode" package="DactToLemmaBehavior" module="DactToLemmaBehavior"/>
+    <context>
+      <context name="self" type="VariableAssignmentAction">
+        <value>
+          <modelElement href="../input/cargo.simplified.preprocessed.dact#//@activity/@activities.0/@root/@ownedNodes.1/@body/@ownedNodes.0"/>
+        </value>
+      </context>
+    </context>
+    <parameters/>
+    <result>
+      <result kind="OUT" name="result" type="VariableAssignmentAction">
+        <value>
+          <modelElement href="../output_expected/cargo.simplified.behavior#//@activityModel/@activities.0/@root/@ownedNodes.1/@body/@ownedNodes.7"/>
+        </value>
+      </result>
+    </result>
+  </traceRecords>
+  <traceRecords>
+    <mappingOperation name="VariableAssignmentToVariableAssignment" package="DactToLemmaBehavior" module="DactToLemmaBehavior"/>
+    <context>
+      <context name="self" type="VariableAssignment">
+        <value>
+          <modelElement href="../input/cargo.simplified.preprocessed.dact#//@activity/@activities.0/@root/@ownedNodes.1/@body/@ownedNodes.0/@assignment"/>
+        </value>
+      </context>
+    </context>
+    <parameters/>
+    <result>
+      <result kind="OUT" name="result" type="VariableAssignment">
+        <value>
+          <modelElement href="../output_expected/cargo.simplified.behavior#//@activityModel/@activities.0/@root/@ownedNodes.1/@body/@ownedNodes.7/@assignment"/>
+        </value>
+      </result>
+    </result>
+  </traceRecords>
+  <traceRecords>
+    <mappingOperation name="IdentifierToIdentifier" package="DactToLemmaBehavior" module="DactToLemmaBehavior"/>
+    <context>
+      <context name="self" type="Identifier">
+        <value>
+          <modelElement href="../input/cargo.simplified.preprocessed.dact#//@activity/@activities.0/@root/@ownedNodes.1/@body/@ownedNodes.0/@assignment/@identifier"/>
+        </value>
+      </context>
+    </context>
+    <parameters/>
+    <result>
+      <result kind="OUT" name="result" type="Identifier">
+        <value>
+          <modelElement href="../output_expected/cargo.simplified.behavior#//@activityModel/@activities.0/@root/@ownedNodes.1/@body/@ownedNodes.7/@assignment/@identifier"/>
+        </value>
+      </result>
+    </result>
+  </traceRecords>
+  <traceRecords>
+    <mappingOperation name="UnaryExpressionToUnaryExpression" package="DactToLemmaBehavior" module="DactToLemmaBehavior"/>
+    <context>
+      <context name="self" type="UnaryExpression">
+        <value>
+          <modelElement href="../input/cargo.simplified.preprocessed.dact#//@activity/@activities.0/@root/@ownedNodes.1/@body/@ownedNodes.0/@assignment/@expr"/>
+        </value>
+      </context>
+    </context>
+    <parameters/>
+    <result>
+      <result kind="OUT" name="result" type="UnaryExpression">
+        <value>
+          <modelElement href="../output_expected/cargo.simplified.behavior#//@activityModel/@activities.0/@root/@ownedNodes.1/@body/@ownedNodes.7/@assignment/@expr"/>
+        </value>
+      </result>
+    </result>
+  </traceRecords>
+  <traceRecords>
+    <mappingOperation name="IdentifierToIdentifier" package="DactToLemmaBehavior" module="DactToLemmaBehavior"/>
+    <context>
+      <context name="self" type="Identifier">
+        <value>
+          <modelElement href="../input/cargo.simplified.preprocessed.dact#//@activity/@activities.0/@root/@ownedNodes.1/@body/@ownedNodes.0/@assignment/@expr/@identifier"/>
+        </value>
+      </context>
+    </context>
+    <parameters/>
+    <result>
+      <result kind="OUT" name="result" type="Identifier">
+        <value>
+          <modelElement href="../output_expected/cargo.simplified.behavior#//@activityModel/@activities.0/@root/@ownedNodes.1/@body/@ownedNodes.7/@assignment/@expr/@identifier"/>
+        </value>
+      </result>
+    </result>
+  </traceRecords>
+  <traceRecords>
+    <mappingOperation name="ExpressionToExpression" package="DactToLemmaBehavior" module="DactToLemmaBehavior"/>
+    <context>
+      <context name="self" type="Expression">
+        <value>
+          <modelElement href="../input/cargo.simplified.preprocessed.dact#//@activity/@activities.0/@root/@ownedNodes.1/@body/@ownedNodes.0/@assignment/@expr"/>
+        </value>
+      </context>
+    </context>
+    <parameters/>
+    <result>
+      <result kind="OUT" name="result" type="Expression">
+        <value>
+          <modelElement href="../output_expected/cargo.simplified.behavior#//@activityModel/@activities.0/@root/@ownedNodes.1/@body/@ownedNodes.7/@assignment/@expr"/>
+        </value>
+      </result>
+    </result>
+  </traceRecords>
+  <traceRecords>
+    <mappingOperation name="NodeToNode" package="DactToLemmaBehavior" module="DactToLemmaBehavior"/>
+    <context>
+      <context name="self" type="FlowFinalNode">
+        <value>
+          <modelElement href="../input/cargo.simplified.preprocessed.dact#//@activity/@activities.0/@root/@ownedNodes.1/@body/@ownedNodes.1"/>
+        </value>
+      </context>
+    </context>
+    <parameters/>
+    <result>
+      <result kind="OUT" name="result" type="FlowFinalNode">
+        <value>
+          <modelElement href="../output_expected/cargo.simplified.behavior#//@activityModel/@activities.0/@root/@ownedNodes.1/@body/@ownedNodes.9"/>
+        </value>
+      </result>
+    </result>
+  </traceRecords>
+  <traceRecords>
+    <mappingOperation name="NodeToNode" package="DactToLemmaBehavior" module="DactToLemmaBehavior"/>
+    <context>
+      <context name="self" type="CallOperationAction">
+        <value>
+          <modelElement href="../input/cargo.simplified.preprocessed.dact#//@activity/@activities.0/@root/@ownedNodes.1/@body/@ownedNodes.2"/>
+        </value>
+      </context>
+    </context>
+    <parameters/>
+    <result>
+      <result kind="OUT" name="result" type="CallOperationAction">
+        <value>
+          <modelElement href="../output_expected/cargo.simplified.behavior#//@activityModel/@activities.0/@root/@ownedNodes.1/@body/@ownedNodes.3"/>
+        </value>
+      </result>
+    </result>
+  </traceRecords>
+  <traceRecords>
+    <mappingOperation name="ParameterMappingToParameterMapping" package="DactToLemmaBehavior" module="DactToLemmaBehavior"/>
+    <context>
+      <context name="self" type="ParameterMapping">
+        <value>
+          <modelElement href="../input/cargo.simplified.preprocessed.dact#//@activity/@activities.0/@root/@ownedNodes.1/@body/@ownedNodes.2/@parameterMappings.1"/>
+        </value>
+      </context>
+    </context>
+    <parameters/>
+    <result>
+      <result kind="OUT" name="result" type="ParameterMapping">
+        <value>
+          <modelElement href="../output_expected/cargo.simplified.behavior#//@activityModel/@activities.0/@root/@ownedNodes.1/@body/@ownedNodes.3/@parameterMappings.0"/>
+        </value>
+      </result>
+    </result>
+  </traceRecords>
+  <traceRecords>
+    <mappingOperation name="IdentifierToIdentifier" package="DactToLemmaBehavior" module="DactToLemmaBehavior"/>
+    <context>
+      <context name="self" type="Identifier">
+        <value>
+          <modelElement href="../input/cargo.simplified.preprocessed.dact#//@activity/@activities.0/@root/@ownedNodes.1/@body/@ownedNodes.2/@parameterMappings.1/@identifier"/>
+        </value>
+      </context>
+    </context>
+    <parameters/>
+    <result>
+      <result kind="OUT" name="result" type="Identifier">
+        <value>
+          <modelElement href="../output_expected/cargo.simplified.behavior#//@activityModel/@activities.0/@root/@ownedNodes.1/@body/@ownedNodes.3/@parameterMappings.0/@identifier"/>
+        </value>
+      </result>
+    </result>
+  </traceRecords>
+  <traceRecords>
+    <mappingOperation name="ParameterMappingToParameterMapping" package="DactToLemmaBehavior" module="DactToLemmaBehavior"/>
+    <context>
+      <context name="self" type="ParameterMapping">
+        <value>
+          <modelElement href="../input/cargo.simplified.preprocessed.dact#//@activity/@activities.0/@root/@ownedNodes.1/@body/@ownedNodes.2/@parameterMappings.0"/>
+        </value>
+      </context>
+    </context>
+    <parameters/>
+    <result>
+      <result kind="OUT" name="result" type="ParameterMapping">
+        <value>
+          <modelElement href="../output_expected/cargo.simplified.behavior#//@activityModel/@activities.0/@root/@ownedNodes.1/@body/@ownedNodes.3/@parameterMappings.1"/>
+        </value>
+      </result>
+    </result>
+  </traceRecords>
+  <traceRecords>
+    <mappingOperation name="IdentifierToIdentifier" package="DactToLemmaBehavior" module="DactToLemmaBehavior"/>
+    <context>
+      <context name="self" type="Identifier">
+        <value>
+          <modelElement href="../input/cargo.simplified.preprocessed.dact#//@activity/@activities.0/@root/@ownedNodes.1/@body/@ownedNodes.2/@parameterMappings.0/@identifier"/>
+        </value>
+      </context>
+    </context>
+    <parameters/>
+    <result>
+      <result kind="OUT" name="result" type="Identifier">
+        <value>
+          <modelElement href="../output_expected/cargo.simplified.behavior#//@activityModel/@activities.0/@root/@ownedNodes.1/@body/@ownedNodes.3/@parameterMappings.1/@identifier"/>
+        </value>
+      </result>
+    </result>
+  </traceRecords>
+  <traceRecords>
+    <mappingOperation name="NodeToNode" package="DactToLemmaBehavior" module="DactToLemmaBehavior"/>
+    <context>
+      <context name="self" type="ConditionalNode">
+        <value>
+          <modelElement href="../input/cargo.simplified.preprocessed.dact#//@activity/@activities.0/@root/@ownedNodes.1/@body/@ownedNodes.3"/>
+        </value>
+      </context>
+    </context>
+    <parameters/>
+    <result>
+      <result kind="OUT" name="result" type="ConditionalNode">
+        <value>
+          <modelElement href="../output_expected/cargo.simplified.behavior#//@activityModel/@activities.0/@root/@ownedNodes.1/@body/@ownedNodes.4"/>
+        </value>
+      </result>
+    </result>
+  </traceRecords>
+  <traceRecords>
+    <mappingOperation name="NotExpressionToNotExpression" package="DactToLemmaBehavior" module="DactToLemmaBehavior"/>
+    <context>
+      <context name="self" type="NotExpression">
+        <value>
+          <modelElement href="../input/cargo.simplified.preprocessed.dact#//@activity/@activities.0/@root/@ownedNodes.1/@body/@ownedNodes.3/@test"/>
+        </value>
+      </context>
+    </context>
+    <parameters/>
+    <result>
+      <result kind="OUT" name="result" type="NotExpression">
+        <value>
+          <modelElement href="../output_expected/cargo.simplified.behavior#//@activityModel/@activities.0/@root/@ownedNodes.1/@body/@ownedNodes.4/@test"/>
+        </value>
+      </result>
+    </result>
+  </traceRecords>
+  <traceRecords>
+    <mappingOperation name="UnaryExpressionToUnaryExpression" package="DactToLemmaBehavior" module="DactToLemmaBehavior"/>
+    <context>
+      <context name="self" type="UnaryExpression">
+        <value>
+          <modelElement href="../input/cargo.simplified.preprocessed.dact#//@activity/@activities.0/@root/@ownedNodes.1/@body/@ownedNodes.3/@test/@expr"/>
+        </value>
+      </context>
+    </context>
+    <parameters/>
+    <result>
+      <result kind="OUT" name="result" type="UnaryExpression">
+        <value>
+          <modelElement href="../output_expected/cargo.simplified.behavior#//@activityModel/@activities.0/@root/@ownedNodes.1/@body/@ownedNodes.4/@test/@expr"/>
+        </value>
+      </result>
+    </result>
+  </traceRecords>
+  <traceRecords>
+    <mappingOperation name="IdentifierToIdentifier" package="DactToLemmaBehavior" module="DactToLemmaBehavior"/>
+    <context>
+      <context name="self" type="Identifier">
+        <value>
+          <modelElement href="../input/cargo.simplified.preprocessed.dact#//@activity/@activities.0/@root/@ownedNodes.1/@body/@ownedNodes.3/@test/@expr/@identifier"/>
+        </value>
+      </context>
+    </context>
+    <parameters/>
+    <result>
+      <result kind="OUT" name="result" type="Identifier">
+        <value>
+          <modelElement href="../output_expected/cargo.simplified.behavior#//@activityModel/@activities.0/@root/@ownedNodes.1/@body/@ownedNodes.4/@test/@expr/@identifier"/>
+        </value>
+      </result>
+    </result>
+  </traceRecords>
+  <traceRecords>
+    <mappingOperation name="ExpressionToExpression" package="DactToLemmaBehavior" module="DactToLemmaBehavior"/>
+    <context>
+      <context name="self" type="Expression">
+        <value>
+          <modelElement href="../input/cargo.simplified.preprocessed.dact#//@activity/@activities.0/@root/@ownedNodes.1/@body/@ownedNodes.3/@test/@expr"/>
+        </value>
+      </context>
+    </context>
+    <parameters/>
+    <result>
+      <result kind="OUT" name="result" type="Expression">
+        <value>
+          <modelElement href="../output_expected/cargo.simplified.behavior#//@activityModel/@activities.0/@root/@ownedNodes.1/@body/@ownedNodes.4/@test/@expr"/>
+        </value>
+      </result>
+    </result>
+  </traceRecords>
+  <traceRecords>
+    <mappingOperation name="ExpressionToExpression" package="DactToLemmaBehavior" module="DactToLemmaBehavior"/>
+    <context>
+      <context name="self" type="Expression">
+        <value>
+          <modelElement href="../input/cargo.simplified.preprocessed.dact#//@activity/@activities.0/@root/@ownedNodes.1/@body/@ownedNodes.3/@test"/>
+        </value>
+      </context>
+    </context>
+    <parameters/>
+    <result>
+      <result kind="OUT" name="result" type="Expression">
+        <value>
+          <modelElement href="../output_expected/cargo.simplified.behavior#//@activityModel/@activities.0/@root/@ownedNodes.1/@body/@ownedNodes.4/@test"/>
+        </value>
+      </result>
+    </result>
+  </traceRecords>
+  <traceRecords>
+    <mappingOperation name="ActivityGroupToActivityGroup" package="DactToLemmaBehavior" module="DactToLemmaBehavior"/>
+    <context>
+      <context name="self" type="ActivityGroup">
+        <value>
+          <modelElement href="../input/cargo.simplified.preprocessed.dact#//@activity/@activities.0/@root/@ownedNodes.1/@body/@ownedNodes.3/@body"/>
+        </value>
+      </context>
+    </context>
+    <parameters/>
+    <result>
+      <result kind="OUT" name="result" type="ActivityGroup">
+        <value>
+          <modelElement href="../output_expected/cargo.simplified.behavior#//@activityModel/@activities.0/@root/@ownedNodes.1/@body/@ownedNodes.4/@body"/>
+        </value>
+      </result>
+    </result>
+  </traceRecords>
+  <traceRecords>
+    <mappingOperation name="NodeToNode" package="DactToLemmaBehavior" module="DactToLemmaBehavior"/>
+    <context>
+      <context name="self" type="RaiseEntityNotFoundExceptionAction">
+        <value>
+          <modelElement href="../input/cargo.simplified.preprocessed.dact#//@activity/@activities.0/@root/@ownedNodes.1/@body/@ownedNodes.3/@body/@ownedNodes.0"/>
+        </value>
+      </context>
+    </context>
+    <parameters/>
+    <result>
+      <result kind="OUT" name="result" type="RaiseEntityNotFoundExceptionAction">
+        <value>
+          <modelElement href="../output_expected/cargo.simplified.behavior#//@activityModel/@activities.0/@root/@ownedNodes.1/@body/@ownedNodes.4/@body/@ownedNodes.2"/>
+        </value>
+      </result>
+    </result>
+  </traceRecords>
+  <traceRecords>
+    <mappingOperation name="NodeToNode" package="DactToLemmaBehavior" module="DactToLemmaBehavior"/>
+    <context>
+      <context name="self" type="FlowFinalNode">
+        <value>
+          <modelElement href="../input/cargo.simplified.preprocessed.dact#//@activity/@activities.0/@root/@ownedNodes.1/@body/@ownedNodes.3/@body/@ownedNodes.1"/>
+        </value>
+      </context>
+    </context>
+    <parameters/>
+    <result>
+      <result kind="OUT" name="result" type="FlowFinalNode">
+        <value>
+          <modelElement href="../output_expected/cargo.simplified.behavior#//@activityModel/@activities.0/@root/@ownedNodes.1/@body/@ownedNodes.4/@body/@ownedNodes.1"/>
+        </value>
+      </result>
+    </result>
+  </traceRecords>
+  <traceRecords>
+    <mappingOperation name="NodeToNode" package="DactToLemmaBehavior" module="DactToLemmaBehavior"/>
+    <context>
+      <context name="self" type="InitialNode">
+        <value>
+          <modelElement href="../input/cargo.simplified.preprocessed.dact#//@activity/@activities.0/@root/@ownedNodes.1/@body/@ownedNodes.3/@body/@ownedNodes.2"/>
+        </value>
+      </context>
+    </context>
+    <parameters/>
+    <result>
+      <result kind="OUT" name="result" type="InitialNode">
+        <value>
+          <modelElement href="../output_expected/cargo.simplified.behavior#//@activityModel/@activities.0/@root/@ownedNodes.1/@body/@ownedNodes.4/@body/@ownedNodes.0"/>
+        </value>
+      </result>
+    </result>
+  </traceRecords>
+  <traceRecords>
+    <mappingOperation name="EdgeToEdge" package="DactToLemmaBehavior" module="DactToLemmaBehavior"/>
+    <context>
+      <context name="self" type="ActivityEdge">
+        <value>
+          <modelElement href="../input/cargo.simplified.preprocessed.dact#//@activity/@activities.0/@root/@ownedNodes.1/@body/@ownedNodes.3/@body/@ownedEdges.0"/>
+        </value>
+      </context>
+    </context>
+    <parameters/>
+    <result>
+      <result kind="OUT" name="result" type="ActivityEdge">
+        <value>
+          <modelElement href="../output_expected/cargo.simplified.behavior#//@activityModel/@activities.0/@root/@ownedNodes.1/@body/@ownedNodes.4/@body/@ownedEdges.1"/>
+        </value>
+      </result>
+    </result>
+  </traceRecords>
+  <traceRecords>
+    <mappingOperation name="EdgeToEdge" package="DactToLemmaBehavior" module="DactToLemmaBehavior"/>
+    <context>
+      <context name="self" type="ActivityEdge">
+        <value>
+          <modelElement href="../input/cargo.simplified.preprocessed.dact#//@activity/@activities.0/@root/@ownedNodes.1/@body/@ownedNodes.3/@body/@ownedEdges.1"/>
+        </value>
+      </context>
+    </context>
+    <parameters/>
+    <result>
+      <result kind="OUT" name="result" type="ActivityEdge">
+        <value>
+          <modelElement href="../output_expected/cargo.simplified.behavior#//@activityModel/@activities.0/@root/@ownedNodes.1/@body/@ownedNodes.4/@body/@ownedEdges.0"/>
+        </value>
+      </result>
+    </result>
+  </traceRecords>
+  <traceRecords>
+    <mappingOperation name="ScopeToScope" package="DactToLemmaBehavior" module="DactToLemmaBehavior"/>
+    <context>
+      <context name="self" type="Scope">
+        <value>
+          <modelElement href="../input/cargo.simplified.preprocessed.dact#//@activity/@activities.0/@root/@ownedNodes.1/@body/@ownedNodes.3/@body/@scope"/>
+        </value>
+      </context>
+    </context>
+    <parameters/>
+    <result>
+      <result kind="OUT" name="result" type="Scope">
+        <value>
+          <modelElement href="../output_expected/cargo.simplified.behavior#//@activityModel/@activities.0/@root/@ownedNodes.1/@body/@ownedNodes.4/@body/@scope"/>
+        </value>
+      </result>
+    </result>
+  </traceRecords>
+  <traceRecords>
+    <mappingOperation name="VariableToVariable" package="DactToLemmaBehavior" module="DactToLemmaBehavior"/>
+    <context>
+      <context name="self" type="Variable">
+        <value>
+          <modelElement href="../input/cargo.simplified.preprocessed.dact#//@activity/@activities.0/@root/@scope/@ownedVariables.1"/>
+        </value>
+      </context>
+    </context>
+    <parameters/>
+    <result>
+      <result kind="OUT" name="result" type="Variable">
+        <value>
+          <modelElement href="../output_expected/cargo.simplified.behavior#//@activityModel/@activities.0/@root/@scope/@ownedVariables.4"/>
+        </value>
+      </result>
+    </result>
+  </traceRecords>
+  <traceRecords>
+    <mappingOperation name="VariableToVariable" package="DactToLemmaBehavior" module="DactToLemmaBehavior"/>
+    <context>
+      <context name="self" type="Variable">
+        <value>
+          <modelElement href="../input/cargo.simplified.preprocessed.dact#//@activity/@activities.0/@root/@ownedNodes.1/@body/@scope/@ownedVariables.0"/>
+        </value>
+      </context>
+    </context>
+    <parameters/>
+    <result>
+      <result kind="OUT" name="result" type="Variable">
+        <value>
+          <modelElement href="../output_expected/cargo.simplified.behavior#//@activityModel/@activities.0/@root/@ownedNodes.1/@body/@scope/@ownedVariables.0"/>
+        </value>
+      </result>
+    </result>
+  </traceRecords>
+  <traceRecords>
+    <mappingOperation name="VariableToVariable" package="DactToLemmaBehavior" module="DactToLemmaBehavior"/>
+    <context>
+      <context name="self" type="Variable">
+        <value>
+          <modelElement href="../input/cargo.simplified.preprocessed.dact#//@activity/@activities.0/@root/@scope/@ownedVariables.2"/>
+        </value>
+      </context>
+    </context>
+    <parameters/>
+    <result>
+      <result kind="OUT" name="result" type="Variable">
+        <value>
+          <modelElement href="../output_expected/cargo.simplified.behavior#//@activityModel/@activities.0/@root/@scope/@ownedVariables.2"/>
+        </value>
+      </result>
+    </result>
+  </traceRecords>
+  <traceRecords>
+    <mappingOperation name="VariableToVariable" package="DactToLemmaBehavior" module="DactToLemmaBehavior"/>
+    <context>
+      <context name="self" type="Variable">
+        <value>
+          <modelElement href="../input/cargo.simplified.preprocessed.dact#//@activity/@activities.0/@root/@scope/@ownedVariables.5"/>
+        </value>
+      </context>
+    </context>
+    <parameters/>
+    <result>
+      <result kind="OUT" name="result" type="Variable">
+        <value>
+          <modelElement href="../output_expected/cargo.simplified.behavior#//@activityModel/@activities.0/@root/@scope/@ownedVariables.3"/>
+        </value>
+      </result>
+    </result>
+  </traceRecords>
+  <traceRecords>
+    <mappingOperation name="VariableToVariable" package="DactToLemmaBehavior" module="DactToLemmaBehavior"/>
+    <context>
+      <context name="self" type="Variable">
+        <value>
+          <modelElement href="../input/cargo.simplified.preprocessed.dact#//@activity/@activities.0/@root/@scope/@ownedVariables.3"/>
+        </value>
+      </context>
+    </context>
+    <parameters/>
+    <result>
+      <result kind="OUT" name="result" type="Variable">
+        <value>
+          <modelElement href="../output_expected/cargo.simplified.behavior#//@activityModel/@activities.0/@root/@scope/@ownedVariables.5"/>
+        </value>
+      </result>
+    </result>
+  </traceRecords>
+  <traceRecords>
+    <mappingOperation name="VariableToVariable" package="DactToLemmaBehavior" module="DactToLemmaBehavior"/>
+    <context>
+      <context name="self" type="Variable">
+        <value>
+          <modelElement href="../input/cargo.simplified.preprocessed.dact#//@activity/@activities.0/@root/@ownedNodes.1/@body/@scope/@ownedVariables.1"/>
+        </value>
+      </context>
+    </context>
+    <parameters/>
+    <result>
+      <result kind="OUT" name="result" type="Variable">
+        <value>
+          <modelElement href="../output_expected/cargo.simplified.behavior#//@activityModel/@activities.0/@root/@ownedNodes.1/@body/@scope/@ownedVariables.1"/>
+        </value>
+      </result>
+    </result>
+  </traceRecords>
+  <traceRecords>
+    <mappingOperation name="VariableToVariable" package="DactToLemmaBehavior" module="DactToLemmaBehavior"/>
+    <context>
+      <context name="self" type="Variable">
+        <value>
+          <modelElement href="../input/cargo.simplified.preprocessed.dact#//@activity/@activities.0/@root/@scope/@ownedVariables.0"/>
+        </value>
+      </context>
+    </context>
+    <parameters/>
+    <result>
+      <result kind="OUT" name="result" type="Variable">
+        <value>
+          <modelElement href="../output_expected/cargo.simplified.behavior#//@activityModel/@activities.0/@root/@scope/@ownedVariables.0"/>
+        </value>
+      </result>
+    </result>
+  </traceRecords>
+  <traceRecords>
+    <mappingOperation name="VariableToVariable" package="DactToLemmaBehavior" module="DactToLemmaBehavior"/>
+    <context>
+      <context name="self" type="Variable">
+        <value>
+          <modelElement href="../input/cargo.simplified.preprocessed.dact#//@activity/@activities.0/@root/@scope/@ownedVariables.4"/>
+        </value>
+      </context>
+    </context>
+    <parameters/>
+    <result>
+      <result kind="OUT" name="result" type="Variable">
+        <value>
+          <modelElement href="../output_expected/cargo.simplified.behavior#//@activityModel/@activities.0/@root/@scope/@ownedVariables.1"/>
+        </value>
+      </result>
+    </result>
+  </traceRecords>
+  <traceRecords>
+    <mappingOperation name="ActivityGroupToActivityGroup" package="DactToLemmaBehavior" module="DactToLemmaBehavior"/>
+    <context>
+      <context name="self" type="ActivityGroup">
+        <value>
+          <modelElement href="../input/cargo.simplified.preprocessed.dact#//@activity/@activities.0/@root/@ownedNodes.1/@body/@ownedNodes.3/@elseBody"/>
+        </value>
+      </context>
+    </context>
+    <parameters/>
+    <result>
+      <result kind="OUT" name="result" type="ActivityGroup">
+        <value>
+          <modelElement href="../output_expected/cargo.simplified.behavior#//@activityModel/@activities.0/@root/@ownedNodes.1/@body/@ownedNodes.4/@elseBody"/>
+        </value>
+      </result>
+    </result>
+  </traceRecords>
+  <traceRecords>
+    <mappingOperation name="ScopeToScope" package="DactToLemmaBehavior" module="DactToLemmaBehavior"/>
+    <context>
+      <context name="self" type="Scope">
+        <value>
+          <modelElement href="../input/cargo.simplified.preprocessed.dact#//@activity/@activities.0/@root/@ownedNodes.1/@body/@ownedNodes.3/@elseBody/@scope"/>
+        </value>
+      </context>
+    </context>
+    <parameters/>
+    <result>
+      <result kind="OUT" name="result" type="Scope">
+        <value>
+          <modelElement href="../output_expected/cargo.simplified.behavior#//@activityModel/@activities.0/@root/@ownedNodes.1/@body/@ownedNodes.4/@elseBody/@scope"/>
+        </value>
+      </result>
+    </result>
+  </traceRecords>
+  <traceRecords>
+    <mappingOperation name="NodeToNode" package="DactToLemmaBehavior" module="DactToLemmaBehavior"/>
+    <context>
+      <context name="self" type="CallOperationAction">
+        <value>
+          <modelElement href="../input/cargo.simplified.preprocessed.dact#//@activity/@activities.0/@root/@ownedNodes.1/@body/@ownedNodes.4"/>
+        </value>
+      </context>
+    </context>
+    <parameters/>
+    <result>
+      <result kind="OUT" name="result" type="CallOperationAction">
+        <value>
+          <modelElement href="../output_expected/cargo.simplified.behavior#//@activityModel/@activities.0/@root/@ownedNodes.1/@body/@ownedNodes.1"/>
+        </value>
+      </result>
+    </result>
+  </traceRecords>
+  <traceRecords>
+    <mappingOperation name="ParameterMappingToParameterMapping" package="DactToLemmaBehavior" module="DactToLemmaBehavior"/>
+    <context>
+      <context name="self" type="ParameterMapping">
+        <value>
+          <modelElement href="../input/cargo.simplified.preprocessed.dact#//@activity/@activities.0/@root/@ownedNodes.1/@body/@ownedNodes.4/@parameterMappings.0"/>
+        </value>
+      </context>
+    </context>
+    <parameters/>
+    <result>
+      <result kind="OUT" name="result" type="ParameterMapping">
+        <value>
+          <modelElement href="../output_expected/cargo.simplified.behavior#//@activityModel/@activities.0/@root/@ownedNodes.1/@body/@ownedNodes.1/@parameterMappings.1"/>
+        </value>
+      </result>
+    </result>
+  </traceRecords>
+  <traceRecords>
+    <mappingOperation name="IdentifierToIdentifier" package="DactToLemmaBehavior" module="DactToLemmaBehavior"/>
+    <context>
+      <context name="self" type="Identifier">
+        <value>
+          <modelElement href="../input/cargo.simplified.preprocessed.dact#//@activity/@activities.0/@root/@ownedNodes.1/@body/@ownedNodes.4/@parameterMappings.0/@identifier"/>
+        </value>
+      </context>
+    </context>
+    <parameters/>
+    <result>
+      <result kind="OUT" name="result" type="Identifier">
+        <value>
+          <modelElement href="../output_expected/cargo.simplified.behavior#//@activityModel/@activities.0/@root/@ownedNodes.1/@body/@ownedNodes.1/@parameterMappings.1/@identifier"/>
+        </value>
+      </result>
+    </result>
+  </traceRecords>
+  <traceRecords>
+    <mappingOperation name="ParameterMappingToParameterMapping" package="DactToLemmaBehavior" module="DactToLemmaBehavior"/>
+    <context>
+      <context name="self" type="ParameterMapping">
+        <value>
+          <modelElement href="../input/cargo.simplified.preprocessed.dact#//@activity/@activities.0/@root/@ownedNodes.1/@body/@ownedNodes.4/@parameterMappings.1"/>
+        </value>
+      </context>
+    </context>
+    <parameters/>
+    <result>
+      <result kind="OUT" name="result" type="ParameterMapping">
+        <value>
+          <modelElement href="../output_expected/cargo.simplified.behavior#//@activityModel/@activities.0/@root/@ownedNodes.1/@body/@ownedNodes.1/@parameterMappings.0"/>
+        </value>
+      </result>
+    </result>
+  </traceRecords>
+  <traceRecords>
+    <mappingOperation name="IdentifierToIdentifier" package="DactToLemmaBehavior" module="DactToLemmaBehavior"/>
+    <context>
+      <context name="self" type="Identifier">
+        <value>
+          <modelElement href="../input/cargo.simplified.preprocessed.dact#//@activity/@activities.0/@root/@ownedNodes.1/@body/@ownedNodes.4/@parameterMappings.1/@identifier"/>
+        </value>
+      </context>
+    </context>
+    <parameters/>
+    <result>
+      <result kind="OUT" name="result" type="Identifier">
+        <value>
+          <modelElement href="../output_expected/cargo.simplified.behavior#//@activityModel/@activities.0/@root/@ownedNodes.1/@body/@ownedNodes.1/@parameterMappings.0/@identifier"/>
+        </value>
+      </result>
+    </result>
+  </traceRecords>
+  <traceRecords>
+    <mappingOperation name="NodeToNode" package="DactToLemmaBehavior" module="DactToLemmaBehavior"/>
+    <context>
+      <context name="self" type="ConditionalNode">
+        <value>
+          <modelElement href="../input/cargo.simplified.preprocessed.dact#//@activity/@activities.0/@root/@ownedNodes.1/@body/@ownedNodes.5"/>
+        </value>
+      </context>
+    </context>
+    <parameters/>
+    <result>
+      <result kind="OUT" name="result" type="ConditionalNode">
+        <value>
+          <modelElement href="../output_expected/cargo.simplified.behavior#//@activityModel/@activities.0/@root/@ownedNodes.1/@body/@ownedNodes.10"/>
+        </value>
+      </result>
+    </result>
+  </traceRecords>
+  <traceRecords>
+    <mappingOperation name="NotExpressionToNotExpression" package="DactToLemmaBehavior" module="DactToLemmaBehavior"/>
+    <context>
+      <context name="self" type="NotExpression">
+        <value>
+          <modelElement href="../input/cargo.simplified.preprocessed.dact#//@activity/@activities.0/@root/@ownedNodes.1/@body/@ownedNodes.5/@test"/>
+        </value>
+      </context>
+    </context>
+    <parameters/>
+    <result>
+      <result kind="OUT" name="result" type="NotExpression">
+        <value>
+          <modelElement href="../output_expected/cargo.simplified.behavior#//@activityModel/@activities.0/@root/@ownedNodes.1/@body/@ownedNodes.10/@test"/>
+        </value>
+      </result>
+    </result>
+  </traceRecords>
+  <traceRecords>
+    <mappingOperation name="UnaryExpressionToUnaryExpression" package="DactToLemmaBehavior" module="DactToLemmaBehavior"/>
+    <context>
+      <context name="self" type="UnaryExpression">
+        <value>
+          <modelElement href="../input/cargo.simplified.preprocessed.dact#//@activity/@activities.0/@root/@ownedNodes.1/@body/@ownedNodes.5/@test/@expr"/>
+        </value>
+      </context>
+    </context>
+    <parameters/>
+    <result>
+      <result kind="OUT" name="result" type="UnaryExpression">
+        <value>
+          <modelElement href="../output_expected/cargo.simplified.behavior#//@activityModel/@activities.0/@root/@ownedNodes.1/@body/@ownedNodes.10/@test/@expr"/>
+        </value>
+      </result>
+    </result>
+  </traceRecords>
+  <traceRecords>
+    <mappingOperation name="IdentifierToIdentifier" package="DactToLemmaBehavior" module="DactToLemmaBehavior"/>
+    <context>
+      <context name="self" type="Identifier">
+        <value>
+          <modelElement href="../input/cargo.simplified.preprocessed.dact#//@activity/@activities.0/@root/@ownedNodes.1/@body/@ownedNodes.5/@test/@expr/@identifier"/>
+        </value>
+      </context>
+    </context>
+    <parameters/>
+    <result>
+      <result kind="OUT" name="result" type="Identifier">
+        <value>
+          <modelElement href="../output_expected/cargo.simplified.behavior#//@activityModel/@activities.0/@root/@ownedNodes.1/@body/@ownedNodes.10/@test/@expr/@identifier"/>
+        </value>
+      </result>
+    </result>
+  </traceRecords>
+  <traceRecords>
+    <mappingOperation name="ExpressionToExpression" package="DactToLemmaBehavior" module="DactToLemmaBehavior"/>
+    <context>
+      <context name="self" type="Expression">
+        <value>
+          <modelElement href="../input/cargo.simplified.preprocessed.dact#//@activity/@activities.0/@root/@ownedNodes.1/@body/@ownedNodes.5/@test/@expr"/>
+        </value>
+      </context>
+    </context>
+    <parameters/>
+    <result>
+      <result kind="OUT" name="result" type="Expression">
+        <value>
+          <modelElement href="../output_expected/cargo.simplified.behavior#//@activityModel/@activities.0/@root/@ownedNodes.1/@body/@ownedNodes.10/@test/@expr"/>
+        </value>
+      </result>
+    </result>
+  </traceRecords>
+  <traceRecords>
+    <mappingOperation name="ExpressionToExpression" package="DactToLemmaBehavior" module="DactToLemmaBehavior"/>
+    <context>
+      <context name="self" type="Expression">
+        <value>
+          <modelElement href="../input/cargo.simplified.preprocessed.dact#//@activity/@activities.0/@root/@ownedNodes.1/@body/@ownedNodes.5/@test"/>
+        </value>
+      </context>
+    </context>
+    <parameters/>
+    <result>
+      <result kind="OUT" name="result" type="Expression">
+        <value>
+          <modelElement href="../output_expected/cargo.simplified.behavior#//@activityModel/@activities.0/@root/@ownedNodes.1/@body/@ownedNodes.10/@test"/>
+        </value>
+      </result>
+    </result>
+  </traceRecords>
+  <traceRecords>
+    <mappingOperation name="ActivityGroupToActivityGroup" package="DactToLemmaBehavior" module="DactToLemmaBehavior"/>
+    <context>
+      <context name="self" type="ActivityGroup">
+        <value>
+          <modelElement href="../input/cargo.simplified.preprocessed.dact#//@activity/@activities.0/@root/@ownedNodes.1/@body/@ownedNodes.5/@body"/>
+        </value>
+      </context>
+    </context>
+    <parameters/>
+    <result>
+      <result kind="OUT" name="result" type="ActivityGroup">
+        <value>
+          <modelElement href="../output_expected/cargo.simplified.behavior#//@activityModel/@activities.0/@root/@ownedNodes.1/@body/@ownedNodes.10/@body"/>
+        </value>
+      </result>
+    </result>
+  </traceRecords>
+  <traceRecords>
+    <mappingOperation name="NodeToNode" package="DactToLemmaBehavior" module="DactToLemmaBehavior"/>
+    <context>
+      <context name="self" type="RaiseEntityNotFoundExceptionAction">
+        <value>
+          <modelElement href="../input/cargo.simplified.preprocessed.dact#//@activity/@activities.0/@root/@ownedNodes.1/@body/@ownedNodes.5/@body/@ownedNodes.0"/>
+        </value>
+      </context>
+    </context>
+    <parameters/>
+    <result>
+      <result kind="OUT" name="result" type="RaiseEntityNotFoundExceptionAction">
+        <value>
+          <modelElement href="../output_expected/cargo.simplified.behavior#//@activityModel/@activities.0/@root/@ownedNodes.1/@body/@ownedNodes.10/@body/@ownedNodes.1"/>
+        </value>
+      </result>
+    </result>
+  </traceRecords>
+  <traceRecords>
+    <mappingOperation name="NodeToNode" package="DactToLemmaBehavior" module="DactToLemmaBehavior"/>
+    <context>
+      <context name="self" type="InitialNode">
+        <value>
+          <modelElement href="../input/cargo.simplified.preprocessed.dact#//@activity/@activities.0/@root/@ownedNodes.1/@body/@ownedNodes.5/@body/@ownedNodes.1"/>
+        </value>
+      </context>
+    </context>
+    <parameters/>
+    <result>
+      <result kind="OUT" name="result" type="InitialNode">
+        <value>
+          <modelElement href="../output_expected/cargo.simplified.behavior#//@activityModel/@activities.0/@root/@ownedNodes.1/@body/@ownedNodes.10/@body/@ownedNodes.0"/>
+        </value>
+      </result>
+    </result>
+  </traceRecords>
+  <traceRecords>
+    <mappingOperation name="NodeToNode" package="DactToLemmaBehavior" module="DactToLemmaBehavior"/>
+    <context>
+      <context name="self" type="FlowFinalNode">
+        <value>
+          <modelElement href="../input/cargo.simplified.preprocessed.dact#//@activity/@activities.0/@root/@ownedNodes.1/@body/@ownedNodes.5/@body/@ownedNodes.2"/>
+        </value>
+      </context>
+    </context>
+    <parameters/>
+    <result>
+      <result kind="OUT" name="result" type="FlowFinalNode">
+        <value>
+          <modelElement href="../output_expected/cargo.simplified.behavior#//@activityModel/@activities.0/@root/@ownedNodes.1/@body/@ownedNodes.10/@body/@ownedNodes.2"/>
+        </value>
+      </result>
+    </result>
+  </traceRecords>
+  <traceRecords>
+    <mappingOperation name="EdgeToEdge" package="DactToLemmaBehavior" module="DactToLemmaBehavior"/>
+    <context>
+      <context name="self" type="ActivityEdge">
+        <value>
+          <modelElement href="../input/cargo.simplified.preprocessed.dact#//@activity/@activities.0/@root/@ownedNodes.1/@body/@ownedNodes.5/@body/@ownedEdges.1"/>
+        </value>
+      </context>
+    </context>
+    <parameters/>
+    <result>
+      <result kind="OUT" name="result" type="ActivityEdge">
+        <value>
+          <modelElement href="../output_expected/cargo.simplified.behavior#//@activityModel/@activities.0/@root/@ownedNodes.1/@body/@ownedNodes.10/@body/@ownedEdges.1"/>
+        </value>
+      </result>
+    </result>
+  </traceRecords>
+  <traceRecords>
+    <mappingOperation name="EdgeToEdge" package="DactToLemmaBehavior" module="DactToLemmaBehavior"/>
+    <context>
+      <context name="self" type="ActivityEdge">
+        <value>
+          <modelElement href="../input/cargo.simplified.preprocessed.dact#//@activity/@activities.0/@root/@ownedNodes.1/@body/@ownedNodes.5/@body/@ownedEdges.0"/>
+        </value>
+      </context>
+    </context>
+    <parameters/>
+    <result>
+      <result kind="OUT" name="result" type="ActivityEdge">
+        <value>
+          <modelElement href="../output_expected/cargo.simplified.behavior#//@activityModel/@activities.0/@root/@ownedNodes.1/@body/@ownedNodes.10/@body/@ownedEdges.0"/>
+        </value>
+      </result>
+    </result>
+  </traceRecords>
+  <traceRecords>
+    <mappingOperation name="ScopeToScope" package="DactToLemmaBehavior" module="DactToLemmaBehavior"/>
+    <context>
+      <context name="self" type="Scope">
+        <value>
+          <modelElement href="../input/cargo.simplified.preprocessed.dact#//@activity/@activities.0/@root/@ownedNodes.1/@body/@ownedNodes.5/@body/@scope"/>
+        </value>
+      </context>
+    </context>
+    <parameters/>
+    <result>
+      <result kind="OUT" name="result" type="Scope">
+        <value>
+          <modelElement href="../output_expected/cargo.simplified.behavior#//@activityModel/@activities.0/@root/@ownedNodes.1/@body/@ownedNodes.10/@body/@scope"/>
+        </value>
+      </result>
+    </result>
+  </traceRecords>
+  <traceRecords>
+    <mappingOperation name="ScopeToScope" package="DactToLemmaBehavior" module="DactToLemmaBehavior"/>
+    <context>
+      <context name="self" type="Scope">
+        <value>
+          <modelElement href="../input/cargo.simplified.preprocessed.dact#//@activity/@activities.0/@root/@ownedNodes.1/@body/@scope"/>
+        </value>
+      </context>
+    </context>
+    <parameters/>
+    <result>
+      <result kind="OUT" name="result" type="Scope">
+        <value>
+          <modelElement href="../output_expected/cargo.simplified.behavior#//@activityModel/@activities.0/@root/@ownedNodes.1/@body/@scope"/>
+        </value>
+      </result>
+    </result>
+  </traceRecords>
+  <traceRecords>
+    <mappingOperation name="ScopeToScope" package="DactToLemmaBehavior" module="DactToLemmaBehavior"/>
+    <context>
+      <context name="self" type="Scope">
+        <value>
+          <modelElement href="../input/cargo.simplified.preprocessed.dact#//@activity/@activities.0/@root/@scope"/>
+        </value>
+      </context>
+    </context>
+    <parameters/>
+    <result>
+      <result kind="OUT" name="result" type="Scope">
+        <value>
+          <modelElement href="../output_expected/cargo.simplified.behavior#//@activityModel/@activities.0/@root/@scope"/>
+        </value>
+      </result>
+    </result>
+  </traceRecords>
+  <traceRecords>
+    <mappingOperation name="ScopeToScope" package="DactToLemmaBehavior" module="DactToLemmaBehavior"/>
+    <context>
+      <context name="self" type="Scope">
+        <value>
+          <modelElement href="../input/cargo.simplified.preprocessed.dact#//@activity/@activities.0/@root/@ownedNodes.1/@elseBody/@scope"/>
+        </value>
+      </context>
+    </context>
+    <parameters/>
+    <result>
+      <result kind="OUT" name="result" type="Scope">
+        <value>
+          <modelElement href="../output_expected/cargo.simplified.behavior#//@activityModel/@activities.0/@root/@ownedNodes.1/@elseBody/@scope"/>
+        </value>
+      </result>
+    </result>
+  </traceRecords>
+  <traceRecords>
+    <mappingOperation name="ScopeToScope" package="DactToLemmaBehavior" module="DactToLemmaBehavior"/>
+    <context>
+      <context name="self" type="Scope">
+        <value>
+          <modelElement href="../input/cargo.simplified.preprocessed.dact#//@activity/@activities.0/@root/@ownedNodes.1/@body/@ownedNodes.5/@elseBody/@scope"/>
+        </value>
+      </context>
+    </context>
+    <parameters/>
+    <result>
+      <result kind="OUT" name="result" type="Scope">
+        <value>
+          <modelElement href="../output_expected/cargo.simplified.behavior#//@activityModel/@activities.0/@root/@ownedNodes.1/@body/@ownedNodes.10/@elseBody/@scope"/>
+        </value>
+      </result>
+    </result>
+  </traceRecords>
+  <traceRecords>
+    <mappingOperation name="ActivityGroupToActivityGroup" package="DactToLemmaBehavior" module="DactToLemmaBehavior"/>
+    <context>
+      <context name="self" type="ActivityGroup">
+        <value>
+          <modelElement href="../input/cargo.simplified.preprocessed.dact#//@activity/@activities.0/@root/@ownedNodes.1/@body/@ownedNodes.5/@elseBody"/>
+        </value>
+      </context>
+    </context>
+    <parameters/>
+    <result>
+      <result kind="OUT" name="result" type="ActivityGroup">
+        <value>
+          <modelElement href="../output_expected/cargo.simplified.behavior#//@activityModel/@activities.0/@root/@ownedNodes.1/@body/@ownedNodes.10/@elseBody"/>
+        </value>
+      </result>
+    </result>
+  </traceRecords>
+  <traceRecords>
+    <mappingOperation name="NodeToNode" package="DactToLemmaBehavior" module="DactToLemmaBehavior"/>
+    <context>
+      <context name="self" type="VariableAssignmentAction">
+        <value>
+          <modelElement href="../input/cargo.simplified.preprocessed.dact#//@activity/@activities.0/@root/@ownedNodes.1/@body/@ownedNodes.6"/>
+        </value>
+      </context>
+    </context>
+    <parameters/>
+    <result>
+      <result kind="OUT" name="result" type="VariableAssignmentAction">
+        <value>
+          <modelElement href="../output_expected/cargo.simplified.behavior#//@activityModel/@activities.0/@root/@ownedNodes.1/@body/@ownedNodes.5"/>
+        </value>
+      </result>
+    </result>
+  </traceRecords>
+  <traceRecords>
+    <mappingOperation name="VariableAssignmentToVariableAssignment" package="DactToLemmaBehavior" module="DactToLemmaBehavior"/>
+    <context>
+      <context name="self" type="VariableAssignment">
+        <value>
+          <modelElement href="../input/cargo.simplified.preprocessed.dact#//@activity/@activities.0/@root/@ownedNodes.1/@body/@ownedNodes.6/@assignment"/>
+        </value>
+      </context>
+    </context>
+    <parameters/>
+    <result>
+      <result kind="OUT" name="result" type="VariableAssignment">
+        <value>
+          <modelElement href="../output_expected/cargo.simplified.behavior#//@activityModel/@activities.0/@root/@ownedNodes.1/@body/@ownedNodes.5/@assignment"/>
+        </value>
+      </result>
+    </result>
+  </traceRecords>
+  <traceRecords>
+    <mappingOperation name="IdentifierToIdentifier" package="DactToLemmaBehavior" module="DactToLemmaBehavior"/>
+    <context>
+      <context name="self" type="Identifier">
+        <value>
+          <modelElement href="../input/cargo.simplified.preprocessed.dact#//@activity/@activities.0/@root/@ownedNodes.1/@body/@ownedNodes.6/@assignment/@identifier"/>
+        </value>
+      </context>
+    </context>
+    <parameters/>
+    <result>
+      <result kind="OUT" name="result" type="Identifier">
+        <value>
+          <modelElement href="../output_expected/cargo.simplified.behavior#//@activityModel/@activities.0/@root/@ownedNodes.1/@body/@ownedNodes.5/@assignment/@identifier"/>
+        </value>
+      </result>
+    </result>
+  </traceRecords>
+  <traceRecords>
+    <mappingOperation name="UnaryExpressionToUnaryExpression" package="DactToLemmaBehavior" module="DactToLemmaBehavior"/>
+    <context>
+      <context name="self" type="UnaryExpression">
+        <value>
+          <modelElement href="../input/cargo.simplified.preprocessed.dact#//@activity/@activities.0/@root/@ownedNodes.1/@body/@ownedNodes.6/@assignment/@expr"/>
+        </value>
+      </context>
+    </context>
+    <parameters/>
+    <result>
+      <result kind="OUT" name="result" type="UnaryExpression">
+        <value>
+          <modelElement href="../output_expected/cargo.simplified.behavior#//@activityModel/@activities.0/@root/@ownedNodes.1/@body/@ownedNodes.5/@assignment/@expr"/>
+        </value>
+      </result>
+    </result>
+  </traceRecords>
+  <traceRecords>
+    <mappingOperation name="IdentifierToIdentifier" package="DactToLemmaBehavior" module="DactToLemmaBehavior"/>
+    <context>
+      <context name="self" type="Identifier">
+        <value>
+          <modelElement href="../input/cargo.simplified.preprocessed.dact#//@activity/@activities.0/@root/@ownedNodes.1/@body/@ownedNodes.6/@assignment/@expr/@identifier"/>
+        </value>
+      </context>
+    </context>
+    <parameters/>
+    <result>
+      <result kind="OUT" name="result" type="Identifier">
+        <value>
+          <modelElement href="../output_expected/cargo.simplified.behavior#//@activityModel/@activities.0/@root/@ownedNodes.1/@body/@ownedNodes.5/@assignment/@expr/@identifier"/>
+        </value>
+      </result>
+    </result>
+  </traceRecords>
+  <traceRecords>
+    <mappingOperation name="ExpressionToExpression" package="DactToLemmaBehavior" module="DactToLemmaBehavior"/>
+    <context>
+      <context name="self" type="Expression">
+        <value>
+          <modelElement href="../input/cargo.simplified.preprocessed.dact#//@activity/@activities.0/@root/@ownedNodes.1/@body/@ownedNodes.6/@assignment/@expr"/>
+        </value>
+      </context>
+    </context>
+    <parameters/>
+    <result>
+      <result kind="OUT" name="result" type="Expression">
+        <value>
+          <modelElement href="../output_expected/cargo.simplified.behavior#//@activityModel/@activities.0/@root/@ownedNodes.1/@body/@ownedNodes.5/@assignment/@expr"/>
+        </value>
+      </result>
+    </result>
+  </traceRecords>
+  <traceRecords>
+    <mappingOperation name="NodeToNode" package="DactToLemmaBehavior" module="DactToLemmaBehavior"/>
+    <context>
+      <context name="self" type="VariableAssignmentAction">
+        <value>
+          <modelElement href="../input/cargo.simplified.preprocessed.dact#//@activity/@activities.0/@root/@ownedNodes.1/@body/@ownedNodes.7"/>
+        </value>
+      </context>
+    </context>
+    <parameters/>
+    <result>
+      <result kind="OUT" name="result" type="VariableAssignmentAction">
+        <value>
+          <modelElement href="../output_expected/cargo.simplified.behavior#//@activityModel/@activities.0/@root/@ownedNodes.1/@body/@ownedNodes.0"/>
+        </value>
+      </result>
+    </result>
+  </traceRecords>
+  <traceRecords>
+    <mappingOperation name="VariableAssignmentToVariableAssignment" package="DactToLemmaBehavior" module="DactToLemmaBehavior"/>
+    <context>
+      <context name="self" type="VariableAssignment">
+        <value>
+          <modelElement href="../input/cargo.simplified.preprocessed.dact#//@activity/@activities.0/@root/@ownedNodes.1/@body/@ownedNodes.7/@assignment"/>
+        </value>
+      </context>
+    </context>
+    <parameters/>
+    <result>
+      <result kind="OUT" name="result" type="VariableAssignment">
+        <value>
+          <modelElement href="../output_expected/cargo.simplified.behavior#//@activityModel/@activities.0/@root/@ownedNodes.1/@body/@ownedNodes.0/@assignment"/>
+        </value>
+      </result>
+    </result>
+  </traceRecords>
+  <traceRecords>
+    <mappingOperation name="IdentifierToIdentifier" package="DactToLemmaBehavior" module="DactToLemmaBehavior"/>
+    <context>
+      <context name="self" type="Identifier">
+        <value>
+          <modelElement href="../input/cargo.simplified.preprocessed.dact#//@activity/@activities.0/@root/@ownedNodes.1/@body/@ownedNodes.7/@assignment/@identifier"/>
+        </value>
+      </context>
+    </context>
+    <parameters/>
+    <result>
+      <result kind="OUT" name="result" type="Identifier">
+        <value>
+          <modelElement href="../output_expected/cargo.simplified.behavior#//@activityModel/@activities.0/@root/@ownedNodes.1/@body/@ownedNodes.0/@assignment/@identifier"/>
+        </value>
+      </result>
+    </result>
+  </traceRecords>
+  <traceRecords>
+    <mappingOperation name="UnaryExpressionToUnaryExpression" package="DactToLemmaBehavior" module="DactToLemmaBehavior"/>
+    <context>
+      <context name="self" type="UnaryExpression">
+        <value>
+          <modelElement href="../input/cargo.simplified.preprocessed.dact#//@activity/@activities.0/@root/@ownedNodes.1/@body/@ownedNodes.7/@assignment/@expr"/>
+        </value>
+      </context>
+    </context>
+    <parameters/>
+    <result>
+      <result kind="OUT" name="result" type="UnaryExpression">
+        <value>
+          <modelElement href="../output_expected/cargo.simplified.behavior#//@activityModel/@activities.0/@root/@ownedNodes.1/@body/@ownedNodes.0/@assignment/@expr"/>
+        </value>
+      </result>
+    </result>
+  </traceRecords>
+  <traceRecords>
+    <mappingOperation name="IdentifierToIdentifier" package="DactToLemmaBehavior" module="DactToLemmaBehavior"/>
+    <context>
+      <context name="self" type="Identifier">
+        <value>
+          <modelElement href="../input/cargo.simplified.preprocessed.dact#//@activity/@activities.0/@root/@ownedNodes.1/@body/@ownedNodes.7/@assignment/@expr/@identifier"/>
+        </value>
+      </context>
+    </context>
+    <parameters/>
+    <result>
+      <result kind="OUT" name="result" type="Identifier">
+        <value>
+          <modelElement href="../output_expected/cargo.simplified.behavior#//@activityModel/@activities.0/@root/@ownedNodes.1/@body/@ownedNodes.0/@assignment/@expr/@identifier"/>
+        </value>
+      </result>
+    </result>
+  </traceRecords>
+  <traceRecords>
+    <mappingOperation name="ExpressionToExpression" package="DactToLemmaBehavior" module="DactToLemmaBehavior"/>
+    <context>
+      <context name="self" type="Expression">
+        <value>
+          <modelElement href="../input/cargo.simplified.preprocessed.dact#//@activity/@activities.0/@root/@ownedNodes.1/@body/@ownedNodes.7/@assignment/@expr"/>
+        </value>
+      </context>
+    </context>
+    <parameters/>
+    <result>
+      <result kind="OUT" name="result" type="Expression">
+        <value>
+          <modelElement href="../output_expected/cargo.simplified.behavior#//@activityModel/@activities.0/@root/@ownedNodes.1/@body/@ownedNodes.0/@assignment/@expr"/>
+        </value>
+      </result>
+    </result>
+  </traceRecords>
+  <traceRecords>
+    <mappingOperation name="NodeToNode" package="DactToLemmaBehavior" module="DactToLemmaBehavior"/>
+    <context>
+      <context name="self" type="CallOperationAction">
+        <value>
+          <modelElement href="../input/cargo.simplified.preprocessed.dact#//@activity/@activities.0/@root/@ownedNodes.1/@body/@ownedNodes.8"/>
+        </value>
+      </context>
+    </context>
+    <parameters/>
+    <result>
+      <result kind="OUT" name="result" type="CallOperationAction">
+        <value>
+          <modelElement href="../output_expected/cargo.simplified.behavior#//@activityModel/@activities.0/@root/@ownedNodes.1/@body/@ownedNodes.6"/>
+        </value>
+      </result>
+    </result>
+  </traceRecords>
+  <traceRecords>
+    <mappingOperation name="ParameterMappingToParameterMapping" package="DactToLemmaBehavior" module="DactToLemmaBehavior"/>
+    <context>
+      <context name="self" type="ParameterMapping">
+        <value>
+          <modelElement href="../input/cargo.simplified.preprocessed.dact#//@activity/@activities.0/@root/@ownedNodes.1/@body/@ownedNodes.8/@parameterMappings.1"/>
+        </value>
+      </context>
+    </context>
+    <parameters/>
+    <result>
+      <result kind="OUT" name="result" type="ParameterMapping">
+        <value>
+          <modelElement href="../output_expected/cargo.simplified.behavior#//@activityModel/@activities.0/@root/@ownedNodes.1/@body/@ownedNodes.6/@parameterMappings.0"/>
+        </value>
+      </result>
+    </result>
+  </traceRecords>
+  <traceRecords>
+    <mappingOperation name="IdentifierToIdentifier" package="DactToLemmaBehavior" module="DactToLemmaBehavior"/>
+    <context>
+      <context name="self" type="Identifier">
+        <value>
+          <modelElement href="../input/cargo.simplified.preprocessed.dact#//@activity/@activities.0/@root/@ownedNodes.1/@body/@ownedNodes.8/@parameterMappings.1/@identifier"/>
+        </value>
+      </context>
+    </context>
+    <parameters/>
+    <result>
+      <result kind="OUT" name="result" type="Identifier">
+        <value>
+          <modelElement href="../output_expected/cargo.simplified.behavior#//@activityModel/@activities.0/@root/@ownedNodes.1/@body/@ownedNodes.6/@parameterMappings.0/@identifier"/>
+        </value>
+      </result>
+    </result>
+  </traceRecords>
+  <traceRecords>
+    <mappingOperation name="ParameterMappingToParameterMapping" package="DactToLemmaBehavior" module="DactToLemmaBehavior"/>
+    <context>
+      <context name="self" type="ParameterMapping">
+        <value>
+          <modelElement href="../input/cargo.simplified.preprocessed.dact#//@activity/@activities.0/@root/@ownedNodes.1/@body/@ownedNodes.8/@parameterMappings.0"/>
+        </value>
+      </context>
+    </context>
+    <parameters/>
+    <result>
+      <result kind="OUT" name="result" type="ParameterMapping">
+        <value>
+          <modelElement href="../output_expected/cargo.simplified.behavior#//@activityModel/@activities.0/@root/@ownedNodes.1/@body/@ownedNodes.6/@parameterMappings.1"/>
+        </value>
+      </result>
+    </result>
+  </traceRecords>
+  <traceRecords>
+    <mappingOperation name="IdentifierToIdentifier" package="DactToLemmaBehavior" module="DactToLemmaBehavior"/>
+    <context>
+      <context name="self" type="Identifier">
+        <value>
+          <modelElement href="../input/cargo.simplified.preprocessed.dact#//@activity/@activities.0/@root/@ownedNodes.1/@body/@ownedNodes.8/@parameterMappings.0/@identifier"/>
+        </value>
+      </context>
+    </context>
+    <parameters/>
+    <result>
+      <result kind="OUT" name="result" type="Identifier">
+        <value>
+          <modelElement href="../output_expected/cargo.simplified.behavior#//@activityModel/@activities.0/@root/@ownedNodes.1/@body/@ownedNodes.6/@parameterMappings.1/@identifier"/>
+        </value>
+      </result>
+    </result>
+  </traceRecords>
+  <traceRecords>
+    <mappingOperation name="NodeToNode" package="DactToLemmaBehavior" module="DactToLemmaBehavior"/>
+    <context>
+      <context name="self" type="VariableAssignmentAction">
+        <value>
+          <modelElement href="../input/cargo.simplified.preprocessed.dact#//@activity/@activities.0/@root/@ownedNodes.1/@body/@ownedNodes.9"/>
+        </value>
+      </context>
+    </context>
+    <parameters/>
+    <result>
+      <result kind="OUT" name="result" type="VariableAssignmentAction">
+        <value>
+          <modelElement href="../output_expected/cargo.simplified.behavior#//@activityModel/@activities.0/@root/@ownedNodes.1/@body/@ownedNodes.8"/>
+        </value>
+      </result>
+    </result>
+  </traceRecords>
+  <traceRecords>
+    <mappingOperation name="VariableAssignmentToVariableAssignment" package="DactToLemmaBehavior" module="DactToLemmaBehavior"/>
+    <context>
+      <context name="self" type="VariableAssignment">
+        <value>
+          <modelElement href="../input/cargo.simplified.preprocessed.dact#//@activity/@activities.0/@root/@ownedNodes.1/@body/@ownedNodes.9/@assignment"/>
+        </value>
+      </context>
+    </context>
+    <parameters/>
+    <result>
+      <result kind="OUT" name="result" type="VariableAssignment">
+        <value>
+          <modelElement href="../output_expected/cargo.simplified.behavior#//@activityModel/@activities.0/@root/@ownedNodes.1/@body/@ownedNodes.8/@assignment"/>
+        </value>
+      </result>
+    </result>
+  </traceRecords>
+  <traceRecords>
+    <mappingOperation name="IdentifierToIdentifier" package="DactToLemmaBehavior" module="DactToLemmaBehavior"/>
+    <context>
+      <context name="self" type="Identifier">
+        <value>
+          <modelElement href="../input/cargo.simplified.preprocessed.dact#//@activity/@activities.0/@root/@ownedNodes.1/@body/@ownedNodes.9/@assignment/@identifier"/>
+        </value>
+      </context>
+    </context>
+    <parameters/>
+    <result>
+      <result kind="OUT" name="result" type="Identifier">
+        <value>
+          <modelElement href="../output_expected/cargo.simplified.behavior#//@activityModel/@activities.0/@root/@ownedNodes.1/@body/@ownedNodes.8/@assignment/@identifier"/>
+        </value>
+      </result>
+    </result>
+  </traceRecords>
+  <traceRecords>
+    <mappingOperation name="UnaryExpressionToUnaryExpression" package="DactToLemmaBehavior" module="DactToLemmaBehavior"/>
+    <context>
+      <context name="self" type="UnaryExpression">
+        <value>
+          <modelElement href="../input/cargo.simplified.preprocessed.dact#//@activity/@activities.0/@root/@ownedNodes.1/@body/@ownedNodes.9/@assignment/@expr"/>
+        </value>
+      </context>
+    </context>
+    <parameters/>
+    <result>
+      <result kind="OUT" name="result" type="UnaryExpression">
+        <value>
+          <modelElement href="../output_expected/cargo.simplified.behavior#//@activityModel/@activities.0/@root/@ownedNodes.1/@body/@ownedNodes.8/@assignment/@expr"/>
+        </value>
+      </result>
+    </result>
+  </traceRecords>
+  <traceRecords>
+    <mappingOperation name="IdentifierToIdentifier" package="DactToLemmaBehavior" module="DactToLemmaBehavior"/>
+    <context>
+      <context name="self" type="Identifier">
+        <value>
+          <modelElement href="../input/cargo.simplified.preprocessed.dact#//@activity/@activities.0/@root/@ownedNodes.1/@body/@ownedNodes.9/@assignment/@expr/@identifier"/>
+        </value>
+      </context>
+    </context>
+    <parameters/>
+    <result>
+      <result kind="OUT" name="result" type="Identifier">
+        <value>
+          <modelElement href="../output_expected/cargo.simplified.behavior#//@activityModel/@activities.0/@root/@ownedNodes.1/@body/@ownedNodes.8/@assignment/@expr/@identifier"/>
+        </value>
+      </result>
+    </result>
+  </traceRecords>
+  <traceRecords>
+    <mappingOperation name="ExpressionToExpression" package="DactToLemmaBehavior" module="DactToLemmaBehavior"/>
+    <context>
+      <context name="self" type="Expression">
+        <value>
+          <modelElement href="../input/cargo.simplified.preprocessed.dact#//@activity/@activities.0/@root/@ownedNodes.1/@body/@ownedNodes.9/@assignment/@expr"/>
+        </value>
+      </context>
+    </context>
+    <parameters/>
+    <result>
+      <result kind="OUT" name="result" type="Expression">
+        <value>
+          <modelElement href="../output_expected/cargo.simplified.behavior#//@activityModel/@activities.0/@root/@ownedNodes.1/@body/@ownedNodes.8/@assignment/@expr"/>
+        </value>
+      </result>
+    </result>
+  </traceRecords>
+  <traceRecords>
+    <mappingOperation name="NodeToNode" package="DactToLemmaBehavior" module="DactToLemmaBehavior"/>
+    <context>
+      <context name="self" type="InitialNode">
+        <value>
+          <modelElement href="../input/cargo.simplified.preprocessed.dact#//@activity/@activities.0/@root/@ownedNodes.1/@body/@ownedNodes.10"/>
+        </value>
+      </context>
+    </context>
+    <parameters/>
+    <result>
+      <result kind="OUT" name="result" type="InitialNode">
+        <value>
+          <modelElement href="../output_expected/cargo.simplified.behavior#//@activityModel/@activities.0/@root/@ownedNodes.1/@body/@ownedNodes.2"/>
+        </value>
+      </result>
+    </result>
+  </traceRecords>
+  <traceRecords>
+    <mappingOperation name="EdgeToEdge" package="DactToLemmaBehavior" module="DactToLemmaBehavior"/>
+    <context>
+      <context name="self" type="ActivityEdge">
+        <value>
+          <modelElement href="../input/cargo.simplified.preprocessed.dact#//@activity/@activities.0/@root/@ownedNodes.1/@body/@ownedEdges.0"/>
+        </value>
+      </context>
+    </context>
+    <parameters/>
+    <result>
+      <result kind="OUT" name="result" type="ActivityEdge">
+        <value>
+          <modelElement href="../output_expected/cargo.simplified.behavior#//@activityModel/@activities.0/@root/@ownedNodes.1/@body/@ownedEdges.0"/>
+        </value>
+      </result>
+    </result>
+  </traceRecords>
+  <traceRecords>
+    <mappingOperation name="EdgeToEdge" package="DactToLemmaBehavior" module="DactToLemmaBehavior"/>
+    <context>
+      <context name="self" type="ActivityEdge">
+        <value>
+          <modelElement href="../input/cargo.simplified.preprocessed.dact#//@activity/@activities.0/@root/@ownedNodes.1/@body/@ownedEdges.2"/>
+        </value>
+      </context>
+    </context>
+    <parameters/>
+    <result>
+      <result kind="OUT" name="result" type="ActivityEdge">
+        <value>
+          <modelElement href="../output_expected/cargo.simplified.behavior#//@activityModel/@activities.0/@root/@ownedNodes.1/@body/@ownedEdges.4"/>
+        </value>
+      </result>
+    </result>
+  </traceRecords>
+  <traceRecords>
+    <mappingOperation name="EdgeToEdge" package="DactToLemmaBehavior" module="DactToLemmaBehavior"/>
+    <context>
+      <context name="self" type="ActivityEdge">
+        <value>
+          <modelElement href="../input/cargo.simplified.preprocessed.dact#//@activity/@activities.0/@root/@ownedNodes.1/@body/@ownedEdges.4"/>
+        </value>
+      </context>
+    </context>
+    <parameters/>
+    <result>
+      <result kind="OUT" name="result" type="ActivityEdge">
+        <value>
+          <modelElement href="../output_expected/cargo.simplified.behavior#//@activityModel/@activities.0/@root/@ownedNodes.1/@body/@ownedEdges.7"/>
+        </value>
+      </result>
+    </result>
+  </traceRecords>
+  <traceRecords>
+    <mappingOperation name="EdgeToEdge" package="DactToLemmaBehavior" module="DactToLemmaBehavior"/>
+    <context>
+      <context name="self" type="ActivityEdge">
+        <value>
+          <modelElement href="../input/cargo.simplified.preprocessed.dact#//@activity/@activities.0/@root/@ownedNodes.1/@body/@ownedEdges.8"/>
+        </value>
+      </context>
+    </context>
+    <parameters/>
+    <result>
+      <result kind="OUT" name="result" type="ActivityEdge">
+        <value>
+          <modelElement href="../output_expected/cargo.simplified.behavior#//@activityModel/@activities.0/@root/@ownedNodes.1/@body/@ownedEdges.1"/>
+        </value>
+      </result>
+    </result>
+  </traceRecords>
+  <traceRecords>
+    <mappingOperation name="EdgeToEdge" package="DactToLemmaBehavior" module="DactToLemmaBehavior"/>
+    <context>
+      <context name="self" type="ActivityEdge">
+        <value>
+          <modelElement href="../input/cargo.simplified.preprocessed.dact#//@activity/@activities.0/@root/@ownedNodes.1/@body/@ownedEdges.7"/>
+        </value>
+      </context>
+    </context>
+    <parameters/>
+    <result>
+      <result kind="OUT" name="result" type="ActivityEdge">
+        <value>
+          <modelElement href="../output_expected/cargo.simplified.behavior#//@activityModel/@activities.0/@root/@ownedNodes.1/@body/@ownedEdges.5"/>
+        </value>
+      </result>
+    </result>
+  </traceRecords>
+  <traceRecords>
+    <mappingOperation name="EdgeToEdge" package="DactToLemmaBehavior" module="DactToLemmaBehavior"/>
+    <context>
+      <context name="self" type="ActivityEdge">
+        <value>
+          <modelElement href="../input/cargo.simplified.preprocessed.dact#//@activity/@activities.0/@root/@ownedNodes.1/@body/@ownedEdges.9"/>
+        </value>
+      </context>
+    </context>
+    <parameters/>
+    <result>
+      <result kind="OUT" name="result" type="ActivityEdge">
+        <value>
+          <modelElement href="../output_expected/cargo.simplified.behavior#//@activityModel/@activities.0/@root/@ownedNodes.1/@body/@ownedEdges.3"/>
+        </value>
+      </result>
+    </result>
+  </traceRecords>
+  <traceRecords>
+    <mappingOperation name="EdgeToEdge" package="DactToLemmaBehavior" module="DactToLemmaBehavior"/>
+    <context>
+      <context name="self" type="ActivityEdge">
+        <value>
+          <modelElement href="../input/cargo.simplified.preprocessed.dact#//@activity/@activities.0/@root/@ownedNodes.1/@body/@ownedEdges.5"/>
+        </value>
+      </context>
+    </context>
+    <parameters/>
+    <result>
+      <result kind="OUT" name="result" type="ActivityEdge">
+        <value>
+          <modelElement href="../output_expected/cargo.simplified.behavior#//@activityModel/@activities.0/@root/@ownedNodes.1/@body/@ownedEdges.9"/>
+        </value>
+      </result>
+    </result>
+  </traceRecords>
+  <traceRecords>
+    <mappingOperation name="EdgeToEdge" package="DactToLemmaBehavior" module="DactToLemmaBehavior"/>
+    <context>
+      <context name="self" type="ActivityEdge">
+        <value>
+          <modelElement href="../input/cargo.simplified.preprocessed.dact#//@activity/@activities.0/@root/@ownedNodes.1/@body/@ownedEdges.3"/>
+        </value>
+      </context>
+    </context>
+    <parameters/>
+    <result>
+      <result kind="OUT" name="result" type="ActivityEdge">
+        <value>
+          <modelElement href="../output_expected/cargo.simplified.behavior#//@activityModel/@activities.0/@root/@ownedNodes.1/@body/@ownedEdges.2"/>
+        </value>
+      </result>
+    </result>
+  </traceRecords>
+  <traceRecords>
+    <mappingOperation name="EdgeToEdge" package="DactToLemmaBehavior" module="DactToLemmaBehavior"/>
+    <context>
+      <context name="self" type="ActivityEdge">
+        <value>
+          <modelElement href="../input/cargo.simplified.preprocessed.dact#//@activity/@activities.0/@root/@ownedNodes.1/@body/@ownedEdges.1"/>
+        </value>
+      </context>
+    </context>
+    <parameters/>
+    <result>
+      <result kind="OUT" name="result" type="ActivityEdge">
+        <value>
+          <modelElement href="../output_expected/cargo.simplified.behavior#//@activityModel/@activities.0/@root/@ownedNodes.1/@body/@ownedEdges.6"/>
+        </value>
+      </result>
+    </result>
+  </traceRecords>
+  <traceRecords>
+    <mappingOperation name="EdgeToEdge" package="DactToLemmaBehavior" module="DactToLemmaBehavior"/>
+    <context>
+      <context name="self" type="ActivityEdge">
+        <value>
+          <modelElement href="../input/cargo.simplified.preprocessed.dact#//@activity/@activities.0/@root/@ownedNodes.1/@body/@ownedEdges.6"/>
+        </value>
+      </context>
+    </context>
+    <parameters/>
+    <result>
+      <result kind="OUT" name="result" type="ActivityEdge">
+        <value>
+          <modelElement href="../output_expected/cargo.simplified.behavior#//@activityModel/@activities.0/@root/@ownedNodes.1/@body/@ownedEdges.8"/>
+        </value>
+      </result>
+    </result>
+  </traceRecords>
+  <traceRecords>
+    <mappingOperation name="ActivityGroupToActivityGroup" package="DactToLemmaBehavior" module="DactToLemmaBehavior"/>
+    <context>
+      <context name="self" type="ActivityGroup">
+        <value>
+          <modelElement href="../input/cargo.simplified.preprocessed.dact#//@activity/@activities.0/@root/@ownedNodes.1/@elseBody"/>
+        </value>
+      </context>
+    </context>
+    <parameters/>
+    <result>
+      <result kind="OUT" name="result" type="ActivityGroup">
+        <value>
+          <modelElement href="../output_expected/cargo.simplified.behavior#//@activityModel/@activities.0/@root/@ownedNodes.1/@elseBody"/>
+        </value>
+      </result>
+    </result>
+  </traceRecords>
+  <traceRecords>
+    <mappingOperation name="NodeToNode" package="DactToLemmaBehavior" module="DactToLemmaBehavior"/>
+    <context>
+      <context name="self" type="InitialNode">
+        <value>
+          <modelElement href="../input/cargo.simplified.preprocessed.dact#//@activity/@activities.0/@root/@ownedNodes.1/@elseBody/@ownedNodes.0"/>
+        </value>
+      </context>
+    </context>
+    <parameters/>
+    <result>
+      <result kind="OUT" name="result" type="InitialNode">
+        <value>
+          <modelElement href="../output_expected/cargo.simplified.behavior#//@activityModel/@activities.0/@root/@ownedNodes.1/@elseBody/@ownedNodes.0"/>
+        </value>
+      </result>
+    </result>
+  </traceRecords>
+  <traceRecords>
+    <mappingOperation name="NodeToNode" package="DactToLemmaBehavior" module="DactToLemmaBehavior"/>
+    <context>
+      <context name="self" type="RaiseEntityNotFoundExceptionAction">
+        <value>
+          <modelElement href="../input/cargo.simplified.preprocessed.dact#//@activity/@activities.0/@root/@ownedNodes.1/@elseBody/@ownedNodes.1"/>
+        </value>
+      </context>
+    </context>
+    <parameters/>
+    <result>
+      <result kind="OUT" name="result" type="RaiseEntityNotFoundExceptionAction">
+        <value>
+          <modelElement href="../output_expected/cargo.simplified.behavior#//@activityModel/@activities.0/@root/@ownedNodes.1/@elseBody/@ownedNodes.1"/>
+        </value>
+      </result>
+    </result>
+  </traceRecords>
+  <traceRecords>
+    <mappingOperation name="NodeToNode" package="DactToLemmaBehavior" module="DactToLemmaBehavior"/>
+    <context>
+      <context name="self" type="FlowFinalNode">
+        <value>
+          <modelElement href="../input/cargo.simplified.preprocessed.dact#//@activity/@activities.0/@root/@ownedNodes.1/@elseBody/@ownedNodes.2"/>
+        </value>
+      </context>
+    </context>
+    <parameters/>
+    <result>
+      <result kind="OUT" name="result" type="FlowFinalNode">
+        <value>
+          <modelElement href="../output_expected/cargo.simplified.behavior#//@activityModel/@activities.0/@root/@ownedNodes.1/@elseBody/@ownedNodes.2"/>
+        </value>
+      </result>
+    </result>
+  </traceRecords>
+  <traceRecords>
+    <mappingOperation name="EdgeToEdge" package="DactToLemmaBehavior" module="DactToLemmaBehavior"/>
+    <context>
+      <context name="self" type="ActivityEdge">
+        <value>
+          <modelElement href="../input/cargo.simplified.preprocessed.dact#//@activity/@activities.0/@root/@ownedNodes.1/@elseBody/@ownedEdges.1"/>
+        </value>
+      </context>
+    </context>
+    <parameters/>
+    <result>
+      <result kind="OUT" name="result" type="ActivityEdge">
+        <value>
+          <modelElement href="../output_expected/cargo.simplified.behavior#//@activityModel/@activities.0/@root/@ownedNodes.1/@elseBody/@ownedEdges.1"/>
+        </value>
+      </result>
+    </result>
+  </traceRecords>
+  <traceRecords>
+    <mappingOperation name="EdgeToEdge" package="DactToLemmaBehavior" module="DactToLemmaBehavior"/>
+    <context>
+      <context name="self" type="ActivityEdge">
+        <value>
+          <modelElement href="../input/cargo.simplified.preprocessed.dact#//@activity/@activities.0/@root/@ownedNodes.1/@elseBody/@ownedEdges.0"/>
+        </value>
+      </context>
+    </context>
+    <parameters/>
+    <result>
+      <result kind="OUT" name="result" type="ActivityEdge">
+        <value>
+          <modelElement href="../output_expected/cargo.simplified.behavior#//@activityModel/@activities.0/@root/@ownedNodes.1/@elseBody/@ownedEdges.0"/>
+        </value>
+      </result>
+    </result>
+  </traceRecords>
+  <traceRecords>
+    <mappingOperation name="NodeToNode" package="DactToLemmaBehavior" module="DactToLemmaBehavior"/>
+    <context>
+      <context name="self" type="InitialNode">
+        <value>
+          <modelElement href="../input/cargo.simplified.preprocessed.dact#//@activity/@activities.0/@root/@ownedNodes.2"/>
+        </value>
+      </context>
+    </context>
+    <parameters/>
+    <result>
+      <result kind="OUT" name="result" type="InitialNode">
+        <value>
+          <modelElement href="../output_expected/cargo.simplified.behavior#//@activityModel/@activities.0/@root/@ownedNodes.4"/>
+        </value>
+      </result>
+    </result>
+  </traceRecords>
+  <traceRecords>
+    <mappingOperation name="NodeToNode" package="DactToLemmaBehavior" module="DactToLemmaBehavior"/>
+    <context>
+      <context name="self" type="ActivityFinalNode">
+        <value>
+          <modelElement href="../input/cargo.simplified.preprocessed.dact#//@activity/@activities.0/@root/@ownedNodes.3"/>
+        </value>
+      </context>
+    </context>
+    <parameters/>
+    <result>
+      <result kind="OUT" name="result" type="ActivityFinalNode">
+        <value>
+          <modelElement href="../output_expected/cargo.simplified.behavior#//@activityModel/@activities.0/@root/@ownedNodes.2"/>
+        </value>
+      </result>
+    </result>
+  </traceRecords>
+  <traceRecords>
+    <mappingOperation name="IdentifierToIdentifier" package="DactToLemmaBehavior" module="DactToLemmaBehavior"/>
+    <context>
+      <context name="self" type="Identifier">
+        <value>
+          <modelElement href="../input/cargo.simplified.preprocessed.dact#//@activity/@activities.0/@root/@ownedNodes.3/@variablesToReturn.0"/>
+        </value>
+      </context>
+    </context>
+    <parameters/>
+    <result>
+      <result kind="OUT" name="result" type="Identifier">
+        <value>
+          <modelElement href="../output_expected/cargo.simplified.behavior#//@activityModel/@activities.0/@root/@ownedNodes.2/@variablesToReturn.0"/>
+        </value>
+      </result>
+    </result>
+  </traceRecords>
+  <traceRecords>
+    <mappingOperation name="NodeToNode" package="DactToLemmaBehavior" module="DactToLemmaBehavior"/>
+    <context>
+      <context name="self" type="VariableDeclarationAction">
+        <value>
+          <modelElement href="../input/cargo.simplified.preprocessed.dact#//@activity/@activities.0/@root/@ownedNodes.4"/>
+        </value>
+      </context>
+    </context>
+    <parameters/>
+    <result>
+      <result kind="OUT" name="result" type="VariableDeclarationAction">
+        <value>
+          <modelElement href="../output_expected/cargo.simplified.behavior#//@activityModel/@activities.0/@root/@ownedNodes.0"/>
+        </value>
+      </result>
+    </result>
+  </traceRecords>
+  <traceRecords>
+    <mappingOperation name="VariableAssignmentToVariableAssignment" package="DactToLemmaBehavior" module="DactToLemmaBehavior"/>
+    <context>
+      <context name="self" type="VariableAssignment">
+        <value>
+          <modelElement href="../input/cargo.simplified.preprocessed.dact#//@activity/@activities.0/@root/@ownedNodes.4/@declaration"/>
+        </value>
+      </context>
+    </context>
+    <parameters/>
+    <result>
+      <result kind="OUT" name="result" type="VariableAssignment">
+        <value>
+          <modelElement href="../output_expected/cargo.simplified.behavior#//@activityModel/@activities.0/@root/@ownedNodes.0/@declaration"/>
+        </value>
+      </result>
+    </result>
+  </traceRecords>
+  <traceRecords>
+    <mappingOperation name="IdentifierToIdentifier" package="DactToLemmaBehavior" module="DactToLemmaBehavior"/>
+    <context>
+      <context name="self" type="Identifier">
+        <value>
+          <modelElement href="../input/cargo.simplified.preprocessed.dact#//@activity/@activities.0/@root/@ownedNodes.4/@declaration/@identifier"/>
+        </value>
+      </context>
+    </context>
+    <parameters/>
+    <result>
+      <result kind="OUT" name="result" type="Identifier">
+        <value>
+          <modelElement href="../output_expected/cargo.simplified.behavior#//@activityModel/@activities.0/@root/@ownedNodes.0/@declaration/@identifier"/>
+        </value>
+      </result>
+    </result>
+  </traceRecords>
+  <traceRecords>
+    <mappingOperation name="EdgeToEdge" package="DactToLemmaBehavior" module="DactToLemmaBehavior"/>
+    <context>
+      <context name="self" type="ActivityEdge">
+        <value>
+          <modelElement href="../input/cargo.simplified.preprocessed.dact#//@activity/@activities.0/@root/@ownedEdges.1"/>
+        </value>
+      </context>
+    </context>
+    <parameters/>
+    <result>
+      <result kind="OUT" name="result" type="ActivityEdge">
+        <value>
+          <modelElement href="../output_expected/cargo.simplified.behavior#//@activityModel/@activities.0/@root/@ownedEdges.1"/>
+        </value>
+      </result>
+    </result>
+  </traceRecords>
+  <traceRecords>
+    <mappingOperation name="EdgeToEdge" package="DactToLemmaBehavior" module="DactToLemmaBehavior"/>
+    <context>
+      <context name="self" type="ActivityEdge">
+        <value>
+          <modelElement href="../input/cargo.simplified.preprocessed.dact#//@activity/@activities.0/@root/@ownedEdges.3"/>
+        </value>
+      </context>
+    </context>
+    <parameters/>
+    <result>
+      <result kind="OUT" name="result" type="ActivityEdge">
+        <value>
+          <modelElement href="../output_expected/cargo.simplified.behavior#//@activityModel/@activities.0/@root/@ownedEdges.2"/>
+        </value>
+      </result>
+    </result>
+  </traceRecords>
+  <traceRecords>
+    <mappingOperation name="EdgeToEdge" package="DactToLemmaBehavior" module="DactToLemmaBehavior"/>
+    <context>
+      <context name="self" type="ActivityEdge">
+        <value>
+          <modelElement href="../input/cargo.simplified.preprocessed.dact#//@activity/@activities.0/@root/@ownedEdges.2"/>
+        </value>
+      </context>
+    </context>
+    <parameters/>
+    <result>
+      <result kind="OUT" name="result" type="ActivityEdge">
+        <value>
+          <modelElement href="../output_expected/cargo.simplified.behavior#//@activityModel/@activities.0/@root/@ownedEdges.3"/>
+        </value>
+      </result>
+    </result>
+  </traceRecords>
+  <traceRecords>
+    <mappingOperation name="EdgeToEdge" package="DactToLemmaBehavior" module="DactToLemmaBehavior"/>
+    <context>
+      <context name="self" type="ActivityEdge">
+        <value>
+          <modelElement href="../input/cargo.simplified.preprocessed.dact#//@activity/@activities.0/@root/@ownedEdges.0"/>
+        </value>
+      </context>
+    </context>
+    <parameters/>
+    <result>
+      <result kind="OUT" name="result" type="ActivityEdge">
+        <value>
+          <modelElement href="../output_expected/cargo.simplified.behavior#//@activityModel/@activities.0/@root/@ownedEdges.0"/>
+        </value>
+      </result>
+    </result>
+  </traceRecords>
+  <traceRecords>
+    <mappingOperation name="ModelToModel" package="LemmaRefine" module="LemmaRefine"/>
+    <context>
+      <context name="self" type="BehaviorModel">
+        <value>
+          <modelElement href="../output_expected/cargo.simplified.behavior#/"/>
+        </value>
+      </context>
+    </context>
+    <parameters/>
+    <result>
+      <result kind="OUT" name="result" type="BehaviorModel">
+        <value>
+          <modelElement href="../output_expected/cargo.simplified.refined.behavior#/"/>
+        </value>
+      </result>
+    </result>
+  </traceRecords>
+</trace:Trace>

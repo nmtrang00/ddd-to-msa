@@ -5,14 +5,16 @@
  * @version 1.0.0
  * @since 1.0.0
  */]
-[module generatePayloads('http://www.example.org/xcore/data')/]
+[module generatePayloads('http://www.example.org/xcore/data',
+'http://www.example.org/xcore/service'
+)/]
 
 [import stringUtils/]
 [import lemmaUtils/]
 
 [comment @main/]
-[template public generatePayloads(dataModel: data::DataModel)]
-[for (context : data::Context | dataModel.contexts)]
+[template public generatePayloads(dataModel: data::DataModel, serviceModel: service::ServiceModel)]
+[for (context : data::Context | dataModel.getInternalFunctionalContexts(serviceModel))]
   	[let serviceName : String = context.name.toCamelCase(), 
   		domainDir : String = serviceName+'-service/src/main/java/com/example/'+serviceName+'/payload/']
   	[comment Generate main payloads /]

@@ -1,0 +1,301 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xmi:XMI xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:behavior="http://www.example.org/xcore/behavior" xmlns:data="http://www.example.org/xcore/data">
+  <behavior:BehaviorModel t_modelUri="DefaultProject">
+    <imports name="DomainData" importURI="./DefaultProject.data"/>
+    <imports name="DomainService" importURI="./DefaultProject.service" importType="MICROSERVICES"/>
+    <activityModel>
+      <activities name="Scenario US2-S1 – A cargo is booked">
+        <specification xsi:type="behavior:ImportedInterfaceOperation" import="/0/@imports.1"/>
+        <ownedParameters name="deadline" lowerBound="1" upperBound="1">
+          <primitiveType xsi:type="data:PrimitiveInteger"/>
+        </ownedParameters>
+        <ownedParameters name="newCargo" exchangePattern="OUT" optional="true" lowerBound="0" upperBound="1">
+          <importedType>
+            <type xsi:type="data:DataStructure" href="cargo.simplified.service#/5/@complexTypes.4"/>
+          </importedType>
+        </ownedParameters>
+        <ownedParameters name="srcPort" lowerBound="1" upperBound="1">
+          <primitiveType xsi:type="data:PrimitiveInteger"/>
+        </ownedParameters>
+        <ownedParameters name="customerId" lowerBound="1" upperBound="1">
+          <primitiveType xsi:type="data:PrimitiveInteger"/>
+        </ownedParameters>
+        <ownedParameters name="destPort" lowerBound="1" upperBound="1">
+          <primitiveType xsi:type="data:PrimitiveInteger"/>
+        </ownedParameters>
+        <parameterMappings type="ACTIVITY_IN" activityParameter="/0/@activityModel/@activities.0/@ownedParameters.2">
+          <operationParameter xsi:type="behavior:ImportedInterfaceParameter" import="/0/@imports.1">
+            <parameter href="cargo.simplified.service#/10"/>
+          </operationParameter>
+        </parameterMappings>
+        <parameterMappings type="ACTIVITY_OUT" activityParameter="/0/@activityModel/@activities.0/@ownedParameters.1">
+          <operationParameter xsi:type="behavior:ImportedInterfaceParameter" import="/0/@imports.1">
+            <parameter href="cargo.simplified.service#/9"/>
+          </operationParameter>
+        </parameterMappings>
+        <parameterMappings type="ACTIVITY_IN" activityParameter="/0/@activityModel/@activities.0/@ownedParameters.3">
+          <operationParameter xsi:type="behavior:ImportedInterfaceParameter" import="/0/@imports.1">
+            <parameter href="cargo.simplified.service#/8"/>
+          </operationParameter>
+        </parameterMappings>
+        <parameterMappings type="ACTIVITY_IN" activityParameter="/0/@activityModel/@activities.0/@ownedParameters.4">
+          <operationParameter xsi:type="behavior:ImportedInterfaceParameter" import="/0/@imports.1">
+            <parameter href="cargo.simplified.service#/11"/>
+          </operationParameter>
+        </parameterMappings>
+        <parameterMappings type="ACTIVITY_IN" activityParameter="/0/@activityModel/@activities.0/@ownedParameters.0">
+          <operationParameter xsi:type="behavior:ImportedInterfaceParameter" import="/0/@imports.1">
+            <parameter href="cargo.simplified.service#/7"/>
+          </operationParameter>
+        </parameterMappings>
+        <root>
+          <ownedNodes xsi:type="behavior:CallOperationAction" name="CheckCustomerExistence" sEdge="/0/@activityModel/@activities.0/@root/@ownedEdges.1" tEdge="/0/@activityModel/@activities.0/@root/@ownedEdges.3" domainToDeclareResult="true">
+            <importedOperation xsi:type="behavior:ImportedInterfaceOperation" import="/0/@imports.1"/>
+            <parameterMappings>
+              <operationParameter xsi:type="behavior:ImportedInterfaceParameter" import="/0/@imports.1">
+                <parameter href="cargo.simplified.service#/12"/>
+              </operationParameter>
+              <identifier name="customerId"/>
+            </parameterMappings>
+            <parameterMappings type="ACTION_OUT">
+              <operationParameter xsi:type="behavior:ImportedInterfaceParameter" import="/0/@imports.1">
+                <parameter href="cargo.simplified.service#/13"/>
+              </operationParameter>
+              <identifier name="customerExists"/>
+            </parameterMappings>
+          </ownedNodes>
+          <ownedNodes xsi:type="behavior:VariableDeclarationAction" name="New Cargo Declaration" sEdge="/0/@activityModel/@activities.0/@root/@ownedEdges.3" tEdge="/0/@activityModel/@activities.0/@root/@ownedEdges.0" lowerBound="0" upperBound="1">
+            <importedType import="/0/@imports.0">
+              <type xsi:type="data:DataStructure" href="cargo.simplified.service#/5/@complexTypes.4"/>
+            </importedType>
+            <declaration>
+              <identifier name="newCargo"/>
+            </declaration>
+          </ownedNodes>
+          <ownedNodes xsi:type="behavior:ConditionalNode" name="CustomerExistsCondition" sEdge="/0/@activityModel/@activities.0/@root/@ownedEdges.2" tEdge="/0/@activityModel/@activities.0/@root/@ownedEdges.1">
+            <test xsi:type="behavior:UnaryExpression">
+              <identifier name="customerExists"/>
+            </test>
+            <body>
+              <ownedNodes xsi:type="behavior:ConditionalNode" name="SourceLocationExists" sEdge="/0/@activityModel/@activities.0/@root/@ownedNodes.2/@body/@ownedEdges.5" tEdge="/0/@activityModel/@activities.0/@root/@ownedNodes.2/@body/@ownedEdges.2">
+                <test xsi:type="behavior:NotExpression">
+                  <expr xsi:type="behavior:UnaryExpression">
+                    <identifier name="destLocationExists"/>
+                  </expr>
+                </test>
+                <body>
+                  <ownedNodes xsi:type="behavior:FlowFinalNode" name="FlowFinalNode2" tEdge="/0/@activityModel/@activities.0/@root/@ownedNodes.2/@body/@ownedNodes.0/@body/@ownedEdges.1"/>
+                  <ownedNodes xsi:type="behavior:InitialNode" name="InitialNode1" sEdge="/0/@activityModel/@activities.0/@root/@ownedNodes.2/@body/@ownedNodes.0/@body/@ownedEdges.0"/>
+                  <ownedNodes xsi:type="behavior:RaiseEntityNotFoundExceptionAction" name="LocationNotFound" sEdge="/0/@activityModel/@activities.0/@root/@ownedNodes.2/@body/@ownedNodes.0/@body/@ownedEdges.1" tEdge="/0/@activityModel/@activities.0/@root/@ownedNodes.2/@body/@ownedNodes.0/@body/@ownedEdges.0">
+                    <exception import="/0/@imports.0">
+                      <type xsi:type="data:DataStructure" href="cargo.simplified.service#/5/@complexTypes.7"/>
+                    </exception>
+                  </ownedNodes>
+                  <ownedEdges name="InitialNode1->LocationNotFound" source="/0/@activityModel/@activities.0/@root/@ownedNodes.2/@body/@ownedNodes.0/@body/@ownedNodes.1" target="/0/@activityModel/@activities.0/@root/@ownedNodes.2/@body/@ownedNodes.0/@body/@ownedNodes.2"/>
+                  <ownedEdges name="LocationNotFound->FlowFinalNode2" source="/0/@activityModel/@activities.0/@root/@ownedNodes.2/@body/@ownedNodes.0/@body/@ownedNodes.2" target="/0/@activityModel/@activities.0/@root/@ownedNodes.2/@body/@ownedNodes.0/@body/@ownedNodes.0"/>
+                  <scope inheritedVariables="/0/@activityModel/@activities.0/@root/@scope/@ownedVariables.0 /0/@activityModel/@activities.0/@root/@scope/@ownedVariables.1 /0/@activityModel/@activities.0/@root/@scope/@ownedVariables.2 /0/@activityModel/@activities.0/@root/@ownedNodes.2/@body/@scope/@ownedVariables.0 /0/@activityModel/@activities.0/@root/@scope/@ownedVariables.3 /0/@activityModel/@activities.0/@root/@scope/@ownedVariables.4 /0/@activityModel/@activities.0/@root/@ownedNodes.2/@body/@scope/@ownedVariables.1 /0/@activityModel/@activities.0/@root/@scope/@ownedVariables.5"/>
+                </body>
+                <elseBody>
+                  <scope inheritedVariables="/0/@activityModel/@activities.0/@root/@scope/@ownedVariables.0 /0/@activityModel/@activities.0/@root/@scope/@ownedVariables.1 /0/@activityModel/@activities.0/@root/@scope/@ownedVariables.2 /0/@activityModel/@activities.0/@root/@ownedNodes.2/@body/@scope/@ownedVariables.0 /0/@activityModel/@activities.0/@root/@scope/@ownedVariables.3 /0/@activityModel/@activities.0/@root/@scope/@ownedVariables.4 /0/@activityModel/@activities.0/@root/@ownedNodes.2/@body/@scope/@ownedVariables.1 /0/@activityModel/@activities.0/@root/@scope/@ownedVariables.5"/>
+                </elseBody>
+              </ownedNodes>
+              <ownedNodes xsi:type="behavior:VariableAssignmentAction" name="AssignDestination" sEdge="/0/@activityModel/@activities.0/@root/@ownedNodes.2/@body/@ownedEdges.0" tEdge="/0/@activityModel/@activities.0/@root/@ownedNodes.2/@body/@ownedEdges.3">
+                <assignment>
+                  <identifier name="newCargo.goal.destination.portCode"/>
+                  <expr xsi:type="behavior:UnaryExpression">
+                    <identifier name="destPort"/>
+                  </expr>
+                </assignment>
+              </ownedNodes>
+              <ownedNodes xsi:type="behavior:VariableAssignmentAction" name="AssignSource" sEdge="/0/@activityModel/@activities.0/@root/@ownedNodes.2/@body/@ownedEdges.8" tEdge="/0/@activityModel/@activities.0/@root/@ownedNodes.2/@body/@ownedEdges.0">
+                <assignment>
+                  <identifier name="newCargo.goal.source.portCode"/>
+                  <expr xsi:type="behavior:UnaryExpression">
+                    <identifier name="srcPort"/>
+                  </expr>
+                </assignment>
+              </ownedNodes>
+              <ownedNodes xsi:type="behavior:VariableAssignmentAction" name="AssignDeadline" sEdge="/0/@activityModel/@activities.0/@root/@ownedNodes.2/@body/@ownedEdges.9" tEdge="/0/@activityModel/@activities.0/@root/@ownedNodes.2/@body/@ownedEdges.8">
+                <assignment>
+                  <identifier name="newCargo.goal.deadline"/>
+                  <expr xsi:type="behavior:UnaryExpression">
+                    <identifier name="deadline"/>
+                  </expr>
+                </assignment>
+              </ownedNodes>
+              <ownedNodes xsi:type="behavior:CallOperationAction" name="DestinationLocationExists" sEdge="/0/@activityModel/@activities.0/@root/@ownedNodes.2/@body/@ownedEdges.2" tEdge="/0/@activityModel/@activities.0/@root/@ownedNodes.2/@body/@ownedEdges.7" domainToDeclareResult="true">
+                <importedOperation xsi:type="behavior:ImportedInterfaceOperation" import="/0/@imports.1"/>
+                <parameterMappings type="ACTION_OUT">
+                  <operationParameter xsi:type="behavior:ImportedInterfaceParameter" import="/0/@imports.1">
+                    <parameter href="cargo.simplified.service#/15"/>
+                  </operationParameter>
+                  <identifier name="destLocationExists"/>
+                </parameterMappings>
+                <parameterMappings>
+                  <operationParameter xsi:type="behavior:ImportedInterfaceParameter" import="/0/@imports.1">
+                    <parameter href="cargo.simplified.service#/14"/>
+                  </operationParameter>
+                  <identifier name="destPort"/>
+                </parameterMappings>
+              </ownedNodes>
+              <ownedNodes xsi:type="behavior:ConditionalNode" name="SourceLocationExists" sEdge="/0/@activityModel/@activities.0/@root/@ownedNodes.2/@body/@ownedEdges.7" tEdge="/0/@activityModel/@activities.0/@root/@ownedNodes.2/@body/@ownedEdges.6">
+                <test xsi:type="behavior:NotExpression">
+                  <expr xsi:type="behavior:UnaryExpression">
+                    <identifier name="srcLocationExists"/>
+                  </expr>
+                </test>
+                <body>
+                  <ownedNodes xsi:type="behavior:FlowFinalNode" name="FlowFinalNode2" tEdge="/0/@activityModel/@activities.0/@root/@ownedNodes.2/@body/@ownedNodes.5/@body/@ownedEdges.1"/>
+                  <ownedNodes xsi:type="behavior:InitialNode" name="InitialNode1" sEdge="/0/@activityModel/@activities.0/@root/@ownedNodes.2/@body/@ownedNodes.5/@body/@ownedEdges.0"/>
+                  <ownedNodes xsi:type="behavior:RaiseEntityNotFoundExceptionAction" name="LocationNotFound" sEdge="/0/@activityModel/@activities.0/@root/@ownedNodes.2/@body/@ownedNodes.5/@body/@ownedEdges.1" tEdge="/0/@activityModel/@activities.0/@root/@ownedNodes.2/@body/@ownedNodes.5/@body/@ownedEdges.0">
+                    <exception import="/0/@imports.0">
+                      <type xsi:type="data:DataStructure" href="cargo.simplified.service#/5/@complexTypes.7"/>
+                    </exception>
+                  </ownedNodes>
+                  <ownedEdges name="InitialNode1->LocationNotFound" source="/0/@activityModel/@activities.0/@root/@ownedNodes.2/@body/@ownedNodes.5/@body/@ownedNodes.1" target="/0/@activityModel/@activities.0/@root/@ownedNodes.2/@body/@ownedNodes.5/@body/@ownedNodes.2"/>
+                  <ownedEdges name="LocationNotFound->FlowFinalNode2" source="/0/@activityModel/@activities.0/@root/@ownedNodes.2/@body/@ownedNodes.5/@body/@ownedNodes.2" target="/0/@activityModel/@activities.0/@root/@ownedNodes.2/@body/@ownedNodes.5/@body/@ownedNodes.0"/>
+                  <scope parent="/0/@activityModel/@activities.0/@root/@ownedNodes.2/@body/@scope" inheritedVariables="/0/@activityModel/@activities.0/@root/@scope/@ownedVariables.0 /0/@activityModel/@activities.0/@root/@scope/@ownedVariables.1 /0/@activityModel/@activities.0/@root/@scope/@ownedVariables.2 /0/@activityModel/@activities.0/@root/@ownedNodes.2/@body/@scope/@ownedVariables.0 /0/@activityModel/@activities.0/@root/@scope/@ownedVariables.3 /0/@activityModel/@activities.0/@root/@scope/@ownedVariables.4 /0/@activityModel/@activities.0/@root/@scope/@ownedVariables.5"/>
+                </body>
+                <elseBody>
+                  <scope parent="/0/@activityModel/@activities.0/@root/@ownedNodes.2/@body/@scope" inheritedVariables="/0/@activityModel/@activities.0/@root/@scope/@ownedVariables.0 /0/@activityModel/@activities.0/@root/@scope/@ownedVariables.1 /0/@activityModel/@activities.0/@root/@scope/@ownedVariables.2 /0/@activityModel/@activities.0/@root/@ownedNodes.2/@body/@scope/@ownedVariables.0 /0/@activityModel/@activities.0/@root/@scope/@ownedVariables.3 /0/@activityModel/@activities.0/@root/@scope/@ownedVariables.4 /0/@activityModel/@activities.0/@root/@scope/@ownedVariables.5"/>
+                </elseBody>
+              </ownedNodes>
+              <ownedNodes xsi:type="behavior:FlowFinalNode" name="FlowFinalNode2" tEdge="/0/@activityModel/@activities.0/@root/@ownedNodes.2/@body/@ownedEdges.4"/>
+              <ownedNodes xsi:type="behavior:CallOperationAction" name="SourceLocationExists" sEdge="/0/@activityModel/@activities.0/@root/@ownedNodes.2/@body/@ownedEdges.6" tEdge="/0/@activityModel/@activities.0/@root/@ownedNodes.2/@body/@ownedEdges.1" domainToDeclareResult="true">
+                <importedOperation xsi:type="behavior:ImportedInterfaceOperation" import="/0/@imports.1"/>
+                <parameterMappings>
+                  <operationParameter xsi:type="behavior:ImportedInterfaceParameter" import="/0/@imports.1">
+                    <parameter href="cargo.simplified.service#/14"/>
+                  </operationParameter>
+                  <identifier name="srcPort"/>
+                </parameterMappings>
+                <parameterMappings type="ACTION_OUT">
+                  <operationParameter xsi:type="behavior:ImportedInterfaceParameter" import="/0/@imports.1">
+                    <parameter href="cargo.simplified.service#/15"/>
+                  </operationParameter>
+                  <identifier name="srcLocationExists"/>
+                </parameterMappings>
+              </ownedNodes>
+              <ownedNodes xsi:type="behavior:VariableAssignmentAction" name="AssignCustomerId" sEdge="/0/@activityModel/@activities.0/@root/@ownedNodes.2/@body/@ownedEdges.3" tEdge="/0/@activityModel/@activities.0/@root/@ownedNodes.2/@body/@ownedEdges.5">
+                <assignment>
+                  <identifier name="newCargo.role.customerId"/>
+                  <expr xsi:type="behavior:UnaryExpression">
+                    <identifier name="customerId"/>
+                  </expr>
+                </assignment>
+              </ownedNodes>
+              <ownedNodes xsi:type="behavior:CallOperationAction" name="DomainCreateAction26" sEdge="/0/@activityModel/@activities.0/@root/@ownedNodes.2/@body/@ownedEdges.4" tEdge="/0/@activityModel/@activities.0/@root/@ownedNodes.2/@body/@ownedEdges.9">
+                <importedOperation xsi:type="behavior:ImportedInterfaceOperation" import="/0/@imports.1"/>
+                <parameterMappings>
+                  <operationParameter xsi:type="behavior:ImportedInterfaceParameter" import="/0/@imports.1">
+                    <parameter href="cargo.simplified.service#/16"/>
+                  </operationParameter>
+                  <identifier name="newCargo"/>
+                </parameterMappings>
+                <parameterMappings type="ACTION_OUT">
+                  <operationParameter xsi:type="behavior:ImportedInterfaceParameter" import="/0/@imports.1">
+                    <parameter href="cargo.simplified.service#/17"/>
+                  </operationParameter>
+                  <identifier name="newCargo"/>
+                </parameterMappings>
+              </ownedNodes>
+              <ownedNodes xsi:type="behavior:InitialNode" name="InitialNode1" sEdge="/0/@activityModel/@activities.0/@root/@ownedNodes.2/@body/@ownedEdges.1"/>
+              <ownedEdges name="AssignDestination->AssignSource" source="/0/@activityModel/@activities.0/@root/@ownedNodes.2/@body/@ownedNodes.1" target="/0/@activityModel/@activities.0/@root/@ownedNodes.2/@body/@ownedNodes.2"/>
+              <ownedEdges name="InitialNode1->SourceLocationExists" source="/0/@activityModel/@activities.0/@root/@ownedNodes.2/@body/@ownedNodes.10" target="/0/@activityModel/@activities.0/@root/@ownedNodes.2/@body/@ownedNodes.7"/>
+              <ownedEdges name="DestinationLocationExists->SourceLocationExists" source="/0/@activityModel/@activities.0/@root/@ownedNodes.2/@body/@ownedNodes.4" target="/0/@activityModel/@activities.0/@root/@ownedNodes.2/@body/@ownedNodes.0"/>
+              <ownedEdges name="AssignCustomerId->AssignDestination" source="/0/@activityModel/@activities.0/@root/@ownedNodes.2/@body/@ownedNodes.8" target="/0/@activityModel/@activities.0/@root/@ownedNodes.2/@body/@ownedNodes.1"/>
+              <ownedEdges name="DomainCreateAction26->FlowFinalNode2" source="/0/@activityModel/@activities.0/@root/@ownedNodes.2/@body/@ownedNodes.9" target="/0/@activityModel/@activities.0/@root/@ownedNodes.2/@body/@ownedNodes.6"/>
+              <ownedEdges name="SourceLocationExists->AssignCustomerId" source="/0/@activityModel/@activities.0/@root/@ownedNodes.2/@body/@ownedNodes.0" target="/0/@activityModel/@activities.0/@root/@ownedNodes.2/@body/@ownedNodes.8"/>
+              <ownedEdges name="SourceLocationExists->SourceLocationExists" source="/0/@activityModel/@activities.0/@root/@ownedNodes.2/@body/@ownedNodes.7" target="/0/@activityModel/@activities.0/@root/@ownedNodes.2/@body/@ownedNodes.5"/>
+              <ownedEdges name="SourceLocationExists->DestinationLocationExists" source="/0/@activityModel/@activities.0/@root/@ownedNodes.2/@body/@ownedNodes.5" target="/0/@activityModel/@activities.0/@root/@ownedNodes.2/@body/@ownedNodes.4"/>
+              <ownedEdges name="AssignSource->AssignDeadline" source="/0/@activityModel/@activities.0/@root/@ownedNodes.2/@body/@ownedNodes.2" target="/0/@activityModel/@activities.0/@root/@ownedNodes.2/@body/@ownedNodes.3"/>
+              <ownedEdges name="AssignDeadline->DomainCreateAction26" source="/0/@activityModel/@activities.0/@root/@ownedNodes.2/@body/@ownedNodes.3" target="/0/@activityModel/@activities.0/@root/@ownedNodes.2/@body/@ownedNodes.9"/>
+              <scope parent="/0/@activityModel/@activities.0/@root/@scope" children="/0/@activityModel/@activities.0/@root/@ownedNodes.2/@body/@ownedNodes.5/@body/@scope /0/@activityModel/@activities.0/@root/@ownedNodes.2/@body/@ownedNodes.5/@elseBody/@scope" inheritedVariables="/0/@activityModel/@activities.0/@root/@scope/@ownedVariables.0 /0/@activityModel/@activities.0/@root/@scope/@ownedVariables.1 /0/@activityModel/@activities.0/@root/@scope/@ownedVariables.2 /0/@activityModel/@activities.0/@root/@scope/@ownedVariables.3 /0/@activityModel/@activities.0/@root/@scope/@ownedVariables.4 /0/@activityModel/@activities.0/@root/@scope/@ownedVariables.5">
+                <ownedVariables name="srcLocationExists" lowerBound="1" accessibleScopes="/0/@activityModel/@activities.0/@root/@ownedNodes.2/@body/@ownedNodes.0/@body/@scope /0/@activityModel/@activities.0/@root/@ownedNodes.2/@body/@ownedNodes.0/@elseBody/@scope /0/@activityModel/@activities.0/@root/@ownedNodes.2/@body/@ownedNodes.5/@elseBody/@scope /0/@activityModel/@activities.0/@root/@ownedNodes.2/@body/@ownedNodes.5/@body/@scope">
+                  <primitiveType xsi:type="data:PrimitiveBoolean"/>
+                </ownedVariables>
+                <ownedVariables name="destLocationExists" lowerBound="1" accessibleScopes="/0/@activityModel/@activities.0/@root/@ownedNodes.2/@body/@ownedNodes.0/@body/@scope /0/@activityModel/@activities.0/@root/@ownedNodes.2/@body/@ownedNodes.0/@elseBody/@scope">
+                  <primitiveType xsi:type="data:PrimitiveBoolean"/>
+                </ownedVariables>
+              </scope>
+            </body>
+            <elseBody>
+              <ownedNodes xsi:type="behavior:FlowFinalNode" name="FlowFinalNode3" tEdge="/0/@activityModel/@activities.0/@root/@ownedNodes.2/@elseBody/@ownedEdges.1"/>
+              <ownedNodes xsi:type="behavior:RaiseEntityNotFoundExceptionAction" name="CustomerNotFound" sEdge="/0/@activityModel/@activities.0/@root/@ownedNodes.2/@elseBody/@ownedEdges.1" tEdge="/0/@activityModel/@activities.0/@root/@ownedNodes.2/@elseBody/@ownedEdges.0">
+                <exception import="/0/@imports.0">
+                  <type xsi:type="data:DataStructure" href="cargo.simplified.service#/5/@complexTypes.8"/>
+                </exception>
+              </ownedNodes>
+              <ownedNodes xsi:type="behavior:InitialNode" name="InitialNode1" sEdge="/0/@activityModel/@activities.0/@root/@ownedNodes.2/@elseBody/@ownedEdges.0"/>
+              <ownedEdges name="InitialNode1->CustomerNotFound" source="/0/@activityModel/@activities.0/@root/@ownedNodes.2/@elseBody/@ownedNodes.2" target="/0/@activityModel/@activities.0/@root/@ownedNodes.2/@elseBody/@ownedNodes.1"/>
+              <ownedEdges name="CustomerNotFound->FlowFinalNode3" source="/0/@activityModel/@activities.0/@root/@ownedNodes.2/@elseBody/@ownedNodes.1" target="/0/@activityModel/@activities.0/@root/@ownedNodes.2/@elseBody/@ownedNodes.0"/>
+              <scope parent="/0/@activityModel/@activities.0/@root/@scope" inheritedVariables="/0/@activityModel/@activities.0/@root/@scope/@ownedVariables.0 /0/@activityModel/@activities.0/@root/@scope/@ownedVariables.1 /0/@activityModel/@activities.0/@root/@scope/@ownedVariables.2 /0/@activityModel/@activities.0/@root/@scope/@ownedVariables.3 /0/@activityModel/@activities.0/@root/@scope/@ownedVariables.4 /0/@activityModel/@activities.0/@root/@scope/@ownedVariables.5"/>
+            </elseBody>
+          </ownedNodes>
+          <ownedNodes xsi:type="behavior:ActivityFinalNode" name="ActivityFinalNode4" tEdge="/0/@activityModel/@activities.0/@root/@ownedEdges.2">
+            <variablesToReturn name="newCargo"/>
+          </ownedNodes>
+          <ownedNodes xsi:type="behavior:InitialNode" name="InitialNode1" sEdge="/0/@activityModel/@activities.0/@root/@ownedEdges.0"/>
+          <ownedEdges name="InitialNode1->New Cargo Declaration" source="/0/@activityModel/@activities.0/@root/@ownedNodes.4" target="/0/@activityModel/@activities.0/@root/@ownedNodes.1"/>
+          <ownedEdges name="CheckCustomerExistence->CustomerExistsCondition" source="/0/@activityModel/@activities.0/@root/@ownedNodes.0" target="/0/@activityModel/@activities.0/@root/@ownedNodes.2"/>
+          <ownedEdges name="CustomerExistsCondition->ActivityFinalNode4" source="/0/@activityModel/@activities.0/@root/@ownedNodes.2" target="/0/@activityModel/@activities.0/@root/@ownedNodes.3"/>
+          <ownedEdges name="New Cargo Declaration->CheckCustomerExistence" source="/0/@activityModel/@activities.0/@root/@ownedNodes.1" target="/0/@activityModel/@activities.0/@root/@ownedNodes.0"/>
+          <scope children="/0/@activityModel/@activities.0/@root/@ownedNodes.2/@elseBody/@scope /0/@activityModel/@activities.0/@root/@ownedNodes.2/@body/@scope">
+            <ownedVariables name="customerId" lowerBound="1" accessibleScopes="/0/@activityModel/@activities.0/@root/@ownedNodes.2/@body/@ownedNodes.0/@body/@scope /0/@activityModel/@activities.0/@root/@ownedNodes.2/@body/@ownedNodes.0/@elseBody/@scope /0/@activityModel/@activities.0/@root/@ownedNodes.2/@elseBody/@scope /0/@activityModel/@activities.0/@root/@ownedNodes.2/@body/@ownedNodes.5/@elseBody/@scope /0/@activityModel/@activities.0/@root/@ownedNodes.2/@body/@scope /0/@activityModel/@activities.0/@root/@ownedNodes.2/@body/@ownedNodes.5/@body/@scope">
+              <primitiveType xsi:type="data:PrimitiveInteger"/>
+            </ownedVariables>
+            <ownedVariables name="srcPort" lowerBound="1" accessibleScopes="/0/@activityModel/@activities.0/@root/@ownedNodes.2/@body/@ownedNodes.0/@body/@scope /0/@activityModel/@activities.0/@root/@ownedNodes.2/@body/@ownedNodes.0/@elseBody/@scope /0/@activityModel/@activities.0/@root/@ownedNodes.2/@elseBody/@scope /0/@activityModel/@activities.0/@root/@ownedNodes.2/@body/@ownedNodes.5/@elseBody/@scope /0/@activityModel/@activities.0/@root/@ownedNodes.2/@body/@scope /0/@activityModel/@activities.0/@root/@ownedNodes.2/@body/@ownedNodes.5/@body/@scope">
+              <primitiveType xsi:type="data:PrimitiveInteger"/>
+            </ownedVariables>
+            <ownedVariables name="customerExists" lowerBound="1" accessibleScopes="/0/@activityModel/@activities.0/@root/@ownedNodes.2/@body/@ownedNodes.0/@body/@scope /0/@activityModel/@activities.0/@root/@ownedNodes.2/@body/@ownedNodes.0/@elseBody/@scope /0/@activityModel/@activities.0/@root/@ownedNodes.2/@elseBody/@scope /0/@activityModel/@activities.0/@root/@ownedNodes.2/@body/@ownedNodes.5/@elseBody/@scope /0/@activityModel/@activities.0/@root/@ownedNodes.2/@body/@scope /0/@activityModel/@activities.0/@root/@ownedNodes.2/@body/@ownedNodes.5/@body/@scope">
+              <primitiveType xsi:type="data:PrimitiveBoolean"/>
+            </ownedVariables>
+            <ownedVariables name="deadline" lowerBound="1" accessibleScopes="/0/@activityModel/@activities.0/@root/@ownedNodes.2/@body/@ownedNodes.0/@body/@scope /0/@activityModel/@activities.0/@root/@ownedNodes.2/@body/@ownedNodes.0/@elseBody/@scope /0/@activityModel/@activities.0/@root/@ownedNodes.2/@elseBody/@scope /0/@activityModel/@activities.0/@root/@ownedNodes.2/@body/@ownedNodes.5/@elseBody/@scope /0/@activityModel/@activities.0/@root/@ownedNodes.2/@body/@scope /0/@activityModel/@activities.0/@root/@ownedNodes.2/@body/@ownedNodes.5/@body/@scope">
+              <primitiveType xsi:type="data:PrimitiveInteger"/>
+            </ownedVariables>
+            <ownedVariables name="destPort" lowerBound="1" accessibleScopes="/0/@activityModel/@activities.0/@root/@ownedNodes.2/@body/@ownedNodes.0/@body/@scope /0/@activityModel/@activities.0/@root/@ownedNodes.2/@body/@ownedNodes.0/@elseBody/@scope /0/@activityModel/@activities.0/@root/@ownedNodes.2/@elseBody/@scope /0/@activityModel/@activities.0/@root/@ownedNodes.2/@body/@ownedNodes.5/@elseBody/@scope /0/@activityModel/@activities.0/@root/@ownedNodes.2/@body/@scope /0/@activityModel/@activities.0/@root/@ownedNodes.2/@body/@ownedNodes.5/@body/@scope">
+              <primitiveType xsi:type="data:PrimitiveInteger"/>
+            </ownedVariables>
+            <ownedVariables name="newCargo" accessibleScopes="/0/@activityModel/@activities.0/@root/@ownedNodes.2/@body/@ownedNodes.0/@body/@scope /0/@activityModel/@activities.0/@root/@ownedNodes.2/@body/@ownedNodes.0/@elseBody/@scope /0/@activityModel/@activities.0/@root/@ownedNodes.2/@elseBody/@scope /0/@activityModel/@activities.0/@root/@ownedNodes.2/@body/@ownedNodes.5/@elseBody/@scope /0/@activityModel/@activities.0/@root/@ownedNodes.2/@body/@scope /0/@activityModel/@activities.0/@root/@ownedNodes.2/@body/@ownedNodes.5/@body/@scope">
+              <importedType import="/0/@imports.0">
+                <type xsi:type="data:DataStructure" href="cargo.simplified.service#/5/@complexTypes.4"/>
+              </importedType>
+            </ownedVariables>
+          </scope>
+        </root>
+      </activities>
+      <activities name="Scenario US2-S1 – A cargo is bookedController">
+        <specification xsi:type="behavior:ImportedInterfaceOperation" import="/0/@imports.1"/>
+        <root>
+          <scope>
+            <ownedVariables name="responseParam" lowerBound="1"/>
+          </scope>
+        </root>
+      </activities>
+    </activityModel>
+  </behavior:BehaviorModel>
+  <behavior:SpecDataOperation name="isValid" operationType="D5_SPECIFICATION" isInvariant="true">
+    <features>VALIDATOR</features>
+    <parameters name="result" lowerBound="1" upperBound="1" exchangePattern="OUT">
+      <primitiveType xsi:type="data:PrimitiveBoolean"/>
+    </parameters>
+    <ownedRules name="Deadline must be a positive integer">
+      <expr xsi:type="behavior:BinaryExpression">
+        <operator xsi:type="behavior:Gt"/>
+        <leftExpr xsi:type="behavior:UnaryExpression">
+          <identifier name="self.deadline"/>
+        </leftExpr>
+        <rightExpr xsi:type="behavior:UnaryExpression">
+          <value xsi:type="data:PrimitiveValue" numericValue="0.0"/>
+        </rightExpr>
+      </expr>
+    </ownedRules>
+  </behavior:SpecDataOperation>
+  <behavior:VariableDeclarationAction name="declareResponseVariable" lowerBound="1" upperBound="1">
+    <declaration>
+      <identifier name="responseParam"/>
+    </declaration>
+  </behavior:VariableDeclarationAction>
+  <behavior:InitialNode name="Scenario US2-S1 – A cargo is bookedController-InitNode"/>
+  <behavior:ActivityFinalNode name="Scenario US2-S1 – A cargo is bookedController-ActivityFinalNode"/>
+</xmi:XMI>

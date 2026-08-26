@@ -62,8 +62,8 @@ abstract class Model{}
 
 @Ecore(constraints="UniqueBoundedContextNames UniqueSharedDomainObjectNames")
 class DddModel extends Model, DiagnosticSupported {
-    contains BoundedContext[] boundedContexts
-    contains SharedDomainObject[] sharedDomainObjects
+    contains unordered BoundedContext[] boundedContexts
+    contains unordered SharedDomainObject[] sharedDomainObjects
 
     op boolean UniqueBoundedContextNames(EDiagnosticChain diagnostics,
                                          EMap<Object, Object> context) {
@@ -113,7 +113,8 @@ class DomainNodeOperationMapping{
 }
 
 class BoundedContext extends NamedElement{
-	contains DomainElement[] ownedElements opposite context
+	Boolean isExternal = 'false'
+	contains unordered DomainElement[] ownedElements opposite context
 }
 
 abstract class DomainElement extends NamedElement
@@ -203,18 +204,31 @@ class Operation extends NamedElement, DefinesIdentityObject,DiagnosticSupported{
 	
 	refers Behavior behavior opposite specification
 	
-	contains Parameter[] ownedParameters opposite operation
+	contains  unordered Parameter[] ownedParameters opposite operation
 	container Interface ^interface opposite ownedOperations
 	container DomainObject domainObject opposite ownedOperations
 }
 
-@Ecore(constraints="BehaviorXorSpecification OwnedByDomainObjectOnly UniqueRuleNames SingleBoolOutParameter")
+@Ecore(constraints="NoBehaviorSpecification BehaviorXorSpecification OwnedByDomainObjectOnly UniqueRuleNames SingleBoolOutParameter")
 class SpecOperation extends Operation,DiagnosticSupported{
 	Boolean isInvariant = 'false'
 	
-	contains SpecRule[0..*] ownedRules opposite operation // Multiple expression joined by AND
+	contains unordered SpecRule[0..*] ownedRules opposite operation // Multiple expression joined by AND
 	
+	op boolean NoBehaviorSpecification(EDiagnosticChain diagnostics,
+                                    EMap<Object, Object> context) {
+    	val hasBehavior = behavior !== null
+	    val hasSpec = !ownedRules.empty
 	
+	    if (!hasBehavior && !hasSpec) {
+	        return warn(diagnostics,
+	            "Operation '" + name + "' defines neither a behavior nor a " +
+	            "specification; a default body will be generated.")
+	    }
+	          
+	    return true                 
+    }
+    
 	op boolean BehaviorXorSpecification(EDiagnosticChain diagnostics,
                                     EMap<Object, Object> context) {
 	    val hasBehavior = behavior !== null
@@ -224,12 +238,6 @@ class SpecOperation extends Operation,DiagnosticSupported{
 	        return report(diagnostics,
 	            "Operation '" + name + "' defines both a behavior and a " +
 	            "specification; only one is allowed.")
-	    }
-	
-	    if (!hasBehavior && !hasSpec) {
-	        return warn(diagnostics,
-	            "Operation '" + name + "' defines neither a behavior nor a " +
-	            "specification; a default body will be generated.")
 	    }
 	
 	    return true
@@ -287,44 +295,42 @@ class SpecOperation extends Operation,DiagnosticSupported{
 
 class SpecRule extends NamedElement {
 	String rawString
-	contains Expression expr
+	contains unordered Expression expr
 	container SpecOperation operation opposite ownedRules
 }
 
 enum OperationType {
-	I0_INBOUND_GET,
-	I1_INBOUND_PUT,
-	I2_INBOUND_POST,
-	I3_INBOUND_DELETE,
-	I4_MESSAGE_HANDLER,
+//	I0_INBOUND_GET,
+//	I1_INBOUND_PUT,
+//	I2_INBOUND_POST,
+//	I3_INBOUND_DELETE,
+//	I4_MESSAGE_HANDLER,
 	S0_DOMAIN_SERVICE,
-	S1_APPLICATION_SERVICE,
+//	S1_APPLICATION_SERVICE,
 	R0_REPOSITORY_CREATE,
 	R1_REPOSITORY_READ,
 	R2_REPOSITORY_UPDATE,
 	R3_REPOSITORY_DELETE,
 	R4_REPOSITORY_EXIST,
-	O0_OUTBOUND_GET,
-	O1_OUTBOUND_PUT,
-	O2_OUTBOUND_POST,
-	O3_OUTBOUND_DELETE,
-	O4_MESSAGE_DISPATCHER,
-	O5_OUTBOX_POLLER,
+//	O0_OUTBOUND_GET,
+//	O1_OUTBOUND_PUT,
+//	O2_OUTBOUND_POST,
+//	O3_OUTBOUND_DELETE,
+//	O4_MESSAGE_DISPATCHER,
+//	O5_OUTBOX_POLLER,
 	D0_CONSTRUCTOR,
 	D1_SIMPLE_MUTATOR,
 	D2_COMPOUND_MUTATOR,
 	D3_SIMPLE_ACCESSOR,
 	D4_COMPOUND_ACCESSOR,
-	D5_SPECIFICATION,
-	A0_INTERNAL_ACL,
-	A1_EXTERNAL_ACL
+	D5_SPECIFICATION
 }
 
 abstract class InternalDomainObject extends DomainObject{}
 
 @Ecore(constraints="UniqueOperationNames")
 abstract class Interface extends DomainElement, DiagnosticSupported {
-    contains Operation[] ownedOperations opposite ^interface
+    contains unordered Operation[] ownedOperations opposite ^interface
 
     op boolean UniqueOperationNames(EDiagnosticChain diagnostics,
                                     EMap<Object, Object> context) {
@@ -345,8 +351,8 @@ abstract class DefinesIdentityObject {
 
 @Ecore(constraints="UniqueOperationNames UniquePropertyNames SingleInvariantOperation")
 abstract class DomainObject extends Type, DomainElement, DiagnosticSupported {
-    contains Property[] ownedProperties opposite domainObject
-    contains Operation[] ownedOperations opposite domainObject
+    contains unordered Property[] ownedProperties opposite domainObject
+    contains unordered Operation[] ownedOperations opposite domainObject
 
     op boolean UniqueOperationNames(EDiagnosticChain diagnostics,
                                     EMap<Object, Object> context) {
@@ -443,27 +449,30 @@ class LiteralReal extends Literal
 
 class DomainEvent extends NamedElement, SharedDomainObject{}
 
-@Ecore(constraints="MatchedParameterMappings")
+@Ecore(constraints="MappingsOnlyWithSpecification MatchedParameterMappingsCount EachParameterIsMapped")
 class Activity extends NamedElement, Behavior,DiagnosticSupported
 {
 	Boolean toTransform = 'true'
-	contains Parameter[] ownedParameters opposite activity
-	contains ParameterMapping[] parameterMappings opposite activity
+	contains unordered Parameter[] ownedParameters opposite activity
+	contains unordered ParameterMapping[] parameterMappings opposite activity
 	contains ActivityGroup[0..1] root opposite activity
 	contains DomainNode[] ownedDomainNodes // Only used during transformation to derive the most influential impact
-	contains DomainNodeOperationMapping[] processedDomainNodeMappings
-	
-	op boolean MatchedParameterMappings(EDiagnosticChain diagnostics,
-                                        EMap<Object, Object> context) {
-        if (parameterMappings.empty) return true
-
-        val operation = specification
-        if (operation === null){
+	contains unordered DomainNodeOperationMapping[] processedDomainNodeMappings
+    
+    op boolean MappingsOnlyWithSpecification(EDiagnosticChain diagnostics,
+                                        EMap<Object, Object> context){
+    	if  (specification === null && !(parameterMappings.empty)) {
             return report(diagnostics, "Activity '" + name +
                 "' declares parameter mappings but specifies no operation.")
 		}
-		
-        val opParams = operation.ownedParameters
+		return true
+    }
+    
+    op boolean MatchedParameterMappingsCount(EDiagnosticChain diagnostics,
+                                        EMap<Object, Object> context) {
+        if  (specification === null) return true
+        
+        val opParams = specification.ownedParameters
         if (parameterMappings.size !== ownedParameters.size ||
             parameterMappings.size !== opParams.size){
             return report(diagnostics, "Activity '" + name + "' declares " +
@@ -472,6 +481,15 @@ class Activity extends NamedElement, Behavior,DiagnosticSupported
                 opParams.size + " operation parameters; all three must " +
                 "be equal.")
 		}
+		
+		return true
+	}
+	
+	op boolean EachParameterIsMapped(EDiagnosticChain diagnostics,
+                                        EMap<Object, Object> context) {
+        if  (specification === null) return true
+        
+		val opParams = specification.ownedParameters
 		
         val mappedOpParams = parameterMappings
             .map[operationParameter].filterNull.toList
@@ -483,7 +501,7 @@ class Activity extends NamedElement, Behavior,DiagnosticSupported
         if (mappedOpParams.size !== mappedOpParams.toSet.size ||
             !mappedOpParams.containsAll(opParams))
             isValid = report(diagnostics, "Each operation parameter of '" +
-                operation.name + "' must be covered by exactly one " +
+                specification.name + "' must be covered by exactly one " +
                 "mapping in activity '" + name + "'.")
 
         if (mappedActParams.size !== mappedActParams.toSet.size ||
@@ -497,19 +515,23 @@ class Activity extends NamedElement, Behavior,DiagnosticSupported
 }
 
 class Scope{
+    derived String name get {
+        return (this.group?.name ?: "?");
+    }
 	refers Scope[0..1] parent opposite children
-	refers Scope[0..*] children opposite parent 
-	refers Variable[] inheritedVariables opposite accessibleScopes
-	contains Variable[] ownedVariables opposite scope
+	refers unordered Scope[0..*] children opposite parent 
+	refers unordered Variable[] inheritedVariables opposite accessibleScopes
+	contains unordered Variable[] ownedVariables opposite scope
 	container ActivityGroup group opposite scope
+	
 }
 
 class Identifier extends NamedElement{}
 
 @Ecore(constraints="SingleInitialNode SingleFinalNode NonEmptyGroup")
 class ActivityGroup extends NamedElement, DiagnosticSupported{
-	contains ActivityNode[0..*] ownedNodes opposite group
-	contains ActivityEdge[0..*] ownedEdges opposite group
+	contains unordered ActivityNode[0..*] ownedNodes opposite group
+	contains unordered ActivityEdge[0..*] ownedEdges opposite group
 	contains Scope scope opposite group
 	
 	container Activity[0..1] activity opposite root
@@ -556,19 +578,19 @@ class Variable extends NamedElement{
 	refers Type ^type
 	Integer upperBound = '1'
 	Integer lowerBound = '0'
-	refers Scope[] accessibleScopes opposite inheritedVariables
+	refers unordered Scope[] accessibleScopes opposite inheritedVariables
 	container Scope scope opposite ownedVariables
 }
 
 class InstanceValue extends ValueSpecification
 {
 	refers DomainObject isInstanceOf
-	contains InstanceProperty[] ownedProperties
+	contains unordered InstanceProperty[] ownedProperties
 }
 
 class InstanceProperty extends NamedElement{
 	refers Property isInstanceOf
-	contains ValueSpecification[] value
+	contains unordered ValueSpecification[] value
 }
 
 abstract class ValueSpecification{}
@@ -580,7 +602,12 @@ abstract class ActivityNode extends NamedElement{
 }
 
 @Ecore(constraints="NoEdgeIntoInitialNode NoEdgeOutOfFinalNode EndpointsInSameGroup")
-class ActivityEdge extends NamedElement, DiagnosticSupported {
+class ActivityEdge extends DiagnosticSupported {
+    derived String name get {
+        return (this.source?.name ?: "?") + "->" + (this.target?.name ?: "?");
+    }
+    
+   	String edgeName 
     refers ActivityNode source opposite sEdge
     refers ActivityNode target opposite tEdge
 
@@ -668,7 +695,7 @@ abstract class Behavior{
 class CallOperationAction extends ExecutableNode{
 	Boolean domainToDeclareResult = 'false'
 	refers Operation[1..1] operation
-	contains  ParameterMapping[] parameterMappings opposite action
+	contains  unordered ParameterMapping[] parameterMappings opposite action
 }
 
 class VariableDeclarationAction extends ExecutableNode{
@@ -703,9 +730,9 @@ class ParallelNode extends ControlNode{
 	contains ActivityGroup[] flows opposite parallelNode
 }
 
-@Ecore(constraints="SelfAnchoredBinaryExpression RequiresMainExpression")
+@Ecore(constraints="RequiresMainExpression SelfAnchoredBinaryExpression")
 abstract class DomainNode extends ExecutableNode, DiagnosticSupported{
-	refers AggregateRoot aggregate
+	refers AggregateRoot[1..1] aggregate
 	contains Identifier[0..1] result
 	
 	refers Entity[0..1] entity 
@@ -714,7 +741,8 @@ abstract class DomainNode extends ExecutableNode, DiagnosticSupported{
 	
 	op boolean RequiresMainExpression(EDiagnosticChain diagnostics,
                                       EMap<Object, Object> context) {
-        val isValid = this instanceof DomainFindAction || !mainExpr.empty
+        // In case empty for DomainFindAction (but not ExistFindAction) -> Get All 
+        val isValid = (this instanceof DomainFindAction && !(this instanceof DomainExistAction)) || !mainExpr.empty
 
         if (!isValid && diagnostics !== null) {
             report(diagnostics,
@@ -778,7 +806,7 @@ class DomainDeleteAction extends DomainNode{
 
 @Ecore(constraints="ExclusiveEventSource")
 abstract class SignalAction extends ExecutableNode, DiagnosticSupported{
-	refers DomainEvent event
+	refers DomainEvent[1..1] event
 	
 	refers Variable variable
 	contains Identifier identifier
@@ -825,7 +853,7 @@ enum ParameterRole{
 @Ecore(constraints="ConformingActivityOperationParameter ExclusiveMappingSource ValueOnlyInAction")
 class ParameterMapping extends DiagnosticSupported{
 	ParameterMappingType ^type
-	refers Parameter operationParameter
+	refers Parameter[1..1] operationParameter
 	
 	// Map Variable to Operation Param
 	contains Identifier[0..1] identifier // Originally defined in the model

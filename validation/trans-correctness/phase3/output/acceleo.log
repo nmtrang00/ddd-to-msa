@@ -1,0 +1,34 @@
+WARNING generateRepositories L33: AQL evaluation issue
+	WARNING : Couldn't find the 'getIdType(EClassifier=EClass)' service
+WARNING generateRepositories L33: AQL evaluation issue
+	WARNING : Couldn't find the 'getIdType(EClassifier=EClass)' service
+WARNING lemmaBehaviorTemplates L283: AQL evaluation issue
+	WARNING : Couldn't find the 'aqlFeatureAccess(java.lang.Object,java.lang.String)' service
+	WARNING : Couldn't find the 'first(org.eclipse.acceleo.query.runtime.impl.Nothing)' service
+WARNING lemmaBehaviorTemplates L283: AQL evaluation issue
+	WARNING : Couldn't find the 'aqlFeatureAccess(java.lang.Object,java.lang.String)' service
+	WARNING : Couldn't find the 'first(org.eclipse.acceleo.query.runtime.impl.Nothing)' service
+WARNING lemmaBehaviorTemplates L283: AQL evaluation issue
+	WARNING : Couldn't find the 'aqlFeatureAccess(java.lang.Object,java.lang.String)' service
+	WARNING : Couldn't find the 'first(org.eclipse.acceleo.query.runtime.impl.Nothing)' service
+ERROR lemmaBehaviorTemplates L184: AQL parsing issue
+	ERROR lemmaBehaviorTemplates L184: incomplet conditional
+ERROR lemmaBehaviorTemplates L184: AQL parsing issue
+	ERROR lemmaBehaviorTemplates L184: incomplet conditional
+ERROR lemmaBehaviorTemplates L184: AQL parsing issue
+	ERROR lemmaBehaviorTemplates L184: incomplet conditional
+ERROR lemmaBehaviorTemplates L184: AQL parsing issue
+	ERROR lemmaBehaviorTemplates L184: incomplet conditional
+ERROR lemmaBehaviorTemplates L184: AQL parsing issue
+	ERROR lemmaBehaviorTemplates L184: incomplet conditional
+ERROR lemmaBehaviorTemplates L184: AQL parsing issue
+	ERROR lemmaBehaviorTemplates L184: incomplet conditional
+ERROR lemmaBehaviorTemplates L184: AQL parsing issue
+	ERROR lemmaBehaviorTemplates L184: incomplet conditional
+ERROR lemmaBehaviorTemplates L184: AQL parsing issue
+	ERROR lemmaBehaviorTemplates L184: incomplet conditional
+ERROR lemmaBehaviorTemplates L184: AQL parsing issue
+	ERROR lemmaBehaviorTemplates L184: incomplet conditional
+ERROR lemmaBehaviorTemplates L184: AQL parsing issue
+	ERROR lemmaBehaviorTemplates L184: incomplet conditional
+Files: 40, Lost Files: 0, Errors: 10, Warnings: 5, Infos: 0.

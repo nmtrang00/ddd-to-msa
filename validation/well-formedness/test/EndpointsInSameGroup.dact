@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<dact:Root xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:dact="http://www.example.org/xcore/dact">
+  <ddd/>
+  <activity>
+    <activities name="doSomethingActivity">
+      <root name="Root">
+        <ownedNodes xsi:type="dact:InitialNode" name="InitRoot" sEdge="//@activity/@activities.0/@root/@ownedEdges.0"/>
+        <ownedNodes xsi:type="dact:ActivityFinalNode"/>
+        <ownedNodes xsi:type="dact:VariableDeclarationAction" name="VarDeclarationRoot"/>
+        <ownedNodes xsi:type="dact:ConditionalNode">
+          <test xsi:type="dact:UnaryExpression">
+            <value xsi:type="dact:LiteralBoolean"/>
+          </test>
+          <body>
+            <ownedNodes xsi:type="dact:InitialNode" name="InitBody"/>
+            <ownedNodes xsi:type="dact:ActivityFinalNode"/>
+            <ownedNodes xsi:type="dact:VariableDeclarationAction" name="VarDeclarationBody" tEdge="//@activity/@activities.0/@root/@ownedEdges.0"/>
+          </body>
+        </ownedNodes>
+        <ownedEdges name="test" source="//@activity/@activities.0/@root/@ownedNodes.0" target="//@activity/@activities.0/@root/@ownedNodes.3/@body/@ownedNodes.2"/>
+      </root>
+    </activities>
+  </activity>
+  <primitivesTypes xsi:type="dact:StringType" name="String"/>
+  <primitivesTypes xsi:type="dact:BooleanType" name="Boolean"/>
+  <primitivesTypes xsi:type="dact:IntegerType" name="Integer"/>
+  <primitivesTypes xsi:type="dact:RealType" name="Real"/>
+</dact:Root>

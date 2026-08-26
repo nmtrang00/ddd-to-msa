@@ -13,7 +13,7 @@
 
 [comment @main/]
 [template public generateRepositories(serviceModel: service::ServiceModel)]
-[for (microservice : service::Microservice | serviceModel.microservices)]
+[for (microservice : service::Microservice | serviceModel.microservices->select(ms|ms.type = service::MicroserviceType::FUNCTIONAL))]
   	[let serviceName : String = microservice.name.toCamelCase(), 
   		interfaceDir : String = serviceName+'-service/src/main/java/com/example/'+serviceName+'/repository/']
     [for (interface: service::Interface | microservice.interfaces -> select(i|i.isRepository()))]

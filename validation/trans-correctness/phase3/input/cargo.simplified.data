@@ -1,0 +1,181 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<data:DataModel xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:behavior="http://www.example.org/xcore/behavior" xmlns:data="http://www.example.org/xcore/data" t_modelUri="simplifiedCargo">
+  <contexts name="Cargo">
+    <complexTypes xsi:type="data:CollectionType" name="CargoStatus">
+      <dataFields name="cargoStatus" complexType="//@contexts.0/@complexTypes.5"/>
+    </complexTypes>
+    <complexTypes xsi:type="data:DataStructure" name="Cargo">
+      <features>ENTITY</features>
+      <features>AGGREGATE</features>
+      <dataFields name="goal" lowerBound="1" upperBound="1" complexType="//@contexts.0/@complexTypes.3"/>
+      <dataFields name="status" upperBound="1" complexType="//@contexts.0/@complexTypes.5">
+        <features>NEVER_EMPTY</features>
+      </dataFields>
+      <dataFields name="testStatusMulti" upperBound="-1" complexType="//@contexts.0/@complexTypes.0">
+        <features>NEVER_EMPTY</features>
+      </dataFields>
+      <dataFields name="deliveryHistory" lowerBound="0" upperBound="1" complexType="//@contexts.0/@complexTypes.4">
+        <features>PART</features>
+      </dataFields>
+      <dataFields name="role" lowerBound="1" upperBound="1" complexType="//@contexts.0/@complexTypes.2"/>
+      <dataFields name="trackingId" lowerBound="1" upperBound="1">
+        <primitiveType xsi:type="data:PrimitiveInteger"/>
+        <features>IDENTIFIER</features>
+        <features>NEVER_EMPTY</features>
+      </dataFields>
+      <operations name="getCustomerName" operationType="D3_SIMPLE_ACCESSOR">
+        <parameters name="primitiveCollection" lowerBound="0" upperBound="-1" complexType="//@complexTypes.0"/>
+        <parameters name="name" lowerBound="0" upperBound="1" exchangePattern="OUT">
+          <primitiveType xsi:type="data:PrimitiveString"/>
+        </parameters>
+      </operations>
+    </complexTypes>
+    <complexTypes xsi:type="data:DataStructure" name="SharedCustomer">
+      <features>SHARED_VALUE_OBJECT</features>
+      <dataFields name="customerId" lowerBound="1" upperBound="1">
+        <primitiveType xsi:type="data:PrimitiveInteger"/>
+        <features>NEVER_EMPTY</features>
+      </dataFields>
+    </complexTypes>
+    <complexTypes xsi:type="data:DataStructure" name="DeliverySpecification">
+      <features>VALUE_OBJECT</features>
+      <dataFields name="destination" lowerBound="1" upperBound="1" complexType="//@contexts.0/@complexTypes.6"/>
+      <dataFields name="deadline" lowerBound="1" upperBound="1">
+        <primitiveType xsi:type="data:PrimitiveInteger"/>
+        <features>NEVER_EMPTY</features>
+      </dataFields>
+      <dataFields name="source" lowerBound="1" upperBound="1" complexType="//@contexts.0/@complexTypes.6"/>
+      <operations xsi:type="behavior:SpecDataOperation" name="isValid" operationType="D5_SPECIFICATION" isInvariant="true">
+        <features>VALIDATOR</features>
+        <parameters name="result" lowerBound="1" upperBound="1" exchangePattern="OUT">
+          <primitiveType xsi:type="data:PrimitiveBoolean"/>
+        </parameters>
+        <ownedRules name="Deadline must be a positive integer">
+          <expr xsi:type="behavior:BinaryExpression">
+            <operator xsi:type="behavior:Ge"/>
+            <leftExpr xsi:type="behavior:UnaryExpression">
+              <identifier name="self.deadline"/>
+            </leftExpr>
+            <rightExpr xsi:type="behavior:BinaryExpression">
+              <operator xsi:type="behavior:Plus"/>
+              <leftExpr xsi:type="behavior:UnaryExpression">
+                <value xsi:type="data:PrimitiveValue" numericValue="0.0"/>
+              </leftExpr>
+              <rightExpr xsi:type="behavior:UnaryExpression">
+                <value xsi:type="data:PrimitiveValue" numericValue="1.0"/>
+              </rightExpr>
+            </rightExpr>
+          </expr>
+        </ownedRules>
+      </operations>
+    </complexTypes>
+    <complexTypes xsi:type="data:DataStructure" name="DeliveryHistory">
+      <features>ENTITY</features>
+      <dataFields name="deliveryHistoryId" lowerBound="0" upperBound="1">
+        <primitiveType xsi:type="data:PrimitiveString"/>
+        <features>IDENTIFIER</features>
+      </dataFields>
+    </complexTypes>
+    <complexTypes xsi:type="data:Enumeration" name="CargoStatus">
+      <fields name="UNRECEIVED"/>
+      <fields name="RECEIVED"/>
+      <fields name="LOADED"/>
+      <fields name="UNLOADED"/>
+      <fields name="DELIVERED"/>
+    </complexTypes>
+    <complexTypes xsi:type="data:DataStructure" name="SharedLocation">
+      <features>SHARED_VALUE_OBJECT</features>
+      <dataFields name="portCode" lowerBound="1" upperBound="1">
+        <primitiveType xsi:type="data:PrimitiveInteger"/>
+        <features>NEVER_EMPTY</features>
+      </dataFields>
+    </complexTypes>
+    <complexTypes xsi:type="data:DataStructure" name="BookACargoRequest">
+      <features>REQUEST_PAYLOAD</features>
+      <dataFields name="srcPort" lowerBound="1" upperBound="1">
+        <primitiveType xsi:type="data:PrimitiveInteger"/>
+      </dataFields>
+      <dataFields name="deadline" lowerBound="1" upperBound="1">
+        <primitiveType xsi:type="data:PrimitiveInteger"/>
+      </dataFields>
+      <dataFields name="customerId" lowerBound="1" upperBound="1">
+        <primitiveType xsi:type="data:PrimitiveInteger"/>
+      </dataFields>
+      <dataFields name="destPort" lowerBound="1" upperBound="1">
+        <primitiveType xsi:type="data:PrimitiveInteger"/>
+      </dataFields>
+    </complexTypes>
+    <complexTypes xsi:type="data:DataStructure" name="BookACargoResponse">
+      <features>RESPONSE_PAYLOAD</features>
+      <dataFields name="newCargo" lowerBound="0" upperBound="1" complexType="//@contexts.0/@complexTypes.1"/>
+    </complexTypes>
+    <complexTypes xsi:type="data:DataStructure" name="LocationNotFound">
+      <features>NOTFOUND_EXCEPTION</features>
+      <dataFields name="description" lowerBound="1" upperBound="1">
+        <primitiveType xsi:type="data:PrimitiveString"/>
+        <initializationValue/>
+      </dataFields>
+      <dataFields name="entity" lowerBound="1" upperBound="1" complexType="//@contexts.1/@complexTypes.0"/>
+    </complexTypes>
+    <complexTypes xsi:type="data:DataStructure" name="CustomerNotFound">
+      <features>NOTFOUND_EXCEPTION</features>
+      <dataFields name="description" lowerBound="1" upperBound="1">
+        <primitiveType xsi:type="data:PrimitiveString"/>
+        <initializationValue/>
+      </dataFields>
+      <dataFields name="entity" lowerBound="1" upperBound="1" complexType="//@contexts.2/@complexTypes.0"/>
+    </complexTypes>
+    <complexTypes xsi:type="data:DataStructure" name="ExistsByCustomerIdResponse">
+      <features>EXTERNAL</features>
+      <dataFields name="result" lowerBound="1" upperBound="1">
+        <primitiveType xsi:type="data:PrimitiveBoolean"/>
+      </dataFields>
+    </complexTypes>
+    <complexTypes xsi:type="data:DataStructure" name="ExistsByPortCodeResponse">
+      <features>EXTERNAL</features>
+      <dataFields name="result" lowerBound="1" upperBound="1">
+        <primitiveType xsi:type="data:PrimitiveBoolean"/>
+      </dataFields>
+    </complexTypes>
+  </contexts>
+  <contexts name="Location">
+    <complexTypes xsi:type="data:DataStructure" name="Location">
+      <features>ENTITY</features>
+      <features>AGGREGATE</features>
+      <dataFields name="portCode" lowerBound="1" upperBound="1">
+        <primitiveType xsi:type="data:PrimitiveInteger"/>
+        <features>IDENTIFIER</features>
+        <features>NEVER_EMPTY</features>
+      </dataFields>
+    </complexTypes>
+    <complexTypes xsi:type="data:DataStructure" name="ExistsByPortCodeResponse">
+      <features>RESPONSE_PAYLOAD</features>
+      <dataFields name="result" lowerBound="1" upperBound="1">
+        <primitiveType xsi:type="data:PrimitiveBoolean"/>
+      </dataFields>
+    </complexTypes>
+  </contexts>
+  <contexts name="Customer">
+    <complexTypes xsi:type="data:DataStructure" name="Customer">
+      <features>ENTITY</features>
+      <features>AGGREGATE</features>
+      <dataFields name="name" lowerBound="0" upperBound="1">
+        <primitiveType xsi:type="data:PrimitiveString"/>
+      </dataFields>
+      <dataFields name="customerId" lowerBound="1" upperBound="1">
+        <primitiveType xsi:type="data:PrimitiveInteger"/>
+        <features>IDENTIFIER</features>
+        <features>NEVER_EMPTY</features>
+      </dataFields>
+    </complexTypes>
+    <complexTypes xsi:type="data:DataStructure" name="ExistsByCustomerIdResponse">
+      <features>RESPONSE_PAYLOAD</features>
+      <dataFields name="result" lowerBound="1" upperBound="1">
+        <primitiveType xsi:type="data:PrimitiveBoolean"/>
+      </dataFields>
+    </complexTypes>
+  </contexts>
+  <complexTypes xsi:type="data:CollectionType" name="Boolean">
+    <primitiveType xsi:type="data:PrimitiveBoolean"/>
+  </complexTypes>
+</data:DataModel>

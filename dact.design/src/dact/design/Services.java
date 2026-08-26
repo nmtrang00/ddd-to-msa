@@ -1,9 +1,14 @@
 package dact.design;
 
+import java.util.stream.StreamSupport;
+
+import org.eclipse.emf.common.notify.impl.AdapterImpl;
 import org.eclipse.emf.common.util.Diagnostic;
 import org.eclipse.emf.ecore.util.Diagnostician;
-
+import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EObject;
+import org.eclipse.emf.ecore.resource.Resource;
+import org.eclipse.emf.ecore.resource.ResourceSet;
 import org.eclipse.emf.ecore.util.EcoreUtil;
 
 import dact.PrimitiveType;
@@ -53,4 +58,71 @@ public class Services {
         return null;
     }
    
+//    public String getNewElementName(EObject object) {
+//    	EObject root = EcoreUtil.getRootContainer(object);
+//    	Iterable<EObject> iterable = () -> EcoreUtil.getAllContents(root, true);
+//    	
+//    	EClass targetClass = object.eClass();
+//    	
+//    	long count = StreamSupport.stream(iterable.spliterator(), false)
+//                .filter(eObj -> targetClass.isInstance(eObj))
+//                .count();
+//
+//        return targetClass.getName() + count;
+//    }
+    
+    
+    /**
+     * An EMF Adapter to hold persistent counter state on the root ResourceSet or Resource.
+     */
+    private static class SessionCounterAdapter extends AdapterImpl {
+        private int count = 0;
+
+        public synchronized int getNextValue() {
+            return ++count;
+        }
+
+        public boolean isAdapterForType(Object type) {
+            return type == SessionCounterAdapter.class;
+        }
+    }
+
+    /**
+     * Generates a unique name using a universal incrementing counter 
+     * stored at the absolute root context.
+     */
+    public String getNewElementName(EObject object) {
+        EClass targetClass = object.eClass();
+        String prefix = targetClass.getName();
+
+        // 1. Navigate to the highest root context (ResourceSet preferred, fall back to Resource)
+        EObject root = EcoreUtil.getRootContainer(object);
+        Resource resource = root.eResource();
+        
+        if (resource == null) {
+            // Unattached object fallback
+            return prefix + "1";
+        }
+
+        ResourceSet resourceSet = resource.getResourceSet();
+        
+        // 2. Fetch or attach the adapter to the root context
+        SessionCounterAdapter counter;
+        if (resourceSet != null) {
+            counter = (SessionCounterAdapter) EcoreUtil.getExistingAdapter(resourceSet, SessionCounterAdapter.class);
+            if (counter == null) {
+                counter = new SessionCounterAdapter();
+                resourceSet.eAdapters().add(counter);
+            }
+        } else {
+            counter = (SessionCounterAdapter) EcoreUtil.getExistingAdapter(resource, SessionCounterAdapter.class);
+            if (counter == null) {
+                counter = new SessionCounterAdapter();
+                resource.eAdapters().add(counter);
+            }
+        }
+
+        // 3. Increment and return
+        return prefix + counter.getNextValue();
+    }
 }

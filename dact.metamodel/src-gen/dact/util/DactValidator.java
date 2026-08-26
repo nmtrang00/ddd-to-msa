@@ -104,12 +104,20 @@ public class DactValidator extends EObjectValidator {
 	public static final int PROPERTY__PRIMITIVE_PROPERTY_REQUIRES_NAME = 8;
 
 	/**
+	 * The {@link org.eclipse.emf.common.util.Diagnostic#getCode() code} for constraint 'No Behavior Specification' of 'Spec Operation'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public static final int SPEC_OPERATION__NO_BEHAVIOR_SPECIFICATION = 9;
+
+	/**
 	 * The {@link org.eclipse.emf.common.util.Diagnostic#getCode() code} for constraint 'Behavior Xor Specification' of 'Spec Operation'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public static final int SPEC_OPERATION__BEHAVIOR_XOR_SPECIFICATION = 9;
+	public static final int SPEC_OPERATION__BEHAVIOR_XOR_SPECIFICATION = 10;
 
 	/**
 	 * The {@link org.eclipse.emf.common.util.Diagnostic#getCode() code} for constraint 'Owned By Domain Object Only' of 'Spec Operation'.
@@ -117,7 +125,7 @@ public class DactValidator extends EObjectValidator {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public static final int SPEC_OPERATION__OWNED_BY_DOMAIN_OBJECT_ONLY = 10;
+	public static final int SPEC_OPERATION__OWNED_BY_DOMAIN_OBJECT_ONLY = 11;
 
 	/**
 	 * The {@link org.eclipse.emf.common.util.Diagnostic#getCode() code} for constraint 'Unique Rule Names' of 'Spec Operation'.
@@ -125,7 +133,7 @@ public class DactValidator extends EObjectValidator {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public static final int SPEC_OPERATION__UNIQUE_RULE_NAMES = 11;
+	public static final int SPEC_OPERATION__UNIQUE_RULE_NAMES = 12;
 
 	/**
 	 * The {@link org.eclipse.emf.common.util.Diagnostic#getCode() code} for constraint 'Single Bool Out Parameter' of 'Spec Operation'.
@@ -133,7 +141,7 @@ public class DactValidator extends EObjectValidator {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public static final int SPEC_OPERATION__SINGLE_BOOL_OUT_PARAMETER = 12;
+	public static final int SPEC_OPERATION__SINGLE_BOOL_OUT_PARAMETER = 13;
 
 	/**
 	 * The {@link org.eclipse.emf.common.util.Diagnostic#getCode() code} for constraint 'Unique Operation Names' of 'Interface'.
@@ -141,7 +149,7 @@ public class DactValidator extends EObjectValidator {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public static final int INTERFACE__UNIQUE_OPERATION_NAMES = 13;
+	public static final int INTERFACE__UNIQUE_OPERATION_NAMES = 14;
 
 	/**
 	 * The {@link org.eclipse.emf.common.util.Diagnostic#getCode() code} for constraint 'Unique Operation Names' of 'Domain Object'.
@@ -149,7 +157,7 @@ public class DactValidator extends EObjectValidator {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public static final int DOMAIN_OBJECT__UNIQUE_OPERATION_NAMES = 14;
+	public static final int DOMAIN_OBJECT__UNIQUE_OPERATION_NAMES = 15;
 
 	/**
 	 * The {@link org.eclipse.emf.common.util.Diagnostic#getCode() code} for constraint 'Unique Property Names' of 'Domain Object'.
@@ -157,7 +165,7 @@ public class DactValidator extends EObjectValidator {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public static final int DOMAIN_OBJECT__UNIQUE_PROPERTY_NAMES = 15;
+	public static final int DOMAIN_OBJECT__UNIQUE_PROPERTY_NAMES = 16;
 
 	/**
 	 * The {@link org.eclipse.emf.common.util.Diagnostic#getCode() code} for constraint 'Single Invariant Operation' of 'Domain Object'.
@@ -165,15 +173,31 @@ public class DactValidator extends EObjectValidator {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public static final int DOMAIN_OBJECT__SINGLE_INVARIANT_OPERATION = 16;
+	public static final int DOMAIN_OBJECT__SINGLE_INVARIANT_OPERATION = 17;
 
 	/**
-	 * The {@link org.eclipse.emf.common.util.Diagnostic#getCode() code} for constraint 'Matched Parameter Mappings' of 'Activity'.
+	 * The {@link org.eclipse.emf.common.util.Diagnostic#getCode() code} for constraint 'Mappings Only With Specification' of 'Activity'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public static final int ACTIVITY__MATCHED_PARAMETER_MAPPINGS = 17;
+	public static final int ACTIVITY__MAPPINGS_ONLY_WITH_SPECIFICATION = 18;
+
+	/**
+	 * The {@link org.eclipse.emf.common.util.Diagnostic#getCode() code} for constraint 'Matched Parameter Mappings Count' of 'Activity'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public static final int ACTIVITY__MATCHED_PARAMETER_MAPPINGS_COUNT = 19;
+
+	/**
+	 * The {@link org.eclipse.emf.common.util.Diagnostic#getCode() code} for constraint 'Each Parameter Is Mapped' of 'Activity'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public static final int ACTIVITY__EACH_PARAMETER_IS_MAPPED = 20;
 
 	/**
 	 * The {@link org.eclipse.emf.common.util.Diagnostic#getCode() code} for constraint 'Single Initial Node' of 'Activity Group'.
@@ -181,7 +205,7 @@ public class DactValidator extends EObjectValidator {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public static final int ACTIVITY_GROUP__SINGLE_INITIAL_NODE = 18;
+	public static final int ACTIVITY_GROUP__SINGLE_INITIAL_NODE = 21;
 
 	/**
 	 * The {@link org.eclipse.emf.common.util.Diagnostic#getCode() code} for constraint 'Single Final Node' of 'Activity Group'.
@@ -189,7 +213,7 @@ public class DactValidator extends EObjectValidator {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public static final int ACTIVITY_GROUP__SINGLE_FINAL_NODE = 19;
+	public static final int ACTIVITY_GROUP__SINGLE_FINAL_NODE = 22;
 
 	/**
 	 * The {@link org.eclipse.emf.common.util.Diagnostic#getCode() code} for constraint 'Non Empty Group' of 'Activity Group'.
@@ -197,7 +221,7 @@ public class DactValidator extends EObjectValidator {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public static final int ACTIVITY_GROUP__NON_EMPTY_GROUP = 20;
+	public static final int ACTIVITY_GROUP__NON_EMPTY_GROUP = 23;
 
 	/**
 	 * The {@link org.eclipse.emf.common.util.Diagnostic#getCode() code} for constraint 'No Edge Into Initial Node' of 'Activity Edge'.
@@ -205,7 +229,7 @@ public class DactValidator extends EObjectValidator {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public static final int ACTIVITY_EDGE__NO_EDGE_INTO_INITIAL_NODE = 21;
+	public static final int ACTIVITY_EDGE__NO_EDGE_INTO_INITIAL_NODE = 24;
 
 	/**
 	 * The {@link org.eclipse.emf.common.util.Diagnostic#getCode() code} for constraint 'No Edge Out Of Final Node' of 'Activity Edge'.
@@ -213,7 +237,7 @@ public class DactValidator extends EObjectValidator {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public static final int ACTIVITY_EDGE__NO_EDGE_OUT_OF_FINAL_NODE = 22;
+	public static final int ACTIVITY_EDGE__NO_EDGE_OUT_OF_FINAL_NODE = 25;
 
 	/**
 	 * The {@link org.eclipse.emf.common.util.Diagnostic#getCode() code} for constraint 'Endpoints In Same Group' of 'Activity Edge'.
@@ -221,7 +245,7 @@ public class DactValidator extends EObjectValidator {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public static final int ACTIVITY_EDGE__ENDPOINTS_IN_SAME_GROUP = 23;
+	public static final int ACTIVITY_EDGE__ENDPOINTS_IN_SAME_GROUP = 26;
 
 	/**
 	 * The {@link org.eclipse.emf.common.util.Diagnostic#getCode() code} for constraint 'Requires Main Expression' of 'Domain Node'.
@@ -229,7 +253,7 @@ public class DactValidator extends EObjectValidator {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public static final int DOMAIN_NODE__REQUIRES_MAIN_EXPRESSION = 24;
+	public static final int DOMAIN_NODE__REQUIRES_MAIN_EXPRESSION = 27;
 
 	/**
 	 * The {@link org.eclipse.emf.common.util.Diagnostic#getCode() code} for constraint 'Self Anchored Binary Expression' of 'Domain Node'.
@@ -237,7 +261,7 @@ public class DactValidator extends EObjectValidator {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public static final int DOMAIN_NODE__SELF_ANCHORED_BINARY_EXPRESSION = 25;
+	public static final int DOMAIN_NODE__SELF_ANCHORED_BINARY_EXPRESSION = 28;
 
 	/**
 	 * The {@link org.eclipse.emf.common.util.Diagnostic#getCode() code} for constraint 'Exclusive Event Source' of 'Signal Action'.
@@ -245,7 +269,7 @@ public class DactValidator extends EObjectValidator {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public static final int SIGNAL_ACTION__EXCLUSIVE_EVENT_SOURCE = 26;
+	public static final int SIGNAL_ACTION__EXCLUSIVE_EVENT_SOURCE = 29;
 
 	/**
 	 * The {@link org.eclipse.emf.common.util.Diagnostic#getCode() code} for constraint 'Conforming Activity Operation Parameter' of 'Parameter Mapping'.
@@ -253,7 +277,7 @@ public class DactValidator extends EObjectValidator {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public static final int PARAMETER_MAPPING__CONFORMING_ACTIVITY_OPERATION_PARAMETER = 27;
+	public static final int PARAMETER_MAPPING__CONFORMING_ACTIVITY_OPERATION_PARAMETER = 30;
 
 	/**
 	 * The {@link org.eclipse.emf.common.util.Diagnostic#getCode() code} for constraint 'Exclusive Mapping Source' of 'Parameter Mapping'.
@@ -261,7 +285,7 @@ public class DactValidator extends EObjectValidator {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public static final int PARAMETER_MAPPING__EXCLUSIVE_MAPPING_SOURCE = 28;
+	public static final int PARAMETER_MAPPING__EXCLUSIVE_MAPPING_SOURCE = 31;
 
 	/**
 	 * The {@link org.eclipse.emf.common.util.Diagnostic#getCode() code} for constraint 'Value Only In Action' of 'Parameter Mapping'.
@@ -269,7 +293,7 @@ public class DactValidator extends EObjectValidator {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public static final int PARAMETER_MAPPING__VALUE_ONLY_IN_ACTION = 29;
+	public static final int PARAMETER_MAPPING__VALUE_ONLY_IN_ACTION = 32;
 
 	/**
 	 * A constant with a fixed name that can be used as the base value for additional hand written constants.
@@ -277,7 +301,7 @@ public class DactValidator extends EObjectValidator {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	private static final int GENERATED_DIAGNOSTIC_CODE_COUNT = 29;
+	private static final int GENERATED_DIAGNOSTIC_CODE_COUNT = 32;
 
 	/**
 	 * A constant with a fixed name that can be used as the base value for additional hand written constants in a derived class.
@@ -895,11 +919,22 @@ public class DactValidator extends EObjectValidator {
 		if (result || diagnostics != null) result &= validate_UniqueID(specOperation, diagnostics, context);
 		if (result || diagnostics != null) result &= validate_EveryKeyUnique(specOperation, diagnostics, context);
 		if (result || diagnostics != null) result &= validate_EveryMapEntryUnique(specOperation, diagnostics, context);
+		if (result || diagnostics != null) result &= validateSpecOperation_NoBehaviorSpecification(specOperation, diagnostics, context);
 		if (result || diagnostics != null) result &= validateSpecOperation_BehaviorXorSpecification(specOperation, diagnostics, context);
 		if (result || diagnostics != null) result &= validateSpecOperation_OwnedByDomainObjectOnly(specOperation, diagnostics, context);
 		if (result || diagnostics != null) result &= validateSpecOperation_UniqueRuleNames(specOperation, diagnostics, context);
 		if (result || diagnostics != null) result &= validateSpecOperation_SingleBoolOutParameter(specOperation, diagnostics, context);
 		return result;
+	}
+
+	/**
+	 * Validates the NoBehaviorSpecification constraint of '<em>Spec Operation</em>'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public boolean validateSpecOperation_NoBehaviorSpecification(SpecOperation specOperation, DiagnosticChain diagnostics, Map<Object, Object> context) {
+		return specOperation.NoBehaviorSpecification(diagnostics, context);
 	}
 
 	/**
@@ -1253,18 +1288,40 @@ public class DactValidator extends EObjectValidator {
 		if (result || diagnostics != null) result &= validate_UniqueID(activity, diagnostics, context);
 		if (result || diagnostics != null) result &= validate_EveryKeyUnique(activity, diagnostics, context);
 		if (result || diagnostics != null) result &= validate_EveryMapEntryUnique(activity, diagnostics, context);
-		if (result || diagnostics != null) result &= validateActivity_MatchedParameterMappings(activity, diagnostics, context);
+		if (result || diagnostics != null) result &= validateActivity_MappingsOnlyWithSpecification(activity, diagnostics, context);
+		if (result || diagnostics != null) result &= validateActivity_MatchedParameterMappingsCount(activity, diagnostics, context);
+		if (result || diagnostics != null) result &= validateActivity_EachParameterIsMapped(activity, diagnostics, context);
 		return result;
 	}
 
 	/**
-	 * Validates the MatchedParameterMappings constraint of '<em>Activity</em>'.
+	 * Validates the MappingsOnlyWithSpecification constraint of '<em>Activity</em>'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public boolean validateActivity_MatchedParameterMappings(Activity activity, DiagnosticChain diagnostics, Map<Object, Object> context) {
-		return activity.MatchedParameterMappings(diagnostics, context);
+	public boolean validateActivity_MappingsOnlyWithSpecification(Activity activity, DiagnosticChain diagnostics, Map<Object, Object> context) {
+		return activity.MappingsOnlyWithSpecification(diagnostics, context);
+	}
+
+	/**
+	 * Validates the MatchedParameterMappingsCount constraint of '<em>Activity</em>'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public boolean validateActivity_MatchedParameterMappingsCount(Activity activity, DiagnosticChain diagnostics, Map<Object, Object> context) {
+		return activity.MatchedParameterMappingsCount(diagnostics, context);
+	}
+
+	/**
+	 * Validates the EachParameterIsMapped constraint of '<em>Activity</em>'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public boolean validateActivity_EachParameterIsMapped(Activity activity, DiagnosticChain diagnostics, Map<Object, Object> context) {
+		return activity.EachParameterIsMapped(diagnostics, context);
 	}
 
 	/**
@@ -1638,19 +1695,9 @@ public class DactValidator extends EObjectValidator {
 		if (result || diagnostics != null) result &= validate_UniqueID(domainNode, diagnostics, context);
 		if (result || diagnostics != null) result &= validate_EveryKeyUnique(domainNode, diagnostics, context);
 		if (result || diagnostics != null) result &= validate_EveryMapEntryUnique(domainNode, diagnostics, context);
-		if (result || diagnostics != null) result &= validateDomainNode_SelfAnchoredBinaryExpression(domainNode, diagnostics, context);
 		if (result || diagnostics != null) result &= validateDomainNode_RequiresMainExpression(domainNode, diagnostics, context);
+		if (result || diagnostics != null) result &= validateDomainNode_SelfAnchoredBinaryExpression(domainNode, diagnostics, context);
 		return result;
-	}
-
-	/**
-	 * Validates the SelfAnchoredBinaryExpression constraint of '<em>Domain Node</em>'.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public boolean validateDomainNode_SelfAnchoredBinaryExpression(DomainNode domainNode, DiagnosticChain diagnostics, Map<Object, Object> context) {
-		return domainNode.SelfAnchoredBinaryExpression(diagnostics, context);
 	}
 
 	/**
@@ -1661,6 +1708,16 @@ public class DactValidator extends EObjectValidator {
 	 */
 	public boolean validateDomainNode_RequiresMainExpression(DomainNode domainNode, DiagnosticChain diagnostics, Map<Object, Object> context) {
 		return domainNode.RequiresMainExpression(diagnostics, context);
+	}
+
+	/**
+	 * Validates the SelfAnchoredBinaryExpression constraint of '<em>Domain Node</em>'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public boolean validateDomainNode_SelfAnchoredBinaryExpression(DomainNode domainNode, DiagnosticChain diagnostics, Map<Object, Object> context) {
+		return domainNode.SelfAnchoredBinaryExpression(diagnostics, context);
 	}
 
 	/**
@@ -1678,8 +1735,8 @@ public class DactValidator extends EObjectValidator {
 		if (result || diagnostics != null) result &= validate_UniqueID(domainExistAction, diagnostics, context);
 		if (result || diagnostics != null) result &= validate_EveryKeyUnique(domainExistAction, diagnostics, context);
 		if (result || diagnostics != null) result &= validate_EveryMapEntryUnique(domainExistAction, diagnostics, context);
-		if (result || diagnostics != null) result &= validateDomainNode_SelfAnchoredBinaryExpression(domainExistAction, diagnostics, context);
 		if (result || diagnostics != null) result &= validateDomainNode_RequiresMainExpression(domainExistAction, diagnostics, context);
+		if (result || diagnostics != null) result &= validateDomainNode_SelfAnchoredBinaryExpression(domainExistAction, diagnostics, context);
 		return result;
 	}
 
@@ -1698,8 +1755,8 @@ public class DactValidator extends EObjectValidator {
 		if (result || diagnostics != null) result &= validate_UniqueID(domainFindAction, diagnostics, context);
 		if (result || diagnostics != null) result &= validate_EveryKeyUnique(domainFindAction, diagnostics, context);
 		if (result || diagnostics != null) result &= validate_EveryMapEntryUnique(domainFindAction, diagnostics, context);
-		if (result || diagnostics != null) result &= validateDomainNode_SelfAnchoredBinaryExpression(domainFindAction, diagnostics, context);
 		if (result || diagnostics != null) result &= validateDomainNode_RequiresMainExpression(domainFindAction, diagnostics, context);
+		if (result || diagnostics != null) result &= validateDomainNode_SelfAnchoredBinaryExpression(domainFindAction, diagnostics, context);
 		return result;
 	}
 
@@ -1718,8 +1775,8 @@ public class DactValidator extends EObjectValidator {
 		if (result || diagnostics != null) result &= validate_UniqueID(domainCreateAction, diagnostics, context);
 		if (result || diagnostics != null) result &= validate_EveryKeyUnique(domainCreateAction, diagnostics, context);
 		if (result || diagnostics != null) result &= validate_EveryMapEntryUnique(domainCreateAction, diagnostics, context);
-		if (result || diagnostics != null) result &= validateDomainNode_SelfAnchoredBinaryExpression(domainCreateAction, diagnostics, context);
 		if (result || diagnostics != null) result &= validateDomainNode_RequiresMainExpression(domainCreateAction, diagnostics, context);
+		if (result || diagnostics != null) result &= validateDomainNode_SelfAnchoredBinaryExpression(domainCreateAction, diagnostics, context);
 		return result;
 	}
 
@@ -1738,8 +1795,8 @@ public class DactValidator extends EObjectValidator {
 		if (result || diagnostics != null) result &= validate_UniqueID(domainUpdateAction, diagnostics, context);
 		if (result || diagnostics != null) result &= validate_EveryKeyUnique(domainUpdateAction, diagnostics, context);
 		if (result || diagnostics != null) result &= validate_EveryMapEntryUnique(domainUpdateAction, diagnostics, context);
-		if (result || diagnostics != null) result &= validateDomainNode_SelfAnchoredBinaryExpression(domainUpdateAction, diagnostics, context);
 		if (result || diagnostics != null) result &= validateDomainNode_RequiresMainExpression(domainUpdateAction, diagnostics, context);
+		if (result || diagnostics != null) result &= validateDomainNode_SelfAnchoredBinaryExpression(domainUpdateAction, diagnostics, context);
 		return result;
 	}
 
@@ -1758,8 +1815,8 @@ public class DactValidator extends EObjectValidator {
 		if (result || diagnostics != null) result &= validate_UniqueID(domainDeleteAction, diagnostics, context);
 		if (result || diagnostics != null) result &= validate_EveryKeyUnique(domainDeleteAction, diagnostics, context);
 		if (result || diagnostics != null) result &= validate_EveryMapEntryUnique(domainDeleteAction, diagnostics, context);
-		if (result || diagnostics != null) result &= validateDomainNode_SelfAnchoredBinaryExpression(domainDeleteAction, diagnostics, context);
 		if (result || diagnostics != null) result &= validateDomainNode_RequiresMainExpression(domainDeleteAction, diagnostics, context);
+		if (result || diagnostics != null) result &= validateDomainNode_SelfAnchoredBinaryExpression(domainDeleteAction, diagnostics, context);
 		return result;
 	}
 

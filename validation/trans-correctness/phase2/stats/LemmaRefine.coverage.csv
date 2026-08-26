@@ -1,0 +1,2 @@
+mapping_operation,source_type,target_type,execution_count,is_covered
+ModelToModel,BEHA::BehaviorModel,BEHA::BehaviorModel,1,True

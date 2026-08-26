@@ -50,7 +50,17 @@ public enum MicroserviceType implements Enumerator {
 	 * @generated
 	 * @ordered
 	 */
-	INFRASTRUCTURE(0, "INFRASTRUCTURE", "INFRASTRUCTURE");
+	INFRASTRUCTURE(0, "INFRASTRUCTURE", "INFRASTRUCTURE"),
+
+	/**
+	 * The '<em><b>EXTERNAL</b></em>' literal object.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see #EXTERNAL_VALUE
+	 * @generated
+	 * @ordered
+	 */
+	EXTERNAL(0, "EXTERNAL", "EXTERNAL");
 
 	/**
 	 * The '<em><b>FUNCTIONAL</b></em>' literal value.
@@ -86,6 +96,17 @@ public enum MicroserviceType implements Enumerator {
 	public static final int INFRASTRUCTURE_VALUE = 0;
 
 	/**
+	 * The '<em><b>EXTERNAL</b></em>' literal value.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see #EXTERNAL
+	 * @model
+	 * @generated
+	 * @ordered
+	 */
+	public static final int EXTERNAL_VALUE = 0;
+
+	/**
 	 * An array of all the '<em><b>Microservice Type</b></em>' enumerators.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -96,6 +117,7 @@ public enum MicroserviceType implements Enumerator {
 			FUNCTIONAL,
 			UTILITY,
 			INFRASTRUCTURE,
+			EXTERNAL,
 		};
 
 	/**

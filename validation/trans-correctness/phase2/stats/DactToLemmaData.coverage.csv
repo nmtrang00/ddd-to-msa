@@ -1,0 +1,15 @@
+mapping_operation,source_type,target_type,execution_count,is_covered
+DddModelToDataModel,DACT::DddModel,DATA::DataModel,1,True
+BoundedContextToContext,DACT::BoundedContext,DATA::Context,3,True
+DomainElementToComplexType,DACT::DomainElement,DATA::ComplexType,8,True
+EnumerationToEnumeration,DACT::Enumeration,DATA::Enumeration,1,True
+EnumerationLiteralToEnumerationField,DACT::EnumerationLiteral,DATA::EnumerationField,5,True
+DomainObjectToDataStructure,DACT::DomainObject,DATA::DataStructure,7,True
+PropertyToDataField,DACT::Property,DATA::DataField,15,True
+PrimitivePropertyToDataField,DACT::Property,DATA::DataField,8,True
+EnumerationPropertyToDataField,DACT::Property,DATA::DataField,2,True
+AssociationPropertyToDataField,DACT::Property,DATA::DataField,5,True
+PrimitiveTypesToPrimitiveTypeCollection,DACT::PrimitiveType,DATA::CollectionType,1,True
+DomainElementsToComplexTypeCollection,DACT::DomainElement,DATA::CollectionType,1,True
+OperationToDataOperation,DACT::Operation,DATA::DataOperation,1,True
+ParameterToDataOperationParameter,DACT::Parameter,DATA::DataOperationParameter,3,True

@@ -51,9 +51,16 @@ main() {
 		root.validateVariablesAndDeriveOperations(root);
 		log("1.4. Validating Variable and Deriving required Operations: End parsing");
 		log("************************************************");
+		
 	};
 	log("-------------------------------------");
 	log("");
+	
+	// Clean the file
+	var elementsToRemove = preprocessedDact.rootObjects() -> select(e|not e.oclIsKindOf(DACT::Root));
+	elementsToRemove -> forEach(e){
+		preprocessedDact.removeElement(e);
+	}
 }
 
 mapping DACT::Root::RootToRoot(): DACT::Root {
@@ -95,7 +102,7 @@ helper DACT::Entity::addMissingId(inout entity: DACT::Entity){
 
 		var newIdAttr := object DACT::Property {
 			name := entity.name.toCamel() + "Id";
-			type := STR;
+			type := INT;
 			lowerBound := 1;
 			upperBound := 1;
 			definesIdentity := true;
@@ -193,9 +200,11 @@ helper DACT::Root::validateVariablesAndDeriveOperations(inout root: DACT::Root){
 		if (activity.toTransform){
 			// Check variable matching for input
 			var rootActivityGroup := activity.root;
-			var rootScope := object Scope{};
-			rootActivityGroup.scope := rootScope;
-
+			if (rootActivityGroup.scope.oclIsUndefined()){
+				rootActivityGroup.scope := object Scope{};
+			};
+			var rootScope := rootActivityGroup.scope;
+			
 			if (activity.specification <> null){
 			// Specification Operation exists 
 				log(indent(2)+"Has specification");
@@ -291,6 +300,7 @@ helper DACT::Activity::generateMappings(inout activity: DACT::Activity){
         log(indent(4) + "Mapped OpParam [" + opParam.name + "] to ActParam [" + matchedActParam.name + "]");
 	};
 }
+
 helper DACT::Activity::assignSpecification(inout activity : DACT::Activity){
 	// Derive BoundedContext
 	var rel := self.deriveTargetContext();
@@ -487,7 +497,7 @@ helper DACT::ActivityFinalNode::processNode(){
 		var matchedVar := currentScope.getVariableWithName(v.name);
 		
 		assert fatal (matchedVar <> null)
-			with log("Compile Error: Variable to return '" + v.name + "' has NOT been defined in scope '" + self.group.name + "'.");
+			with log("VariableYetDeclared: Variable to return '" + v.name + "' has NOT been defined in scope '" + self.group.name + "'.");
 		
 		matchedVars += matchedVar;
 	};
@@ -504,16 +514,14 @@ helper DACT::ActivityFinalNode::processNode(){
 	                 " return values, but the node returns " + actualCount.toString() + ".");
 	    Sequence{1..actualCount}->forEach(i) {
 	        var returnVar := matchedVars->at(i);
-	        var returnParam := expectedOutParams->at(i);
+	        var returnParam := expectedOutParams
+	        	->selectOne(p| (returnVar.type = p.type) and 
+	        		(returnVar.lowerBound = p.lowerBound) and
+	        		(returnVar.upperBound = p.upperBound));
 	        
-	        assert fatal (returnVar.type = returnParam.type)
-				with log("Compile Error: Activity Param '" + returnVar.name + "' and the operation param '" + returnParam.name + "' are not the same type.");
-		
-			assert fatal (returnVar.lowerBound = returnParam.lowerBound)
-				with log("Compile Error: Activity Param  '" + returnVar.name + "' and the operation param '" + returnParam.name + "' have different lower bound.");
-				
-			assert fatal (returnVar.upperBound = returnParam.upperBound)
-				with log("Compile Error: Activity Param '" + returnVar.name + "' and the operation param '" + returnParam.name + "' have different upper bound.");
+	        assert fatal (returnParam != null)
+	        	with log("VariableYetDeclared: Variable to return '" + returnVar.name + "' has NOT been defined in scope '" + self.group.name + "'.");
+	        
 	    }
 	    }
 }
@@ -525,7 +533,7 @@ helper DACT::FlowFinalNode::processNode(){
 		var matchedVar := currentScope.getVariableWithName(v.name);
 		
 		assert fatal (matchedVar <> null)
-			with log("Compile Error: Variable to return '" + matchedVar.name + "' has NOT been defined in scope '" + self.group.name + "'.");
+			with log("VariableYetDeclared: Variable to return '" + matchedVar.name + "' has NOT been defined in scope '" + self.group.name + "'.");
 	};
 }
 
@@ -537,23 +545,28 @@ helper DACT::ConditionalNode::processNode(){
 	assert fatal(testType = BOOL)
 		with log("Compile Error: Test expression must return Boolean type.", testType);
 	
-	// Generate new scope here!!!!
-	var localScope := object DACT::Scope{
-		parent := currentScope;
-        group := self.body;
-		inheritedVariables := currentScope.ownedVariables;
+	var variablesToInherit := currentScope.ownedVariables;
+	variablesToInherit += currentScope.inheritedVariables;
+	
+	// Generate new scope here if yet existed!!!!
+	if (self.body.scope.oclIsUndefined()){
+		self.body.scope := object DACT::Scope{
+			parent := currentScope;
+	        group := self.body;
+		};
 	};
-	localScope.inheritedVariables += currentScope.inheritedVariables;
-	self.body.scope := localScope;
+	self.body.scope.inheritedVariables := variablesToInherit;
+
+	
 	self.body.processGroup(self.body);
 	
-	var localElseScope := object DACT::Scope{
-		parent := currentScope;
-        group := self.elseBody;
-		inheritedVariables := currentScope.ownedVariables;
+	if (self.elseBody.scope.oclIsUndefined()){
+		self.elseBody.scope := object DACT::Scope{
+			parent := currentScope;
+	        group := self.elseBody;
+		};
 	};
-	localElseScope.inheritedVariables += currentScope.inheritedVariables;
-	self.elseBody.scope := localElseScope;
+	self.elseBody.scope.inheritedVariables := variablesToInherit;
 	self.elseBody.processGroup(self.elseBody);
 }
 
@@ -669,7 +682,7 @@ helper DACT::DomainNode::processNode(){
 	// check if result is already declare
 
 	var newAction := object DACT::CallOperationAction{
-		name := inMp.newName;
+		name := self.name;
 		operation := matchedOperation;
 		domainToDeclareResult := not resultIsDeclared;
 	};
@@ -830,14 +843,29 @@ helper DACT::DomainFindAction::generateMainMappings(inout scope : DACT::Scope): 
 				
 			// Right is the identifier or value -> Check if actually exists and match type
 			var rightExpr := e.oclAsType(DACT::BinaryExpression).rightExpr;
-			assert fatal(rightExpr.oclIsKindOf(DACT::UnaryExpression) and rightExpr.oclAsType(DACT::UnaryExpression).identifier<>null)
-				with log("Type Error: The right side of Domain Node expression must be identifier, but provided: ", rightExpr.toString());
-			var identifierToCheck := rightExpr.oclAsType(DACT::UnaryExpression).identifier;
+			assert fatal(
+				(rightExpr.oclIsKindOf(DACT::UnaryExpression) and rightExpr.oclAsType(DACT::UnaryExpression).identifier<>null) or
+				(rightExpr.oclIsKindOf(DACT::UnaryExpression) and rightExpr.oclAsType(DACT::UnaryExpression).value<>null))
+				with log("Type Error: The right side of Domain Node expression must be identifier or value, but provided: ", rightExpr.toString());
 			
-			var newMapping := object ParameterMapping{
-				operationParameter := newParameter;
-				identifier := identifierToCheck.deepclone();
-				type := ParameterMappingType::ACTION_IN;
+			var newMapping : ParameterMapping;
+			
+			if (rightExpr.oclAsType(DACT::UnaryExpression).identifier <> null){
+				var identifierToCheck := rightExpr.oclAsType(DACT::UnaryExpression).identifier;
+				
+				newMapping := object ParameterMapping{
+					operationParameter := newParameter;
+					identifier := identifierToCheck.deepclone();
+					type := ParameterMappingType::ACTION_IN;
+				};
+			}else{
+				var valueToCheck := rightExpr.oclAsType(DACT::UnaryExpression).value;
+				
+				newMapping := object ParameterMapping{
+					operationParameter := newParameter;
+					value := valueToCheck.deepclone();
+					type := ParameterMappingType::ACTION_IN;
+				};
 			};
 			
 			newMapping.validate(scope);
@@ -850,14 +878,16 @@ helper DACT::DomainFindAction::generateMainMappings(inout scope : DACT::Scope): 
 		newName := if self.oclIsTypeOf(DACT::DomainExistAction) then "existsBy" else "findBy" endif;
 	
 		var isFirst := true;
-		identifiersToProcess->forEach(p) {
-			if (isFirst) {
-				newName := newName + p;
-				isFirst := false;
-			} else {
-				newName := newName + "And" + p;
+		identifiersToProcess
+			->sortedBy(p | p)	
+			->forEach(p) {
+				if (isFirst) {
+					newName := newName + p;
+					isFirst := false;
+				} else {
+					newName := newName + "And" + p;
+				};
 			};
-		};
 	};
 	CACHED_REQUIRED_PROPERTIES := queriedProperties;
 	return Tuple{newName = newName, parameters = parameters, mappings = mappings};
@@ -935,17 +965,30 @@ helper DACT::DomainDeleteAction::generateMainMappings(inout scope : DACT::Scope)
 	
 	// Right is the identifier or value -> Check if actually exists and match type
 	var rightExpr := self.mainExpr-> first().oclAsType(DACT::BinaryExpression).rightExpr;
-	assert fatal(rightExpr.oclIsKindOf(DACT::UnaryExpression) and rightExpr.oclAsType(DACT::UnaryExpression).identifier<>null)
-		with log("Type Error: The right side of Domain Node expression must be identifier, but provided: ", rightExpr.toString());
+	assert fatal(
+		rightExpr.oclIsKindOf(DACT::UnaryExpression) and 
+		(rightExpr.oclAsType(DACT::UnaryExpression).identifier<>null or rightExpr.oclAsType(DACT::UnaryExpression).value<>null)
+	)
+		with log("Type Error: The right side of Domain Node expression must be identifier or value , but provided: ", rightExpr.toString());
 	
-	var identifierToCheck := rightExpr.oclAsType(DACT::UnaryExpression).identifier;
+	var mainMapping : ParameterMapping;
 	
-		
-	var mainMapping := object ParameterMapping{
-		operationParameter := mainParam;
-		identifier := identifierToCheck.deepclone();
-		type := ParameterMappingType::ACTION_IN;
+	if (rightExpr.oclAsType(DACT::UnaryExpression).identifier <> null){
+		var identifierToCheck := rightExpr.oclAsType(DACT::UnaryExpression).identifier;
+		mainMapping := object ParameterMapping{
+			operationParameter := mainParam;
+			identifier := identifierToCheck.deepclone();
+			type := ParameterMappingType::ACTION_IN;
+		};
+	}else{
+		var valueToCheck := rightExpr.oclAsType(DACT::UnaryExpression).value;
+		mainMapping := object ParameterMapping{
+			operationParameter := mainParam;
+			value := valueToCheck.deepclone();
+			type := ParameterMappingType::ACTION_IN;
+		};
 	};
+	mainMapping.validate(self.group.scope);
 	
 	parameters+=mainParam;
 	mappings+=mainMapping;
@@ -995,27 +1038,36 @@ query DACT::VariableAssignment::validate(scope : DACT::Scope, sourceVar: DACT::V
 			// Check if identifier exist in the scope
 			var matchedVar := scope.getVariableWithName(childExpr.identifier.name);
 			assert fatal (matchedVar <> null)
-    			with log("Compile Error: Variable '" + childExpr.identifier.name + "' does NOT exist in scope '" + scope.repr() + "'.");
+    			with log("VariableYetDeclared: Variable '" + childExpr.identifier.name + "' does NOT exist in scope '" + scope.repr() + "'.");
 			
 			assert fatal (matchedVar.type = sourceVar.type)
-				with log("Compile Error: Variable '" + sourceVar.name + "' and the assigned variable '" + matchedVar.name + "' are not the same type.");
+				with log("AssignmentTypeMismatch: Variable '" + sourceVar.name + "' and the assigned variable '" + matchedVar.name + "' are not the same type.");
 			
 			assert fatal (matchedVar.lowerBound = sourceVar.lowerBound)
-				with log("Compile Error: Variable '" + sourceVar.name + "' and the assigned variable '" + matchedVar.name + "' have different lower bound.");
+				with log("AssignmentBoundMismatch: Variable '" + sourceVar.name + "' and the assigned variable '" + matchedVar.name + "' have different lower bound.");
 				
 			assert fatal (matchedVar.upperBound = sourceVar.upperBound)
-				with log("Compile Error: Variable '" + sourceVar.name + "' and the assigned variable '" + matchedVar.name + "' have different upper bound.");
+				with log("AssignmentBoundMismatch: Variable '" + sourceVar.name + "' and the assigned variable '" + matchedVar.name + "' have different upper bound.");
 				
 		};
 		if (childExpr.value <> null){
 			assert fatal (sourceVar.upperBound<>-1 and sourceVar.upperBound <= 1)
-				with log("Compile Error: Currently, value for collection type is not supported");
+				with log("AssignmentBoundMismatch: Currently, value for collection type is not supported");
 				
-			assert fatal (childExpr.value.hasType(sourceVar.type))
-				with log("Compile Error: Default value and the assigned variable are of different type");
+			assert fatal (childExpr.value.hasType(sourceVar.type)
+					 or (childExpr.value.oclIsKindOf(DACT::LiteralReal) and sourceVar.type.oclIsKindOf(DACT::RealType))
+					 or (childExpr.value.oclIsKindOf(DACT::LiteralInteger) and sourceVar.type.oclIsKindOf(DACT::IntegerType))
+					 or (childExpr.value.oclIsKindOf(DACT::LiteralReal) and sourceVar.type.oclIsKindOf(DACT::IntegerType))
+					 or (childExpr.value.oclIsKindOf(DACT::LiteralInteger) and sourceVar.type.oclIsKindOf(DACT::RealType))
+				)
+				with log("AssignmentTypeMismatch: Default value and the assigned variable are of different type:"
+					+childExpr.value.toString()
+					+" vs "
+					+sourceVar.type.toString()
+				);
 				
 			assert fatal (sourceVar.type.oclIsKindOf(DACT::PrimitiveType))
-				with log("Compile Error: Currently, value for complex type is not supported");
+				with log("AssignmentPrimitiveVariableOnly: Currently, value for complex type is not supported");
 		};
 	};
 }
@@ -1028,24 +1080,33 @@ query DACT::VariableAssignment::validate(scope : DACT::Scope, sourceProperty: DA
 			// Check if identifier exist in the scope
 			var matchedVar := scope.getVariableWithName(childExpr.identifier.name);
 			assert fatal (matchedVar <> null)
-    			with log("Compile Error: Variable '" + childExpr.identifier.name + "' does NOT exist in scope '" + scope.repr() + "'.");
+    			with log("VariableYetDeclared: Variable '" + childExpr.identifier.name + "' does NOT exist in scope '" + scope.repr() + "'.");
 			
 			assert fatal (matchedVar.type = sourceProperty.type)
-				with log("Compile Error: New variable '" + sourceProperty.name + "' and the assigned variable '" + matchedVar.name + "' are not the same type.");
+				with log("AssignmentTypeMismatch: New variable '" + sourceProperty.name + "' and the assigned variable '" + matchedVar.name + "' are not the same type.");
 			
 //			assert fatal (matchedVar.lowerBound = sourceProperty.lowerBound)
 //				with log("Compile Error: New variable '" + sourceProperty.name + "' and the assigned variable '" + matchedVar.name + "' have different lower bound.");
 //				
 			assert fatal (matchedVar.upperBound = sourceProperty.upperBound)
-				with log("Compile Error: New variable '" + sourceProperty.name + "' and the assigned variable '" + matchedVar.name + "' have different upper bound.");
+				with log("AssignmentBoundMismatch: New variable '" + sourceProperty.name + "' and the assigned variable '" + matchedVar.name + "' have different upper bound.");
 				
 		};
 		if (childExpr.value <> null){
 			assert fatal (sourceProperty.upperBound<>-1 and sourceProperty.upperBound <= 1)
-				with log("Compile Error: Currently, value for collection type is not supported");
+				with log("AssignmentBoundMismatch: Currently, value for collection type is not supported");
 				
-			assert fatal (childExpr.value.hasType(sourceProperty.type))
-				with log("Compile Error: Default value and the assigned variable are of different type");
+			assert fatal (childExpr.value.hasType(sourceProperty.type)
+					 or (childExpr.value.oclIsKindOf(DACT::LiteralReal) and sourceProperty.type.oclIsKindOf(DACT::RealType))
+					 or (childExpr.value.oclIsKindOf(DACT::LiteralInteger) and sourceProperty.type.oclIsKindOf(DACT::IntegerType))
+					 or (childExpr.value.oclIsKindOf(DACT::LiteralReal) and sourceProperty.type.oclIsKindOf(DACT::IntegerType))
+					 or (childExpr.value.oclIsKindOf(DACT::LiteralInteger) and sourceProperty.type.oclIsKindOf(DACT::RealType))
+				)
+				with log("AssignmentTypeMismatch: Default value and the assigned variable are of different type:"
+					+childExpr.value.toString()
+					+" vs "
+					+sourceProperty.type.toString()
+				);
 				
 			assert fatal (sourceProperty.type.oclIsKindOf(DACT::PrimitiveType))
 				with log("Compile Error: Currently, value for complex type is not supported");
@@ -1062,29 +1123,29 @@ query DACT::ParameterMapping::validate(scope : DACT::Scope){
 	
 	if (aParam <> null){
 		assert fatal (aParam.direction = oParam.direction)
-			with log("Compile Error: Activity Param '" + aParam.name + "' and the operation param '" + oParam.name + "' are not for the same direction.");
+			with log("MappingDirectionMismatch: Activity Param '" + aParam.name + "' and the operation param '" + oParam.name + "' are not for the same direction.");
 	
 		assert fatal (aParam.type = oParam.type)
-			with log("Type Error: Activity Param '" + aParam.name + "' and the operation param '" + oParam.name + "' are not the same type.");
+			with log("MappingTypeMismatch: Activity Param '" + aParam.name + "' and the operation param '" + oParam.name + "' are not the same type.");
 		
 		assert fatal (aParam.lowerBound = oParam.lowerBound)
-			with log("Type Error: Activity Param  '" + aParam.name + "' and the operation param '" + oParam.name + "' have different lower bound.");
+			with log("MappingBoundMismatch: Activity Param  '" + aParam.name + "' and the operation param '" + oParam.name + "' have different lower bound.");
 			
 		assert fatal (aParam.upperBound = oParam.upperBound)
-			with log("Type Error: Activity Param '" + aParam.name + "' and the operation param '" + oParam.name + "' have different upper bound.");
+			with log("MappingBoundMismatch: Activity Param '" + aParam.name + "' and the operation param '" + oParam.name + "' have different upper bound.");
 	};			
 	
 	if (identifier <> null){
 		var matchedVar := scope.getVariableWithName(identifier.name);
 		
 		assert fatal (matchedVar <> null)
-			with log("Compile Error: Variable '" + self.identifier.name + "' has NOT been defined in scope '" + scope.group.name + "'.");
+			with log("VariableYetDeclared: Variable '" + self.identifier.name + "' has NOT been defined in scope '" + scope.group.name + "'.");
 		
 		assert fatal (matchedVar.type = oParam.type)
-			with log("Type Error: Mapped Variable '" + matchedVar.name + "' and the operation param '" + oParam.name + "' are not the same type.");
+			with log("MappingTypeMismatch: Mapped Variable '" + matchedVar.name + "' and the operation param '" + oParam.name + "' are not the same type.");
 		
 		assert fatal (matchedVar.isCollection() = oParam.isCollection())
-		    with log("Type Error: Multiplicity mismatch between Variable '" 
+		    with log("CollectionYetSupported: Multiplicity mismatch between Variable '" 
 		            + matchedVar.name + "' (isCollection=" + matchedVar.isCollection().toString() 
 		            + ", lower=" + matchedVar.lowerBound.toString() 
 		            + ", upper=" + matchedVar.upperBound.toString() 
@@ -1173,7 +1234,8 @@ query DACT::BinaryExpression::validate(scope: DACT::Scope): DACT::Type{
     };
     
     if (self.operator.oclIsKindOf(DACT::Gt) or self.operator.oclIsKindOf(DACT::Lt) or 
-        self.operator.oclIsKindOf(DACT::Ge) or self.operator.oclIsKindOf(DACT::Le)) {
+        self.operator.oclIsKindOf(DACT::Ge) or self.operator.oclIsKindOf(DACT::Le)
+       	) {
         -- Relational operators require numeric values (Integer or Real).
         assert fatal (leftType = INT or leftType = REAL)
             with log("Type Error: Relational operators can only compare numeric types: "+ 
@@ -1192,6 +1254,16 @@ query DACT::BinaryExpression::validate(scope: DACT::Scope): DACT::Type{
             
         -- They return the same type as the operands (e.g., Integer + Integer = Integer).
         return leftType;
+    };
+    
+    if (self.operator.oclIsKindOf(DACT::And) or self.operator.oclIsKindOf(DACT::Or)){
+    	-- Relational operators require numeric values (Integer or Real).
+        assert fatal (leftType = BOOL or leftType = BOOL)
+            with log("Type Error: Logical operators can only compare numeric types: "+ 
+			leftType.toString() +" vs " + rightType.toString());
+            
+        -- They always return a Boolean result type.
+        return BOOL;
     };
 
     -- Fallback default for unhandled operators
@@ -1221,7 +1293,8 @@ helper DACT::DomainObject::getPropertyFromIdentifier(identifier: String): Tuple(
     
     var totalSegments := segments->size();
     var processedCount := 0;
-
+	var errorCode := "Compile Error";
+	
     -- 3. Loop through every segment in the dot-separated chain
     segments->forEach(segment) {
         if (resolvedSuccessfully) {
@@ -1273,14 +1346,15 @@ helper DACT::DomainObject::getPropertyFromIdentifier(identifier: String): Tuple(
             } else {
                 -- Break tracking if any link in the chain is broken
                 resolvedSuccessfully := false;
-                failedSegment := segment;
+                failedSegment :=  segment;
+                errorCode := "QueryOnNonExistentProperty";
             };
         };
     };
 
     -- 4. Enforce the validation check on the final outcome
     assert fatal (resolvedSuccessfully)
-        with log("Compile Error: Invalid path navigation at segment '" + failedSegment + "' in the resolved chain context for '" + identifier + "' within DomainObject '" + self.name + "'.");
+        with log(errorCode+": Invalid path navigation at segment '" + failedSegment + "' in the resolved chain context for '" + identifier + "' within DomainObject '" + self.name + "'.");
         
     -- 5. Return the resolved target property
     return Tuple{matchedProperty=matchedProperty, propertyChain=propertyChain};
@@ -1349,9 +1423,13 @@ helper DACT::Root::validateSpecRule(inout root: DACT::Root){
 				op.printInfo(3);
 				op.ownedRules -> forEach(rule){
 					rule.expr.printExpr(4);
-					rule.expr.validate(domainScope);
+					var exprType = rule.expr.validate(domainScope);
+					assert fatal(exprType = BOOL)
+						with log("NonBooleanSpecificationRule: Expression of rule '"+ rule.name +
+							"' does not evaluate to Boolean. Given: " + exprType.toString() );
 				}
-			}
+			};
+			
 		}
 	}
 }

@@ -44,6 +44,7 @@ Package dact <http://www.example.org/xcore/dact>
     Reference operation : Operation
 
   Class BoundedContext -> NamedElement
+    Attribute isExternal : EBooleanObject
     Reference ownedElements : DomainElement<<0..*>>
 
   Class DomainElement -> NamedElement
@@ -82,6 +83,7 @@ Package dact <http://www.example.org/xcore/dact>
   Class SpecOperation -> Operation, DiagnosticSupported
     Attribute isInvariant : EBooleanObject
     Reference ownedRules : SpecRule<<0..*>>
+    Operation NoBehaviorSpecification(EDiagnosticChain, EMap) : EBoolean
     Operation BehaviorXorSpecification(EDiagnosticChain, EMap) : EBoolean
     Operation OwnedByDomainObjectOnly(EDiagnosticChain, EMap) : EBoolean
     Operation UniqueRuleNames(EDiagnosticChain, EMap) : EBoolean
@@ -156,9 +158,12 @@ Package dact <http://www.example.org/xcore/dact>
     Reference root : ActivityGroup
     Reference ownedDomainNodes : DomainNode<<0..*>>
     Reference processedDomainNodeMappings : DomainNodeOperationMapping<<0..*>>
-    Operation MatchedParameterMappings(EDiagnosticChain, EMap) : EBoolean
+    Operation MappingsOnlyWithSpecification(EDiagnosticChain, EMap) : EBoolean
+    Operation MatchedParameterMappingsCount(EDiagnosticChain, EMap) : EBoolean
+    Operation EachParameterIsMapped(EDiagnosticChain, EMap) : EBoolean
 
   Class Scope
+    Attribute /name : EString
     Reference parent : Scope
     Reference children : Scope<<0..*>>
     Reference inheritedVariables : Variable<<0..*>>
@@ -201,7 +206,9 @@ Package dact <http://www.example.org/xcore/dact>
     Reference tEdge : ActivityEdge
     Reference group : ActivityGroup
 
-  Class ActivityEdge -> NamedElement, DiagnosticSupported
+  Class ActivityEdge -> DiagnosticSupported
+    Attribute /name : EString
+    Attribute edgeName : EString
     Reference source : ActivityNode
     Reference target : ActivityNode
     Reference group : ActivityGroup
@@ -268,7 +275,7 @@ Package dact <http://www.example.org/xcore/dact>
     Reference flows : ActivityGroup<<0..*>>
 
   Class DomainNode -> ExecutableNode, DiagnosticSupported
-    Reference aggregate : AggregateRoot
+    Reference aggregate : AggregateRoot<<1..1>>
     Reference result : Identifier
     Reference entity : Entity
     Reference mainExpr : Expression<<0..*>>
@@ -287,7 +294,7 @@ Package dact <http://www.example.org/xcore/dact>
   Class DomainDeleteAction -> DomainNode
 
   Class SignalAction -> ExecutableNode, DiagnosticSupported
-    Reference event : DomainEvent
+    Reference event : DomainEvent<<1..1>>
     Reference variable : Variable
     Reference identifier : Identifier
     Reference value : ValueSpecification
@@ -301,7 +308,7 @@ Package dact <http://www.example.org/xcore/dact>
 
   Class ParameterMapping -> DiagnosticSupported
     Attribute type : ParameterMappingType
-    Reference operationParameter : Parameter
+    Reference operationParameter : Parameter<<1..1>>
     Reference identifier : Identifier
     Reference variable : Variable
     Reference activityParameter : Parameter
@@ -357,32 +364,18 @@ Package dact <http://www.example.org/xcore/dact>
   Class Or -> LogicalOperator
 
   Enum OperationType
-    Literal I0_INBOUND_GET = 0
-    Literal I1_INBOUND_PUT = 0
-    Literal I2_INBOUND_POST = 0
-    Literal I3_INBOUND_DELETE = 0
-    Literal I4_MESSAGE_HANDLER = 0
     Literal S0_DOMAIN_SERVICE = 0
-    Literal S1_APPLICATION_SERVICE = 0
     Literal R0_REPOSITORY_CREATE = 0
     Literal R1_REPOSITORY_READ = 0
     Literal R2_REPOSITORY_UPDATE = 0
     Literal R3_REPOSITORY_DELETE = 0
     Literal R4_REPOSITORY_EXIST = 0
-    Literal O0_OUTBOUND_GET = 0
-    Literal O1_OUTBOUND_PUT = 0
-    Literal O2_OUTBOUND_POST = 0
-    Literal O3_OUTBOUND_DELETE = 0
-    Literal O4_MESSAGE_DISPATCHER = 0
-    Literal O5_OUTBOX_POLLER = 0
     Literal D0_CONSTRUCTOR = 0
     Literal D1_SIMPLE_MUTATOR = 0
     Literal D2_COMPOUND_MUTATOR = 0
     Literal D3_SIMPLE_ACCESSOR = 0
     Literal D4_COMPOUND_ACCESSOR = 0
     Literal D5_SPECIFICATION = 0
-    Literal A0_INTERNAL_ACL = 0
-    Literal A1_EXTERNAL_ACL = 0
 
   Enum ParameterDirection
     Literal IN = 0

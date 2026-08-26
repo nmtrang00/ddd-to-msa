@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="ASCII"?>
+<dact:Root xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:dact="http://www.example.org/xcore/dact">
+  <ddd>
+    <boundedContexts name="Cargo">
+      <ownedElements xsi:type="dact:Entity" name="DeliveryHistory">
+        <ownedProperties name="historyId" definesIdentity="true" type="//@primitivesTypes.2" lowerBound="1"/>
+        <ownedProperties name="handlingEventCollection" type="//@ddd/@boundedContexts.0/@ownedElements.1" upperBound="-1" isComposite="true"/>
+      </ownedElements>
+      <ownedElements xsi:type="dact:Entity" name="HandlingEvent">
+        <ownedProperties name="handlingEventId" definesIdentity="true" type="//@primitivesTypes.2" lowerBound="1"/>
+      </ownedElements>
+      <ownedElements xsi:type="dact:ValueObject" name="DeliverySpecification"/>
+    </boundedContexts>
+  </ddd>
+  <activity/>
+  <primitivesTypes xsi:type="dact:StringType" name="String"/>
+  <primitivesTypes xsi:type="dact:BooleanType" name="Boolean"/>
+  <primitivesTypes xsi:type="dact:IntegerType" name="Integer"/>
+  <primitivesTypes xsi:type="dact:RealType" name="Real"/>
+</dact:Root>

@@ -51,7 +51,11 @@ mapping DACT::BoundedContext::BoundedContextToMicroservice() : SERV::Microservic
 	self.printInfo(1);
 	
 	name := self.name;
-	type := SERV::MicroserviceType::FUNCTIONAL;
+	if (self.isExternal){
+		type := SERV::MicroserviceType::EXTERNAL;
+	}else{
+		type := SERV::MicroserviceType::FUNCTIONAL;
+	};
 	visibility := SERV::Visibility::PUBLIC;
 	endpoints := object Endpoint{ addresses := "/"+self.name+"-ms"};
 	interfaces := self.ownedElements[DACT::Interface] -> map InterfaceToInterface();

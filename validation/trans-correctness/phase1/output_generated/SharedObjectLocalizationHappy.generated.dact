@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="ASCII"?>
+<dact:Root xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:dact="http://www.example.org/xcore/dact">
+  <ddd>
+    <boundedContexts name="Cargo">
+      <ownedElements xsi:type="dact:Entity" name="CarrierMovement">
+        <ownedProperties name="from" type="//@ddd/@boundedContexts.0/@ownedElements.2" lowerBound="1"/>
+        <ownedProperties name="to" type="//@ddd/@boundedContexts.0/@ownedElements.2" lowerBound="1"/>
+        <ownedProperties name="carrierMovementId" definesIdentity="true" type="//@primitivesTypes.0" lowerBound="1"/>
+      </ownedElements>
+      <ownedElements xsi:type="dact:ValueObject" name="DeliverySpecification">
+        <ownedProperties name="destination" type="//@ddd/@boundedContexts.0/@ownedElements.2" lowerBound="1"/>
+      </ownedElements>
+      <ownedElements xsi:type="dact:SharedValueObject" name="SharedLocation" abstractedRoot="//@ddd/@boundedContexts.1/@ownedElements.0">
+        <ownedProperties name="portCode" definesIdentity="true" type="//@primitivesTypes.0" lowerBound="1"/>
+      </ownedElements>
+    </boundedContexts>
+    <boundedContexts name="Location">
+      <ownedElements xsi:type="dact:AggregateRoot" name="Location">
+        <ownedProperties name="portCode" definesIdentity="true" type="//@primitivesTypes.0" lowerBound="1"/>
+      </ownedElements>
+    </boundedContexts>
+    <boundedContexts name="CargoDup">
+      <ownedElements xsi:type="dact:Entity" name="Cargo">
+        <ownedProperties name="trackingId" definesIdentity="true" type="//@primitivesTypes.0" lowerBound="1"/>
+        <ownedProperties name="destination" type="//@ddd/@boundedContexts.2/@ownedElements.1"/>
+      </ownedElements>
+      <ownedElements xsi:type="dact:SharedValueObject" name="SharedLocation" abstractedRoot="//@ddd/@boundedContexts.1/@ownedElements.0">
+        <ownedProperties name="portCode" definesIdentity="true" type="//@primitivesTypes.0" lowerBound="1"/>
+      </ownedElements>
+    </boundedContexts>
+  </ddd>
+  <activity/>
+  <primitivesTypes xsi:type="dact:StringType" name="String"/>
+  <primitivesTypes xsi:type="dact:BooleanType" name="Boolean"/>
+  <primitivesTypes xsi:type="dact:IntegerType" name="Integer"/>
+  <primitivesTypes xsi:type="dact:RealType" name="Real"/>
+</dact:Root>

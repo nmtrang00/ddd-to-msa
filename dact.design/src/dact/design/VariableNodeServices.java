@@ -43,6 +43,7 @@ public class VariableNodeServices{
     
     public String readAssignment(VariableAssignment a) {
     	String toReturn = "";
+    	dslHelper = getDslHelper();
     	
     	toReturn +=  (a.getIdentifier() != null) ? a.getIdentifier().getName() : "UNDEFINED_IDENTIFIER";
     	toReturn += (a.getExpr() != null) ? ( " = " + dslHelper.read(a.getExpr())) : "";

@@ -1,0 +1,8 @@
+mapping_operation,source_type,target_type,execution_count,is_covered
+DddModelToServiceModel,DACT::DddModel,SERV::ServiceModel,1,True
+BoundedContextToMicroservice,DACT::BoundedContext,SERV::Microservice,3,True
+InterfaceToInterface,DACT::Interface,SERV::Interface,4,True
+InterfaceOperationToOperation,DACT::Operation,SERV::Operation,4,True
+ParameterToParameter,DACT::Parameter,SERV::Parameter,16,True
+ServiceToDefaultController,DACT::Service,SERV::Interface,1,True
+ServiceOperationsToDefaultControllerOperations,DACT::Operation,SERV::Operation,1,True

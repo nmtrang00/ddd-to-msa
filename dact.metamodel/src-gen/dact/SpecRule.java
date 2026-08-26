@@ -51,7 +51,7 @@ public interface SpecRule extends NamedElement {
 	 * @return the value of the '<em>Expr</em>' containment reference.
 	 * @see #setExpr(Expression)
 	 * @see dact.DactPackage#getSpecRule_Expr()
-	 * @model containment="true"
+	 * @model containment="true" ordered="false"
 	 * @generated
 	 */
 	Expression getExpr();

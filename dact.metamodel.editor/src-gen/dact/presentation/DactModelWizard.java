@@ -84,6 +84,11 @@ import org.eclipse.ui.IWorkbenchPart;
 import org.eclipse.ui.IWorkbenchWindow;
 import org.eclipse.ui.PartInitException;
 
+import dact.Root;
+import dact.StringType;
+import dact.RealType;
+import dact.IntegerType;
+import dact.BooleanType;
 
 /**
  * This is a simple wizard for creating a new model file.
@@ -212,7 +217,30 @@ public class DactModelWizard extends Wizard implements INewWizard {
 //		EClass eClass = (EClass)dactPackage.getEClassifier(initialObjectCreationPage.getInitialObjectName());
 //		EObject rootObject = dactFactory.create(eClass);
 //		return rootObject;
-		return dactFactory.createInitializedRoot();
+		Root root =  dactFactory.createRoot();
+	
+	    // 1. Populate default sub-models
+	    root.setDdd(dactFactory.createDddModel());
+	    root.setActivity(dactFactory.createActivityModel());
+	
+	    // 2. Populate default primitive types
+	    StringType stringType = dactFactory.createStringType();
+	    stringType.setName("String");
+	    root.getPrimitivesTypes().add(stringType);
+	
+	    BooleanType boolType = dactFactory.createBooleanType();
+	    boolType.setName("Boolean");
+	    root.getPrimitivesTypes().add(boolType);
+	
+	    IntegerType intType = dactFactory.createIntegerType();
+	    intType.setName("Integer");
+	    root.getPrimitivesTypes().add(intType);
+	
+	    RealType realType = dactFactory.createRealType();
+	    realType.setName("Real");
+	    root.getPrimitivesTypes().add(realType);
+	
+	    return root;
 	}
 
 	/**

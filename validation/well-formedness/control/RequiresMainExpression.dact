@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<dact:Root xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:dact="http://www.example.org/xcore/dact">
+  <ddd>
+    <boundedContexts name="Cargo">
+      <ownedElements xsi:type="dact:AggregateRoot" name="Cargo"/>
+    </boundedContexts>
+  </ddd>
+  <activity>
+    <activities name="doSomethingActivity">
+      <root name="Root">
+        <ownedNodes xsi:type="dact:InitialNode"/>
+        <ownedNodes xsi:type="dact:ActivityFinalNode"/>
+        <ownedNodes xsi:type="dact:DomainFindAction" name="FindCargoAction" aggregate="//@ddd/@boundedContexts.0/@ownedElements.0"/>
+        <ownedNodes xsi:type="dact:DomainExistAction" name="ExistCargoAction" aggregate="//@ddd/@boundedContexts.0/@ownedElements.0">
+          <mainExpr xsi:type="dact:BinaryExpression" name="expr1">
+            <operator xsi:type="dact:Eq"/>
+            <leftExpr xsi:type="dact:UnaryExpression" name="">
+              <identifier name="self.trackingId"/>
+            </leftExpr>
+            <rightExpr xsi:type="dact:UnaryExpression" name="">
+              <value xsi:type="dact:LiteralInteger" value="1"/>
+            </rightExpr>
+          </mainExpr>
+        </ownedNodes>
+      </root>
+    </activities>
+  </activity>
+  <primitivesTypes xsi:type="dact:StringType" name="String"/>
+  <primitivesTypes xsi:type="dact:BooleanType" name="Boolean"/>
+  <primitivesTypes xsi:type="dact:IntegerType" name="Integer"/>
+  <primitivesTypes xsi:type="dact:RealType" name="Real"/>
+</dact:Root>

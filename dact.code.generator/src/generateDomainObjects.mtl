@@ -5,15 +5,17 @@
  * @version 1.0.0
  * @since 1.0.0
  */]
-[module generateDomainObjects('http://www.example.org/xcore/data','http://www.example.org/xcore/behavior')/]
+[module generateDomainObjects('http://www.example.org/xcore/data',
+'http://www.example.org/xcore/service',
+'http://www.example.org/xcore/behavior')/]
 
 [import stringUtils/]
 [import lemmaUtils/]
 [import lemmaExprTemplates/]
 
 [comment @main/]
-[template public generateDomainObjects(dataModel: data::DataModel)]
-[for (context : data::Context | dataModel.contexts)]
+[template public generateDomainObjects(dataModel: data::DataModel,serviceModel: service::ServiceModel)]
+[for (context : data::Context | dataModel.getInternalFunctionalContexts(serviceModel))]
   	[let serviceName : String = context.name.toCamelCase(), 
   		domainDir : String = serviceName+'-service/src/main/java/com/example/'+serviceName+'/domain/']
     [for (complexType: data::ComplexType | context.complexTypes -> select(t|t.isDomainObject()))]

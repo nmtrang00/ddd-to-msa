@@ -1,0 +1,99 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<data:DataModel xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:data="http://www.example.org/xcore/data" t_modelUri="DefaultProject">
+  <contexts name="Customer">
+    <complexTypes xsi:type="data:DataStructure" name="Customer">
+      <features>ENTITY</features>
+      <features>AGGREGATE</features>
+      <dataFields name="customerId" lowerBound="1" upperBound="1">
+        <primitiveType xsi:type="data:PrimitiveInteger"/>
+        <features>IDENTIFIER</features>
+        <features>NEVER_EMPTY</features>
+      </dataFields>
+      <dataFields name="name" lowerBound="0" upperBound="1">
+        <primitiveType xsi:type="data:PrimitiveString"/>
+      </dataFields>
+    </complexTypes>
+  </contexts>
+  <contexts name="Cargo">
+    <complexTypes xsi:type="data:CollectionType" name="CargoStatus">
+      <dataFields name="cargoStatus" complexType="//@contexts.1/@complexTypes.3"/>
+    </complexTypes>
+    <complexTypes xsi:type="data:DataStructure" name="DeliveryHistory">
+      <features>ENTITY</features>
+      <dataFields name="deliveryHistoryId" lowerBound="0" upperBound="1">
+        <primitiveType xsi:type="data:PrimitiveString"/>
+        <features>IDENTIFIER</features>
+      </dataFields>
+    </complexTypes>
+    <complexTypes xsi:type="data:DataStructure" name="SharedCustomer">
+      <features>SHARED_VALUE_OBJECT</features>
+      <dataFields name="customerId" lowerBound="1" upperBound="1">
+        <primitiveType xsi:type="data:PrimitiveInteger"/>
+        <features>NEVER_EMPTY</features>
+      </dataFields>
+    </complexTypes>
+    <complexTypes xsi:type="data:Enumeration" name="CargoStatus">
+      <fields name="UNRECEIVED"/>
+      <fields name="RECEIVED"/>
+      <fields name="LOADED"/>
+      <fields name="UNLOADED"/>
+      <fields name="DELIVERED"/>
+    </complexTypes>
+    <complexTypes xsi:type="data:DataStructure" name="SharedLocation">
+      <features>SHARED_VALUE_OBJECT</features>
+      <dataFields name="portCode" lowerBound="1" upperBound="1">
+        <primitiveType xsi:type="data:PrimitiveInteger"/>
+        <features>NEVER_EMPTY</features>
+      </dataFields>
+    </complexTypes>
+    <complexTypes xsi:type="data:DataStructure" name="Cargo">
+      <features>ENTITY</features>
+      <features>AGGREGATE</features>
+      <dataFields name="trackingId" lowerBound="1" upperBound="1">
+        <primitiveType xsi:type="data:PrimitiveInteger"/>
+        <features>IDENTIFIER</features>
+        <features>NEVER_EMPTY</features>
+      </dataFields>
+      <dataFields name="testStatusMulti" upperBound="-1" complexType="//@contexts.1/@complexTypes.0">
+        <features>NEVER_EMPTY</features>
+      </dataFields>
+      <dataFields name="status" upperBound="1" complexType="//@contexts.1/@complexTypes.3">
+        <features>NEVER_EMPTY</features>
+      </dataFields>
+      <dataFields name="role" lowerBound="1" upperBound="1" complexType="//@contexts.1/@complexTypes.2"/>
+      <dataFields name="goal" lowerBound="1" upperBound="1" complexType="//@contexts.1/@complexTypes.6"/>
+      <dataFields name="deliveryHistory" lowerBound="0" upperBound="1" complexType="//@contexts.1/@complexTypes.1">
+        <features>PART</features>
+      </dataFields>
+      <operations name="getCustomerName" operationType="D3_SIMPLE_ACCESSOR">
+        <parameters name="name" lowerBound="0" upperBound="1" exchangePattern="OUT">
+          <primitiveType xsi:type="data:PrimitiveString"/>
+        </parameters>
+        <parameters name="primitiveCollection" lowerBound="0" upperBound="-1" complexType="//@complexTypes.0"/>
+      </operations>
+    </complexTypes>
+    <complexTypes xsi:type="data:DataStructure" name="DeliverySpecification">
+      <features>VALUE_OBJECT</features>
+      <dataFields name="destination" lowerBound="1" upperBound="1" complexType="//@contexts.1/@complexTypes.4"/>
+      <dataFields name="deadline" lowerBound="1" upperBound="1">
+        <primitiveType xsi:type="data:PrimitiveInteger"/>
+        <features>NEVER_EMPTY</features>
+      </dataFields>
+      <dataFields name="source" lowerBound="1" upperBound="1" complexType="//@contexts.1/@complexTypes.4"/>
+    </complexTypes>
+  </contexts>
+  <contexts name="Location">
+    <complexTypes xsi:type="data:DataStructure" name="Location">
+      <features>ENTITY</features>
+      <features>AGGREGATE</features>
+      <dataFields name="portCode" lowerBound="1" upperBound="1">
+        <primitiveType xsi:type="data:PrimitiveInteger"/>
+        <features>IDENTIFIER</features>
+        <features>NEVER_EMPTY</features>
+      </dataFields>
+    </complexTypes>
+  </contexts>
+  <complexTypes xsi:type="data:CollectionType" name="Boolean">
+    <primitiveType xsi:type="data:PrimitiveBoolean"/>
+  </complexTypes>
+</data:DataModel>

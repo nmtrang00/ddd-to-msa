@@ -1,0 +1,33 @@
+import DactPreprocess;
+import DactToLemmaData;
+import DactToLemmaService;
+
+modeltype DACT uses 'http://www.example.org/xcore/dact';
+modeltype DATA uses 'http://www.example.org/xcore/data';
+modeltype SERVICE uses 'http://www.example.org/xcore/service';
+
+transformation index(
+	in dact : DACT, 
+	out data : DATA, 
+	out service: SERVICE
+);
+configuration property PROJECT_NAME : String;
+
+main() {
+	log("PROJECT " + PROJECT_NAME +": Start parsing");
+	// Transform DACT to LEMMA Data
+	var dactToLemmaData := new DactToLemmaData(dact,data);
+	dactToLemmaData.PROJECT_NAME := PROJECT_NAME;
+	var dactToLemmaDataTrans := dactToLemmaData.transform();
+	assert fatal (dactToLemmaDataTrans.failed() = false) 
+        with log("Stopping pipeline due to error in DactToLemmaData");
+        
+	// Transform DACT to LEMMA Service
+	var dactToLemmaService := new DactToLemmaService(dact,data,service);
+	dactToLemmaService.PROJECT_NAME := PROJECT_NAME;
+	var dactToLemmaServiceTrans := dactToLemmaService.transform();
+	assert fatal (dactToLemmaServiceTrans.failed() = false) 
+        with log("Stopping pipeline due to error in DactToLemmaService");
+       
+	log("DONE!");
+}

@@ -1,5 +1,6 @@
 package dact.design;
 
+import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.util.EcoreUtil;
 
@@ -51,5 +52,5 @@ public class ActivityServices {
         allOperations.add(null);
         return allOperations;
     }
-    
+
 }

@@ -209,7 +209,7 @@ public class DomainNodeServices {
     	}
     	
     	if ((node.getMainExpr().isEmpty())) {
-    		return actionStr + "()";
+    		return actionStr + "All()";
     	}	
     	
     	List<String> params = node.getMainExpr()

@@ -3329,6 +3329,7 @@ public class ServicePackageImpl extends EPackageImpl implements ServicePackage {
 		addEEnumLiteral(microserviceTypeEEnum, MicroserviceType.FUNCTIONAL);
 		addEEnumLiteral(microserviceTypeEEnum, MicroserviceType.UTILITY);
 		addEEnumLiteral(microserviceTypeEEnum, MicroserviceType.INFRASTRUCTURE);
+		addEEnumLiteral(microserviceTypeEEnum, MicroserviceType.EXTERNAL);
 
 		initEEnum(visibilityEEnum, Visibility.class, "Visibility");
 		addEEnumLiteral(visibilityEEnum, Visibility.NONE);

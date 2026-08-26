@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<dact:Root xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:dact="http://www.example.org/xcore/dact">
+  <ddd>
+    <boundedContexts name="Cargo">
+      <ownedElements xsi:type="dact:AggregateRoot" name="Cargo" repository="//@ddd/@boundedContexts.0/@ownedElements.2">
+        <ownedProperties name="trackingId" definesIdentity="true" type="//@primitivesTypes.2" lowerBound="1"/>
+        <ownedProperties name="deliveryHistory" type="//@ddd/@boundedContexts.0/@ownedElements.1" isComposite="true"/>
+      </ownedElements>
+      <ownedElements xsi:type="dact:Entity" name="DeliveryHistory">
+        <ownedProperties name="deliveryHistoryId" definesIdentity="true" type="//@primitivesTypes.2" lowerBound="1"/>
+      </ownedElements>
+      <ownedElements xsi:type="dact:Repository" name="CargoRepository" entity="//@ddd/@boundedContexts.0/@ownedElements.0">
+        <ownedOperations name="findAll" type="R1_REPOSITORY_READ">
+          <ownedParameters name="result" type="//@ddd/@boundedContexts.0/@ownedElements.0" upperBound="-1" direction="OUT"/>
+        </ownedOperations>
+      </ownedElements>
+      <ownedElements xsi:type="dact:Service" name="CargoService">
+        <ownedOperations name="TestActivity" behavior="//@activity/@activities.0"/>
+      </ownedElements>
+    </boundedContexts>
+    <boundedContexts name="Location">
+      <ownedElements xsi:type="dact:AggregateRoot" name="Location" repository="//@ddd/@boundedContexts.1/@ownedElements.1">
+        <ownedProperties name="portCode" definesIdentity="true" type="//@primitivesTypes.2"/>
+      </ownedElements>
+      <ownedElements xsi:type="dact:Repository" name="LocationRepository" entity="//@ddd/@boundedContexts.1/@ownedElements.0">
+        <ownedOperations name="findAll" type="R1_REPOSITORY_READ">
+          <ownedParameters name="result" type="//@ddd/@boundedContexts.1/@ownedElements.0" upperBound="-1" direction="OUT"/>
+        </ownedOperations>
+      </ownedElements>
+    </boundedContexts>
+  </ddd>
+  <activity>
+    <activities name="TestActivity" specification="//@ddd/@boundedContexts.0/@ownedElements.3/@ownedOperations.0">
+      <root name="Root">
+        <ownedNodes xsi:type="dact:CallOperationAction" name="DomainFindAction1" sEdge="//@activity/@activities.0/@root/@ownedEdges.2" tEdge="//@activity/@activities.0/@root/@ownedEdges.1" operation="//@ddd/@boundedContexts.1/@ownedElements.1/@ownedOperations.0"/>
+        <ownedNodes xsi:type="dact:CallOperationAction" name="DomainFindAction1" sEdge="//@activity/@activities.0/@root/@ownedEdges.1" tEdge="//@activity/@activities.0/@root/@ownedEdges.0" domainToDeclareResult="true" operation="//@ddd/@boundedContexts.0/@ownedElements.2/@ownedOperations.0">
+          <parameterMappings type="ACTION_OUT" operationParameter="//@ddd/@boundedContexts.0/@ownedElements.2/@ownedOperations.0/@ownedParameters.0">
+            <identifier name="targetCargo"/>
+          </parameterMappings>
+        </ownedNodes>
+        <ownedNodes xsi:type="dact:InitialNode" name="InitialNode1" sEdge="//@activity/@activities.0/@root/@ownedEdges.0"/>
+        <ownedNodes xsi:type="dact:ActivityFinalNode" name="ActivityFinalNode4" tEdge="//@activity/@activities.0/@root/@ownedEdges.2"/>
+        <ownedEdges edgeName="ActivityEdge1" source="//@activity/@activities.0/@root/@ownedNodes.2" target="//@activity/@activities.0/@root/@ownedNodes.1"/>
+        <ownedEdges edgeName="ActivityEdge2" source="//@activity/@activities.0/@root/@ownedNodes.1" target="//@activity/@activities.0/@root/@ownedNodes.0"/>
+        <ownedEdges edgeName="ActivityEdge3" source="//@activity/@activities.0/@root/@ownedNodes.0" target="//@activity/@activities.0/@root/@ownedNodes.3"/>
+        <scope>
+          <ownedVariables name="targetCargo" type="//@ddd/@boundedContexts.0/@ownedElements.0" upperBound="-1"/>
+        </scope>
+      </root>
+      <ownedDomainNodes xsi:type="dact:DomainFindAction" name="DomainFindAction1" aggregate="//@ddd/@boundedContexts.0/@ownedElements.0">
+        <result name="targetCargo"/>
+      </ownedDomainNodes>
+      <ownedDomainNodes xsi:type="dact:DomainFindAction" name="DomainFindAction1" aggregate="//@ddd/@boundedContexts.1/@ownedElements.0"/>
+      <processedDomainNodeMappings usedByExternalContext="false" domainNode="//@activity/@activities.0/@ownedDomainNodes.0" operation="//@ddd/@boundedContexts.0/@ownedElements.2/@ownedOperations.0"/>
+      <processedDomainNodeMappings usedByExternalContext="true" domainNode="//@activity/@activities.0/@ownedDomainNodes.1" operation="//@ddd/@boundedContexts.1/@ownedElements.1/@ownedOperations.0"/>
+    </activities>
+  </activity>
+  <primitivesTypes xsi:type="dact:StringType" name="String"/>
+  <primitivesTypes xsi:type="dact:BooleanType" name="Boolean"/>
+  <primitivesTypes xsi:type="dact:IntegerType" name="Integer"/>
+  <primitivesTypes xsi:type="dact:RealType" name="Real"/>
+</dact:Root>

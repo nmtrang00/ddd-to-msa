@@ -184,7 +184,7 @@ public class DslHelper {
             throw new DiagnosticException(chain);
         }
 
-        System.out.println("[DSL-SUCCESS] Successfully parsed string into " + rootAst.eClass().getName());
+        System.out.println("[DSL-SUCCESS] Successfully parsed string '"+ dslText +"' into " + rootAst.eClass().getName());
         return rootAst;
     }
 }

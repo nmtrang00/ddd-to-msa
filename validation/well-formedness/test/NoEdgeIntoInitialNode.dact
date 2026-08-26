@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<dact:Root xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:dact="http://www.example.org/xcore/dact">
+  <ddd/>
+  <activity>
+    <activities name="doSomethingActivity">
+      <root name="Root">
+        <ownedNodes xsi:type="dact:InitialNode" tEdge="//@activity/@activities.0/@root/@ownedEdges.0"/>
+        <ownedNodes xsi:type="dact:ActivityFinalNode"/>
+        <ownedNodes xsi:type="dact:VariableDeclarationAction" sEdge="//@activity/@activities.0/@root/@ownedEdges.0"/>
+        <ownedEdges name="test" source="//@activity/@activities.0/@root/@ownedNodes.2" target="//@activity/@activities.0/@root/@ownedNodes.0"/>
+      </root>
+    </activities>
+  </activity>
+  <primitivesTypes xsi:type="dact:StringType" name="String"/>
+  <primitivesTypes xsi:type="dact:BooleanType" name="Boolean"/>
+  <primitivesTypes xsi:type="dact:IntegerType" name="Integer"/>
+  <primitivesTypes xsi:type="dact:RealType" name="Real"/>
+</dact:Root>

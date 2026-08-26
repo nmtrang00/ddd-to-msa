@@ -25,7 +25,7 @@ import org.eclipse.emf.common.util.EList;
  *
  * @see dact.DactPackage#getDomainNode()
  * @model abstract="true"
- *        annotation="http://www.eclipse.org/emf/2002/Ecore constraints='SelfAnchoredBinaryExpression RequiresMainExpression'"
+ *        annotation="http://www.eclipse.org/emf/2002/Ecore constraints='RequiresMainExpression SelfAnchoredBinaryExpression'"
  * @generated
  */
 public interface DomainNode extends ExecutableNode, DiagnosticSupported {
@@ -36,7 +36,7 @@ public interface DomainNode extends ExecutableNode, DiagnosticSupported {
 	 * @return the value of the '<em>Aggregate</em>' reference.
 	 * @see #setAggregate(AggregateRoot)
 	 * @see dact.DactPackage#getDomainNode_Aggregate()
-	 * @model
+	 * @model required="true"
 	 * @generated
 	 */
 	AggregateRoot getAggregate();

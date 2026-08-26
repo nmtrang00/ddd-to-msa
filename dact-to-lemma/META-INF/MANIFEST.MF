@@ -1,7 +1,7 @@
 Manifest-Version: 1.0
 Bundle-ManifestVersion: 2
-Bundle-Name: DddActivity_to_lemma Plug-in
-Bundle-SymbolicName: dddActivity_to_lemma;singleton:=true
+Bundle-Name: DACT-to-LEMMA Plug-in
+Bundle-SymbolicName: dact.to.lemma;singleton:=true
 Bundle-Version: 0.1.0.qualifier
 Require-Bundle: org.eclipse.core.runtime;bundle-version="0.0.0",
  lemma.adapted.data.metamodel;bundle-version="0.1.0",

@@ -17,5 +17,9 @@ import org.eclipse.emf.common.util.EList;
 public interface BoundedContextValidator {
 	boolean validate();
 
+	boolean validateIsExternal(Boolean value);
+
+	boolean validate_(Object value);
+
 	boolean validateOwnedElements(EList<DomainElement> value);
 }

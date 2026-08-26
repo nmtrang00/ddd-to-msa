@@ -1,0 +1,148 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<service:ServiceModel xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:data="http://www.example.org/xcore/data" xmlns:service="http://www.example.org/xcore/service">
+  <imports name="DomainData"/>
+  <microservices name="Cargo" visibility="PUBLIC">
+    <endpoints>
+      <addresses>/Cargo-ms</addresses>
+    </endpoints>
+    <interfaces name="CargoRepository" visibility="INTERNAL" interfaceType="REPOSITORY">
+      <operations name="createCargo" notImplemented="true" visibility="INTERNAL" operationType="R0_REPOSITORY_CREATE">
+        <protocols/>
+        <parameters name="result" exchangePattern="OUT" optional="true" lowerBound="0" upperBound="1">
+          <importedType import="//@imports.0">
+            <type xsi:type="data:DataStructure" href="cargo.simplified.dataAndServiceAndBeha.data#//@contexts.0/@complexTypes.6"/>
+          </importedType>
+        </parameters>
+        <parameters name="cargo" lowerBound="1" upperBound="1">
+          <importedType import="//@imports.0">
+            <type xsi:type="data:DataStructure" href="cargo.simplified.dataAndServiceAndBeha.data#//@contexts.0/@complexTypes.6"/>
+          </importedType>
+        </parameters>
+      </operations>
+    </interfaces>
+    <interfaces name="CargoService" visibility="INTERNAL" interfaceType="DOMAIN_SERVICE">
+      <operations name="bookACargo" visibility="INTERNAL" operationType="S0_DOMAIN_SERVICE">
+        <protocols/>
+        <parameters name="deadline" lowerBound="1" upperBound="1">
+          <primitiveType xsi:type="data:PrimitiveInteger"/>
+        </parameters>
+        <parameters name="srcPort" lowerBound="1" upperBound="1">
+          <primitiveType xsi:type="data:PrimitiveInteger"/>
+        </parameters>
+        <parameters name="customerId" lowerBound="1" upperBound="1">
+          <primitiveType xsi:type="data:PrimitiveInteger"/>
+        </parameters>
+        <parameters name="destPort" lowerBound="1" upperBound="1">
+          <primitiveType xsi:type="data:PrimitiveInteger"/>
+        </parameters>
+        <parameters name="newCargo" exchangePattern="OUT" optional="true" lowerBound="0" upperBound="1">
+          <importedType import="//@imports.0">
+            <type xsi:type="data:DataStructure" href="cargo.simplified.dataAndServiceAndBeha.data#//@contexts.0/@complexTypes.6"/>
+          </importedType>
+        </parameters>
+      </operations>
+    </interfaces>
+    <interfaces name="CargoController" visibility="PUBLIC">
+      <endpoints>
+        <addresses>/cargo</addresses>
+      </endpoints>
+      <operations name="bookACargo" visibility="PUBLIC" operationType="I2_INBOUND_POST">
+        <endpoints>
+          <addresses></addresses>
+        </endpoints>
+        <parameters name="requestParam" lowerBound="1" upperBound="1" adapterParameterType="REQUEST_BODY">
+          <importedType import="//@imports.0">
+            <type xsi:type="data:DataStructure" href="cargo.simplified.dataAndServiceAndBeha.data#//@contexts.0/@complexTypes.7"/>
+          </importedType>
+        </parameters>
+        <parameters name="responseParam" exchangePattern="OUT" lowerBound="1" upperBound="1" adapterParameterType="RESPONSE_BODY">
+          <importedType import="//@imports.0">
+            <type xsi:type="data:DataStructure" href="cargo.simplified.dataAndServiceAndBeha.data#//@contexts.0/@complexTypes.8"/>
+          </importedType>
+        </parameters>
+      </operations>
+    </interfaces>
+  </microservices>
+  <microservices name="Customer" visibility="PUBLIC">
+    <endpoints>
+      <addresses>/Customer-ms</addresses>
+    </endpoints>
+    <interfaces name="CustomerRepository" visibility="INTERNAL" interfaceType="REPOSITORY">
+      <operations name="existsByCustomerId" notImplemented="true" visibility="INTERNAL" operationType="R4_REPOSITORY_EXIST">
+        <protocols/>
+        <parameters name="customerId" lowerBound="1" upperBound="1">
+          <primitiveType xsi:type="data:PrimitiveInteger"/>
+        </parameters>
+        <parameters name="result" exchangePattern="OUT" lowerBound="1" upperBound="1">
+          <primitiveType xsi:type="data:PrimitiveBoolean"/>
+        </parameters>
+      </operations>
+    </interfaces>
+    <interfaces name="CustomerService" visibility="INTERNAL" interfaceType="DOMAIN_SERVICE">
+      <operations name="existsByCustomerId" operationType="S0_DOMAIN_SERVICE">
+        <parameters name="result" exchangePattern="OUT" lowerBound="1" upperBound="1">
+          <primitiveType xsi:type="data:PrimitiveBoolean"/>
+        </parameters>
+        <parameters name="customerId" lowerBound="1" upperBound="1">
+          <primitiveType xsi:type="data:PrimitiveInteger"/>
+        </parameters>
+      </operations>
+    </interfaces>
+    <interfaces name="CustomerController" visibility="PUBLIC">
+      <operations name="existsByCustomerId">
+        <endpoints>
+          <addresses>/{customerId}/exists</addresses>
+        </endpoints>
+        <parameters name="customerId" lowerBound="1" upperBound="1">
+          <primitiveType xsi:type="data:PrimitiveInteger"/>
+        </parameters>
+        <parameters name="responseParam" exchangePattern="OUT" lowerBound="1" upperBound="1" adapterParameterType="RESPONSE_BODY">
+          <importedType import="//@imports.0">
+            <type xsi:type="data:DataStructure" href="cargo.simplified.dataAndServiceAndBeha.data#//@contexts.2/@complexTypes.1"/>
+          </importedType>
+        </parameters>
+      </operations>
+    </interfaces>
+  </microservices>
+  <microservices name="Location" visibility="PUBLIC">
+    <endpoints>
+      <addresses>/Location-ms</addresses>
+    </endpoints>
+    <interfaces name="LocationRepository" visibility="INTERNAL" interfaceType="REPOSITORY">
+      <operations name="existsByPortCode" notImplemented="true" visibility="INTERNAL" operationType="R4_REPOSITORY_EXIST">
+        <protocols/>
+        <parameters name="result" exchangePattern="OUT" lowerBound="1" upperBound="1">
+          <primitiveType xsi:type="data:PrimitiveBoolean"/>
+        </parameters>
+        <parameters name="portCode" lowerBound="1" upperBound="1">
+          <primitiveType xsi:type="data:PrimitiveInteger"/>
+        </parameters>
+      </operations>
+    </interfaces>
+    <interfaces name="LocationService" visibility="INTERNAL" interfaceType="DOMAIN_SERVICE">
+      <operations name="existsByPortCode" operationType="S0_DOMAIN_SERVICE">
+        <parameters name="result" exchangePattern="OUT" lowerBound="1" upperBound="1">
+          <primitiveType xsi:type="data:PrimitiveBoolean"/>
+        </parameters>
+        <parameters name="portCode" lowerBound="1" upperBound="1">
+          <primitiveType xsi:type="data:PrimitiveInteger"/>
+        </parameters>
+      </operations>
+    </interfaces>
+    <interfaces name="LocationController" visibility="PUBLIC">
+      <operations name="existsByPortCode">
+        <endpoints>
+          <addresses>/{portCode}/exists</addresses>
+        </endpoints>
+        <parameters name="portCode" lowerBound="1" upperBound="1">
+          <primitiveType xsi:type="data:PrimitiveInteger"/>
+        </parameters>
+        <parameters name="responseParam" exchangePattern="OUT" lowerBound="1" upperBound="1" adapterParameterType="RESPONSE_BODY">
+          <importedType import="//@imports.0">
+            <type xsi:type="data:DataStructure" href="cargo.simplified.dataAndServiceAndBeha.data#//@contexts.1/@complexTypes.1"/>
+          </importedType>
+        </parameters>
+      </operations>
+    </interfaces>
+  </microservices>
+</service:ServiceModel>

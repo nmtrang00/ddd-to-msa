@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <description:Group xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:description="http://www.eclipse.org/sirius/description/1.1.0" xmlns:description_1="http://www.eclipse.org/sirius/diagram/description/1.1.0" xmlns:properties="http://www.eclipse.org/sirius/properties/1.0.0" xmlns:style="http://www.eclipse.org/sirius/diagram/description/style/1.1.0" xmlns:tool="http://www.eclipse.org/sirius/diagram/description/tool/1.1.0" xmlns:tool_1="http://www.eclipse.org/sirius/description/tool/1.1.0" xmlns:validation="http://www.eclipse.org/sirius/description/validation/1.1.0" name="ddd" version="15.4.0.202401051836">
-  <ownedViewpoints name="ddd" modelFileExtension="dact">
+  <ownedViewpoints name="Domain" modelFileExtension="dact">
     <ownedRepresentations xsi:type="description_1:DiagramDescription" name="DDD Diagram" initialisation="true" domainClass="dact::DddModel" enablePopupBars="true">
       <metamodel href="http://www.example.org/xcore/dact#/"/>
       <validationSet name="EcoreOclValidation">
@@ -9,7 +9,7 @@
         </ownedRules>
       </validationSet>
       <defaultLayer name="Default">
-        <edgeMappings name="CompositionEdge" preconditionExpression="aql:self.isComposite" synchronizationLock="true" sourceMapping="//@ownedViewpoints[name='ddd']/@ownedRepresentations[name='DDD%20Diagram']/@defaultLayer/@containerMappings[name='BoundedContextNode']/@subContainerMappings[name='InternalDomainObjectNode']" targetMapping="//@ownedViewpoints[name='ddd']/@ownedRepresentations[name='DDD%20Diagram']/@defaultLayer/@containerMappings[name='BoundedContextNode']/@subContainerMappings[name='InternalDomainObjectNode']" targetFinderExpression="aql:self.type" sourceFinderExpression="aql:self.domainObject" domainClass="dact::Property" useDomainElement="true">
+        <edgeMappings name="CompositionEdge" preconditionExpression="aql:self.isComposite" synchronizationLock="true" sourceMapping="//@ownedViewpoints[name='Domain']/@ownedRepresentations[name='DDD%20Diagram']/@defaultLayer/@containerMappings[name='BoundedContextNode']/@subContainerMappings[name='InternalDomainObjectNode']" targetMapping="//@ownedViewpoints[name='Domain']/@ownedRepresentations[name='DDD%20Diagram']/@defaultLayer/@containerMappings[name='BoundedContextNode']/@subContainerMappings[name='InternalDomainObjectNode']" targetFinderExpression="aql:self.type" sourceFinderExpression="aql:self.domainObject" domainClass="dact::Property" useDomainElement="true">
           <style sourceArrow="FillDiamond" sizeComputationExpression="2" routingStyle="manhattan">
             <strokeColor xsi:type="description:SystemColor" href="environment:/viewpoint#//@systemColors/@entries[name='gray']"/>
             <centerLabelStyleDescription labelSize="12" showIcon="false" labelExpression="aql:self.name + ' [' + self.lowerBound + '..'+ (if self.upperBound = -1 then '*' else self.upperBound endif) +']'">
@@ -17,7 +17,7 @@
             </centerLabelStyleDescription>
           </style>
         </edgeMappings>
-        <edgeMappings name="ReferenceEdge" preconditionExpression="aql:not self.isComposite" synchronizationLock="true" sourceMapping="//@ownedViewpoints[name='ddd']/@ownedRepresentations[name='DDD%20Diagram']/@defaultLayer/@containerMappings[name='BoundedContextNode']/@subContainerMappings[name='InternalDomainObjectNode']" targetMapping="//@ownedViewpoints[name='ddd']/@ownedRepresentations[name='DDD%20Diagram']/@defaultLayer/@containerMappings[name='BoundedContextNode']/@subContainerMappings[name='InternalDomainObjectNode'] //@ownedViewpoints[name='ddd']/@ownedRepresentations[name='DDD%20Diagram']/@defaultLayer/@containerMappings[name='SharedDomainObjectNode'] //@ownedViewpoints[name='ddd']/@ownedRepresentations[name='DDD%20Diagram']/@defaultLayer/@containerMappings[name='BoundedContextNode']/@subContainerMappings[name='LocalizedSharedDomainObjectNode']" targetFinderExpression="aql:self.type" sourceFinderExpression="aql:self.domainObject" domainClass="dact::Property" useDomainElement="true">
+        <edgeMappings name="ReferenceEdge" preconditionExpression="aql:not self.isComposite" synchronizationLock="true" sourceMapping="//@ownedViewpoints[name='Domain']/@ownedRepresentations[name='DDD%20Diagram']/@defaultLayer/@containerMappings[name='BoundedContextNode']/@subContainerMappings[name='InternalDomainObjectNode']" targetMapping="//@ownedViewpoints[name='Domain']/@ownedRepresentations[name='DDD%20Diagram']/@defaultLayer/@containerMappings[name='BoundedContextNode']/@subContainerMappings[name='InternalDomainObjectNode'] //@ownedViewpoints[name='Domain']/@ownedRepresentations[name='DDD%20Diagram']/@defaultLayer/@containerMappings[name='SharedDomainObjectNode'] //@ownedViewpoints[name='Domain']/@ownedRepresentations[name='DDD%20Diagram']/@defaultLayer/@containerMappings[name='BoundedContextNode']/@subContainerMappings[name='LocalizedSharedDomainObjectNode']" targetFinderExpression="aql:self.type" sourceFinderExpression="aql:self.domainObject" domainClass="dact::Property" useDomainElement="true">
           <style sizeComputationExpression="2" routingStyle="manhattan">
             <strokeColor xsi:type="description:SystemColor" href="environment:/viewpoint#//@systemColors/@entries[name='gray']"/>
             <centerLabelStyleDescription labelSize="12" showIcon="false" labelExpression="aql:self.name + ' [' + self.lowerBound + '..'+ (if self.upperBound = -1 then '*' else self.upperBound endif) +']'">
@@ -25,7 +25,7 @@
             </centerLabelStyleDescription>
           </style>
         </edgeMappings>
-        <edgeMappings name="Abstraction" synchronizationLock="true" sourceMapping="//@ownedViewpoints[name='ddd']/@ownedRepresentations[name='DDD%20Diagram']/@defaultLayer/@containerMappings[name='SharedDomainObjectNode'] //@ownedViewpoints[name='ddd']/@ownedRepresentations[name='DDD%20Diagram']/@defaultLayer/@containerMappings[name='BoundedContextNode']/@subContainerMappings[name='LocalizedSharedDomainObjectNode']" targetMapping="//@ownedViewpoints[name='ddd']/@ownedRepresentations[name='DDD%20Diagram']/@defaultLayer/@containerMappings[name='BoundedContextNode']/@subContainerMappings[name='InternalDomainObjectNode']" targetFinderExpression="aql:self.abstractedRoot" sourceFinderExpression="aql:self" domainClass="dact::SharedDomainObject" useDomainElement="true">
+        <edgeMappings name="Abstraction" synchronizationLock="true" sourceMapping="//@ownedViewpoints[name='Domain']/@ownedRepresentations[name='DDD%20Diagram']/@defaultLayer/@containerMappings[name='SharedDomainObjectNode'] //@ownedViewpoints[name='Domain']/@ownedRepresentations[name='DDD%20Diagram']/@defaultLayer/@containerMappings[name='BoundedContextNode']/@subContainerMappings[name='LocalizedSharedDomainObjectNode']" targetMapping="//@ownedViewpoints[name='Domain']/@ownedRepresentations[name='DDD%20Diagram']/@defaultLayer/@containerMappings[name='BoundedContextNode']/@subContainerMappings[name='InternalDomainObjectNode']" targetFinderExpression="aql:self.abstractedRoot" sourceFinderExpression="aql:self" domainClass="dact::SharedDomainObject" useDomainElement="true">
           <style lineStyle="dash" targetArrow="InputClosedArrow" sizeComputationExpression="2" routingStyle="manhattan">
             <strokeColor xsi:type="description:SystemColor" href="environment:/viewpoint#//@systemColors/@entries[name='gray']"/>
             <centerLabelStyleDescription labelSize="12" showIcon="false" labelExpression="aql:'&lt;&lt;abstraction>>'">
@@ -34,7 +34,7 @@
             </centerLabelStyleDescription>
           </style>
         </edgeMappings>
-        <edgeMappings name="RepositoryManagesEdge" synchronizationLock="true" sourceMapping="//@ownedViewpoints[name='ddd']/@ownedRepresentations[name='DDD%20Diagram']/@defaultLayer/@containerMappings[name='BoundedContextNode']/@subContainerMappings[name='InterfaceNode']" targetMapping="//@ownedViewpoints[name='ddd']/@ownedRepresentations[name='DDD%20Diagram']/@defaultLayer/@containerMappings[name='BoundedContextNode']/@subContainerMappings[name='InternalDomainObjectNode']" targetFinderExpression="aql:self.entity" sourceFinderExpression="aql:self" domainClass="dact::Repository" useDomainElement="true">
+        <edgeMappings name="RepositoryManagesEdge" synchronizationLock="true" sourceMapping="//@ownedViewpoints[name='Domain']/@ownedRepresentations[name='DDD%20Diagram']/@defaultLayer/@containerMappings[name='BoundedContextNode']/@subContainerMappings[name='InterfaceNode']" targetMapping="//@ownedViewpoints[name='Domain']/@ownedRepresentations[name='DDD%20Diagram']/@defaultLayer/@containerMappings[name='BoundedContextNode']/@subContainerMappings[name='InternalDomainObjectNode']" targetFinderExpression="aql:self.entity" sourceFinderExpression="aql:self" domainClass="dact::Repository" useDomainElement="true">
           <style sizeComputationExpression="2" routingStyle="manhattan">
             <strokeColor xsi:type="description:SystemColor" href="environment:/viewpoint#//@systemColors/@entries[name='gray']"/>
             <centerLabelStyleDescription labelSize="12" showIcon="false" labelExpression="manages">
@@ -168,7 +168,7 @@
           </style>
         </containerMappings>
         <toolSections name="Bounded Context">
-          <ownedTools xsi:type="tool:ContainerCreationDescription" name="Bounded Context" forceRefresh="true" containerMappings="//@ownedViewpoints[name='ddd']/@ownedRepresentations[name='DDD%20Diagram']/@defaultLayer/@containerMappings[name='BoundedContextNode']">
+          <ownedTools xsi:type="tool:ContainerCreationDescription" name="Bounded Context" forceRefresh="true" containerMappings="//@ownedViewpoints[name='Domain']/@ownedRepresentations[name='DDD%20Diagram']/@defaultLayer/@containerMappings[name='BoundedContextNode']">
             <variable name="container"/>
             <viewVariable name="containerView"/>
             <initialOperation>
@@ -181,7 +181,7 @@
           </ownedTools>
         </toolSections>
         <toolSections name="Interface">
-          <ownedTools xsi:type="tool:ContainerCreationDescription" name="Repository" forceRefresh="true" containerMappings="//@ownedViewpoints[name='ddd']/@ownedRepresentations[name='DDD%20Diagram']/@defaultLayer/@containerMappings[name='BoundedContextNode']/@subContainerMappings[name='InternalDomainObjectNode']">
+          <ownedTools xsi:type="tool:ContainerCreationDescription" name="Repository" forceRefresh="true" containerMappings="//@ownedViewpoints[name='Domain']/@ownedRepresentations[name='DDD%20Diagram']/@defaultLayer/@containerMappings[name='BoundedContextNode']/@subContainerMappings[name='InternalDomainObjectNode']">
             <variable name="container"/>
             <viewVariable name="containerView"/>
             <initialOperation>
@@ -192,7 +192,7 @@
               </firstModelOperations>
             </initialOperation>
           </ownedTools>
-          <ownedTools xsi:type="tool:ContainerCreationDescription" name="Service" forceRefresh="true" containerMappings="//@ownedViewpoints[name='ddd']/@ownedRepresentations[name='DDD%20Diagram']/@defaultLayer/@containerMappings[name='BoundedContextNode']/@subContainerMappings[name='InternalDomainObjectNode']">
+          <ownedTools xsi:type="tool:ContainerCreationDescription" name="Service" forceRefresh="true" containerMappings="//@ownedViewpoints[name='Domain']/@ownedRepresentations[name='DDD%20Diagram']/@defaultLayer/@containerMappings[name='BoundedContextNode']/@subContainerMappings[name='InternalDomainObjectNode']">
             <variable name="container"/>
             <viewVariable name="containerView"/>
             <initialOperation>
@@ -205,7 +205,7 @@
           </ownedTools>
         </toolSections>
         <toolSections name="Domain Object">
-          <ownedTools xsi:type="tool:ContainerCreationDescription" name="Entity" forceRefresh="true" containerMappings="//@ownedViewpoints[name='ddd']/@ownedRepresentations[name='DDD%20Diagram']/@defaultLayer/@containerMappings[name='BoundedContextNode']/@subContainerMappings[name='InternalDomainObjectNode']">
+          <ownedTools xsi:type="tool:ContainerCreationDescription" name="Entity" forceRefresh="true" containerMappings="//@ownedViewpoints[name='Domain']/@ownedRepresentations[name='DDD%20Diagram']/@defaultLayer/@containerMappings[name='BoundedContextNode']/@subContainerMappings[name='InternalDomainObjectNode']">
             <variable name="container"/>
             <viewVariable name="containerView"/>
             <initialOperation>
@@ -216,7 +216,7 @@
               </firstModelOperations>
             </initialOperation>
           </ownedTools>
-          <ownedTools xsi:type="tool:ContainerCreationDescription" name="AggregateRoot" forceRefresh="true" containerMappings="//@ownedViewpoints[name='ddd']/@ownedRepresentations[name='DDD%20Diagram']/@defaultLayer/@containerMappings[name='BoundedContextNode']/@subContainerMappings[name='InternalDomainObjectNode']">
+          <ownedTools xsi:type="tool:ContainerCreationDescription" name="AggregateRoot" forceRefresh="true" containerMappings="//@ownedViewpoints[name='Domain']/@ownedRepresentations[name='DDD%20Diagram']/@defaultLayer/@containerMappings[name='BoundedContextNode']/@subContainerMappings[name='InternalDomainObjectNode']">
             <variable name="container"/>
             <viewVariable name="containerView"/>
             <initialOperation>
@@ -227,7 +227,7 @@
               </firstModelOperations>
             </initialOperation>
           </ownedTools>
-          <ownedTools xsi:type="tool:ContainerCreationDescription" name="ValueObject" forceRefresh="true" containerMappings="//@ownedViewpoints[name='ddd']/@ownedRepresentations[name='DDD%20Diagram']/@defaultLayer/@containerMappings[name='BoundedContextNode']/@subContainerMappings[name='InternalDomainObjectNode']">
+          <ownedTools xsi:type="tool:ContainerCreationDescription" name="ValueObject" forceRefresh="true" containerMappings="//@ownedViewpoints[name='Domain']/@ownedRepresentations[name='DDD%20Diagram']/@defaultLayer/@containerMappings[name='BoundedContextNode']/@subContainerMappings[name='InternalDomainObjectNode']">
             <variable name="container"/>
             <viewVariable name="containerView"/>
             <initialOperation>
@@ -238,7 +238,7 @@
               </firstModelOperations>
             </initialOperation>
           </ownedTools>
-          <ownedTools xsi:type="tool:ContainerCreationDescription" name="Shared Value Object" forceRefresh="true" containerMappings="//@ownedViewpoints[name='ddd']/@ownedRepresentations[name='DDD%20Diagram']/@defaultLayer/@containerMappings[name='SharedDomainObjectNode']">
+          <ownedTools xsi:type="tool:ContainerCreationDescription" name="Shared Value Object" forceRefresh="true" containerMappings="//@ownedViewpoints[name='Domain']/@ownedRepresentations[name='DDD%20Diagram']/@defaultLayer/@containerMappings[name='SharedDomainObjectNode']">
             <variable name="container"/>
             <viewVariable name="containerView"/>
             <initialOperation>
@@ -251,7 +251,7 @@
           </ownedTools>
         </toolSections>
         <toolSections name="Property">
-          <ownedTools xsi:type="tool:ContainerCreationDescription" name="Property" forceRefresh="true" containerMappings="//@ownedViewpoints[name='ddd']/@ownedRepresentations[name='DDD%20Diagram']/@defaultLayer/@containerMappings[name='SharedDomainObjectNode']/@subContainerMappings[name='SharedDomainObjectProperties'] //@ownedViewpoints[name='ddd']/@ownedRepresentations[name='DDD%20Diagram']/@defaultLayer/@containerMappings[name='BoundedContextNode']/@subContainerMappings[name='InternalDomainObjectNode']/@subContainerMappings[name='DomainObjectProperties']">
+          <ownedTools xsi:type="tool:ContainerCreationDescription" name="Property" forceRefresh="true" containerMappings="//@ownedViewpoints[name='Domain']/@ownedRepresentations[name='DDD%20Diagram']/@defaultLayer/@containerMappings[name='SharedDomainObjectNode']/@subContainerMappings[name='SharedDomainObjectProperties'] //@ownedViewpoints[name='Domain']/@ownedRepresentations[name='DDD%20Diagram']/@defaultLayer/@containerMappings[name='BoundedContextNode']/@subContainerMappings[name='InternalDomainObjectNode']/@subContainerMappings[name='DomainObjectProperties']">
             <variable name="container"/>
             <viewVariable name="containerView"/>
             <initialOperation>
@@ -264,7 +264,7 @@
           </ownedTools>
         </toolSections>
         <toolSections name="Operation">
-          <ownedTools xsi:type="tool:ContainerCreationDescription" name="Operation" forceRefresh="true" containerMappings="//@ownedViewpoints[name='ddd']/@ownedRepresentations[name='DDD%20Diagram']/@defaultLayer/@containerMappings[name='BoundedContextNode']/@subContainerMappings[name='InternalDomainObjectNode']/@subContainerMappings[name='DomainObjectOperations'] //@ownedViewpoints[name='ddd']/@ownedRepresentations[name='DDD%20Diagram']/@defaultLayer/@containerMappings[name='BoundedContextNode']/@subContainerMappings[name='InterfaceNode']/@subContainerMappings[name='InterfaceOperations'] //@ownedViewpoints[name='ddd']/@ownedRepresentations[name='DDD%20Diagram']/@defaultLayer/@containerMappings[name='SharedDomainObjectNode']/@subContainerMappings[name='SharedDomainObjectOperations']">
+          <ownedTools xsi:type="tool:ContainerCreationDescription" name="Operation" forceRefresh="true" containerMappings="//@ownedViewpoints[name='Domain']/@ownedRepresentations[name='DDD%20Diagram']/@defaultLayer/@containerMappings[name='BoundedContextNode']/@subContainerMappings[name='InternalDomainObjectNode']/@subContainerMappings[name='DomainObjectOperations'] //@ownedViewpoints[name='Domain']/@ownedRepresentations[name='DDD%20Diagram']/@defaultLayer/@containerMappings[name='BoundedContextNode']/@subContainerMappings[name='InterfaceNode']/@subContainerMappings[name='InterfaceOperations'] //@ownedViewpoints[name='Domain']/@ownedRepresentations[name='DDD%20Diagram']/@defaultLayer/@containerMappings[name='SharedDomainObjectNode']/@subContainerMappings[name='SharedDomainObjectOperations']">
             <variable name="container"/>
             <viewVariable name="containerView"/>
             <initialOperation>
@@ -275,7 +275,7 @@
               </firstModelOperations>
             </initialOperation>
           </ownedTools>
-          <ownedTools xsi:type="tool:ContainerCreationDescription" name="Specification Operation" forceRefresh="true" containerMappings="//@ownedViewpoints[name='ddd']/@ownedRepresentations[name='DDD%20Diagram']/@defaultLayer/@containerMappings[name='BoundedContextNode']/@subContainerMappings[name='InternalDomainObjectNode']/@subContainerMappings[name='DomainObjectOperations']">
+          <ownedTools xsi:type="tool:ContainerCreationDescription" name="Specification Operation" forceRefresh="true" containerMappings="//@ownedViewpoints[name='Domain']/@ownedRepresentations[name='DDD%20Diagram']/@defaultLayer/@containerMappings[name='BoundedContextNode']/@subContainerMappings[name='InternalDomainObjectNode']/@subContainerMappings[name='DomainObjectOperations']">
             <variable name="container"/>
             <viewVariable name="containerView"/>
             <initialOperation>
@@ -299,7 +299,7 @@
           </ownedTools>
         </toolSections>
         <toolSections name="Edge">
-          <ownedTools xsi:type="tool:EdgeCreationDescription" name="New Reference Edge" forceRefresh="true" edgeMappings="//@ownedViewpoints[name='ddd']/@ownedRepresentations[name='DDD%20Diagram']/@defaultLayer/@edgeMappings[name='ReferenceEdge']">
+          <ownedTools xsi:type="tool:EdgeCreationDescription" name="New Reference Edge" forceRefresh="true" edgeMappings="//@ownedViewpoints[name='Domain']/@ownedRepresentations[name='DDD%20Diagram']/@defaultLayer/@edgeMappings[name='ReferenceEdge']">
             <sourceVariable name="source"/>
             <targetVariable name="target"/>
             <sourceViewVariable name="sourceView"/>
@@ -312,7 +312,7 @@
               </firstModelOperations>
             </initialOperation>
           </ownedTools>
-          <ownedTools xsi:type="tool:EdgeCreationDescription" name="New Abstraction Edge" forceRefresh="true" edgeMappings="//@ownedViewpoints[name='ddd']/@ownedRepresentations[name='DDD%20Diagram']/@defaultLayer/@edgeMappings[name='Abstraction']">
+          <ownedTools xsi:type="tool:EdgeCreationDescription" name="New Abstraction Edge" forceRefresh="true" edgeMappings="//@ownedViewpoints[name='Domain']/@ownedRepresentations[name='DDD%20Diagram']/@defaultLayer/@edgeMappings[name='Abstraction']">
             <sourceVariable name="source"/>
             <targetVariable name="target"/>
             <sourceViewVariable name="sourceView"/>
@@ -323,7 +323,7 @@
               </firstModelOperations>
             </initialOperation>
           </ownedTools>
-          <ownedTools xsi:type="tool:EdgeCreationDescription" name="New Composition Edge" forceRefresh="true" edgeMappings="//@ownedViewpoints[name='ddd']/@ownedRepresentations[name='DDD%20Diagram']/@defaultLayer/@edgeMappings[name='CompositionEdge']">
+          <ownedTools xsi:type="tool:EdgeCreationDescription" name="New Composition Edge" forceRefresh="true" edgeMappings="//@ownedViewpoints[name='Domain']/@ownedRepresentations[name='DDD%20Diagram']/@defaultLayer/@edgeMappings[name='CompositionEdge']">
             <sourceVariable name="source"/>
             <targetVariable name="target"/>
             <sourceViewVariable name="sourceView"/>
@@ -337,7 +337,7 @@
               </firstModelOperations>
             </initialOperation>
           </ownedTools>
-          <ownedTools xsi:type="tool:EdgeCreationDescription" name="New Repository Manages Edge" forceRefresh="true" edgeMappings="//@ownedViewpoints[name='ddd']/@ownedRepresentations[name='DDD%20Diagram']/@defaultLayer/@edgeMappings[name='RepositoryManagesEdge']">
+          <ownedTools xsi:type="tool:EdgeCreationDescription" name="New Repository Manages Edge" forceRefresh="true" edgeMappings="//@ownedViewpoints[name='Domain']/@ownedRepresentations[name='DDD%20Diagram']/@defaultLayer/@edgeMappings[name='RepositoryManagesEdge']">
             <sourceVariable name="source"/>
             <targetVariable name="target"/>
             <sourceViewVariable name="sourceView"/>
@@ -350,7 +350,7 @@
           </ownedTools>
         </toolSections>
         <toolSections name="Enumeration">
-          <ownedTools xsi:type="tool:ContainerCreationDescription" name="Enumeration" forceRefresh="true" containerMappings="//@ownedViewpoints[name='ddd']/@ownedRepresentations[name='DDD%20Diagram']/@defaultLayer/@containerMappings[name='BoundedContextNode']/@subContainerMappings[name='EnumerationNode']">
+          <ownedTools xsi:type="tool:ContainerCreationDescription" name="Enumeration" forceRefresh="true" containerMappings="//@ownedViewpoints[name='Domain']/@ownedRepresentations[name='DDD%20Diagram']/@defaultLayer/@containerMappings[name='BoundedContextNode']/@subContainerMappings[name='EnumerationNode']">
             <variable name="container"/>
             <viewVariable name="containerView"/>
             <initialOperation>
@@ -361,7 +361,7 @@
               </firstModelOperations>
             </initialOperation>
           </ownedTools>
-          <ownedTools xsi:type="tool:ContainerCreationDescription" name="Enumeration Literal" forceRefresh="true" containerMappings="//@ownedViewpoints[name='ddd']/@ownedRepresentations[name='DDD%20Diagram']/@defaultLayer/@containerMappings[name='BoundedContextNode']/@subContainerMappings[name='EnumerationNode']/@subContainerMappings[name='EnumerationLiterals']">
+          <ownedTools xsi:type="tool:ContainerCreationDescription" name="Enumeration Literal" forceRefresh="true" containerMappings="//@ownedViewpoints[name='Domain']/@ownedRepresentations[name='DDD%20Diagram']/@defaultLayer/@containerMappings[name='BoundedContextNode']/@subContainerMappings[name='EnumerationNode']/@subContainerMappings[name='EnumerationLiterals']">
             <variable name="container"/>
             <viewVariable name="containerView"/>
             <initialOperation>
