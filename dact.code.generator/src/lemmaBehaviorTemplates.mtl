@@ -181,17 +181,19 @@
 /]
 
 [query private getNestedTypeAtRecursive(currentType : data::DataStructure, parts : Sequence(String), currentIndex : Integer, targetIndex : Integer) : data::DataStructure =
-    if currentType == null then
+    if currentType = null then
         null
-    else if currentIndex >= targetIndex then
-        currentType
-    else
-        let propName : String = parts->at(currentIndex) in
-        let prop : data::DataField = currentType.dataFields->select(f | f.name = propName)->first() in
-        if prop != null and prop.getType() != null and prop.getType().oclIsKindOf(data::DataStructure) then
-            prop.getType().oclAsType(data::DataStructure).getNestedTypeAtRecursive(parts, currentIndex + 1, targetIndex)
+    else 
+        if currentIndex >= targetIndex then
+            currentType
         else
-            null
+            let propName : String = parts->at(currentIndex) in
+            let prop : data::DataField = currentType.dataFields->select(f | f.name = propName)->first() in
+            if prop <> null and prop.getType() <> null and prop.getType().oclIsKindOf(data::DataStructure) then
+                prop.getType().oclAsType(data::DataStructure).getNestedTypeAtRecursive(parts, currentIndex + 1, targetIndex)
+            else
+                null
+            endif
         endif
     endif
 /]
@@ -280,13 +282,20 @@ action.parameterMappings
 /]
 
 [query public getEndpoint(interface: service::Interface): String = 
-interface.endpoints->first().addresses->first()
+  if not interface.endpoints->isEmpty() and not interface.endpoints->first().addresses->isEmpty() then
+    interface.endpoints->first().addresses->first()
+  else
+    ''
+  endif
 /]
 
 [query public getEndpoint(op: service::Operation): String = 
-op.endpoints->first().addresses->first()
+  if not op.endpoints->isEmpty() and not op.endpoints->first().addresses->isEmpty() then
+    op.endpoints->first().addresses->first()
+  else
+    ''
+  endif
 /]
-
 
 [comment ========================================== /]
 [comment GET                                        /]

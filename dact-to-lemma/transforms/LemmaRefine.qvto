@@ -156,8 +156,9 @@ helper BEHA::CallOperationAction::refineNode(){
 	var controller := controllerOp.interface;
 	
 	// Create Outbound Adapter: Map purely by name
+	var outboundAdapterName := self.getMicroservice().getCorrespondingOutboundAdapterName();
 	var outboundAdapter := ROOT_MS.interfaces 
-		-> selectOne(i|i.interfaceType = SERV::InterfaceType::OUTBOUND_ADAPTER and i.name = ROOT_MS.getCorrespondingOutboundAdapterName());
+		-> selectOne(i|i.interfaceType = SERV::InterfaceType::OUTBOUND_ADAPTER and i.name = outboundAdapterName );
 	
 	if (outboundAdapter <> null){
 		log(indent(2)+"    + Outbound Adapter for microservice '"+nodeMS.name+"' exists.");

@@ -103,7 +103,6 @@
 [if (d.hasCollectionField())]
   import java.util.Set;
 [/if]
-  import java.time.LocalDateTime;
   
   @Entity
   @Table(name = "[d.name.toUpperFirst()/]")

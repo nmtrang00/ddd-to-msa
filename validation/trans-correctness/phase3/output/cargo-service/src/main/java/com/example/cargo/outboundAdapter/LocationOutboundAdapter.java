@@ -17,11 +17,11 @@ public class LocationOutboundAdapter {
     private final RestTemplate restTemplate = new RestTemplate();
     @Value("${services.location.url}") private String locationUrl;
     
-    public Boolean DestinationLocationExists(Integer portCode){
-      // Activity: DestinationLocationExistsOutboundAdapter      
+    public Boolean SourceLocationExists(Integer portCode){
+      // Activity: SourceLocationExistsOutboundAdapter      
       try {
-        // InitialNode: DestinationLocationExistsOutboundAdapter-InitNode
-        // CallOperationAction: DestinationLocationExists 
+        // InitialNode: SourceLocationExistsOutboundAdapter-InitNode
+        // CallOperationAction: SourceLocationExists 
         org.springframework.web.util.UriComponentsBuilder builder = org.springframework.web.util.UriComponentsBuilder
             .fromUriString(this.locationUrl)
             .path("/{portCode}/exists");
@@ -51,13 +51,12 @@ public class LocationOutboundAdapter {
           null
       );
   }
-   }
-
-    public Boolean SourceLocationExists(Integer portCode){
-      // Activity: SourceLocationExistsOutboundAdapter      
+   };
+    public Boolean DestinationLocationExists(Integer portCode){
+      // Activity: DestinationLocationExistsOutboundAdapter      
       try {
-        // InitialNode: SourceLocationExistsOutboundAdapter-InitNode
-        // CallOperationAction: SourceLocationExists 
+        // InitialNode: DestinationLocationExistsOutboundAdapter-InitNode
+        // CallOperationAction: DestinationLocationExists 
         org.springframework.web.util.UriComponentsBuilder builder = org.springframework.web.util.UriComponentsBuilder
             .fromUriString(this.locationUrl)
             .path("/{portCode}/exists");

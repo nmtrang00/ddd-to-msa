@@ -25,7 +25,6 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import java.util.Set;
-import java.time.LocalDateTime;
 
 @Entity
 @Table(name = "Cargo")
@@ -43,29 +42,30 @@ public class Cargo {
   @JoinColumn(name = "deliveryHistoryId")
   private DeliveryHistory deliveryHistory;
 
-  @ElementCollection(targetClass = CargoStatus.class)
-  @CollectionTable(name = "Cargo_testStatusMulti", joinColumns = @JoinColumn(name = "trackingId"))
-  @Column(name = "testStatusMulti")
-  @Enumerated(EnumType.STRING)
-  private Set<CargoStatus> testStatusMulti;
-
   @Enumerated(EnumType.STRING)
   @Column(nullable = false)
   private CargoStatus status;
 
   @Embedded
   @AttributeOverrides({
-      @AttributeOverride(name = "destination", column = @Column(name = "goal_destination")),
-      @AttributeOverride(name = "deadline", column = @Column(name = "goal_deadline")),
-      @AttributeOverride(name = "source", column = @Column(name = "goal_source")),
-  })
-  private DeliverySpecification goal;
-
-  @Embedded
-  @AttributeOverrides({
       @AttributeOverride(name = "customerId", column = @Column(name = "role_customerId")),
   })
   private SharedCustomer role;
+
+  @Embedded
+  @AttributeOverrides({
+      @AttributeOverride(name = "source", column = @Column(name = "goal_source")),
+      @AttributeOverride(name = "destination", column = @Column(name = "goal_destination")),
+      @AttributeOverride(name = "deadline", column = @Column(name = "goal_deadline")),
+  })
+  private DeliverySpecification goal;
+
+  @ElementCollection(targetClass = CargoStatus.class)
+  @CollectionTable(name = "Cargo_testStatusMulti", joinColumns = @JoinColumn(name = "trackingId"))
+  @Column(name = "testStatusMulti")
+  @Enumerated(EnumType.STRING)
+  @Size(min = 1)
+  private Set<CargoStatus> testStatusMulti;
 
 
 @PreUpdate

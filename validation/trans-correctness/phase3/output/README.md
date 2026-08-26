@@ -1,6 +1,6 @@
-# 'CUSTOMER' Microservice
+# 'LOCATION' Microservice
 ```bash
-cd customer-service
+cd location-service
 
 # Test 
 mvn clean test -e
@@ -18,9 +18,9 @@ http://localhost:8081/swagger-ui/index.html
 http://localhost:8081/h2-console
 ```
 
-# 'CARGO' Microservice
+# 'CUSTOMER' Microservice
 ```bash
-cd cargo-service
+cd customer-service
 
 # Test 
 mvn clean test -e
@@ -38,9 +38,9 @@ http://localhost:8082/swagger-ui/index.html
 http://localhost:8082/h2-console
 ```
 
-# 'LOCATION' Microservice
+# 'CARGO' Microservice
 ```bash
-cd location-service
+cd cargo-service
 
 # Test 
 mvn clean test -e

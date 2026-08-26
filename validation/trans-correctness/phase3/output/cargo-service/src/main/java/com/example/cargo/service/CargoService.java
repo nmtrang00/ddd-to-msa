@@ -5,10 +5,9 @@ import com.example.cargo.domain.*;
 import com.example.cargo.payload.*;
 import com.example.cargo.exception.*;
 
-import com.example.cargo.repository.CargoRepository;
-import com.example.cargo.outboundAdapter.LocationOutboundAdapter;
-import com.example.cargo.outboundAdapter.LocationOutboundAdapter;
 import com.example.cargo.outboundAdapter.CustomerOutboundAdapter;
+import com.example.cargo.outboundAdapter.LocationOutboundAdapter;
+import com.example.cargo.repository.CargoRepository;
 
 
 import lombok.RequiredArgsConstructor;
@@ -21,12 +20,12 @@ import jakarta.transaction.Transactional;
 @RequiredArgsConstructor
 public class CargoService {
     
-   private final CargoRepository cargoRepository;
-   private final LocationOutboundAdapter locationOutboundAdapter;
    private final CustomerOutboundAdapter customerOutboundAdapter;
+   private final LocationOutboundAdapter locationOutboundAdapter;
+   private final CargoRepository cargoRepository;
     
     @Transactional
-    public Cargo bookACargo(Integer srcPort, Integer destPort, Integer deadline, Integer customerId){
+    public Cargo bookACargo(Integer srcPort, Integer customerId, Integer destPort, Integer deadline){
     // Activity: Scenario US2-S1 – A cargo is booked      
     // InitialNode: InitialNode1
     // Declaration: New Cargo Declaration 

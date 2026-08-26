@@ -10,6 +10,7 @@
 [import stringUtils/]
 [import lemmaUtils/]
 [import lemmaDataTypeTemplates/]
+[import dact::code::generator::utils::ResourceUtils/]
 
 [comment @main/]
 [template public generateRepositories(serviceModel: service::ServiceModel)]
@@ -30,6 +31,7 @@
 	filePath: String, 
 	serviceName: String)]
 [file (filePath, overwrite, 'UTF-8')]
+
 [let aggregate : data::DataStructure = interface.getRepositoryAggregate(), aggregateIdType : String = aggregate.getIdType()]
   package com.example.[serviceName/].repository;
   
@@ -54,4 +56,3 @@
 [/let]
 [/file]
 [/template]
-

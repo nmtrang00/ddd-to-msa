@@ -19,18 +19,18 @@ import jakarta.persistence.PreUpdate;
 public class DeliverySpecification {
   @Embedded
   @AttributeOverrides({
+      @AttributeOverride(name = "portCode", column = @Column(name = "source_portCode")),
+  })
+  private SharedLocation source;
+
+  @Embedded
+  @AttributeOverrides({
       @AttributeOverride(name = "portCode", column = @Column(name = "destination_portCode")),
   })
   private SharedLocation destination;
 
   @Column(nullable = false)
   private Integer deadline;
-
-  @Embedded
-  @AttributeOverrides({
-      @AttributeOverride(name = "portCode", column = @Column(name = "source_portCode")),
-  })
-  private SharedLocation source;
 
 @PreUpdate
 @PrePersist

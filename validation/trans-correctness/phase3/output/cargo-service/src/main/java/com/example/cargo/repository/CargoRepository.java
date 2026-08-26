@@ -1,3 +1,4 @@
+
 package com.example.cargo.repository;
 
 import com.example.cargo.domain.Cargo;

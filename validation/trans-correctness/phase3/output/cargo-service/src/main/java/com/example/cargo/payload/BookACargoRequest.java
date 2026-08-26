@@ -12,12 +12,12 @@ import jakarta.validation.constraints.NotNull;
 @NoArgsConstructor
 @AllArgsConstructor
 public class BookACargoRequest {
-  @NotNull(message="'customer_id' cannot be null")
-  public Integer customerId;
-  @NotNull(message="'dest_port' cannot be null")
-  public Integer destPort;
   @NotNull(message="'deadline' cannot be null")
   public Integer deadline;
   @NotNull(message="'src_port' cannot be null")
   public Integer srcPort;
+  @NotNull(message="'customer_id' cannot be null")
+  public Integer customerId;
+  @NotNull(message="'dest_port' cannot be null")
+  public Integer destPort;
 }

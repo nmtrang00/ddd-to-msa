@@ -41,7 +41,7 @@ public class CargoController {
     BookACargoResponse responseParam = new BookACargoResponse();
     // CallOperationAction: bookACargo 
     // Cargo false
-     responseParam.newCargo = cargoService.bookACargo(requestParam.srcPort, requestParam.destPort, requestParam.deadline, requestParam.customerId);
+     responseParam.newCargo = cargoService.bookACargo(requestParam.srcPort, requestParam.customerId, requestParam.destPort, requestParam.deadline);
     
     return responseParam;
      };

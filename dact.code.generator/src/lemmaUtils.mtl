@@ -9,7 +9,6 @@
 [import lemmaDataTypeTemplates/]
 [import dact::code::generator::utils::ResourceUtils /]
 
-
 [query public getOperatorPresentation(op : behavior::Operator) : String = 'UNKNOWN' /]
 
 [query public getOperatorPresentation(op : behavior::Divide) : String = ':' /]
@@ -40,6 +39,11 @@
     ->first()
 /]
 
+[query public getDataModel(serviceModel : service::ServiceModel) : ecore::EObject = 
+  serviceModel.getAllResourceSetRoots()
+    ->filter(data::DataModel)
+    ->first()
+/]
 
 [query public requiresValidation(d : data::DataStructure) : Boolean = 
 	d.getInvariantOperation() <> null or d.dataFields -> exists(f|f.requiresValidation())
@@ -229,9 +233,21 @@
 	let repoName : String = i.name, 
 		aggregateName : String = i.name.replace('Repository',''),
 		msName : String = i.microservice.name,
-		allDomainObjects : Sequence(data::ComplexType) = i.getDomainObjectsToImport()
-	in allDomainObjects -> select(o|o.name = aggregateName) -> first().oclAsType(data::DataStructure)
+		allAggregates : Sequence(data::ComplexType) = i.microservice.getAllAggregates()
+	in allAggregates -> select(o|o.name = aggregateName) -> first().oclAsType(data::DataStructure)
 /]
+
+
+[query public getAllAggregates(ms : service::Microservice): Sequence(data::ComplexType)=
+	let context : data::Context = ms.getCorrespondingContext() in
+	context.complexTypes->select(t | t.hasFeature(data::ComplexTypeFeature::AGGREGATE))	
+/]
+
+[query public getCorrespondingContext(ms : service::Microservice): data::Context =
+	let dataModel : data::DataModel = ms.serviceModel.getDataModel().oclAsType(data::DataModel) in
+	dataModel.contexts->select(c|c.name = ms.name)->first()
+/]
+
 
 [query public hasCollectionTypeParameter(i : service::Interface) : Boolean =
   i.operations.parameters.importedType.type->filter(data::CollectionType)->notEmpty()
@@ -291,7 +307,7 @@ endif/]
 /]
 
 [query public getDomainObjectsToImport(i : service::Interface) : Sequence(data::ComplexType) = 
-  i.operations.parameters.importedType.type
+  let paramObjects : Sequence(data::ComplexType) = i.operations.parameters.importedType.type
     ->collect(t | 
       if (t.oclIsKindOf(data::CollectionType)) then
         t.oclAsType(data::CollectionType).dataFields -> first().complexType
@@ -302,6 +318,8 @@ endif/]
     ->filter(data::ComplexType)
     ->asSet()
     ->asSequence()
+   in
+   paramObjects->including(i.getRepositoryAggregate())->asSet()->asSequence()
 /]
 
 [query public getActivity(op : service::Operation, activityModel : behavior::ActivityModel): behavior::Activity = 

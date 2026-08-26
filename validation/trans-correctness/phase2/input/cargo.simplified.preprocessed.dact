@@ -7,7 +7,7 @@
         <ownedProperties name="deliveryHistory" type="//@ddd/@boundedContexts.0/@ownedElements.1" isComposite="true"/>
         <ownedProperties name="status" type="//@ddd/@boundedContexts.0/@ownedElements.2" lowerBound="1"/>
         <ownedProperties name="testStatusMulti" type="//@ddd/@boundedContexts.0/@ownedElements.2" upperBound="-1" lowerBound="1"/>
-        <ownedProperties name="role" type="//@ddd/@boundedContexts.0/@ownedElements.5" lowerBound="1"/>
+        <ownedProperties name="role" type="//@ddd/@boundedContexts.0/@ownedElements.6" lowerBound="1"/>
         <ownedProperties name="goal" type="//@ddd/@boundedContexts.0/@ownedElements.4" lowerBound="1"/>
         <ownedOperations name="getCustomerName" type="D3_SIMPLE_ACCESSOR">
           <ownedParameters name="name" type="//@primitivesTypes.0" direction="OUT"/>
@@ -34,8 +34,8 @@
         </ownedOperations>
       </ownedElements>
       <ownedElements xsi:type="dact:ValueObject" name="DeliverySpecification">
-        <ownedProperties name="destination" type="//@ddd/@boundedContexts.0/@ownedElements.6" lowerBound="1"/>
-        <ownedProperties name="source" type="//@ddd/@boundedContexts.0/@ownedElements.6" lowerBound="1"/>
+        <ownedProperties name="destination" type="//@ddd/@boundedContexts.0/@ownedElements.5" lowerBound="1"/>
+        <ownedProperties name="source" type="//@ddd/@boundedContexts.0/@ownedElements.5" lowerBound="1"/>
         <ownedProperties name="deadline" type="//@primitivesTypes.2" lowerBound="1"/>
         <ownedOperations xsi:type="dact:SpecOperation" name="isValid" type="D5_SPECIFICATION" isInvariant="true">
           <ownedParameters name="result" type="//@primitivesTypes.1" lowerBound="1" direction="OUT"/>
@@ -58,11 +58,11 @@
           </ownedRules>
         </ownedOperations>
       </ownedElements>
-      <ownedElements xsi:type="dact:SharedValueObject" name="SharedCustomer" abstractedRoot="//@ddd/@boundedContexts.2/@ownedElements.0">
-        <ownedProperties name="customerId" type="//@primitivesTypes.2" lowerBound="1"/>
-      </ownedElements>
       <ownedElements xsi:type="dact:SharedValueObject" name="SharedLocation" abstractedRoot="//@ddd/@boundedContexts.1/@ownedElements.0">
         <ownedProperties name="portCode" type="//@primitivesTypes.2" lowerBound="1"/>
+      </ownedElements>
+      <ownedElements xsi:type="dact:SharedValueObject" name="SharedCustomer" abstractedRoot="//@ddd/@boundedContexts.2/@ownedElements.0">
+        <ownedProperties name="customerId" type="//@primitivesTypes.2" lowerBound="1"/>
       </ownedElements>
       <ownedElements xsi:type="dact:Repository" name="CargoRepository" entity="//@ddd/@boundedContexts.0/@ownedElements.0">
         <ownedOperations name="createCargo" type="R0_REPOSITORY_CREATE">
@@ -108,6 +108,133 @@
       <parameterMappings type="ACTIVITY_IN" operationParameter="//@ddd/@boundedContexts.0/@ownedElements.3/@ownedOperations.0/@ownedParameters.4" activityParameter="//@activity/@activities.0/@ownedParameters.3"/>
       <parameterMappings type="ACTIVITY_OUT" operationParameter="//@ddd/@boundedContexts.0/@ownedElements.3/@ownedOperations.0/@ownedParameters.3" activityParameter="//@activity/@activities.0/@ownedParameters.4"/>
       <root name="Root">
+        <ownedNodes xsi:type="dact:InitialNode" name="InitialNode1" sEdge="//@activity/@activities.0/@root/@ownedEdges.0"/>
+        <ownedNodes xsi:type="dact:ActivityFinalNode" name="ActivityFinalNode4" tEdge="//@activity/@activities.0/@root/@ownedEdges.3">
+          <variablesToReturn name="newCargo"/>
+        </ownedNodes>
+        <ownedNodes xsi:type="dact:ConditionalNode" name="CustomerExistsCondition" sEdge="//@activity/@activities.0/@root/@ownedEdges.3" tEdge="//@activity/@activities.0/@root/@ownedEdges.2">
+          <test xsi:type="dact:UnaryExpression">
+            <identifier name="customerExists"/>
+          </test>
+          <body name="Body (True)">
+            <ownedNodes xsi:type="dact:InitialNode" name="InitialNode1" sEdge="//@activity/@activities.0/@root/@ownedNodes.2/@body/@ownedEdges.0"/>
+            <ownedNodes xsi:type="dact:CallOperationAction" name="DomainCreateAction26" sEdge="//@activity/@activities.0/@root/@ownedNodes.2/@body/@ownedEdges.9" tEdge="//@activity/@activities.0/@root/@ownedNodes.2/@body/@ownedEdges.8" operation="//@ddd/@boundedContexts.0/@ownedElements.7/@ownedOperations.0">
+              <parameterMappings operationParameter="//@ddd/@boundedContexts.0/@ownedElements.7/@ownedOperations.0/@ownedParameters.0">
+                <identifier name="newCargo"/>
+              </parameterMappings>
+              <parameterMappings type="ACTION_OUT" operationParameter="//@ddd/@boundedContexts.0/@ownedElements.7/@ownedOperations.0/@ownedParameters.1">
+                <identifier name="newCargo"/>
+              </parameterMappings>
+            </ownedNodes>
+            <ownedNodes xsi:type="dact:ConditionalNode" name="SourceLocationExists" sEdge="//@activity/@activities.0/@root/@ownedNodes.2/@body/@ownedEdges.4" tEdge="//@activity/@activities.0/@root/@ownedNodes.2/@body/@ownedEdges.3">
+              <test xsi:type="dact:NotExpression">
+                <expr xsi:type="dact:UnaryExpression">
+                  <identifier name="destLocationExists"/>
+                </expr>
+              </test>
+              <body name="Body (True)">
+                <ownedNodes xsi:type="dact:InitialNode" name="InitialNode1" sEdge="//@activity/@activities.0/@root/@ownedNodes.2/@body/@ownedNodes.2/@body/@ownedEdges.0"/>
+                <ownedNodes xsi:type="dact:FlowFinalNode" name="FlowFinalNode2" tEdge="//@activity/@activities.0/@root/@ownedNodes.2/@body/@ownedNodes.2/@body/@ownedEdges.1"/>
+                <ownedNodes xsi:type="dact:RaiseEntityNotFoundExceptionAction" name="LocationNotFound" sEdge="//@activity/@activities.0/@root/@ownedNodes.2/@body/@ownedNodes.2/@body/@ownedEdges.1" tEdge="//@activity/@activities.0/@root/@ownedNodes.2/@body/@ownedNodes.2/@body/@ownedEdges.0" entity="//@ddd/@boundedContexts.1/@ownedElements.0"/>
+                <ownedEdges edgeName="ActivityEdge18" source="//@activity/@activities.0/@root/@ownedNodes.2/@body/@ownedNodes.2/@body/@ownedNodes.0" target="//@activity/@activities.0/@root/@ownedNodes.2/@body/@ownedNodes.2/@body/@ownedNodes.2"/>
+                <ownedEdges edgeName="ActivityEdge19" source="//@activity/@activities.0/@root/@ownedNodes.2/@body/@ownedNodes.2/@body/@ownedNodes.2" target="//@activity/@activities.0/@root/@ownedNodes.2/@body/@ownedNodes.2/@body/@ownedNodes.1"/>
+                <scope inheritedVariables="//@activity/@activities.0/@root/@scope/@ownedVariables.5 //@activity/@activities.0/@root/@scope/@ownedVariables.3 //@activity/@activities.0/@root/@ownedNodes.2/@body/@scope/@ownedVariables.1 //@activity/@activities.0/@root/@scope/@ownedVariables.1 //@activity/@activities.0/@root/@scope/@ownedVariables.0 //@activity/@activities.0/@root/@ownedNodes.2/@body/@scope/@ownedVariables.0 //@activity/@activities.0/@root/@scope/@ownedVariables.2 //@activity/@activities.0/@root/@scope/@ownedVariables.4"/>
+              </body>
+              <elseBody name="ElseBody (False)">
+                <scope inheritedVariables="//@activity/@activities.0/@root/@scope/@ownedVariables.5 //@activity/@activities.0/@root/@scope/@ownedVariables.3 //@activity/@activities.0/@root/@ownedNodes.2/@body/@scope/@ownedVariables.1 //@activity/@activities.0/@root/@scope/@ownedVariables.1 //@activity/@activities.0/@root/@scope/@ownedVariables.0 //@activity/@activities.0/@root/@ownedNodes.2/@body/@scope/@ownedVariables.0 //@activity/@activities.0/@root/@scope/@ownedVariables.2 //@activity/@activities.0/@root/@scope/@ownedVariables.4"/>
+              </elseBody>
+            </ownedNodes>
+            <ownedNodes xsi:type="dact:CallOperationAction" name="SourceLocationExists" sEdge="//@activity/@activities.0/@root/@ownedNodes.2/@body/@ownedEdges.1" tEdge="//@activity/@activities.0/@root/@ownedNodes.2/@body/@ownedEdges.0" domainToDeclareResult="true" operation="//@ddd/@boundedContexts.1/@ownedElements.1/@ownedOperations.0">
+              <parameterMappings operationParameter="//@ddd/@boundedContexts.1/@ownedElements.1/@ownedOperations.0/@ownedParameters.0">
+                <identifier name="srcPort"/>
+              </parameterMappings>
+              <parameterMappings type="ACTION_OUT" operationParameter="//@ddd/@boundedContexts.1/@ownedElements.1/@ownedOperations.0/@ownedParameters.1">
+                <identifier name="srcLocationExists"/>
+              </parameterMappings>
+            </ownedNodes>
+            <ownedNodes xsi:type="dact:VariableAssignmentAction" name="AssignDeadline" sEdge="//@activity/@activities.0/@root/@ownedNodes.2/@body/@ownedEdges.8" tEdge="//@activity/@activities.0/@root/@ownedNodes.2/@body/@ownedEdges.7">
+              <assignment>
+                <identifier name="newCargo.goal.deadline"/>
+                <expr xsi:type="dact:UnaryExpression">
+                  <identifier name="deadline"/>
+                </expr>
+              </assignment>
+            </ownedNodes>
+            <ownedNodes xsi:type="dact:CallOperationAction" name="DestinationLocationExists" sEdge="//@activity/@activities.0/@root/@ownedNodes.2/@body/@ownedEdges.3" tEdge="//@activity/@activities.0/@root/@ownedNodes.2/@body/@ownedEdges.2" domainToDeclareResult="true" operation="//@ddd/@boundedContexts.1/@ownedElements.1/@ownedOperations.0">
+              <parameterMappings operationParameter="//@ddd/@boundedContexts.1/@ownedElements.1/@ownedOperations.0/@ownedParameters.0">
+                <identifier name="destPort"/>
+              </parameterMappings>
+              <parameterMappings type="ACTION_OUT" operationParameter="//@ddd/@boundedContexts.1/@ownedElements.1/@ownedOperations.0/@ownedParameters.1">
+                <identifier name="destLocationExists"/>
+              </parameterMappings>
+            </ownedNodes>
+            <ownedNodes xsi:type="dact:FlowFinalNode" name="FlowFinalNode2" tEdge="//@activity/@activities.0/@root/@ownedNodes.2/@body/@ownedEdges.9"/>
+            <ownedNodes xsi:type="dact:VariableAssignmentAction" name="AssignCustomerId" sEdge="//@activity/@activities.0/@root/@ownedNodes.2/@body/@ownedEdges.5" tEdge="//@activity/@activities.0/@root/@ownedNodes.2/@body/@ownedEdges.4">
+              <assignment>
+                <identifier name="newCargo.role.customerId"/>
+                <expr xsi:type="dact:UnaryExpression">
+                  <identifier name="customerId"/>
+                </expr>
+              </assignment>
+            </ownedNodes>
+            <ownedNodes xsi:type="dact:VariableAssignmentAction" name="AssignDestination" sEdge="//@activity/@activities.0/@root/@ownedNodes.2/@body/@ownedEdges.6" tEdge="//@activity/@activities.0/@root/@ownedNodes.2/@body/@ownedEdges.5">
+              <assignment>
+                <identifier name="newCargo.goal.destination.portCode"/>
+                <expr xsi:type="dact:UnaryExpression">
+                  <identifier name="destPort"/>
+                </expr>
+              </assignment>
+            </ownedNodes>
+            <ownedNodes xsi:type="dact:ConditionalNode" name="SourceLocationExists" sEdge="//@activity/@activities.0/@root/@ownedNodes.2/@body/@ownedEdges.2" tEdge="//@activity/@activities.0/@root/@ownedNodes.2/@body/@ownedEdges.1">
+              <test xsi:type="dact:NotExpression">
+                <expr xsi:type="dact:UnaryExpression">
+                  <identifier name="srcLocationExists"/>
+                </expr>
+              </test>
+              <body name="Body (True)">
+                <ownedNodes xsi:type="dact:FlowFinalNode" name="FlowFinalNode2" tEdge="//@activity/@activities.0/@root/@ownedNodes.2/@body/@ownedNodes.9/@body/@ownedEdges.1"/>
+                <ownedNodes xsi:type="dact:RaiseEntityNotFoundExceptionAction" name="LocationNotFound" sEdge="//@activity/@activities.0/@root/@ownedNodes.2/@body/@ownedNodes.9/@body/@ownedEdges.1" tEdge="//@activity/@activities.0/@root/@ownedNodes.2/@body/@ownedNodes.9/@body/@ownedEdges.0" entity="//@ddd/@boundedContexts.1/@ownedElements.0"/>
+                <ownedNodes xsi:type="dact:InitialNode" name="InitialNode1" sEdge="//@activity/@activities.0/@root/@ownedNodes.2/@body/@ownedNodes.9/@body/@ownedEdges.0"/>
+                <ownedEdges edgeName="ActivityEdge18" source="//@activity/@activities.0/@root/@ownedNodes.2/@body/@ownedNodes.9/@body/@ownedNodes.2" target="//@activity/@activities.0/@root/@ownedNodes.2/@body/@ownedNodes.9/@body/@ownedNodes.1"/>
+                <ownedEdges edgeName="ActivityEdge19" source="//@activity/@activities.0/@root/@ownedNodes.2/@body/@ownedNodes.9/@body/@ownedNodes.1" target="//@activity/@activities.0/@root/@ownedNodes.2/@body/@ownedNodes.9/@body/@ownedNodes.0"/>
+                <scope parent="//@activity/@activities.0/@root/@ownedNodes.2/@body/@scope" inheritedVariables="//@activity/@activities.0/@root/@scope/@ownedVariables.5 //@activity/@activities.0/@root/@scope/@ownedVariables.3 //@activity/@activities.0/@root/@scope/@ownedVariables.1 //@activity/@activities.0/@root/@scope/@ownedVariables.0 //@activity/@activities.0/@root/@ownedNodes.2/@body/@scope/@ownedVariables.0 //@activity/@activities.0/@root/@scope/@ownedVariables.2 //@activity/@activities.0/@root/@scope/@ownedVariables.4"/>
+              </body>
+              <elseBody name="ElseBody (False)">
+                <scope parent="//@activity/@activities.0/@root/@ownedNodes.2/@body/@scope" inheritedVariables="//@activity/@activities.0/@root/@scope/@ownedVariables.5 //@activity/@activities.0/@root/@scope/@ownedVariables.3 //@activity/@activities.0/@root/@scope/@ownedVariables.1 //@activity/@activities.0/@root/@scope/@ownedVariables.0 //@activity/@activities.0/@root/@ownedNodes.2/@body/@scope/@ownedVariables.0 //@activity/@activities.0/@root/@scope/@ownedVariables.2 //@activity/@activities.0/@root/@scope/@ownedVariables.4"/>
+              </elseBody>
+            </ownedNodes>
+            <ownedNodes xsi:type="dact:VariableAssignmentAction" name="AssignSource" sEdge="//@activity/@activities.0/@root/@ownedNodes.2/@body/@ownedEdges.7" tEdge="//@activity/@activities.0/@root/@ownedNodes.2/@body/@ownedEdges.6">
+              <assignment>
+                <identifier name="newCargo.goal.source.portCode"/>
+                <expr xsi:type="dact:UnaryExpression">
+                  <identifier name="srcPort"/>
+                </expr>
+              </assignment>
+            </ownedNodes>
+            <ownedEdges edgeName="ActivityEdge15" source="//@activity/@activities.0/@root/@ownedNodes.2/@body/@ownedNodes.0" target="//@activity/@activities.0/@root/@ownedNodes.2/@body/@ownedNodes.3"/>
+            <ownedEdges edgeName="ActivityEdge16" source="//@activity/@activities.0/@root/@ownedNodes.2/@body/@ownedNodes.3" target="//@activity/@activities.0/@root/@ownedNodes.2/@body/@ownedNodes.9"/>
+            <ownedEdges edgeName="ActivityEdge20" source="//@activity/@activities.0/@root/@ownedNodes.2/@body/@ownedNodes.9" target="//@activity/@activities.0/@root/@ownedNodes.2/@body/@ownedNodes.5"/>
+            <ownedEdges edgeName="ActivityEdge21" source="//@activity/@activities.0/@root/@ownedNodes.2/@body/@ownedNodes.5" target="//@activity/@activities.0/@root/@ownedNodes.2/@body/@ownedNodes.2"/>
+            <ownedEdges edgeName="ActivityEdge22" source="//@activity/@activities.0/@root/@ownedNodes.2/@body/@ownedNodes.2" target="//@activity/@activities.0/@root/@ownedNodes.2/@body/@ownedNodes.7"/>
+            <ownedEdges edgeName="ActivityEdge23" source="//@activity/@activities.0/@root/@ownedNodes.2/@body/@ownedNodes.7" target="//@activity/@activities.0/@root/@ownedNodes.2/@body/@ownedNodes.8"/>
+            <ownedEdges edgeName="ActivityEdge24" source="//@activity/@activities.0/@root/@ownedNodes.2/@body/@ownedNodes.8" target="//@activity/@activities.0/@root/@ownedNodes.2/@body/@ownedNodes.10"/>
+            <ownedEdges edgeName="ActivityEdge25" source="//@activity/@activities.0/@root/@ownedNodes.2/@body/@ownedNodes.10" target="//@activity/@activities.0/@root/@ownedNodes.2/@body/@ownedNodes.4"/>
+            <ownedEdges edgeName="ActivityEdge27" source="//@activity/@activities.0/@root/@ownedNodes.2/@body/@ownedNodes.4" target="//@activity/@activities.0/@root/@ownedNodes.2/@body/@ownedNodes.1"/>
+            <ownedEdges edgeName="ActivityEdge28" source="//@activity/@activities.0/@root/@ownedNodes.2/@body/@ownedNodes.1" target="//@activity/@activities.0/@root/@ownedNodes.2/@body/@ownedNodes.6"/>
+            <scope parent="//@activity/@activities.0/@root/@scope" children="//@activity/@activities.0/@root/@ownedNodes.2/@body/@ownedNodes.9/@body/@scope //@activity/@activities.0/@root/@ownedNodes.2/@body/@ownedNodes.9/@elseBody/@scope" inheritedVariables="//@activity/@activities.0/@root/@scope/@ownedVariables.5 //@activity/@activities.0/@root/@scope/@ownedVariables.3 //@activity/@activities.0/@root/@scope/@ownedVariables.1 //@activity/@activities.0/@root/@scope/@ownedVariables.0 //@activity/@activities.0/@root/@scope/@ownedVariables.2 //@activity/@activities.0/@root/@scope/@ownedVariables.4">
+              <ownedVariables name="srcLocationExists" type="//@primitivesTypes.1" lowerBound="1" accessibleScopes="//@activity/@activities.0/@root/@ownedNodes.2/@body/@ownedNodes.9/@body/@scope //@activity/@activities.0/@root/@ownedNodes.2/@body/@ownedNodes.9/@elseBody/@scope //@activity/@activities.0/@root/@ownedNodes.2/@body/@ownedNodes.2/@body/@scope //@activity/@activities.0/@root/@ownedNodes.2/@body/@ownedNodes.2/@elseBody/@scope"/>
+              <ownedVariables name="destLocationExists" type="//@primitivesTypes.1" lowerBound="1" accessibleScopes="//@activity/@activities.0/@root/@ownedNodes.2/@body/@ownedNodes.2/@body/@scope //@activity/@activities.0/@root/@ownedNodes.2/@body/@ownedNodes.2/@elseBody/@scope"/>
+            </scope>
+          </body>
+          <elseBody name="ElseBody (False)">
+            <ownedNodes xsi:type="dact:InitialNode" name="InitialNode1" sEdge="//@activity/@activities.0/@root/@ownedNodes.2/@elseBody/@ownedEdges.0"/>
+            <ownedNodes xsi:type="dact:RaiseEntityNotFoundExceptionAction" name="CustomerNotFound" sEdge="//@activity/@activities.0/@root/@ownedNodes.2/@elseBody/@ownedEdges.1" tEdge="//@activity/@activities.0/@root/@ownedNodes.2/@elseBody/@ownedEdges.0" entity="//@ddd/@boundedContexts.2/@ownedElements.0"/>
+            <ownedNodes xsi:type="dact:FlowFinalNode" name="FlowFinalNode3" tEdge="//@activity/@activities.0/@root/@ownedNodes.2/@elseBody/@ownedEdges.1"/>
+            <ownedEdges edgeName="ActivityEdge12" source="//@activity/@activities.0/@root/@ownedNodes.2/@elseBody/@ownedNodes.0" target="//@activity/@activities.0/@root/@ownedNodes.2/@elseBody/@ownedNodes.1"/>
+            <ownedEdges edgeName="ActivityEdge13" source="//@activity/@activities.0/@root/@ownedNodes.2/@elseBody/@ownedNodes.1" target="//@activity/@activities.0/@root/@ownedNodes.2/@elseBody/@ownedNodes.2"/>
+            <scope parent="//@activity/@activities.0/@root/@scope" inheritedVariables="//@activity/@activities.0/@root/@scope/@ownedVariables.5 //@activity/@activities.0/@root/@scope/@ownedVariables.3 //@activity/@activities.0/@root/@scope/@ownedVariables.1 //@activity/@activities.0/@root/@scope/@ownedVariables.0 //@activity/@activities.0/@root/@scope/@ownedVariables.2 //@activity/@activities.0/@root/@scope/@ownedVariables.4"/>
+          </elseBody>
+        </ownedNodes>
         <ownedNodes xsi:type="dact:CallOperationAction" name="CheckCustomerExistence" sEdge="//@activity/@activities.0/@root/@ownedEdges.2" tEdge="//@activity/@activities.0/@root/@ownedEdges.1" domainToDeclareResult="true" operation="//@ddd/@boundedContexts.2/@ownedElements.1/@ownedOperations.0">
           <parameterMappings operationParameter="//@ddd/@boundedContexts.2/@ownedElements.1/@ownedOperations.0/@ownedParameters.0">
             <identifier name="customerId"/>
@@ -116,149 +243,22 @@
             <identifier name="customerExists"/>
           </parameterMappings>
         </ownedNodes>
-        <ownedNodes xsi:type="dact:ConditionalNode" name="CustomerExistsCondition" sEdge="//@activity/@activities.0/@root/@ownedEdges.3" tEdge="//@activity/@activities.0/@root/@ownedEdges.2">
-          <test xsi:type="dact:UnaryExpression">
-            <identifier name="customerExists"/>
-          </test>
-          <body name="Body (True)">
-            <ownedNodes xsi:type="dact:VariableAssignmentAction" name="AssignSource" sEdge="//@activity/@activities.0/@root/@ownedNodes.1/@body/@ownedEdges.7" tEdge="//@activity/@activities.0/@root/@ownedNodes.1/@body/@ownedEdges.6">
-              <assignment>
-                <identifier name="newCargo.goal.source.portCode"/>
-                <expr xsi:type="dact:UnaryExpression">
-                  <identifier name="srcPort"/>
-                </expr>
-              </assignment>
-            </ownedNodes>
-            <ownedNodes xsi:type="dact:FlowFinalNode" name="FlowFinalNode2" tEdge="//@activity/@activities.0/@root/@ownedNodes.1/@body/@ownedEdges.9"/>
-            <ownedNodes xsi:type="dact:CallOperationAction" name="SourceLocationExists" sEdge="//@activity/@activities.0/@root/@ownedNodes.1/@body/@ownedEdges.1" tEdge="//@activity/@activities.0/@root/@ownedNodes.1/@body/@ownedEdges.0" domainToDeclareResult="true" operation="//@ddd/@boundedContexts.1/@ownedElements.1/@ownedOperations.0">
-              <parameterMappings operationParameter="//@ddd/@boundedContexts.1/@ownedElements.1/@ownedOperations.0/@ownedParameters.0">
-                <identifier name="srcPort"/>
-              </parameterMappings>
-              <parameterMappings type="ACTION_OUT" operationParameter="//@ddd/@boundedContexts.1/@ownedElements.1/@ownedOperations.0/@ownedParameters.1">
-                <identifier name="srcLocationExists"/>
-              </parameterMappings>
-            </ownedNodes>
-            <ownedNodes xsi:type="dact:ConditionalNode" name="SourceLocationExists" sEdge="//@activity/@activities.0/@root/@ownedNodes.1/@body/@ownedEdges.4" tEdge="//@activity/@activities.0/@root/@ownedNodes.1/@body/@ownedEdges.3">
-              <test xsi:type="dact:NotExpression">
-                <expr xsi:type="dact:UnaryExpression">
-                  <identifier name="destLocationExists"/>
-                </expr>
-              </test>
-              <body name="Body (True)">
-                <ownedNodes xsi:type="dact:RaiseEntityNotFoundExceptionAction" name="LocationNotFound" sEdge="//@activity/@activities.0/@root/@ownedNodes.1/@body/@ownedNodes.3/@body/@ownedEdges.1" tEdge="//@activity/@activities.0/@root/@ownedNodes.1/@body/@ownedNodes.3/@body/@ownedEdges.0" entity="//@ddd/@boundedContexts.1/@ownedElements.0"/>
-                <ownedNodes xsi:type="dact:FlowFinalNode" name="FlowFinalNode2" tEdge="//@activity/@activities.0/@root/@ownedNodes.1/@body/@ownedNodes.3/@body/@ownedEdges.1"/>
-                <ownedNodes xsi:type="dact:InitialNode" name="InitialNode1" sEdge="//@activity/@activities.0/@root/@ownedNodes.1/@body/@ownedNodes.3/@body/@ownedEdges.0"/>
-                <ownedEdges edgeName="ActivityEdge18" source="//@activity/@activities.0/@root/@ownedNodes.1/@body/@ownedNodes.3/@body/@ownedNodes.2" target="//@activity/@activities.0/@root/@ownedNodes.1/@body/@ownedNodes.3/@body/@ownedNodes.0"/>
-                <ownedEdges edgeName="ActivityEdge19" source="//@activity/@activities.0/@root/@ownedNodes.1/@body/@ownedNodes.3/@body/@ownedNodes.0" target="//@activity/@activities.0/@root/@ownedNodes.1/@body/@ownedNodes.3/@body/@ownedNodes.1"/>
-                <scope inheritedVariables="//@activity/@activities.0/@root/@scope/@ownedVariables.1 //@activity/@activities.0/@root/@ownedNodes.1/@body/@scope/@ownedVariables.0 //@activity/@activities.0/@root/@scope/@ownedVariables.2 //@activity/@activities.0/@root/@scope/@ownedVariables.5 //@activity/@activities.0/@root/@scope/@ownedVariables.3 //@activity/@activities.0/@root/@ownedNodes.1/@body/@scope/@ownedVariables.1 //@activity/@activities.0/@root/@scope/@ownedVariables.0 //@activity/@activities.0/@root/@scope/@ownedVariables.4"/>
-              </body>
-              <elseBody name="ElseBody (False)">
-                <scope inheritedVariables="//@activity/@activities.0/@root/@scope/@ownedVariables.1 //@activity/@activities.0/@root/@ownedNodes.1/@body/@scope/@ownedVariables.0 //@activity/@activities.0/@root/@scope/@ownedVariables.2 //@activity/@activities.0/@root/@scope/@ownedVariables.5 //@activity/@activities.0/@root/@scope/@ownedVariables.3 //@activity/@activities.0/@root/@ownedNodes.1/@body/@scope/@ownedVariables.1 //@activity/@activities.0/@root/@scope/@ownedVariables.0 //@activity/@activities.0/@root/@scope/@ownedVariables.4"/>
-              </elseBody>
-            </ownedNodes>
-            <ownedNodes xsi:type="dact:CallOperationAction" name="DomainCreateAction26" sEdge="//@activity/@activities.0/@root/@ownedNodes.1/@body/@ownedEdges.9" tEdge="//@activity/@activities.0/@root/@ownedNodes.1/@body/@ownedEdges.8" operation="//@ddd/@boundedContexts.0/@ownedElements.7/@ownedOperations.0">
-              <parameterMappings operationParameter="//@ddd/@boundedContexts.0/@ownedElements.7/@ownedOperations.0/@ownedParameters.0">
-                <identifier name="newCargo"/>
-              </parameterMappings>
-              <parameterMappings type="ACTION_OUT" operationParameter="//@ddd/@boundedContexts.0/@ownedElements.7/@ownedOperations.0/@ownedParameters.1">
-                <identifier name="newCargo"/>
-              </parameterMappings>
-            </ownedNodes>
-            <ownedNodes xsi:type="dact:ConditionalNode" name="SourceLocationExists" sEdge="//@activity/@activities.0/@root/@ownedNodes.1/@body/@ownedEdges.2" tEdge="//@activity/@activities.0/@root/@ownedNodes.1/@body/@ownedEdges.1">
-              <test xsi:type="dact:NotExpression">
-                <expr xsi:type="dact:UnaryExpression">
-                  <identifier name="srcLocationExists"/>
-                </expr>
-              </test>
-              <body name="Body (True)">
-                <ownedNodes xsi:type="dact:RaiseEntityNotFoundExceptionAction" name="LocationNotFound" sEdge="//@activity/@activities.0/@root/@ownedNodes.1/@body/@ownedNodes.5/@body/@ownedEdges.1" tEdge="//@activity/@activities.0/@root/@ownedNodes.1/@body/@ownedNodes.5/@body/@ownedEdges.0" entity="//@ddd/@boundedContexts.1/@ownedElements.0"/>
-                <ownedNodes xsi:type="dact:InitialNode" name="InitialNode1" sEdge="//@activity/@activities.0/@root/@ownedNodes.1/@body/@ownedNodes.5/@body/@ownedEdges.0"/>
-                <ownedNodes xsi:type="dact:FlowFinalNode" name="FlowFinalNode2" tEdge="//@activity/@activities.0/@root/@ownedNodes.1/@body/@ownedNodes.5/@body/@ownedEdges.1"/>
-                <ownedEdges edgeName="ActivityEdge18" source="//@activity/@activities.0/@root/@ownedNodes.1/@body/@ownedNodes.5/@body/@ownedNodes.1" target="//@activity/@activities.0/@root/@ownedNodes.1/@body/@ownedNodes.5/@body/@ownedNodes.0"/>
-                <ownedEdges edgeName="ActivityEdge19" source="//@activity/@activities.0/@root/@ownedNodes.1/@body/@ownedNodes.5/@body/@ownedNodes.0" target="//@activity/@activities.0/@root/@ownedNodes.1/@body/@ownedNodes.5/@body/@ownedNodes.2"/>
-                <scope parent="//@activity/@activities.0/@root/@ownedNodes.1/@body/@scope" inheritedVariables="//@activity/@activities.0/@root/@scope/@ownedVariables.1 //@activity/@activities.0/@root/@ownedNodes.1/@body/@scope/@ownedVariables.0 //@activity/@activities.0/@root/@scope/@ownedVariables.2 //@activity/@activities.0/@root/@scope/@ownedVariables.5 //@activity/@activities.0/@root/@scope/@ownedVariables.3 //@activity/@activities.0/@root/@scope/@ownedVariables.0 //@activity/@activities.0/@root/@scope/@ownedVariables.4"/>
-              </body>
-              <elseBody name="ElseBody (False)">
-                <scope parent="//@activity/@activities.0/@root/@ownedNodes.1/@body/@scope" inheritedVariables="//@activity/@activities.0/@root/@scope/@ownedVariables.1 //@activity/@activities.0/@root/@ownedNodes.1/@body/@scope/@ownedVariables.0 //@activity/@activities.0/@root/@scope/@ownedVariables.2 //@activity/@activities.0/@root/@scope/@ownedVariables.5 //@activity/@activities.0/@root/@scope/@ownedVariables.3 //@activity/@activities.0/@root/@scope/@ownedVariables.0 //@activity/@activities.0/@root/@scope/@ownedVariables.4"/>
-              </elseBody>
-            </ownedNodes>
-            <ownedNodes xsi:type="dact:VariableAssignmentAction" name="AssignDeadline" sEdge="//@activity/@activities.0/@root/@ownedNodes.1/@body/@ownedEdges.8" tEdge="//@activity/@activities.0/@root/@ownedNodes.1/@body/@ownedEdges.7">
-              <assignment>
-                <identifier name="newCargo.goal.deadline"/>
-                <expr xsi:type="dact:UnaryExpression">
-                  <identifier name="deadline"/>
-                </expr>
-              </assignment>
-            </ownedNodes>
-            <ownedNodes xsi:type="dact:VariableAssignmentAction" name="AssignCustomerId" sEdge="//@activity/@activities.0/@root/@ownedNodes.1/@body/@ownedEdges.5" tEdge="//@activity/@activities.0/@root/@ownedNodes.1/@body/@ownedEdges.4">
-              <assignment>
-                <identifier name="newCargo.role.customerId"/>
-                <expr xsi:type="dact:UnaryExpression">
-                  <identifier name="customerId"/>
-                </expr>
-              </assignment>
-            </ownedNodes>
-            <ownedNodes xsi:type="dact:CallOperationAction" name="DestinationLocationExists" sEdge="//@activity/@activities.0/@root/@ownedNodes.1/@body/@ownedEdges.3" tEdge="//@activity/@activities.0/@root/@ownedNodes.1/@body/@ownedEdges.2" domainToDeclareResult="true" operation="//@ddd/@boundedContexts.1/@ownedElements.1/@ownedOperations.0">
-              <parameterMappings operationParameter="//@ddd/@boundedContexts.1/@ownedElements.1/@ownedOperations.0/@ownedParameters.0">
-                <identifier name="destPort"/>
-              </parameterMappings>
-              <parameterMappings type="ACTION_OUT" operationParameter="//@ddd/@boundedContexts.1/@ownedElements.1/@ownedOperations.0/@ownedParameters.1">
-                <identifier name="destLocationExists"/>
-              </parameterMappings>
-            </ownedNodes>
-            <ownedNodes xsi:type="dact:VariableAssignmentAction" name="AssignDestination" sEdge="//@activity/@activities.0/@root/@ownedNodes.1/@body/@ownedEdges.6" tEdge="//@activity/@activities.0/@root/@ownedNodes.1/@body/@ownedEdges.5">
-              <assignment>
-                <identifier name="newCargo.goal.destination.portCode"/>
-                <expr xsi:type="dact:UnaryExpression">
-                  <identifier name="destPort"/>
-                </expr>
-              </assignment>
-            </ownedNodes>
-            <ownedNodes xsi:type="dact:InitialNode" name="InitialNode1" sEdge="//@activity/@activities.0/@root/@ownedNodes.1/@body/@ownedEdges.0"/>
-            <ownedEdges edgeName="ActivityEdge15" source="//@activity/@activities.0/@root/@ownedNodes.1/@body/@ownedNodes.10" target="//@activity/@activities.0/@root/@ownedNodes.1/@body/@ownedNodes.2"/>
-            <ownedEdges edgeName="ActivityEdge16" source="//@activity/@activities.0/@root/@ownedNodes.1/@body/@ownedNodes.2" target="//@activity/@activities.0/@root/@ownedNodes.1/@body/@ownedNodes.5"/>
-            <ownedEdges edgeName="ActivityEdge20" source="//@activity/@activities.0/@root/@ownedNodes.1/@body/@ownedNodes.5" target="//@activity/@activities.0/@root/@ownedNodes.1/@body/@ownedNodes.8"/>
-            <ownedEdges edgeName="ActivityEdge21" source="//@activity/@activities.0/@root/@ownedNodes.1/@body/@ownedNodes.8" target="//@activity/@activities.0/@root/@ownedNodes.1/@body/@ownedNodes.3"/>
-            <ownedEdges edgeName="ActivityEdge22" source="//@activity/@activities.0/@root/@ownedNodes.1/@body/@ownedNodes.3" target="//@activity/@activities.0/@root/@ownedNodes.1/@body/@ownedNodes.7"/>
-            <ownedEdges edgeName="ActivityEdge23" source="//@activity/@activities.0/@root/@ownedNodes.1/@body/@ownedNodes.7" target="//@activity/@activities.0/@root/@ownedNodes.1/@body/@ownedNodes.9"/>
-            <ownedEdges edgeName="ActivityEdge24" source="//@activity/@activities.0/@root/@ownedNodes.1/@body/@ownedNodes.9" target="//@activity/@activities.0/@root/@ownedNodes.1/@body/@ownedNodes.0"/>
-            <ownedEdges edgeName="ActivityEdge25" source="//@activity/@activities.0/@root/@ownedNodes.1/@body/@ownedNodes.0" target="//@activity/@activities.0/@root/@ownedNodes.1/@body/@ownedNodes.6"/>
-            <ownedEdges edgeName="ActivityEdge27" source="//@activity/@activities.0/@root/@ownedNodes.1/@body/@ownedNodes.6" target="//@activity/@activities.0/@root/@ownedNodes.1/@body/@ownedNodes.4"/>
-            <ownedEdges edgeName="ActivityEdge28" source="//@activity/@activities.0/@root/@ownedNodes.1/@body/@ownedNodes.4" target="//@activity/@activities.0/@root/@ownedNodes.1/@body/@ownedNodes.1"/>
-            <scope parent="//@activity/@activities.0/@root/@scope" children="//@activity/@activities.0/@root/@ownedNodes.1/@body/@ownedNodes.5/@body/@scope //@activity/@activities.0/@root/@ownedNodes.1/@body/@ownedNodes.5/@elseBody/@scope" inheritedVariables="//@activity/@activities.0/@root/@scope/@ownedVariables.1 //@activity/@activities.0/@root/@scope/@ownedVariables.2 //@activity/@activities.0/@root/@scope/@ownedVariables.5 //@activity/@activities.0/@root/@scope/@ownedVariables.3 //@activity/@activities.0/@root/@scope/@ownedVariables.0 //@activity/@activities.0/@root/@scope/@ownedVariables.4">
-              <ownedVariables name="srcLocationExists" type="//@primitivesTypes.1" lowerBound="1" accessibleScopes="//@activity/@activities.0/@root/@ownedNodes.1/@body/@ownedNodes.5/@body/@scope //@activity/@activities.0/@root/@ownedNodes.1/@body/@ownedNodes.5/@elseBody/@scope //@activity/@activities.0/@root/@ownedNodes.1/@body/@ownedNodes.3/@body/@scope //@activity/@activities.0/@root/@ownedNodes.1/@body/@ownedNodes.3/@elseBody/@scope"/>
-              <ownedVariables name="destLocationExists" type="//@primitivesTypes.1" lowerBound="1" accessibleScopes="//@activity/@activities.0/@root/@ownedNodes.1/@body/@ownedNodes.3/@body/@scope //@activity/@activities.0/@root/@ownedNodes.1/@body/@ownedNodes.3/@elseBody/@scope"/>
-            </scope>
-          </body>
-          <elseBody name="ElseBody (False)">
-            <ownedNodes xsi:type="dact:InitialNode" name="InitialNode1" sEdge="//@activity/@activities.0/@root/@ownedNodes.1/@elseBody/@ownedEdges.0"/>
-            <ownedNodes xsi:type="dact:RaiseEntityNotFoundExceptionAction" name="CustomerNotFound" sEdge="//@activity/@activities.0/@root/@ownedNodes.1/@elseBody/@ownedEdges.1" tEdge="//@activity/@activities.0/@root/@ownedNodes.1/@elseBody/@ownedEdges.0" entity="//@ddd/@boundedContexts.2/@ownedElements.0"/>
-            <ownedNodes xsi:type="dact:FlowFinalNode" name="FlowFinalNode3" tEdge="//@activity/@activities.0/@root/@ownedNodes.1/@elseBody/@ownedEdges.1"/>
-            <ownedEdges edgeName="ActivityEdge12" source="//@activity/@activities.0/@root/@ownedNodes.1/@elseBody/@ownedNodes.0" target="//@activity/@activities.0/@root/@ownedNodes.1/@elseBody/@ownedNodes.1"/>
-            <ownedEdges edgeName="ActivityEdge13" source="//@activity/@activities.0/@root/@ownedNodes.1/@elseBody/@ownedNodes.1" target="//@activity/@activities.0/@root/@ownedNodes.1/@elseBody/@ownedNodes.2"/>
-            <scope parent="//@activity/@activities.0/@root/@scope" inheritedVariables="//@activity/@activities.0/@root/@scope/@ownedVariables.1 //@activity/@activities.0/@root/@scope/@ownedVariables.2 //@activity/@activities.0/@root/@scope/@ownedVariables.5 //@activity/@activities.0/@root/@scope/@ownedVariables.3 //@activity/@activities.0/@root/@scope/@ownedVariables.0 //@activity/@activities.0/@root/@scope/@ownedVariables.4"/>
-          </elseBody>
-        </ownedNodes>
-        <ownedNodes xsi:type="dact:InitialNode" name="InitialNode1" sEdge="//@activity/@activities.0/@root/@ownedEdges.0"/>
-        <ownedNodes xsi:type="dact:ActivityFinalNode" name="ActivityFinalNode4" tEdge="//@activity/@activities.0/@root/@ownedEdges.3">
-          <variablesToReturn name="newCargo"/>
-        </ownedNodes>
         <ownedNodes xsi:type="dact:VariableDeclarationAction" name="New Cargo Declaration" sEdge="//@activity/@activities.0/@root/@ownedEdges.1" tEdge="//@activity/@activities.0/@root/@ownedEdges.0" type="//@ddd/@boundedContexts.0/@ownedElements.0">
           <declaration>
             <identifier name="newCargo"/>
           </declaration>
         </ownedNodes>
-        <ownedEdges edgeName="ActivityEdge7" source="//@activity/@activities.0/@root/@ownedNodes.2" target="//@activity/@activities.0/@root/@ownedNodes.4"/>
-        <ownedEdges edgeName="ActivityEdge8" source="//@activity/@activities.0/@root/@ownedNodes.4" target="//@activity/@activities.0/@root/@ownedNodes.0"/>
-        <ownedEdges edgeName="ActivityEdge9" source="//@activity/@activities.0/@root/@ownedNodes.0" target="//@activity/@activities.0/@root/@ownedNodes.1"/>
-        <ownedEdges edgeName="ActivityEdge10" source="//@activity/@activities.0/@root/@ownedNodes.1" target="//@activity/@activities.0/@root/@ownedNodes.3"/>
-        <scope children="//@activity/@activities.0/@root/@ownedNodes.1/@body/@scope //@activity/@activities.0/@root/@ownedNodes.1/@elseBody/@scope">
-          <ownedVariables name="customerId" type="//@primitivesTypes.2" lowerBound="1" accessibleScopes="//@activity/@activities.0/@root/@ownedNodes.1/@body/@scope //@activity/@activities.0/@root/@ownedNodes.1/@body/@ownedNodes.5/@body/@scope //@activity/@activities.0/@root/@ownedNodes.1/@body/@ownedNodes.5/@elseBody/@scope //@activity/@activities.0/@root/@ownedNodes.1/@body/@ownedNodes.3/@body/@scope //@activity/@activities.0/@root/@ownedNodes.1/@body/@ownedNodes.3/@elseBody/@scope //@activity/@activities.0/@root/@ownedNodes.1/@elseBody/@scope"/>
-          <ownedVariables name="srcPort" type="//@primitivesTypes.2" lowerBound="1" accessibleScopes="//@activity/@activities.0/@root/@ownedNodes.1/@body/@scope //@activity/@activities.0/@root/@ownedNodes.1/@body/@ownedNodes.5/@body/@scope //@activity/@activities.0/@root/@ownedNodes.1/@body/@ownedNodes.5/@elseBody/@scope //@activity/@activities.0/@root/@ownedNodes.1/@body/@ownedNodes.3/@body/@scope //@activity/@activities.0/@root/@ownedNodes.1/@body/@ownedNodes.3/@elseBody/@scope //@activity/@activities.0/@root/@ownedNodes.1/@elseBody/@scope"/>
-          <ownedVariables name="deadline" type="//@primitivesTypes.2" lowerBound="1" accessibleScopes="//@activity/@activities.0/@root/@ownedNodes.1/@body/@scope //@activity/@activities.0/@root/@ownedNodes.1/@body/@ownedNodes.5/@body/@scope //@activity/@activities.0/@root/@ownedNodes.1/@body/@ownedNodes.5/@elseBody/@scope //@activity/@activities.0/@root/@ownedNodes.1/@body/@ownedNodes.3/@body/@scope //@activity/@activities.0/@root/@ownedNodes.1/@body/@ownedNodes.3/@elseBody/@scope //@activity/@activities.0/@root/@ownedNodes.1/@elseBody/@scope"/>
-          <ownedVariables name="destPort" type="//@primitivesTypes.2" lowerBound="1" accessibleScopes="//@activity/@activities.0/@root/@ownedNodes.1/@body/@scope //@activity/@activities.0/@root/@ownedNodes.1/@body/@ownedNodes.5/@body/@scope //@activity/@activities.0/@root/@ownedNodes.1/@body/@ownedNodes.5/@elseBody/@scope //@activity/@activities.0/@root/@ownedNodes.1/@body/@ownedNodes.3/@body/@scope //@activity/@activities.0/@root/@ownedNodes.1/@body/@ownedNodes.3/@elseBody/@scope //@activity/@activities.0/@root/@ownedNodes.1/@elseBody/@scope"/>
-          <ownedVariables name="newCargo" type="//@ddd/@boundedContexts.0/@ownedElements.0" accessibleScopes="//@activity/@activities.0/@root/@ownedNodes.1/@body/@scope //@activity/@activities.0/@root/@ownedNodes.1/@body/@ownedNodes.5/@body/@scope //@activity/@activities.0/@root/@ownedNodes.1/@body/@ownedNodes.5/@elseBody/@scope //@activity/@activities.0/@root/@ownedNodes.1/@body/@ownedNodes.3/@body/@scope //@activity/@activities.0/@root/@ownedNodes.1/@body/@ownedNodes.3/@elseBody/@scope //@activity/@activities.0/@root/@ownedNodes.1/@elseBody/@scope"/>
-          <ownedVariables name="customerExists" type="//@primitivesTypes.1" lowerBound="1" accessibleScopes="//@activity/@activities.0/@root/@ownedNodes.1/@body/@scope //@activity/@activities.0/@root/@ownedNodes.1/@body/@ownedNodes.5/@body/@scope //@activity/@activities.0/@root/@ownedNodes.1/@body/@ownedNodes.5/@elseBody/@scope //@activity/@activities.0/@root/@ownedNodes.1/@body/@ownedNodes.3/@body/@scope //@activity/@activities.0/@root/@ownedNodes.1/@body/@ownedNodes.3/@elseBody/@scope //@activity/@activities.0/@root/@ownedNodes.1/@elseBody/@scope"/>
+        <ownedEdges edgeName="ActivityEdge7" source="//@activity/@activities.0/@root/@ownedNodes.0" target="//@activity/@activities.0/@root/@ownedNodes.4"/>
+        <ownedEdges edgeName="ActivityEdge8" source="//@activity/@activities.0/@root/@ownedNodes.4" target="//@activity/@activities.0/@root/@ownedNodes.3"/>
+        <ownedEdges edgeName="ActivityEdge9" source="//@activity/@activities.0/@root/@ownedNodes.3" target="//@activity/@activities.0/@root/@ownedNodes.2"/>
+        <ownedEdges edgeName="ActivityEdge10" source="//@activity/@activities.0/@root/@ownedNodes.2" target="//@activity/@activities.0/@root/@ownedNodes.1"/>
+        <scope children="//@activity/@activities.0/@root/@ownedNodes.2/@body/@scope //@activity/@activities.0/@root/@ownedNodes.2/@elseBody/@scope">
+          <ownedVariables name="customerId" type="//@primitivesTypes.2" lowerBound="1" accessibleScopes="//@activity/@activities.0/@root/@ownedNodes.2/@body/@scope //@activity/@activities.0/@root/@ownedNodes.2/@body/@ownedNodes.9/@body/@scope //@activity/@activities.0/@root/@ownedNodes.2/@body/@ownedNodes.9/@elseBody/@scope //@activity/@activities.0/@root/@ownedNodes.2/@body/@ownedNodes.2/@body/@scope //@activity/@activities.0/@root/@ownedNodes.2/@body/@ownedNodes.2/@elseBody/@scope //@activity/@activities.0/@root/@ownedNodes.2/@elseBody/@scope"/>
+          <ownedVariables name="destPort" type="//@primitivesTypes.2" lowerBound="1" accessibleScopes="//@activity/@activities.0/@root/@ownedNodes.2/@body/@scope //@activity/@activities.0/@root/@ownedNodes.2/@body/@ownedNodes.9/@body/@scope //@activity/@activities.0/@root/@ownedNodes.2/@body/@ownedNodes.9/@elseBody/@scope //@activity/@activities.0/@root/@ownedNodes.2/@body/@ownedNodes.2/@body/@scope //@activity/@activities.0/@root/@ownedNodes.2/@body/@ownedNodes.2/@elseBody/@scope //@activity/@activities.0/@root/@ownedNodes.2/@elseBody/@scope"/>
+          <ownedVariables name="deadline" type="//@primitivesTypes.2" lowerBound="1" accessibleScopes="//@activity/@activities.0/@root/@ownedNodes.2/@body/@scope //@activity/@activities.0/@root/@ownedNodes.2/@body/@ownedNodes.9/@body/@scope //@activity/@activities.0/@root/@ownedNodes.2/@body/@ownedNodes.9/@elseBody/@scope //@activity/@activities.0/@root/@ownedNodes.2/@body/@ownedNodes.2/@body/@scope //@activity/@activities.0/@root/@ownedNodes.2/@body/@ownedNodes.2/@elseBody/@scope //@activity/@activities.0/@root/@ownedNodes.2/@elseBody/@scope"/>
+          <ownedVariables name="srcPort" type="//@primitivesTypes.2" lowerBound="1" accessibleScopes="//@activity/@activities.0/@root/@ownedNodes.2/@body/@scope //@activity/@activities.0/@root/@ownedNodes.2/@body/@ownedNodes.9/@body/@scope //@activity/@activities.0/@root/@ownedNodes.2/@body/@ownedNodes.9/@elseBody/@scope //@activity/@activities.0/@root/@ownedNodes.2/@body/@ownedNodes.2/@body/@scope //@activity/@activities.0/@root/@ownedNodes.2/@body/@ownedNodes.2/@elseBody/@scope //@activity/@activities.0/@root/@ownedNodes.2/@elseBody/@scope"/>
+          <ownedVariables name="newCargo" type="//@ddd/@boundedContexts.0/@ownedElements.0" accessibleScopes="//@activity/@activities.0/@root/@ownedNodes.2/@body/@scope //@activity/@activities.0/@root/@ownedNodes.2/@body/@ownedNodes.9/@body/@scope //@activity/@activities.0/@root/@ownedNodes.2/@body/@ownedNodes.9/@elseBody/@scope //@activity/@activities.0/@root/@ownedNodes.2/@body/@ownedNodes.2/@body/@scope //@activity/@activities.0/@root/@ownedNodes.2/@body/@ownedNodes.2/@elseBody/@scope //@activity/@activities.0/@root/@ownedNodes.2/@elseBody/@scope"/>
+          <ownedVariables name="customerExists" type="//@primitivesTypes.1" lowerBound="1" accessibleScopes="//@activity/@activities.0/@root/@ownedNodes.2/@body/@scope //@activity/@activities.0/@root/@ownedNodes.2/@body/@ownedNodes.9/@body/@scope //@activity/@activities.0/@root/@ownedNodes.2/@body/@ownedNodes.9/@elseBody/@scope //@activity/@activities.0/@root/@ownedNodes.2/@body/@ownedNodes.2/@body/@scope //@activity/@activities.0/@root/@ownedNodes.2/@body/@ownedNodes.2/@elseBody/@scope //@activity/@activities.0/@root/@ownedNodes.2/@elseBody/@scope"/>
         </scope>
       </root>
       <ownedDomainNodes xsi:type="dact:DomainExistAction" name="CheckCustomerExistence" aggregate="//@ddd/@boundedContexts.2/@ownedElements.0">

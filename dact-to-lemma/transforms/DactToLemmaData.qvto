@@ -99,6 +99,7 @@ when {self.type.oclIsKindOf(DACT::Enumeration)}
 	
 	name := self.name.toCamel();
 	features := self.GetCorrespondingDataFieldFeatures();
+	lowerBound := self.lowerBound;
 	upperBound := self.upperBound;
 	if (self.upperBound <0 or self.upperBound > 1){
 		complexType := self.type.oclAsType(DACT::Enumeration).map DomainElementsToComplexTypeCollection();
