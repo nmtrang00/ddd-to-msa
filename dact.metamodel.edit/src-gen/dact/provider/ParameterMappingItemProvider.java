@@ -291,6 +291,11 @@ public class ParameterMappingItemProvider extends DiagnosticSupportedItemProvide
 		newChildDescriptors.add
 			(createChildParameter
 				(DactPackage.Literals.PARAMETER_MAPPING__VALUE,
+				 DactFactory.eINSTANCE.createEnumerationLiteral()));
+
+		newChildDescriptors.add
+			(createChildParameter
+				(DactPackage.Literals.PARAMETER_MAPPING__VALUE,
 				 DactFactory.eINSTANCE.createLiteralNull()));
 
 		newChildDescriptors.add

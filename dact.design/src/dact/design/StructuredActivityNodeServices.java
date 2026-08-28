@@ -12,6 +12,7 @@ import dact.LiteralBoolean;
 import dact.LoopNode;
 import dact.Scope;
 import dact.StructuredActivityNode;
+import dact.ParallelNode;
 
 /**
  * The services class used by VSM.
@@ -93,14 +94,14 @@ public class StructuredActivityNodeServices {
     	}
     	
     	// Create a new node
-    	LoopNode node = DactFactory.eINSTANCE.createLoopNode();
+    	ParallelNode node = DactFactory.eINSTANCE.createParallelNode();
     	node.setName("NewParallelNode"+group.getOwnedNodes().size());
     	group.getOwnedNodes().add(node);
     	
     	// Create a new body group
     	ActivityGroup body = DactFactory.eINSTANCE.createActivityGroup();
     	body.setName("Flow");
-    	node.setBody(body);
+    	node.getFlows().add(body);
     }
     
     public void updateTestExpr(EObject node, String dslText) throws DiagnosticException {

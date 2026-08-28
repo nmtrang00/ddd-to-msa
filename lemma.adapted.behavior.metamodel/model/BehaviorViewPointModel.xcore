@@ -86,7 +86,9 @@ class Scope{
 	container ActivityGroup group opposite scope
 }
 
-class Identifier extends NamedElement{}
+class Identifier extends NamedElement{
+	String index
+}
 
 class ActivityGroup extends NamedElement, Scope{
 	contains ActivityNode[0..*] ownedNodes opposite group

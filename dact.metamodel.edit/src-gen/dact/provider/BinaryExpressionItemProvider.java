@@ -202,6 +202,11 @@ public class BinaryExpressionItemProvider extends ExpressionItemProvider {
 
 		newChildDescriptors.add
 			(createChildParameter
+				(DactPackage.Literals.BINARY_EXPRESSION__OPERATOR,
+				 DactFactory.eINSTANCE.createIn()));
+
+		newChildDescriptors.add
+			(createChildParameter
 				(DactPackage.Literals.BINARY_EXPRESSION__LEFT_EXPR,
 				 DactFactory.eINSTANCE.createVariableAssignment()));
 

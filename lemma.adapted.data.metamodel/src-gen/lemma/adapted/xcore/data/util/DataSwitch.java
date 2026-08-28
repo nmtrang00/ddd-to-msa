@@ -249,6 +249,7 @@ public class DataSwitch<T> extends Switch<T> {
 			case DataPackage.ENUMERATION_FIELD: {
 				EnumerationField enumerationField = (EnumerationField)theEObject;
 				T result = caseEnumerationField(enumerationField);
+				if (result == null) result = caseValueSpecification(enumerationField);
 				if (result == null) result = defaultCase(theEObject);
 				return result;
 			}

@@ -61,6 +61,7 @@ Package behavior <http://www.example.org/xcore/behavior>
     Reference group : ActivityGroup
 
   Class Identifier -> NamedElement
+    Attribute index : EString
 
   Class ActivityGroup -> NamedElement, Scope
     Reference ownedNodes : ActivityNode<<0..*>>

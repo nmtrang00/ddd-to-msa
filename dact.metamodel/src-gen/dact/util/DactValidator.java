@@ -537,6 +537,8 @@ public class DactValidator extends EObjectValidator {
 				return validateAnd((And)value, diagnostics, context);
 			case DactPackage.OR:
 				return validateOr((Or)value, diagnostics, context);
+			case DactPackage.IN:
+				return validateIn((In)value, diagnostics, context);
 			case DactPackage.OPERATION_TYPE:
 				return validateOperationType((OperationType)value, diagnostics, context);
 			case DactPackage.PARAMETER_DIRECTION:
@@ -2078,6 +2080,15 @@ public class DactValidator extends EObjectValidator {
 	 */
 	public boolean validateOr(Or or, DiagnosticChain diagnostics, Map<Object, Object> context) {
 		return validate_EveryDefaultConstraint(or, diagnostics, context);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public boolean validateIn(In in, DiagnosticChain diagnostics, Map<Object, Object> context) {
+		return validate_EveryDefaultConstraint(in, diagnostics, context);
 	}
 
 	/**

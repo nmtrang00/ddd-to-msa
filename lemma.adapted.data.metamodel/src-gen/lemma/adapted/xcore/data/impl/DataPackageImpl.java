@@ -2204,6 +2204,7 @@ public class DataPackageImpl extends EPackageImpl implements DataPackage {
 		dataStructureEClass.getESuperTypes().add(this.getComplexType());
 		collectionTypeEClass.getESuperTypes().add(this.getComplexType());
 		enumerationEClass.getESuperTypes().add(this.getComplexType());
+		enumerationFieldEClass.getESuperTypes().add(this.getValueSpecification());
 		primitiveValueEClass.getESuperTypes().add(this.getValueSpecification());
 
 		// Initialize classes, features, and operations; add parameters

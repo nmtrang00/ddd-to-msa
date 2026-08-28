@@ -1213,7 +1213,7 @@ class Enumeration extends ComplexType {
 /**
  * Represents a field in an enumeration
  */
-class EnumerationField {
+class EnumerationField extends ValueSpecification {
     String name
 
     contains PrimitiveValue[0..1] initializationValue

@@ -867,13 +867,22 @@ public interface BehaviorPackage extends EPackage {
 	int IDENTIFIER__NAME = NAMED_ELEMENT__NAME;
 
 	/**
+	 * The feature id for the '<em><b>Index</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int IDENTIFIER__INDEX = NAMED_ELEMENT_FEATURE_COUNT + 0;
+
+	/**
 	 * The number of structural features of the '<em>Identifier</em>' class.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
-	int IDENTIFIER_FEATURE_COUNT = NAMED_ELEMENT_FEATURE_COUNT + 0;
+	int IDENTIFIER_FEATURE_COUNT = NAMED_ELEMENT_FEATURE_COUNT + 1;
 
 	/**
 	 * The number of operations of the '<em>Identifier</em>' class.
@@ -3930,6 +3939,17 @@ public interface BehaviorPackage extends EPackage {
 	EClass getIdentifier();
 
 	/**
+	 * Returns the meta object for the attribute '{@link lemma.adapted.xcore.behavior.Identifier#getIndex <em>Index</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the attribute '<em>Index</em>'.
+	 * @see lemma.adapted.xcore.behavior.Identifier#getIndex()
+	 * @see #getIdentifier()
+	 * @generated
+	 */
+	EAttribute getIdentifier_Index();
+
+	/**
 	 * Returns the meta object for class '{@link lemma.adapted.xcore.behavior.ActivityGroup <em>Activity Group</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -5378,6 +5398,14 @@ public interface BehaviorPackage extends EPackage {
 		 * @generated
 		 */
 		EClass IDENTIFIER = eINSTANCE.getIdentifier();
+
+		/**
+		 * The meta object literal for the '<em><b>Index</b></em>' attribute feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EAttribute IDENTIFIER__INDEX = eINSTANCE.getIdentifier_Index();
 
 		/**
 		 * The meta object literal for the '{@link lemma.adapted.xcore.behavior.impl.ActivityGroupImpl <em>Activity Group</em>}' class.

@@ -48,6 +48,7 @@ public class DomainEventItemProvider extends NamedElementItemProvider {
 			super.getPropertyDescriptors(object);
 
 			addContextPropertyDescriptor(object);
+			addAbstractedRootPropertyDescriptor(object);
 		}
 		return itemPropertyDescriptors;
 	}
@@ -66,6 +67,28 @@ public class DomainEventItemProvider extends NamedElementItemProvider {
 				 getString("_UI_DomainElement_context_feature"),
 				 getString("_UI_PropertyDescriptor_description", "_UI_DomainElement_context_feature", "_UI_DomainElement_type"),
 				 DactPackage.Literals.DOMAIN_ELEMENT__CONTEXT,
+				 true,
+				 false,
+				 true,
+				 null,
+				 null,
+				 null));
+	}
+
+	/**
+	 * This adds a property descriptor for the Abstracted Root feature.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	protected void addAbstractedRootPropertyDescriptor(Object object) {
+		itemPropertyDescriptors.add
+			(createItemPropertyDescriptor
+				(((ComposeableAdapterFactory)adapterFactory).getRootAdapterFactory(),
+				 getResourceLocator(),
+				 getString("_UI_SharedDomainObject_abstractedRoot_feature"),
+				 getString("_UI_PropertyDescriptor_description", "_UI_SharedDomainObject_abstractedRoot_feature", "_UI_SharedDomainObject_type"),
+				 DactPackage.Literals.SHARED_DOMAIN_OBJECT__ABSTRACTED_ROOT,
 				 true,
 				 false,
 				 true,

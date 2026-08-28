@@ -23,7 +23,7 @@ OrExpression returns dact::Expression:
     )*;
 
 OrOperator returns dact::Operator:
-    {dact::Or} ('OR' | '||' | 'or');
+    {dact::Or} ('||' | 'OR' | 'or');
 
 AndExpression returns dact::Expression:
     ComparisonExpression (
@@ -33,7 +33,7 @@ AndExpression returns dact::Expression:
     )*;
 
 AndOperator returns dact::Operator:
-    {dact::And} ('AND' | '&&' | 'and');
+    {dact::And} ('&&' | 'AND' | 'and');
 
 ComparisonExpression returns dact::Expression:
     AdditiveExpression (
@@ -51,16 +51,26 @@ ComparisonOperator returns dact::Operator:
     {dact::Ne} '!=';
 
 AdditiveExpression returns dact::Expression:
-    MultiplicativeExpression (
+    InExpression (
         {dact::BinaryExpression.leftExpr=current} 
         operator=AdditiveOperator 
-        rightExpr=MultiplicativeExpression
+        rightExpr=InExpression
     )*;
 
 AdditiveOperator returns dact::Operator:
     {dact::Plus} '+' |
     {dact::Minus} '-';
 
+InExpression returns dact::Expression:
+	MultiplicativeExpression (
+        {dact::BinaryExpression.leftExpr=current} 
+        operator=InOperator 
+        rightExpr=MultiplicativeExpression
+    )*;
+
+InOperator returns dact::Operator:
+	{dact::In} ('IN' | 'in' | 'In');
+	
 MultiplicativeExpression returns dact::Expression:
     UnaryExpression (
         {dact::BinaryExpression.leftExpr=current} 
@@ -73,7 +83,7 @@ MultiplicativeOperator returns dact::Operator:
     {dact::Divide} '/';
 
 UnaryExpression returns dact::Expression:
-    {dact::NotExpression} ('NOT' | '!' | 'not') expr=PrimaryExpression
+    {dact::NotExpression} ( '!' | 'NOT' | 'not') expr=PrimaryExpression
   | PrimaryExpression;
 
 // Level 7: Primary Expressions & Literals
@@ -83,6 +93,7 @@ PrimaryExpression returns dact::Expression:
   | LiteralString
   | LiteralBoolean
   | LiteralNull
+  | LiteralEnum
   | PropertyAccess
   | '(' AssignmentExpression ')'
 ;
@@ -137,10 +148,24 @@ PropertyAccess returns dact::UnaryExpression:
     {dact::UnaryExpression} identifier=Identifier;
 
 Identifier returns dact::Identifier:
-	{dact::Identifier} name=QualifiedName;
+	{dact::Identifier} name=QualifiedName ('[' index=SignedInt ']')?;
+
+SignedInt returns ecore::EInt:
+	'-'? INT;
 
 QualifiedName:
     ID ('.' ID)*;
+    
+// ENUM
+LiteralEnum returns dact::UnaryExpression:
+    value=EnumSpecification;
+
+EnumSpecification returns dact::EnumerationLiteral:
+    // Matches expressions like 'Status::ACTIVE'
+    name=EnumQualifiedName;
+
+EnumQualifiedName:
+    ID ('::') ID;
 
 //    PrimaryIdentifier ({dact::NavigationExpression.target=current} '.' property=[dact::Property|ID])*;
 //

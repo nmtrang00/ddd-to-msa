@@ -21,6 +21,8 @@ import org.eclipse.emf.common.util.EList;
 public interface OperationValidator {
 	boolean validate();
 
+	boolean validateToExpose(Boolean value);
+
 	boolean validateType(OperationType value);
 	boolean validateClosure(Boolean value);
 	boolean validateSideEffectFree(Boolean value);

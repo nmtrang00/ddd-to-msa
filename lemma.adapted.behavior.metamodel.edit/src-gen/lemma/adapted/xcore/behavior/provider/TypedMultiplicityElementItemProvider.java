@@ -198,6 +198,11 @@ public class TypedMultiplicityElementItemProvider
 		newChildDescriptors.add
 			(createChildParameter
 				(BehaviorPackage.Literals.TYPED_MULTIPLICITY_ELEMENT__DEFAULT,
+				 DataFactory.eINSTANCE.createEnumerationField()));
+
+		newChildDescriptors.add
+			(createChildParameter
+				(BehaviorPackage.Literals.TYPED_MULTIPLICITY_ELEMENT__DEFAULT,
 				 DataFactory.eINSTANCE.createPrimitiveValue()));
 
 		newChildDescriptors.add

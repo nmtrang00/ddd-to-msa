@@ -14,4 +14,6 @@ package dact.validation;
 public interface IdentifierValidator {
 	boolean validate();
 
+	boolean validateIndex(Integer value);
+
 }

@@ -36,6 +36,7 @@ public class ExprDslParser extends AbstractContentAssistParser {
 			builder.put(grammarAccess.getAndOperatorAccess().getAlternatives_1(), "rule__AndOperator__Alternatives_1");
 			builder.put(grammarAccess.getComparisonOperatorAccess().getAlternatives(), "rule__ComparisonOperator__Alternatives");
 			builder.put(grammarAccess.getAdditiveOperatorAccess().getAlternatives(), "rule__AdditiveOperator__Alternatives");
+			builder.put(grammarAccess.getInOperatorAccess().getAlternatives_1(), "rule__InOperator__Alternatives_1");
 			builder.put(grammarAccess.getMultiplicativeOperatorAccess().getAlternatives(), "rule__MultiplicativeOperator__Alternatives");
 			builder.put(grammarAccess.getUnaryExpressionAccess().getAlternatives(), "rule__UnaryExpression__Alternatives");
 			builder.put(grammarAccess.getUnaryExpressionAccess().getAlternatives_0_1(), "rule__UnaryExpression__Alternatives_0_1");
@@ -61,20 +62,26 @@ public class ExprDslParser extends AbstractContentAssistParser {
 			builder.put(grammarAccess.getAdditiveExpressionAccess().getGroup_1(), "rule__AdditiveExpression__Group_1__0");
 			builder.put(grammarAccess.getAdditiveOperatorAccess().getGroup_0(), "rule__AdditiveOperator__Group_0__0");
 			builder.put(grammarAccess.getAdditiveOperatorAccess().getGroup_1(), "rule__AdditiveOperator__Group_1__0");
+			builder.put(grammarAccess.getInExpressionAccess().getGroup(), "rule__InExpression__Group__0");
+			builder.put(grammarAccess.getInExpressionAccess().getGroup_1(), "rule__InExpression__Group_1__0");
+			builder.put(grammarAccess.getInOperatorAccess().getGroup(), "rule__InOperator__Group__0");
 			builder.put(grammarAccess.getMultiplicativeExpressionAccess().getGroup(), "rule__MultiplicativeExpression__Group__0");
 			builder.put(grammarAccess.getMultiplicativeExpressionAccess().getGroup_1(), "rule__MultiplicativeExpression__Group_1__0");
 			builder.put(grammarAccess.getMultiplicativeOperatorAccess().getGroup_0(), "rule__MultiplicativeOperator__Group_0__0");
 			builder.put(grammarAccess.getMultiplicativeOperatorAccess().getGroup_1(), "rule__MultiplicativeOperator__Group_1__0");
 			builder.put(grammarAccess.getUnaryExpressionAccess().getGroup_0(), "rule__UnaryExpression__Group_0__0");
-			builder.put(grammarAccess.getPrimaryExpressionAccess().getGroup_6(), "rule__PrimaryExpression__Group_6__0");
+			builder.put(grammarAccess.getPrimaryExpressionAccess().getGroup_7(), "rule__PrimaryExpression__Group_7__0");
 			builder.put(grammarAccess.getEDoubleObjectAccess().getGroup(), "rule__EDoubleObject__Group__0");
 			builder.put(grammarAccess.getEIntegerObjectAccess().getGroup(), "rule__EIntegerObject__Group__0");
 			builder.put(grammarAccess.getBooleanSpecificationAccess().getGroup(), "rule__BooleanSpecification__Group__0");
 			builder.put(grammarAccess.getNullSpecificationAccess().getGroup(), "rule__NullSpecification__Group__0");
 			builder.put(grammarAccess.getPropertyAccessAccess().getGroup(), "rule__PropertyAccess__Group__0");
 			builder.put(grammarAccess.getIdentifierAccess().getGroup(), "rule__Identifier__Group__0");
+			builder.put(grammarAccess.getIdentifierAccess().getGroup_2(), "rule__Identifier__Group_2__0");
+			builder.put(grammarAccess.getSignedIntAccess().getGroup(), "rule__SignedInt__Group__0");
 			builder.put(grammarAccess.getQualifiedNameAccess().getGroup(), "rule__QualifiedName__Group__0");
 			builder.put(grammarAccess.getQualifiedNameAccess().getGroup_1(), "rule__QualifiedName__Group_1__0");
+			builder.put(grammarAccess.getEnumQualifiedNameAccess().getGroup(), "rule__EnumQualifiedName__Group__0");
 			builder.put(grammarAccess.getAssignmentExpressionAccess().getIdentifierAssignment_0_1(), "rule__AssignmentExpression__IdentifierAssignment_0_1");
 			builder.put(grammarAccess.getAssignmentExpressionAccess().getExprAssignment_0_3(), "rule__AssignmentExpression__ExprAssignment_0_3");
 			builder.put(grammarAccess.getOrExpressionAccess().getOperatorAssignment_1_1(), "rule__OrExpression__OperatorAssignment_1_1");
@@ -85,6 +92,8 @@ public class ExprDslParser extends AbstractContentAssistParser {
 			builder.put(grammarAccess.getComparisonExpressionAccess().getRightExprAssignment_1_2(), "rule__ComparisonExpression__RightExprAssignment_1_2");
 			builder.put(grammarAccess.getAdditiveExpressionAccess().getOperatorAssignment_1_1(), "rule__AdditiveExpression__OperatorAssignment_1_1");
 			builder.put(grammarAccess.getAdditiveExpressionAccess().getRightExprAssignment_1_2(), "rule__AdditiveExpression__RightExprAssignment_1_2");
+			builder.put(grammarAccess.getInExpressionAccess().getOperatorAssignment_1_1(), "rule__InExpression__OperatorAssignment_1_1");
+			builder.put(grammarAccess.getInExpressionAccess().getRightExprAssignment_1_2(), "rule__InExpression__RightExprAssignment_1_2");
 			builder.put(grammarAccess.getMultiplicativeExpressionAccess().getOperatorAssignment_1_1(), "rule__MultiplicativeExpression__OperatorAssignment_1_1");
 			builder.put(grammarAccess.getMultiplicativeExpressionAccess().getRightExprAssignment_1_2(), "rule__MultiplicativeExpression__RightExprAssignment_1_2");
 			builder.put(grammarAccess.getUnaryExpressionAccess().getExprAssignment_0_2(), "rule__UnaryExpression__ExprAssignment_0_2");
@@ -99,6 +108,9 @@ public class ExprDslParser extends AbstractContentAssistParser {
 			builder.put(grammarAccess.getLiteralNullAccess().getValueAssignment(), "rule__LiteralNull__ValueAssignment");
 			builder.put(grammarAccess.getPropertyAccessAccess().getIdentifierAssignment_1(), "rule__PropertyAccess__IdentifierAssignment_1");
 			builder.put(grammarAccess.getIdentifierAccess().getNameAssignment_1(), "rule__Identifier__NameAssignment_1");
+			builder.put(grammarAccess.getIdentifierAccess().getIndexAssignment_2_1(), "rule__Identifier__IndexAssignment_2_1");
+			builder.put(grammarAccess.getLiteralEnumAccess().getValueAssignment(), "rule__LiteralEnum__ValueAssignment");
+			builder.put(grammarAccess.getEnumSpecificationAccess().getNameAssignment(), "rule__EnumSpecification__NameAssignment");
 		}
 	}
 	

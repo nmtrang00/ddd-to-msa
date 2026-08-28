@@ -979,6 +979,16 @@ public class BehaviorPackageImpl extends EPackageImpl implements BehaviorPackage
 	 * @generated
 	 */
 	@Override
+	public EAttribute getIdentifier_Index() {
+		return (EAttribute)identifierEClass.getEStructuralFeatures().get(0);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	@Override
 	public EClass getActivityGroup() {
 		return activityGroupEClass;
 	}
@@ -2076,6 +2086,7 @@ public class BehaviorPackageImpl extends EPackageImpl implements BehaviorPackage
 		createEReference(scopeEClass, SCOPE__GROUP);
 
 		identifierEClass = createEClass(IDENTIFIER);
+		createEAttribute(identifierEClass, IDENTIFIER__INDEX);
 
 		activityGroupEClass = createEClass(ACTIVITY_GROUP);
 		createEReference(activityGroupEClass, ACTIVITY_GROUP__OWNED_NODES);
@@ -2365,6 +2376,7 @@ public class BehaviorPackageImpl extends EPackageImpl implements BehaviorPackage
 		initEReference(getScope_Group(), this.getActivityGroup(), this.getActivityGroup_Scope(), "group", null, 0, 1, Scope.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
 		initEClass(identifierEClass, Identifier.class, "Identifier", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
+		initEAttribute(getIdentifier_Index(), theEcorePackage.getEString(), "index", null, 0, 1, Identifier.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, !IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
 		initEClass(activityGroupEClass, ActivityGroup.class, "ActivityGroup", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
 		initEReference(getActivityGroup_OwnedNodes(), this.getActivityNode(), this.getActivityNode_Group(), "ownedNodes", null, 0, -1, ActivityGroup.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);

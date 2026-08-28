@@ -21,22 +21,24 @@ import org.eclipse.xtext.serializer.sequencer.AbstractSyntacticSequencer;
 public class ExprDslSyntacticSequencer extends AbstractSyntacticSequencer {
 
 	protected ExprDslGrammarAccess grammarAccess;
-	protected AbstractElementAlias match_AndOperator_ANDKeyword_1_0_or_AmpersandAmpersandKeyword_1_1_or_AndKeyword_1_2;
+	protected AbstractElementAlias match_AndOperator_ANDKeyword_1_1_or_AmpersandAmpersandKeyword_1_0_or_AndKeyword_1_2;
+	protected AbstractElementAlias match_InOperator_INKeyword_1_0_or_InKeyword_1_1_or_InKeyword_1_2;
 	protected AbstractElementAlias match_NullSpecification_NULLKeyword_1_1_or_NullKeyword_1_0;
-	protected AbstractElementAlias match_OrOperator_ORKeyword_1_0_or_OrKeyword_1_2_or_VerticalLineVerticalLineKeyword_1_1;
-	protected AbstractElementAlias match_PrimaryExpression_LeftParenthesisKeyword_6_0_a;
-	protected AbstractElementAlias match_PrimaryExpression_LeftParenthesisKeyword_6_0_p;
-	protected AbstractElementAlias match_UnaryExpression_ExclamationMarkKeyword_0_1_1_or_NOTKeyword_0_1_0_or_NotKeyword_0_1_2;
+	protected AbstractElementAlias match_OrOperator_ORKeyword_1_1_or_OrKeyword_1_2_or_VerticalLineVerticalLineKeyword_1_0;
+	protected AbstractElementAlias match_PrimaryExpression_LeftParenthesisKeyword_7_0_a;
+	protected AbstractElementAlias match_PrimaryExpression_LeftParenthesisKeyword_7_0_p;
+	protected AbstractElementAlias match_UnaryExpression_ExclamationMarkKeyword_0_1_0_or_NOTKeyword_0_1_1_or_NotKeyword_0_1_2;
 	
 	@Inject
 	protected void init(IGrammarAccess access) {
 		grammarAccess = (ExprDslGrammarAccess) access;
-		match_AndOperator_ANDKeyword_1_0_or_AmpersandAmpersandKeyword_1_1_or_AndKeyword_1_2 = new AlternativeAlias(false, false, new TokenAlias(false, false, grammarAccess.getAndOperatorAccess().getANDKeyword_1_0()), new TokenAlias(false, false, grammarAccess.getAndOperatorAccess().getAmpersandAmpersandKeyword_1_1()), new TokenAlias(false, false, grammarAccess.getAndOperatorAccess().getAndKeyword_1_2()));
+		match_AndOperator_ANDKeyword_1_1_or_AmpersandAmpersandKeyword_1_0_or_AndKeyword_1_2 = new AlternativeAlias(false, false, new TokenAlias(false, false, grammarAccess.getAndOperatorAccess().getANDKeyword_1_1()), new TokenAlias(false, false, grammarAccess.getAndOperatorAccess().getAmpersandAmpersandKeyword_1_0()), new TokenAlias(false, false, grammarAccess.getAndOperatorAccess().getAndKeyword_1_2()));
+		match_InOperator_INKeyword_1_0_or_InKeyword_1_1_or_InKeyword_1_2 = new AlternativeAlias(false, false, new TokenAlias(false, false, grammarAccess.getInOperatorAccess().getINKeyword_1_0()), new TokenAlias(false, false, grammarAccess.getInOperatorAccess().getInKeyword_1_1()), new TokenAlias(false, false, grammarAccess.getInOperatorAccess().getInKeyword_1_2()));
 		match_NullSpecification_NULLKeyword_1_1_or_NullKeyword_1_0 = new AlternativeAlias(false, false, new TokenAlias(false, false, grammarAccess.getNullSpecificationAccess().getNULLKeyword_1_1()), new TokenAlias(false, false, grammarAccess.getNullSpecificationAccess().getNullKeyword_1_0()));
-		match_OrOperator_ORKeyword_1_0_or_OrKeyword_1_2_or_VerticalLineVerticalLineKeyword_1_1 = new AlternativeAlias(false, false, new TokenAlias(false, false, grammarAccess.getOrOperatorAccess().getORKeyword_1_0()), new TokenAlias(false, false, grammarAccess.getOrOperatorAccess().getOrKeyword_1_2()), new TokenAlias(false, false, grammarAccess.getOrOperatorAccess().getVerticalLineVerticalLineKeyword_1_1()));
-		match_PrimaryExpression_LeftParenthesisKeyword_6_0_a = new TokenAlias(true, true, grammarAccess.getPrimaryExpressionAccess().getLeftParenthesisKeyword_6_0());
-		match_PrimaryExpression_LeftParenthesisKeyword_6_0_p = new TokenAlias(true, false, grammarAccess.getPrimaryExpressionAccess().getLeftParenthesisKeyword_6_0());
-		match_UnaryExpression_ExclamationMarkKeyword_0_1_1_or_NOTKeyword_0_1_0_or_NotKeyword_0_1_2 = new AlternativeAlias(false, false, new TokenAlias(false, false, grammarAccess.getUnaryExpressionAccess().getExclamationMarkKeyword_0_1_1()), new TokenAlias(false, false, grammarAccess.getUnaryExpressionAccess().getNOTKeyword_0_1_0()), new TokenAlias(false, false, grammarAccess.getUnaryExpressionAccess().getNotKeyword_0_1_2()));
+		match_OrOperator_ORKeyword_1_1_or_OrKeyword_1_2_or_VerticalLineVerticalLineKeyword_1_0 = new AlternativeAlias(false, false, new TokenAlias(false, false, grammarAccess.getOrOperatorAccess().getORKeyword_1_1()), new TokenAlias(false, false, grammarAccess.getOrOperatorAccess().getOrKeyword_1_2()), new TokenAlias(false, false, grammarAccess.getOrOperatorAccess().getVerticalLineVerticalLineKeyword_1_0()));
+		match_PrimaryExpression_LeftParenthesisKeyword_7_0_a = new TokenAlias(true, true, grammarAccess.getPrimaryExpressionAccess().getLeftParenthesisKeyword_7_0());
+		match_PrimaryExpression_LeftParenthesisKeyword_7_0_p = new TokenAlias(true, false, grammarAccess.getPrimaryExpressionAccess().getLeftParenthesisKeyword_7_0());
+		match_UnaryExpression_ExclamationMarkKeyword_0_1_0_or_NOTKeyword_0_1_1_or_NotKeyword_0_1_2 = new AlternativeAlias(false, false, new TokenAlias(false, false, grammarAccess.getUnaryExpressionAccess().getExclamationMarkKeyword_0_1_0()), new TokenAlias(false, false, grammarAccess.getUnaryExpressionAccess().getNOTKeyword_0_1_1()), new TokenAlias(false, false, grammarAccess.getUnaryExpressionAccess().getNotKeyword_0_1_2()));
 	}
 	
 	@Override
@@ -51,18 +53,20 @@ public class ExprDslSyntacticSequencer extends AbstractSyntacticSequencer {
 		List<INode> transitionNodes = collectNodes(fromNode, toNode);
 		for (AbstractElementAlias syntax : transition.getAmbiguousSyntaxes()) {
 			List<INode> syntaxNodes = getNodesFor(transitionNodes, syntax);
-			if (match_AndOperator_ANDKeyword_1_0_or_AmpersandAmpersandKeyword_1_1_or_AndKeyword_1_2.equals(syntax))
-				emit_AndOperator_ANDKeyword_1_0_or_AmpersandAmpersandKeyword_1_1_or_AndKeyword_1_2(semanticObject, getLastNavigableState(), syntaxNodes);
+			if (match_AndOperator_ANDKeyword_1_1_or_AmpersandAmpersandKeyword_1_0_or_AndKeyword_1_2.equals(syntax))
+				emit_AndOperator_ANDKeyword_1_1_or_AmpersandAmpersandKeyword_1_0_or_AndKeyword_1_2(semanticObject, getLastNavigableState(), syntaxNodes);
+			else if (match_InOperator_INKeyword_1_0_or_InKeyword_1_1_or_InKeyword_1_2.equals(syntax))
+				emit_InOperator_INKeyword_1_0_or_InKeyword_1_1_or_InKeyword_1_2(semanticObject, getLastNavigableState(), syntaxNodes);
 			else if (match_NullSpecification_NULLKeyword_1_1_or_NullKeyword_1_0.equals(syntax))
 				emit_NullSpecification_NULLKeyword_1_1_or_NullKeyword_1_0(semanticObject, getLastNavigableState(), syntaxNodes);
-			else if (match_OrOperator_ORKeyword_1_0_or_OrKeyword_1_2_or_VerticalLineVerticalLineKeyword_1_1.equals(syntax))
-				emit_OrOperator_ORKeyword_1_0_or_OrKeyword_1_2_or_VerticalLineVerticalLineKeyword_1_1(semanticObject, getLastNavigableState(), syntaxNodes);
-			else if (match_PrimaryExpression_LeftParenthesisKeyword_6_0_a.equals(syntax))
-				emit_PrimaryExpression_LeftParenthesisKeyword_6_0_a(semanticObject, getLastNavigableState(), syntaxNodes);
-			else if (match_PrimaryExpression_LeftParenthesisKeyword_6_0_p.equals(syntax))
-				emit_PrimaryExpression_LeftParenthesisKeyword_6_0_p(semanticObject, getLastNavigableState(), syntaxNodes);
-			else if (match_UnaryExpression_ExclamationMarkKeyword_0_1_1_or_NOTKeyword_0_1_0_or_NotKeyword_0_1_2.equals(syntax))
-				emit_UnaryExpression_ExclamationMarkKeyword_0_1_1_or_NOTKeyword_0_1_0_or_NotKeyword_0_1_2(semanticObject, getLastNavigableState(), syntaxNodes);
+			else if (match_OrOperator_ORKeyword_1_1_or_OrKeyword_1_2_or_VerticalLineVerticalLineKeyword_1_0.equals(syntax))
+				emit_OrOperator_ORKeyword_1_1_or_OrKeyword_1_2_or_VerticalLineVerticalLineKeyword_1_0(semanticObject, getLastNavigableState(), syntaxNodes);
+			else if (match_PrimaryExpression_LeftParenthesisKeyword_7_0_a.equals(syntax))
+				emit_PrimaryExpression_LeftParenthesisKeyword_7_0_a(semanticObject, getLastNavigableState(), syntaxNodes);
+			else if (match_PrimaryExpression_LeftParenthesisKeyword_7_0_p.equals(syntax))
+				emit_PrimaryExpression_LeftParenthesisKeyword_7_0_p(semanticObject, getLastNavigableState(), syntaxNodes);
+			else if (match_UnaryExpression_ExclamationMarkKeyword_0_1_0_or_NOTKeyword_0_1_1_or_NotKeyword_0_1_2.equals(syntax))
+				emit_UnaryExpression_ExclamationMarkKeyword_0_1_0_or_NOTKeyword_0_1_1_or_NotKeyword_0_1_2(semanticObject, getLastNavigableState(), syntaxNodes);
 			else acceptNodes(getLastNavigableState(), syntaxNodes);
 		}
 	}
@@ -70,14 +74,28 @@ public class ExprDslSyntacticSequencer extends AbstractSyntacticSequencer {
 	/**
 	 * <pre>
 	 * Ambiguous syntax:
-	 *     'AND' | '&&' | 'and'
+	 *     '&&' | 'AND' | 'and'
 	 *
 	 * This ambiguous syntax occurs at:
 	 *     (rule start) (ambiguity) (rule start)
 	 
 	 * </pre>
 	 */
-	protected void emit_AndOperator_ANDKeyword_1_0_or_AmpersandAmpersandKeyword_1_1_or_AndKeyword_1_2(EObject semanticObject, ISynNavigable transition, List<INode> nodes) {
+	protected void emit_AndOperator_ANDKeyword_1_1_or_AmpersandAmpersandKeyword_1_0_or_AndKeyword_1_2(EObject semanticObject, ISynNavigable transition, List<INode> nodes) {
+		acceptNodes(transition, nodes);
+	}
+	
+	/**
+	 * <pre>
+	 * Ambiguous syntax:
+	 *     'IN' | 'in' | 'In'
+	 *
+	 * This ambiguous syntax occurs at:
+	 *     (rule start) (ambiguity) (rule start)
+	 
+	 * </pre>
+	 */
+	protected void emit_InOperator_INKeyword_1_0_or_InKeyword_1_1_or_InKeyword_1_2(EObject semanticObject, ISynNavigable transition, List<INode> nodes) {
 		acceptNodes(transition, nodes);
 	}
 	
@@ -98,14 +116,14 @@ public class ExprDslSyntacticSequencer extends AbstractSyntacticSequencer {
 	/**
 	 * <pre>
 	 * Ambiguous syntax:
-	 *     'OR' | '||' | 'or'
+	 *     '||' | 'OR' | 'or'
 	 *
 	 * This ambiguous syntax occurs at:
 	 *     (rule start) (ambiguity) (rule start)
 	 
 	 * </pre>
 	 */
-	protected void emit_OrOperator_ORKeyword_1_0_or_OrKeyword_1_2_or_VerticalLineVerticalLineKeyword_1_1(EObject semanticObject, ISynNavigable transition, List<INode> nodes) {
+	protected void emit_OrOperator_ORKeyword_1_1_or_OrKeyword_1_2_or_VerticalLineVerticalLineKeyword_1_0(EObject semanticObject, ISynNavigable transition, List<INode> nodes) {
 		acceptNodes(transition, nodes);
 	}
 	
@@ -115,9 +133,10 @@ public class ExprDslSyntacticSequencer extends AbstractSyntacticSequencer {
 	 *     '('*
 	 *
 	 * This ambiguous syntax occurs at:
-	 *     (rule start) (ambiguity) ('NOT' | '!' | 'not') expr=PrimaryExpression
+	 *     (rule start) (ambiguity) ('!' | 'NOT' | 'not') expr=PrimaryExpression
 	 *     (rule start) (ambiguity) identifier=Identifier
 	 *     (rule start) (ambiguity) value=BooleanSpecification
+	 *     (rule start) (ambiguity) value=EnumSpecification
 	 *     (rule start) (ambiguity) value=IntegerSpecification
 	 *     (rule start) (ambiguity) value=NullSpecification
 	 *     (rule start) (ambiguity) value=RealSpecification
@@ -126,7 +145,7 @@ public class ExprDslSyntacticSequencer extends AbstractSyntacticSequencer {
 	 
 	 * </pre>
 	 */
-	protected void emit_PrimaryExpression_LeftParenthesisKeyword_6_0_a(EObject semanticObject, ISynNavigable transition, List<INode> nodes) {
+	protected void emit_PrimaryExpression_LeftParenthesisKeyword_7_0_a(EObject semanticObject, ISynNavigable transition, List<INode> nodes) {
 		acceptNodes(transition, nodes);
 	}
 	
@@ -136,20 +155,20 @@ public class ExprDslSyntacticSequencer extends AbstractSyntacticSequencer {
 	 *     '('+
 	 *
 	 * This ambiguous syntax occurs at:
-	 *     (rule start) (ambiguity) ('NOT' | '!' | 'not') expr=PrimaryExpression
+	 *     (rule start) (ambiguity) ('!' | 'NOT' | 'not') expr=PrimaryExpression
 	 *     (rule start) (ambiguity) identifier=Identifier
 	 *     (rule start) (ambiguity) {BinaryExpression.leftExpr=}
 	 
 	 * </pre>
 	 */
-	protected void emit_PrimaryExpression_LeftParenthesisKeyword_6_0_p(EObject semanticObject, ISynNavigable transition, List<INode> nodes) {
+	protected void emit_PrimaryExpression_LeftParenthesisKeyword_7_0_p(EObject semanticObject, ISynNavigable transition, List<INode> nodes) {
 		acceptNodes(transition, nodes);
 	}
 	
 	/**
 	 * <pre>
 	 * Ambiguous syntax:
-	 *     'NOT' | '!' | 'not'
+	 *     '!' | 'NOT' | 'not'
 	 *
 	 * This ambiguous syntax occurs at:
 	 *     (rule start) '('* (ambiguity) expr=PrimaryExpression
@@ -157,7 +176,7 @@ public class ExprDslSyntacticSequencer extends AbstractSyntacticSequencer {
 	 
 	 * </pre>
 	 */
-	protected void emit_UnaryExpression_ExclamationMarkKeyword_0_1_1_or_NOTKeyword_0_1_0_or_NotKeyword_0_1_2(EObject semanticObject, ISynNavigable transition, List<INode> nodes) {
+	protected void emit_UnaryExpression_ExclamationMarkKeyword_0_1_0_or_NOTKeyword_0_1_1_or_NotKeyword_0_1_2(EObject semanticObject, ISynNavigable transition, List<INode> nodes) {
 		acceptNodes(transition, nodes);
 	}
 	

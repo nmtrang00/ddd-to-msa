@@ -49,6 +49,7 @@ public class OperationItemProvider extends NamedElementItemProvider {
 			super.getPropertyDescriptors(object);
 
 			addDefinesIdentityPropertyDescriptor(object);
+			addToExposePropertyDescriptor(object);
 			addTypePropertyDescriptor(object);
 			addBehaviorPropertyDescriptor(object);
 			addInterfacePropertyDescriptor(object);
@@ -71,6 +72,28 @@ public class OperationItemProvider extends NamedElementItemProvider {
 				 getString("_UI_DefinesIdentityObject_definesIdentity_feature"),
 				 getString("_UI_PropertyDescriptor_description", "_UI_DefinesIdentityObject_definesIdentity_feature", "_UI_DefinesIdentityObject_type"),
 				 DactPackage.Literals.DEFINES_IDENTITY_OBJECT__DEFINES_IDENTITY,
+				 true,
+				 false,
+				 false,
+				 ItemPropertyDescriptor.GENERIC_VALUE_IMAGE,
+				 null,
+				 null));
+	}
+
+	/**
+	 * This adds a property descriptor for the To Expose feature.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	protected void addToExposePropertyDescriptor(Object object) {
+		itemPropertyDescriptors.add
+			(createItemPropertyDescriptor
+				(((ComposeableAdapterFactory)adapterFactory).getRootAdapterFactory(),
+				 getResourceLocator(),
+				 getString("_UI_Operation_toExpose_feature"),
+				 getString("_UI_PropertyDescriptor_description", "_UI_Operation_toExpose_feature", "_UI_Operation_type"),
+				 DactPackage.Literals.OPERATION__TO_EXPOSE,
 				 true,
 				 false,
 				 false,
@@ -236,6 +259,7 @@ public class OperationItemProvider extends NamedElementItemProvider {
 
 		switch (notification.getFeatureID(Operation.class)) {
 			case DactPackage.OPERATION__DEFINES_IDENTITY:
+			case DactPackage.OPERATION__TO_EXPOSE:
 			case DactPackage.OPERATION__TYPE:
 				fireNotifyChanged(new ViewerNotification(notification, notification.getNotifier(), false, true));
 				return;

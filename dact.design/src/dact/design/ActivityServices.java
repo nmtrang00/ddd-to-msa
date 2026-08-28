@@ -10,6 +10,7 @@ import java.util.stream.StreamSupport;
 import dact.DactFactory;
 import dact.Service;
 import dact.Operation;
+import dact.OperationType;
 import dact.Activity;
 import dact.ActivityModel;
 import dact.ActivityGroup;
@@ -49,6 +50,17 @@ public class ActivityServices {
                 .map(Operation.class::cast)
                 .filter(op -> op.eContainer() instanceof Service)
                 .collect(Collectors.toList());
+        
+        // Domain Object Operations
+        List<Operation> constructorOps = StreamSupport.stream(iterable.spliterator(), false)
+                .filter(Operation.class::isInstance)
+                .map(Operation.class::cast)
+                .filter(op -> (
+                		op.getType() == OperationType.D2_COMPOUND_MUTATOR ||
+                		op.getType() == OperationType.D4_COMPOUND_ACCESSOR))
+                .collect(Collectors.toList());
+        allOperations.addAll(constructorOps);
+        
         allOperations.add(null);
         return allOperations;
     }

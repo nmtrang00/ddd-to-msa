@@ -2497,79 +2497,6 @@ public interface DataPackage extends EPackage {
 	int ENUMERATION_OPERATION_COUNT = COMPLEX_TYPE_OPERATION_COUNT + 0;
 
 	/**
-	 * The meta object id for the '{@link lemma.adapted.xcore.data.impl.EnumerationFieldImpl <em>Enumeration Field</em>}' class.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @see lemma.adapted.xcore.data.impl.EnumerationFieldImpl
-	 * @see lemma.adapted.xcore.data.impl.DataPackageImpl#getEnumerationField()
-	 * @generated
-	 */
-	int ENUMERATION_FIELD = 25;
-
-	/**
-	 * The feature id for the '<em><b>Name</b></em>' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int ENUMERATION_FIELD__NAME = 0;
-
-	/**
-	 * The feature id for the '<em><b>Initialization Value</b></em>' containment reference.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int ENUMERATION_FIELD__INITIALIZATION_VALUE = 1;
-
-	/**
-	 * The feature id for the '<em><b>Enumeration</b></em>' container reference.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int ENUMERATION_FIELD__ENUMERATION = 2;
-
-	/**
-	 * The number of structural features of the '<em>Enumeration Field</em>' class.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int ENUMERATION_FIELD_FEATURE_COUNT = 3;
-
-	/**
-	 * The operation id for the '<em>Get Qualified Name Parts</em>' operation.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int ENUMERATION_FIELD___GET_QUALIFIED_NAME_PARTS = 0;
-
-	/**
-	 * The operation id for the '<em>Build Qualified Name</em>' operation.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int ENUMERATION_FIELD___BUILD_QUALIFIED_NAME__STRING = 1;
-
-	/**
-	 * The number of operations of the '<em>Enumeration Field</em>' class.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int ENUMERATION_FIELD_OPERATION_COUNT = 2;
-
-	/**
 	 * The meta object id for the '{@link lemma.adapted.xcore.data.impl.ValueSpecificationImpl <em>Value Specification</em>}' class.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -2596,6 +2523,79 @@ public interface DataPackage extends EPackage {
 	 * @ordered
 	 */
 	int VALUE_SPECIFICATION_OPERATION_COUNT = 0;
+
+	/**
+	 * The meta object id for the '{@link lemma.adapted.xcore.data.impl.EnumerationFieldImpl <em>Enumeration Field</em>}' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see lemma.adapted.xcore.data.impl.EnumerationFieldImpl
+	 * @see lemma.adapted.xcore.data.impl.DataPackageImpl#getEnumerationField()
+	 * @generated
+	 */
+	int ENUMERATION_FIELD = 25;
+
+	/**
+	 * The feature id for the '<em><b>Name</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int ENUMERATION_FIELD__NAME = VALUE_SPECIFICATION_FEATURE_COUNT + 0;
+
+	/**
+	 * The feature id for the '<em><b>Initialization Value</b></em>' containment reference.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int ENUMERATION_FIELD__INITIALIZATION_VALUE = VALUE_SPECIFICATION_FEATURE_COUNT + 1;
+
+	/**
+	 * The feature id for the '<em><b>Enumeration</b></em>' container reference.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int ENUMERATION_FIELD__ENUMERATION = VALUE_SPECIFICATION_FEATURE_COUNT + 2;
+
+	/**
+	 * The number of structural features of the '<em>Enumeration Field</em>' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int ENUMERATION_FIELD_FEATURE_COUNT = VALUE_SPECIFICATION_FEATURE_COUNT + 3;
+
+	/**
+	 * The operation id for the '<em>Get Qualified Name Parts</em>' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int ENUMERATION_FIELD___GET_QUALIFIED_NAME_PARTS = VALUE_SPECIFICATION_OPERATION_COUNT + 0;
+
+	/**
+	 * The operation id for the '<em>Build Qualified Name</em>' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int ENUMERATION_FIELD___BUILD_QUALIFIED_NAME__STRING = VALUE_SPECIFICATION_OPERATION_COUNT + 1;
+
+	/**
+	 * The number of operations of the '<em>Enumeration Field</em>' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int ENUMERATION_FIELD_OPERATION_COUNT = VALUE_SPECIFICATION_OPERATION_COUNT + 2;
 
 	/**
 	 * The meta object id for the '{@link lemma.adapted.xcore.data.impl.PrimitiveValueImpl <em>Primitive Value</em>}' class.

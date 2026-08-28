@@ -61,7 +61,9 @@ mapping DACT::BoundedContext::BoundedContextToMicroservice() : SERV::Microservic
 	interfaces := self.ownedElements[DACT::Interface] -> map InterfaceToInterface();
 	// Reset cache
 	ENDPOINT_CACHE := Sequence{};
-	interfaces += self.ownedElements[DACT::Service] -> map ServiceToDefaultController();
+	interfaces += self.ownedElements[DACT::Service] 
+		-> select(s | s.ownedOperations -> exists(o|o.toExpose))
+		-> map ServiceToDefaultController();
 	// Reset cache
 	ENDPOINT_CACHE := Sequence{};
 	self.ownedElements[DACT::Repository] -> RepositoryToDefaultController();

@@ -1705,6 +1705,29 @@ public class DactItemProviderAdapterFactory extends DactAdapterFactory implement
 	}
 
 	/**
+	 * This keeps track of the one adapter used for all {@link dact.In} instances.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	protected InItemProvider inItemProvider;
+
+	/**
+	 * This creates an adapter for a {@link dact.In}.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	@Override
+	public Adapter createInAdapter() {
+		if (inItemProvider == null) {
+			inItemProvider = new InItemProvider(this);
+		}
+
+		return inItemProvider;
+	}
+
+	/**
 	 * This returns the root adapter factory that contains this factory.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -1880,6 +1903,7 @@ public class DactItemProviderAdapterFactory extends DactAdapterFactory implement
 		if (neItemProvider != null) neItemProvider.dispose();
 		if (andItemProvider != null) andItemProvider.dispose();
 		if (orItemProvider != null) orItemProvider.dispose();
+		if (inItemProvider != null) inItemProvider.dispose();
 	}
 
 }

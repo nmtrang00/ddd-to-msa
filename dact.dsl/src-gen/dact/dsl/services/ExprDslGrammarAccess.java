@@ -139,28 +139,28 @@ public class ExprDslGrammarAccess extends AbstractElementFinder.AbstractGrammarE
 		private final Group cGroup = (Group)rule.eContents().get(1);
 		private final Action cOrAction_0 = (Action)cGroup.eContents().get(0);
 		private final Alternatives cAlternatives_1 = (Alternatives)cGroup.eContents().get(1);
-		private final Keyword cORKeyword_1_0 = (Keyword)cAlternatives_1.eContents().get(0);
-		private final Keyword cVerticalLineVerticalLineKeyword_1_1 = (Keyword)cAlternatives_1.eContents().get(1);
+		private final Keyword cVerticalLineVerticalLineKeyword_1_0 = (Keyword)cAlternatives_1.eContents().get(0);
+		private final Keyword cORKeyword_1_1 = (Keyword)cAlternatives_1.eContents().get(1);
 		private final Keyword cOrKeyword_1_2 = (Keyword)cAlternatives_1.eContents().get(2);
 		
 		//OrOperator returns dact::Operator:
-		//    {dact::Or} ('OR' | '||' | 'or');
+		//    {dact::Or} ('||' | 'OR' | 'or');
 		@Override public ParserRule getRule() { return rule; }
 		
-		//{dact::Or} ('OR' | '||' | 'or')
+		//{dact::Or} ('||' | 'OR' | 'or')
 		public Group getGroup() { return cGroup; }
 		
 		//{dact::Or}
 		public Action getOrAction_0() { return cOrAction_0; }
 		
-		//('OR' | '||' | 'or')
+		//('||' | 'OR' | 'or')
 		public Alternatives getAlternatives_1() { return cAlternatives_1; }
 		
-		//'OR'
-		public Keyword getORKeyword_1_0() { return cORKeyword_1_0; }
-		
 		//'||'
-		public Keyword getVerticalLineVerticalLineKeyword_1_1() { return cVerticalLineVerticalLineKeyword_1_1; }
+		public Keyword getVerticalLineVerticalLineKeyword_1_0() { return cVerticalLineVerticalLineKeyword_1_0; }
+		
+		//'OR'
+		public Keyword getORKeyword_1_1() { return cORKeyword_1_1; }
 		
 		//'or'
 		public Keyword getOrKeyword_1_2() { return cOrKeyword_1_2; }
@@ -221,28 +221,28 @@ public class ExprDslGrammarAccess extends AbstractElementFinder.AbstractGrammarE
 		private final Group cGroup = (Group)rule.eContents().get(1);
 		private final Action cAndAction_0 = (Action)cGroup.eContents().get(0);
 		private final Alternatives cAlternatives_1 = (Alternatives)cGroup.eContents().get(1);
-		private final Keyword cANDKeyword_1_0 = (Keyword)cAlternatives_1.eContents().get(0);
-		private final Keyword cAmpersandAmpersandKeyword_1_1 = (Keyword)cAlternatives_1.eContents().get(1);
+		private final Keyword cAmpersandAmpersandKeyword_1_0 = (Keyword)cAlternatives_1.eContents().get(0);
+		private final Keyword cANDKeyword_1_1 = (Keyword)cAlternatives_1.eContents().get(1);
 		private final Keyword cAndKeyword_1_2 = (Keyword)cAlternatives_1.eContents().get(2);
 		
 		//AndOperator returns dact::Operator:
-		//    {dact::And} ('AND' | '&&' | 'and');
+		//    {dact::And} ('&&' | 'AND' | 'and');
 		@Override public ParserRule getRule() { return rule; }
 		
-		//{dact::And} ('AND' | '&&' | 'and')
+		//{dact::And} ('&&' | 'AND' | 'and')
 		public Group getGroup() { return cGroup; }
 		
 		//{dact::And}
 		public Action getAndAction_0() { return cAndAction_0; }
 		
-		//('AND' | '&&' | 'and')
+		//('&&' | 'AND' | 'and')
 		public Alternatives getAlternatives_1() { return cAlternatives_1; }
 		
-		//'AND'
-		public Keyword getANDKeyword_1_0() { return cANDKeyword_1_0; }
-		
 		//'&&'
-		public Keyword getAmpersandAmpersandKeyword_1_1() { return cAmpersandAmpersandKeyword_1_1; }
+		public Keyword getAmpersandAmpersandKeyword_1_0() { return cAmpersandAmpersandKeyword_1_0; }
+		
+		//'AND'
+		public Keyword getANDKeyword_1_1() { return cANDKeyword_1_1; }
 		
 		//'and'
 		public Keyword getAndKeyword_1_2() { return cAndKeyword_1_2; }
@@ -394,36 +394,36 @@ public class ExprDslGrammarAccess extends AbstractElementFinder.AbstractGrammarE
 	public class AdditiveExpressionElements extends AbstractParserRuleElementFinder {
 		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "dact.dsl.ExprDsl.AdditiveExpression");
 		private final Group cGroup = (Group)rule.eContents().get(1);
-		private final RuleCall cMultiplicativeExpressionParserRuleCall_0 = (RuleCall)cGroup.eContents().get(0);
+		private final RuleCall cInExpressionParserRuleCall_0 = (RuleCall)cGroup.eContents().get(0);
 		private final Group cGroup_1 = (Group)cGroup.eContents().get(1);
 		private final Action cBinaryExpressionLeftExprAction_1_0 = (Action)cGroup_1.eContents().get(0);
 		private final Assignment cOperatorAssignment_1_1 = (Assignment)cGroup_1.eContents().get(1);
 		private final RuleCall cOperatorAdditiveOperatorParserRuleCall_1_1_0 = (RuleCall)cOperatorAssignment_1_1.eContents().get(0);
 		private final Assignment cRightExprAssignment_1_2 = (Assignment)cGroup_1.eContents().get(2);
-		private final RuleCall cRightExprMultiplicativeExpressionParserRuleCall_1_2_0 = (RuleCall)cRightExprAssignment_1_2.eContents().get(0);
+		private final RuleCall cRightExprInExpressionParserRuleCall_1_2_0 = (RuleCall)cRightExprAssignment_1_2.eContents().get(0);
 		
 		//AdditiveExpression returns dact::Expression:
-		//    MultiplicativeExpression (
+		//    InExpression (
 		//        {dact::BinaryExpression.leftExpr=current}
 		//        operator=AdditiveOperator
-		//        rightExpr=MultiplicativeExpression
+		//        rightExpr=InExpression
 		//    )*;
 		@Override public ParserRule getRule() { return rule; }
 		
-		//MultiplicativeExpression (
+		//InExpression (
 		//    {dact::BinaryExpression.leftExpr=current}
 		//    operator=AdditiveOperator
-		//    rightExpr=MultiplicativeExpression
+		//    rightExpr=InExpression
 		//)*
 		public Group getGroup() { return cGroup; }
 		
-		//MultiplicativeExpression
-		public RuleCall getMultiplicativeExpressionParserRuleCall_0() { return cMultiplicativeExpressionParserRuleCall_0; }
+		//InExpression
+		public RuleCall getInExpressionParserRuleCall_0() { return cInExpressionParserRuleCall_0; }
 		
 		//(
 		//       {dact::BinaryExpression.leftExpr=current}
 		//       operator=AdditiveOperator
-		//       rightExpr=MultiplicativeExpression
+		//       rightExpr=InExpression
 		//   )*
 		public Group getGroup_1() { return cGroup_1; }
 		
@@ -436,11 +436,11 @@ public class ExprDslGrammarAccess extends AbstractElementFinder.AbstractGrammarE
 		//AdditiveOperator
 		public RuleCall getOperatorAdditiveOperatorParserRuleCall_1_1_0() { return cOperatorAdditiveOperatorParserRuleCall_1_1_0; }
 		
-		//rightExpr=MultiplicativeExpression
+		//rightExpr=InExpression
 		public Assignment getRightExprAssignment_1_2() { return cRightExprAssignment_1_2; }
 		
-		//MultiplicativeExpression
-		public RuleCall getRightExprMultiplicativeExpressionParserRuleCall_1_2_0() { return cRightExprMultiplicativeExpressionParserRuleCall_1_2_0; }
+		//InExpression
+		public RuleCall getRightExprInExpressionParserRuleCall_1_2_0() { return cRightExprInExpressionParserRuleCall_1_2_0; }
 	}
 	public class AdditiveOperatorElements extends AbstractParserRuleElementFinder {
 		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "dact.dsl.ExprDsl.AdditiveOperator");
@@ -478,6 +478,88 @@ public class ExprDslGrammarAccess extends AbstractElementFinder.AbstractGrammarE
 		
 		//'-'
 		public Keyword getHyphenMinusKeyword_1_1() { return cHyphenMinusKeyword_1_1; }
+	}
+	public class InExpressionElements extends AbstractParserRuleElementFinder {
+		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "dact.dsl.ExprDsl.InExpression");
+		private final Group cGroup = (Group)rule.eContents().get(1);
+		private final RuleCall cMultiplicativeExpressionParserRuleCall_0 = (RuleCall)cGroup.eContents().get(0);
+		private final Group cGroup_1 = (Group)cGroup.eContents().get(1);
+		private final Action cBinaryExpressionLeftExprAction_1_0 = (Action)cGroup_1.eContents().get(0);
+		private final Assignment cOperatorAssignment_1_1 = (Assignment)cGroup_1.eContents().get(1);
+		private final RuleCall cOperatorInOperatorParserRuleCall_1_1_0 = (RuleCall)cOperatorAssignment_1_1.eContents().get(0);
+		private final Assignment cRightExprAssignment_1_2 = (Assignment)cGroup_1.eContents().get(2);
+		private final RuleCall cRightExprMultiplicativeExpressionParserRuleCall_1_2_0 = (RuleCall)cRightExprAssignment_1_2.eContents().get(0);
+		
+		//InExpression returns dact::Expression:
+		//    MultiplicativeExpression (
+		//        {dact::BinaryExpression.leftExpr=current}
+		//        operator=InOperator
+		//        rightExpr=MultiplicativeExpression
+		//    )*;
+		@Override public ParserRule getRule() { return rule; }
+		
+		//MultiplicativeExpression (
+		//    {dact::BinaryExpression.leftExpr=current}
+		//    operator=InOperator
+		//    rightExpr=MultiplicativeExpression
+		//)*
+		public Group getGroup() { return cGroup; }
+		
+		//MultiplicativeExpression
+		public RuleCall getMultiplicativeExpressionParserRuleCall_0() { return cMultiplicativeExpressionParserRuleCall_0; }
+		
+		//(
+		//       {dact::BinaryExpression.leftExpr=current}
+		//       operator=InOperator
+		//       rightExpr=MultiplicativeExpression
+		//   )*
+		public Group getGroup_1() { return cGroup_1; }
+		
+		//{dact::BinaryExpression.leftExpr=current}
+		public Action getBinaryExpressionLeftExprAction_1_0() { return cBinaryExpressionLeftExprAction_1_0; }
+		
+		//operator=InOperator
+		public Assignment getOperatorAssignment_1_1() { return cOperatorAssignment_1_1; }
+		
+		//InOperator
+		public RuleCall getOperatorInOperatorParserRuleCall_1_1_0() { return cOperatorInOperatorParserRuleCall_1_1_0; }
+		
+		//rightExpr=MultiplicativeExpression
+		public Assignment getRightExprAssignment_1_2() { return cRightExprAssignment_1_2; }
+		
+		//MultiplicativeExpression
+		public RuleCall getRightExprMultiplicativeExpressionParserRuleCall_1_2_0() { return cRightExprMultiplicativeExpressionParserRuleCall_1_2_0; }
+	}
+	public class InOperatorElements extends AbstractParserRuleElementFinder {
+		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "dact.dsl.ExprDsl.InOperator");
+		private final Group cGroup = (Group)rule.eContents().get(1);
+		private final Action cInAction_0 = (Action)cGroup.eContents().get(0);
+		private final Alternatives cAlternatives_1 = (Alternatives)cGroup.eContents().get(1);
+		private final Keyword cINKeyword_1_0 = (Keyword)cAlternatives_1.eContents().get(0);
+		private final Keyword cInKeyword_1_1 = (Keyword)cAlternatives_1.eContents().get(1);
+		private final Keyword cInKeyword_1_2 = (Keyword)cAlternatives_1.eContents().get(2);
+		
+		//InOperator returns dact::Operator:
+		//    {dact::In} ('IN' | 'in' | 'In');
+		@Override public ParserRule getRule() { return rule; }
+		
+		//{dact::In} ('IN' | 'in' | 'In')
+		public Group getGroup() { return cGroup; }
+		
+		//{dact::In}
+		public Action getInAction_0() { return cInAction_0; }
+		
+		//('IN' | 'in' | 'In')
+		public Alternatives getAlternatives_1() { return cAlternatives_1; }
+		
+		//'IN'
+		public Keyword getINKeyword_1_0() { return cINKeyword_1_0; }
+		
+		//'in'
+		public Keyword getInKeyword_1_1() { return cInKeyword_1_1; }
+		
+		//'In'
+		public Keyword getInKeyword_1_2() { return cInKeyword_1_2; }
 	}
 	public class MultiplicativeExpressionElements extends AbstractParserRuleElementFinder {
 		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "dact.dsl.ExprDsl.MultiplicativeExpression");
@@ -573,36 +655,36 @@ public class ExprDslGrammarAccess extends AbstractElementFinder.AbstractGrammarE
 		private final Group cGroup_0 = (Group)cAlternatives.eContents().get(0);
 		private final Action cNotExpressionAction_0_0 = (Action)cGroup_0.eContents().get(0);
 		private final Alternatives cAlternatives_0_1 = (Alternatives)cGroup_0.eContents().get(1);
-		private final Keyword cNOTKeyword_0_1_0 = (Keyword)cAlternatives_0_1.eContents().get(0);
-		private final Keyword cExclamationMarkKeyword_0_1_1 = (Keyword)cAlternatives_0_1.eContents().get(1);
+		private final Keyword cExclamationMarkKeyword_0_1_0 = (Keyword)cAlternatives_0_1.eContents().get(0);
+		private final Keyword cNOTKeyword_0_1_1 = (Keyword)cAlternatives_0_1.eContents().get(1);
 		private final Keyword cNotKeyword_0_1_2 = (Keyword)cAlternatives_0_1.eContents().get(2);
 		private final Assignment cExprAssignment_0_2 = (Assignment)cGroup_0.eContents().get(2);
 		private final RuleCall cExprPrimaryExpressionParserRuleCall_0_2_0 = (RuleCall)cExprAssignment_0_2.eContents().get(0);
 		private final RuleCall cPrimaryExpressionParserRuleCall_1 = (RuleCall)cAlternatives.eContents().get(1);
 		
 		//UnaryExpression returns dact::Expression:
-		//    {dact::NotExpression} ('NOT' | '!' | 'not') expr=PrimaryExpression
+		//    {dact::NotExpression} ( '!' | 'NOT' | 'not') expr=PrimaryExpression
 		//  | PrimaryExpression;
 		@Override public ParserRule getRule() { return rule; }
 		
-		//  {dact::NotExpression} ('NOT' | '!' | 'not') expr=PrimaryExpression
+		//  {dact::NotExpression} ( '!' | 'NOT' | 'not') expr=PrimaryExpression
 		//| PrimaryExpression
 		public Alternatives getAlternatives() { return cAlternatives; }
 		
-		//{dact::NotExpression} ('NOT' | '!' | 'not') expr=PrimaryExpression
+		//{dact::NotExpression} ( '!' | 'NOT' | 'not') expr=PrimaryExpression
 		public Group getGroup_0() { return cGroup_0; }
 		
 		//{dact::NotExpression}
 		public Action getNotExpressionAction_0_0() { return cNotExpressionAction_0_0; }
 		
-		//('NOT' | '!' | 'not')
+		//( '!' | 'NOT' | 'not')
 		public Alternatives getAlternatives_0_1() { return cAlternatives_0_1; }
 		
-		//'NOT'
-		public Keyword getNOTKeyword_0_1_0() { return cNOTKeyword_0_1_0; }
-		
 		//'!'
-		public Keyword getExclamationMarkKeyword_0_1_1() { return cExclamationMarkKeyword_0_1_1; }
+		public Keyword getExclamationMarkKeyword_0_1_0() { return cExclamationMarkKeyword_0_1_0; }
+		
+		//'NOT'
+		public Keyword getNOTKeyword_0_1_1() { return cNOTKeyword_0_1_1; }
 		
 		//'not'
 		public Keyword getNotKeyword_0_1_2() { return cNotKeyword_0_1_2; }
@@ -624,11 +706,12 @@ public class ExprDslGrammarAccess extends AbstractElementFinder.AbstractGrammarE
 		private final RuleCall cLiteralStringParserRuleCall_2 = (RuleCall)cAlternatives.eContents().get(2);
 		private final RuleCall cLiteralBooleanParserRuleCall_3 = (RuleCall)cAlternatives.eContents().get(3);
 		private final RuleCall cLiteralNullParserRuleCall_4 = (RuleCall)cAlternatives.eContents().get(4);
-		private final RuleCall cPropertyAccessParserRuleCall_5 = (RuleCall)cAlternatives.eContents().get(5);
-		private final Group cGroup_6 = (Group)cAlternatives.eContents().get(6);
-		private final Keyword cLeftParenthesisKeyword_6_0 = (Keyword)cGroup_6.eContents().get(0);
-		private final RuleCall cAssignmentExpressionParserRuleCall_6_1 = (RuleCall)cGroup_6.eContents().get(1);
-		private final Keyword cRightParenthesisKeyword_6_2 = (Keyword)cGroup_6.eContents().get(2);
+		private final RuleCall cLiteralEnumParserRuleCall_5 = (RuleCall)cAlternatives.eContents().get(5);
+		private final RuleCall cPropertyAccessParserRuleCall_6 = (RuleCall)cAlternatives.eContents().get(6);
+		private final Group cGroup_7 = (Group)cAlternatives.eContents().get(7);
+		private final Keyword cLeftParenthesisKeyword_7_0 = (Keyword)cGroup_7.eContents().get(0);
+		private final RuleCall cAssignmentExpressionParserRuleCall_7_1 = (RuleCall)cGroup_7.eContents().get(1);
+		private final Keyword cRightParenthesisKeyword_7_2 = (Keyword)cGroup_7.eContents().get(2);
 		
 		//// Level 7: Primary Expressions & Literals
 		//PrimaryExpression returns dact::Expression:
@@ -637,6 +720,7 @@ public class ExprDslGrammarAccess extends AbstractElementFinder.AbstractGrammarE
 		//  | LiteralString
 		//  | LiteralBoolean
 		//  | LiteralNull
+		//  | LiteralEnum
 		//  | PropertyAccess
 		//  | '(' AssignmentExpression ')'
 		//;
@@ -647,6 +731,7 @@ public class ExprDslGrammarAccess extends AbstractElementFinder.AbstractGrammarE
 		//| LiteralString
 		//| LiteralBoolean
 		//| LiteralNull
+		//| LiteralEnum
 		//| PropertyAccess
 		//| '(' AssignmentExpression ')'
 		public Alternatives getAlternatives() { return cAlternatives; }
@@ -666,20 +751,23 @@ public class ExprDslGrammarAccess extends AbstractElementFinder.AbstractGrammarE
 		//LiteralNull
 		public RuleCall getLiteralNullParserRuleCall_4() { return cLiteralNullParserRuleCall_4; }
 		
+		//LiteralEnum
+		public RuleCall getLiteralEnumParserRuleCall_5() { return cLiteralEnumParserRuleCall_5; }
+		
 		//PropertyAccess
-		public RuleCall getPropertyAccessParserRuleCall_5() { return cPropertyAccessParserRuleCall_5; }
+		public RuleCall getPropertyAccessParserRuleCall_6() { return cPropertyAccessParserRuleCall_6; }
 		
 		//'(' AssignmentExpression ')'
-		public Group getGroup_6() { return cGroup_6; }
+		public Group getGroup_7() { return cGroup_7; }
 		
 		//'('
-		public Keyword getLeftParenthesisKeyword_6_0() { return cLeftParenthesisKeyword_6_0; }
+		public Keyword getLeftParenthesisKeyword_7_0() { return cLeftParenthesisKeyword_7_0; }
 		
 		//AssignmentExpression
-		public RuleCall getAssignmentExpressionParserRuleCall_6_1() { return cAssignmentExpressionParserRuleCall_6_1; }
+		public RuleCall getAssignmentExpressionParserRuleCall_7_1() { return cAssignmentExpressionParserRuleCall_7_1; }
 		
 		//')'
-		public Keyword getRightParenthesisKeyword_6_2() { return cRightParenthesisKeyword_6_2; }
+		public Keyword getRightParenthesisKeyword_7_2() { return cRightParenthesisKeyword_7_2; }
 	}
 	public class LiteralRealElements extends AbstractParserRuleElementFinder {
 		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "dact.dsl.ExprDsl.LiteralReal");
@@ -943,12 +1031,17 @@ public class ExprDslGrammarAccess extends AbstractElementFinder.AbstractGrammarE
 		private final Action cIdentifierAction_0 = (Action)cGroup.eContents().get(0);
 		private final Assignment cNameAssignment_1 = (Assignment)cGroup.eContents().get(1);
 		private final RuleCall cNameQualifiedNameParserRuleCall_1_0 = (RuleCall)cNameAssignment_1.eContents().get(0);
+		private final Group cGroup_2 = (Group)cGroup.eContents().get(2);
+		private final Keyword cLeftSquareBracketKeyword_2_0 = (Keyword)cGroup_2.eContents().get(0);
+		private final Assignment cIndexAssignment_2_1 = (Assignment)cGroup_2.eContents().get(1);
+		private final RuleCall cIndexSignedIntParserRuleCall_2_1_0 = (RuleCall)cIndexAssignment_2_1.eContents().get(0);
+		private final Keyword cRightSquareBracketKeyword_2_2 = (Keyword)cGroup_2.eContents().get(2);
 		
 		//Identifier returns dact::Identifier:
-		//    {dact::Identifier} name=QualifiedName;
+		//    {dact::Identifier} name=QualifiedName ('[' index=SignedInt ']')?;
 		@Override public ParserRule getRule() { return rule; }
 		
-		//{dact::Identifier} name=QualifiedName
+		//{dact::Identifier} name=QualifiedName ('[' index=SignedInt ']')?
 		public Group getGroup() { return cGroup; }
 		
 		//{dact::Identifier}
@@ -959,6 +1052,40 @@ public class ExprDslGrammarAccess extends AbstractElementFinder.AbstractGrammarE
 		
 		//QualifiedName
 		public RuleCall getNameQualifiedNameParserRuleCall_1_0() { return cNameQualifiedNameParserRuleCall_1_0; }
+		
+		//('[' index=SignedInt ']')?
+		public Group getGroup_2() { return cGroup_2; }
+		
+		//'['
+		public Keyword getLeftSquareBracketKeyword_2_0() { return cLeftSquareBracketKeyword_2_0; }
+		
+		//index=SignedInt
+		public Assignment getIndexAssignment_2_1() { return cIndexAssignment_2_1; }
+		
+		//SignedInt
+		public RuleCall getIndexSignedIntParserRuleCall_2_1_0() { return cIndexSignedIntParserRuleCall_2_1_0; }
+		
+		//']'
+		public Keyword getRightSquareBracketKeyword_2_2() { return cRightSquareBracketKeyword_2_2; }
+	}
+	public class SignedIntElements extends AbstractParserRuleElementFinder {
+		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "dact.dsl.ExprDsl.SignedInt");
+		private final Group cGroup = (Group)rule.eContents().get(1);
+		private final Keyword cHyphenMinusKeyword_0 = (Keyword)cGroup.eContents().get(0);
+		private final RuleCall cINTTerminalRuleCall_1 = (RuleCall)cGroup.eContents().get(1);
+		
+		//SignedInt returns ecore::EInt:
+		//    '-'? INT;
+		@Override public ParserRule getRule() { return rule; }
+		
+		//'-'? INT
+		public Group getGroup() { return cGroup; }
+		
+		//'-'?
+		public Keyword getHyphenMinusKeyword_0() { return cHyphenMinusKeyword_0; }
+		
+		//INT
+		public RuleCall getINTTerminalRuleCall_1() { return cINTTerminalRuleCall_1; }
 	}
 	public class QualifiedNameElements extends AbstractParserRuleElementFinder {
 		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "dact.dsl.ExprDsl.QualifiedName");
@@ -987,6 +1114,62 @@ public class ExprDslGrammarAccess extends AbstractElementFinder.AbstractGrammarE
 		//ID
 		public RuleCall getIDTerminalRuleCall_1_1() { return cIDTerminalRuleCall_1_1; }
 	}
+	public class LiteralEnumElements extends AbstractParserRuleElementFinder {
+		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "dact.dsl.ExprDsl.LiteralEnum");
+		private final Assignment cValueAssignment = (Assignment)rule.eContents().get(1);
+		private final RuleCall cValueEnumSpecificationParserRuleCall_0 = (RuleCall)cValueAssignment.eContents().get(0);
+		
+		//// ENUM
+		//LiteralEnum returns dact::UnaryExpression:
+		//    value=EnumSpecification;
+		@Override public ParserRule getRule() { return rule; }
+		
+		//value=EnumSpecification
+		public Assignment getValueAssignment() { return cValueAssignment; }
+		
+		//EnumSpecification
+		public RuleCall getValueEnumSpecificationParserRuleCall_0() { return cValueEnumSpecificationParserRuleCall_0; }
+	}
+	public class EnumSpecificationElements extends AbstractParserRuleElementFinder {
+		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "dact.dsl.ExprDsl.EnumSpecification");
+		private final Assignment cNameAssignment = (Assignment)rule.eContents().get(1);
+		private final RuleCall cNameEnumQualifiedNameParserRuleCall_0 = (RuleCall)cNameAssignment.eContents().get(0);
+		
+		//EnumSpecification returns dact::EnumerationLiteral:
+		//    // Matches expressions like 'Status::ACTIVE'
+		//    name=EnumQualifiedName;
+		@Override public ParserRule getRule() { return rule; }
+		
+		//// Matches expressions like 'Status::ACTIVE'
+		//name=EnumQualifiedName
+		public Assignment getNameAssignment() { return cNameAssignment; }
+		
+		//EnumQualifiedName
+		public RuleCall getNameEnumQualifiedNameParserRuleCall_0() { return cNameEnumQualifiedNameParserRuleCall_0; }
+	}
+	public class EnumQualifiedNameElements extends AbstractParserRuleElementFinder {
+		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "dact.dsl.ExprDsl.EnumQualifiedName");
+		private final Group cGroup = (Group)rule.eContents().get(1);
+		private final RuleCall cIDTerminalRuleCall_0 = (RuleCall)cGroup.eContents().get(0);
+		private final Keyword cColonColonKeyword_1 = (Keyword)cGroup.eContents().get(1);
+		private final RuleCall cIDTerminalRuleCall_2 = (RuleCall)cGroup.eContents().get(2);
+		
+		//EnumQualifiedName:
+		//    ID ('::') ID;
+		@Override public ParserRule getRule() { return rule; }
+		
+		//ID ('::') ID
+		public Group getGroup() { return cGroup; }
+		
+		//ID
+		public RuleCall getIDTerminalRuleCall_0() { return cIDTerminalRuleCall_0; }
+		
+		//('::')
+		public Keyword getColonColonKeyword_1() { return cColonColonKeyword_1; }
+		
+		//ID
+		public RuleCall getIDTerminalRuleCall_2() { return cIDTerminalRuleCall_2; }
+	}
 	
 	
 	private final ExpressionElements pExpression;
@@ -999,6 +1182,8 @@ public class ExprDslGrammarAccess extends AbstractElementFinder.AbstractGrammarE
 	private final ComparisonOperatorElements pComparisonOperator;
 	private final AdditiveExpressionElements pAdditiveExpression;
 	private final AdditiveOperatorElements pAdditiveOperator;
+	private final InExpressionElements pInExpression;
+	private final InOperatorElements pInOperator;
 	private final MultiplicativeExpressionElements pMultiplicativeExpression;
 	private final MultiplicativeOperatorElements pMultiplicativeOperator;
 	private final UnaryExpressionElements pUnaryExpression;
@@ -1017,7 +1202,11 @@ public class ExprDslGrammarAccess extends AbstractElementFinder.AbstractGrammarE
 	private final NullSpecificationElements pNullSpecification;
 	private final PropertyAccessElements pPropertyAccess;
 	private final IdentifierElements pIdentifier;
+	private final SignedIntElements pSignedInt;
 	private final QualifiedNameElements pQualifiedName;
+	private final LiteralEnumElements pLiteralEnum;
+	private final EnumSpecificationElements pEnumSpecification;
+	private final EnumQualifiedNameElements pEnumQualifiedName;
 	
 	private final Grammar grammar;
 	
@@ -1038,6 +1227,8 @@ public class ExprDslGrammarAccess extends AbstractElementFinder.AbstractGrammarE
 		this.pComparisonOperator = new ComparisonOperatorElements();
 		this.pAdditiveExpression = new AdditiveExpressionElements();
 		this.pAdditiveOperator = new AdditiveOperatorElements();
+		this.pInExpression = new InExpressionElements();
+		this.pInOperator = new InOperatorElements();
 		this.pMultiplicativeExpression = new MultiplicativeExpressionElements();
 		this.pMultiplicativeOperator = new MultiplicativeOperatorElements();
 		this.pUnaryExpression = new UnaryExpressionElements();
@@ -1056,7 +1247,11 @@ public class ExprDslGrammarAccess extends AbstractElementFinder.AbstractGrammarE
 		this.pNullSpecification = new NullSpecificationElements();
 		this.pPropertyAccess = new PropertyAccessElements();
 		this.pIdentifier = new IdentifierElements();
+		this.pSignedInt = new SignedIntElements();
 		this.pQualifiedName = new QualifiedNameElements();
+		this.pLiteralEnum = new LiteralEnumElements();
+		this.pEnumSpecification = new EnumSpecificationElements();
+		this.pEnumQualifiedName = new EnumQualifiedNameElements();
 	}
 	
 	protected Grammar internalFindGrammar(GrammarProvider grammarProvider) {
@@ -1126,7 +1321,7 @@ public class ExprDslGrammarAccess extends AbstractElementFinder.AbstractGrammarE
 	}
 	
 	//OrOperator returns dact::Operator:
-	//    {dact::Or} ('OR' | '||' | 'or');
+	//    {dact::Or} ('||' | 'OR' | 'or');
 	public OrOperatorElements getOrOperatorAccess() {
 		return pOrOperator;
 	}
@@ -1150,7 +1345,7 @@ public class ExprDslGrammarAccess extends AbstractElementFinder.AbstractGrammarE
 	}
 	
 	//AndOperator returns dact::Operator:
-	//    {dact::And} ('AND' | '&&' | 'and');
+	//    {dact::And} ('&&' | 'AND' | 'and');
 	public AndOperatorElements getAndOperatorAccess() {
 		return pAndOperator;
 	}
@@ -1189,10 +1384,10 @@ public class ExprDslGrammarAccess extends AbstractElementFinder.AbstractGrammarE
 	}
 	
 	//AdditiveExpression returns dact::Expression:
-	//    MultiplicativeExpression (
+	//    InExpression (
 	//        {dact::BinaryExpression.leftExpr=current}
 	//        operator=AdditiveOperator
-	//        rightExpr=MultiplicativeExpression
+	//        rightExpr=InExpression
 	//    )*;
 	public AdditiveExpressionElements getAdditiveExpressionAccess() {
 		return pAdditiveExpression;
@@ -1211,6 +1406,30 @@ public class ExprDslGrammarAccess extends AbstractElementFinder.AbstractGrammarE
 	
 	public ParserRule getAdditiveOperatorRule() {
 		return getAdditiveOperatorAccess().getRule();
+	}
+	
+	//InExpression returns dact::Expression:
+	//    MultiplicativeExpression (
+	//        {dact::BinaryExpression.leftExpr=current}
+	//        operator=InOperator
+	//        rightExpr=MultiplicativeExpression
+	//    )*;
+	public InExpressionElements getInExpressionAccess() {
+		return pInExpression;
+	}
+	
+	public ParserRule getInExpressionRule() {
+		return getInExpressionAccess().getRule();
+	}
+	
+	//InOperator returns dact::Operator:
+	//    {dact::In} ('IN' | 'in' | 'In');
+	public InOperatorElements getInOperatorAccess() {
+		return pInOperator;
+	}
+	
+	public ParserRule getInOperatorRule() {
+		return getInOperatorAccess().getRule();
 	}
 	
 	//MultiplicativeExpression returns dact::Expression:
@@ -1239,7 +1458,7 @@ public class ExprDslGrammarAccess extends AbstractElementFinder.AbstractGrammarE
 	}
 	
 	//UnaryExpression returns dact::Expression:
-	//    {dact::NotExpression} ('NOT' | '!' | 'not') expr=PrimaryExpression
+	//    {dact::NotExpression} ( '!' | 'NOT' | 'not') expr=PrimaryExpression
 	//  | PrimaryExpression;
 	public UnaryExpressionElements getUnaryExpressionAccess() {
 		return pUnaryExpression;
@@ -1256,6 +1475,7 @@ public class ExprDslGrammarAccess extends AbstractElementFinder.AbstractGrammarE
 	//  | LiteralString
 	//  | LiteralBoolean
 	//  | LiteralNull
+	//  | LiteralEnum
 	//  | PropertyAccess
 	//  | '(' AssignmentExpression ')'
 	//;
@@ -1407,13 +1627,23 @@ public class ExprDslGrammarAccess extends AbstractElementFinder.AbstractGrammarE
 	}
 	
 	//Identifier returns dact::Identifier:
-	//    {dact::Identifier} name=QualifiedName;
+	//    {dact::Identifier} name=QualifiedName ('[' index=SignedInt ']')?;
 	public IdentifierElements getIdentifierAccess() {
 		return pIdentifier;
 	}
 	
 	public ParserRule getIdentifierRule() {
 		return getIdentifierAccess().getRule();
+	}
+	
+	//SignedInt returns ecore::EInt:
+	//    '-'? INT;
+	public SignedIntElements getSignedIntAccess() {
+		return pSignedInt;
+	}
+	
+	public ParserRule getSignedIntRule() {
+		return getSignedIntAccess().getRule();
 	}
 	
 	//QualifiedName:
@@ -1424,6 +1654,38 @@ public class ExprDslGrammarAccess extends AbstractElementFinder.AbstractGrammarE
 	
 	public ParserRule getQualifiedNameRule() {
 		return getQualifiedNameAccess().getRule();
+	}
+	
+	//// ENUM
+	//LiteralEnum returns dact::UnaryExpression:
+	//    value=EnumSpecification;
+	public LiteralEnumElements getLiteralEnumAccess() {
+		return pLiteralEnum;
+	}
+	
+	public ParserRule getLiteralEnumRule() {
+		return getLiteralEnumAccess().getRule();
+	}
+	
+	//EnumSpecification returns dact::EnumerationLiteral:
+	//    // Matches expressions like 'Status::ACTIVE'
+	//    name=EnumQualifiedName;
+	public EnumSpecificationElements getEnumSpecificationAccess() {
+		return pEnumSpecification;
+	}
+	
+	public ParserRule getEnumSpecificationRule() {
+		return getEnumSpecificationAccess().getRule();
+	}
+	
+	//EnumQualifiedName:
+	//    ID ('::') ID;
+	public EnumQualifiedNameElements getEnumQualifiedNameAccess() {
+		return pEnumQualifiedName;
+	}
+	
+	public ParserRule getEnumQualifiedNameRule() {
+		return getEnumQualifiedNameAccess().getRule();
 	}
 	
 	//terminal ID: '^'?('a'..'z'|'A'..'Z'|'_') ('a'..'z'|'A'..'Z'|'_'|'0'..'9')*;

@@ -4,6 +4,8 @@
  */
 package dact.validation;
 
+import dact.AggregateRoot;
+
 
 /**
  * A sample validator interface for {@link dact.SharedDomainObject}.
@@ -13,5 +15,7 @@ package dact.validation;
  */
 public interface SharedDomainObjectValidator {
 	boolean validate();
+
+	boolean validateAbstractedRoot(AggregateRoot value);
 
 }

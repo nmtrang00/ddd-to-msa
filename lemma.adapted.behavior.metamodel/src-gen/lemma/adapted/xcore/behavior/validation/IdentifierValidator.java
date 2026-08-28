@@ -14,4 +14,6 @@ package lemma.adapted.xcore.behavior.validation;
 public interface IdentifierValidator {
 	boolean validate();
 
+	boolean validateIndex(String value);
+
 }

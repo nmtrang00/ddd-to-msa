@@ -56,7 +56,6 @@ Package dact <http://www.example.org/xcore/dact>
   Class ValueObject -> InternalDomainObject
 
   Class SharedValueObject -> SharedDomainObject
-    Reference abstractedRoot : AggregateRoot
 
   Class AggregateRoot -> Entity
 
@@ -74,6 +73,7 @@ Package dact <http://www.example.org/xcore/dact>
     Operation PrimitivePropertyRequiresName(EDiagnosticChain, EMap) : EBoolean
 
   Class Operation -> NamedElement, DefinesIdentityObject, DiagnosticSupported
+    Attribute toExpose : EBooleanObject
     Attribute type : OperationType
     Reference behavior : Behavior
     Reference ownedParameters : Parameter<<0..*>>
@@ -111,6 +111,7 @@ Package dact <http://www.example.org/xcore/dact>
     Operation SingleInvariantOperation(EDiagnosticChain, EMap) : EBoolean
 
   Class SharedDomainObject -> DomainObject
+    Reference abstractedRoot : AggregateRoot
 
   Class PrimitiveType -> DataType
 
@@ -129,7 +130,7 @@ Package dact <http://www.example.org/xcore/dact>
 
   Class DataType -> Type
 
-  Class EnumerationLiteral -> NamedElement
+  Class EnumerationLiteral -> NamedElement, ValueSpecification
 
   Class Literal -> ValueSpecification
 
@@ -171,6 +172,7 @@ Package dact <http://www.example.org/xcore/dact>
     Reference group : ActivityGroup
 
   Class Identifier -> NamedElement
+    Attribute index : EIntegerObject
 
   Class ActivityGroup -> NamedElement, DiagnosticSupported
     Reference ownedNodes : ActivityNode<<0..*>>
@@ -362,6 +364,8 @@ Package dact <http://www.example.org/xcore/dact>
   Class And -> LogicalOperator
 
   Class Or -> LogicalOperator
+
+  Class In -> LogicalOperator
 
   Enum OperationType
     Literal S0_DOMAIN_SERVICE = 0

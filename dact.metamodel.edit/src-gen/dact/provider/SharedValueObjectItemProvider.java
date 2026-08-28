@@ -3,7 +3,6 @@
 package dact.provider;
 
 
-import dact.DactPackage;
 import dact.SharedValueObject;
 
 import java.util.Collection;
@@ -11,8 +10,6 @@ import java.util.List;
 
 import org.eclipse.emf.common.notify.AdapterFactory;
 import org.eclipse.emf.common.notify.Notification;
-
-import org.eclipse.emf.edit.provider.ComposeableAdapterFactory;
 import org.eclipse.emf.edit.provider.IItemPropertyDescriptor;
 
 /**
@@ -43,31 +40,8 @@ public class SharedValueObjectItemProvider extends SharedDomainObjectItemProvide
 		if (itemPropertyDescriptors == null) {
 			super.getPropertyDescriptors(object);
 
-			addAbstractedRootPropertyDescriptor(object);
 		}
 		return itemPropertyDescriptors;
-	}
-
-	/**
-	 * This adds a property descriptor for the Abstracted Root feature.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	protected void addAbstractedRootPropertyDescriptor(Object object) {
-		itemPropertyDescriptors.add
-			(createItemPropertyDescriptor
-				(((ComposeableAdapterFactory)adapterFactory).getRootAdapterFactory(),
-				 getResourceLocator(),
-				 getString("_UI_SharedValueObject_abstractedRoot_feature"),
-				 getString("_UI_PropertyDescriptor_description", "_UI_SharedValueObject_abstractedRoot_feature", "_UI_SharedValueObject_type"),
-				 DactPackage.Literals.SHARED_VALUE_OBJECT__ABSTRACTED_ROOT,
-				 true,
-				 false,
-				 true,
-				 null,
-				 null,
-				 null));
 	}
 
 	/**

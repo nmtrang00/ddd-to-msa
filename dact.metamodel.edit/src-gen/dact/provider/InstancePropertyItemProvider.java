@@ -163,6 +163,11 @@ public class InstancePropertyItemProvider extends NamedElementItemProvider {
 		newChildDescriptors.add
 			(createChildParameter
 				(DactPackage.Literals.INSTANCE_PROPERTY__VALUE,
+				 DactFactory.eINSTANCE.createEnumerationLiteral()));
+
+		newChildDescriptors.add
+			(createChildParameter
+				(DactPackage.Literals.INSTANCE_PROPERTY__VALUE,
 				 DactFactory.eINSTANCE.createLiteralNull()));
 
 		newChildDescriptors.add

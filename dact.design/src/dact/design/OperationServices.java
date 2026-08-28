@@ -16,10 +16,15 @@ import dact.SpecRule;
 import dact.Type;
 import dact.Root;
 import dact.Parameter;
+import dact.ParameterDirection;
+import dact.Property;
 import dact.Operation;
+import dact.OperationType;
+import dact.Activity;
 import dact.BoundedContext;
 import dact.SharedDomainObject;
 import dact.Service;
+import dact.DomainObject;
 
 /**
  * The services class used by VSM.
@@ -59,7 +64,11 @@ public class OperationServices {
     	BoundedContext context = getContext(op);
     	if (context != null) {
     		contextName = context.getName();
-    	}else {
+    	}else if(op.getDomainObject() instanceof SharedDomainObject) {
+    		SharedDomainObject domainObject = (SharedDomainObject) op.getDomainObject();
+    		contextName = domainObject.getAbstractedRoot().getContext().getName();
+    	}
+    	else {
     		contextName = "UNDEFINED";
     	}
     	return contextName+sep+parentName+sep+op.getName()+"()";
@@ -71,11 +80,28 @@ public class OperationServices {
         EObject root = EcoreUtil.getRootContainer(object);
         Iterable<EObject> iterable = () -> EcoreUtil.getAllContents(root, true);
 
+        // Service Operations
         List<Operation> allOperations = StreamSupport.stream(iterable.spliterator(), false)
                 .filter(Operation.class::isInstance)
                 .map(Operation.class::cast)
                 .filter(op -> op.eContainer() instanceof Service)
                 .collect(Collectors.toList());
+       
+        // Domain Object Operations
+        List<Operation> constructorOps = StreamSupport.stream(iterable.spliterator(), false)
+                .filter(Operation.class::isInstance)
+                .map(Operation.class::cast)
+                .filter(op -> (
+                		op.getType() == OperationType.D0_CONSTRUCTOR ||
+                		op.getType() == OperationType.D1_SIMPLE_MUTATOR ||
+                		op.getType() == OperationType.D2_COMPOUND_MUTATOR ||
+                		op.getType() == OperationType.D3_SIMPLE_ACCESSOR ||
+                		op.getType() == OperationType.D4_COMPOUND_ACCESSOR ||
+                		op.getType() == OperationType.D5_SPECIFICATION))
+                .collect(Collectors.toList());
+        allOperations.addAll(constructorOps);
+        
+   
         allOperations.add(null);
         return allOperations;
     }
@@ -105,6 +131,11 @@ public class OperationServices {
         if (root instanceof Root) {
         	availableTypes.addAll(((Root) root).getDdd().getSharedDomainObjects());
         }
+        
+        // Enumeration
+        availableTypes.addAll(
+            	EcoreUtil.getObjectsByType(context.getOwnedElements(), DactPackage.Literals.ENUMERATION)
+        );
     	return availableTypes;
     }
     public EObject getDomainParent(Parameter param) {
@@ -146,4 +177,69 @@ public class OperationServices {
         rule.setExpr(parsedExpr);
         return operation;
     }
+    
+    public List<Activity> getAllAvailableActivities(Operation operation) {
+        if (operation == null) {
+            return List.of();
+        }
+
+        EObject root = EcoreUtil.getRootContainer(operation);
+        Iterable<EObject> iterable = () -> EcoreUtil.getAllContents(root, true);
+
+        List<Activity> allActivities = StreamSupport.stream(iterable.spliterator(), false)
+                .filter(Activity.class::isInstance)
+                .map(Activity.class::cast)
+                .collect(Collectors.toList());
+        allActivities.add(null);
+        return allActivities;
+    }
+    
+    public void createConstuctorOp(DomainObject object) {
+    	Operation constructorOp = dact.DactFactory.eINSTANCE.createOperation();
+    	constructorOp.setName(object.getName());
+    	constructorOp.setType(OperationType.D0_CONSTRUCTOR);
+    	
+    	for (Property property : object.getOwnedProperties()) {
+    		  Parameter param = dact.DactFactory.eINSTANCE.createParameter();
+    		  param.setName(property.getName());
+    		  param.setDirection(ParameterDirection.IN);
+    		  param.setType(property.getType());
+    		  param.setLowerBound(property.getLowerBound());
+    		  param.setUpperBound(property.getUpperBound());
+    		  constructorOp.getOwnedParameters().add(param);
+    	}
+    	Parameter outParam = dact.DactFactory.eINSTANCE.createParameter();
+    	outParam.setName(toCamelCase(object.getName()));
+    	outParam.setDirection(ParameterDirection.OUT);
+    	outParam.setType(object);
+    	outParam.setLowerBound(1);
+    	outParam.setUpperBound(1);
+    	constructorOp.getOwnedParameters().add(outParam);
+		
+    	object.getOwnedOperations().add(constructorOp);
+    }
+    
+    public static String toCamelCase(String str) {
+        if (str == null || str.isEmpty()) {
+            return str;
+        }
+        
+        // Split by non-alphanumeric characters (spaces, underscores, hyphens)
+        String[] words = str.split("[\\s_\\-]+");
+        StringBuilder builder = new StringBuilder();
+        
+        for (int i = 0; i < words.length; i++) {
+            String word = words[i];
+            if (word.isEmpty()) continue;
+            
+            if (i == 0) {
+                builder.append(word.toLowerCase());
+            } else {
+                builder.append(Character.toUpperCase(word.charAt(0)))
+                       .append(word.substring(1).toLowerCase());
+            }
+        }
+        return builder.toString();
+    }
+
 }

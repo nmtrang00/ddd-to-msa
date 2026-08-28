@@ -19,7 +19,6 @@ import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.InternalEObject;
 
 import org.eclipse.emf.ecore.impl.ENotificationImpl;
-import org.eclipse.emf.ecore.impl.MinimalEObjectImpl;
 
 import org.eclipse.emf.ecore.util.EcoreUtil;
 
@@ -40,7 +39,7 @@ import org.eclipse.xtext.xbase.lib.CollectionLiterals;
  *
  * @generated
  */
-public class EnumerationFieldImpl extends MinimalEObjectImpl.Container implements EnumerationField {
+public class EnumerationFieldImpl extends ValueSpecificationImpl implements EnumerationField {
 	/**
 	 * The default value of the '{@link #getName() <em>Name</em>}' attribute.
 	 * <!-- begin-user-doc -->

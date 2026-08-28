@@ -308,6 +308,11 @@ public class ParameterItemProvider extends NamedElementItemProvider {
 		newChildDescriptors.add
 			(createChildParameter
 				(DactPackage.Literals.TYPED_MULTIPLICITY_ELEMENT__DEFAULT,
+				 DactFactory.eINSTANCE.createEnumerationLiteral()));
+
+		newChildDescriptors.add
+			(createChildParameter
+				(DactPackage.Literals.TYPED_MULTIPLICITY_ELEMENT__DEFAULT,
 				 DactFactory.eINSTANCE.createLiteralNull()));
 
 		newChildDescriptors.add

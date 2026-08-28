@@ -295,6 +295,11 @@ public class ParameterMappingItemProvider
 		newChildDescriptors.add
 			(createChildParameter
 				(BehaviorPackage.Literals.PARAMETER_MAPPING__VALUE,
+				 DataFactory.eINSTANCE.createEnumerationField()));
+
+		newChildDescriptors.add
+			(createChildParameter
+				(BehaviorPackage.Literals.PARAMETER_MAPPING__VALUE,
 				 DataFactory.eINSTANCE.createPrimitiveValue()));
 	}
 

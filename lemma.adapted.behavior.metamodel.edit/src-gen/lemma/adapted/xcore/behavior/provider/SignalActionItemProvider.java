@@ -135,6 +135,11 @@ public class SignalActionItemProvider extends ExecutableNodeItemProvider {
 		newChildDescriptors.add
 			(createChildParameter
 				(BehaviorPackage.Literals.SIGNAL_ACTION__VALUE,
+				 DataFactory.eINSTANCE.createEnumerationField()));
+
+		newChildDescriptors.add
+			(createChildParameter
+				(BehaviorPackage.Literals.SIGNAL_ACTION__VALUE,
 				 DataFactory.eINSTANCE.createPrimitiveValue()));
 	}
 

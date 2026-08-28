@@ -153,7 +153,7 @@ Package data <http://www.example.org/xcore/data>
   Class Enumeration -> ComplexType
     Reference fields : EnumerationField<<1..*>>
 
-  Class EnumerationField
+  Class EnumerationField -> ValueSpecification
     Attribute name : EString
     Reference initializationValue : PrimitiveValue
     Reference enumeration : Enumeration

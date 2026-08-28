@@ -141,6 +141,11 @@ public class UnaryExpressionItemProvider extends ExpressionItemProvider {
 		newChildDescriptors.add
 			(createChildParameter
 				(DactPackage.Literals.UNARY_EXPRESSION__VALUE,
+				 DactFactory.eINSTANCE.createEnumerationLiteral()));
+
+		newChildDescriptors.add
+			(createChildParameter
+				(DactPackage.Literals.UNARY_EXPRESSION__VALUE,
 				 DactFactory.eINSTANCE.createLiteralNull()));
 
 		newChildDescriptors.add

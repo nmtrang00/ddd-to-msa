@@ -244,7 +244,7 @@
                   <foregroundColor xsi:type="description:SystemColor" href="environment:/viewpoint#//@systemColors/@entries[name='white']"/>
                 </style>
               </subContainerMappings>
-              <style xsi:type="style:FlatContainerStyleDescription" borderSizeComputationExpression="1" labelSize="12" showIcon="false" labelExpression="aql: '&lt;&lt;' + self.eClass().name + '>>\n' + self.name + ' (' + self.test.read() +')'" roundedCorner="true">
+              <style xsi:type="style:FlatContainerStyleDescription" borderSizeComputationExpression="1" labelSize="12" showIcon="false" labelExpression="aql: '&lt;&lt;' + self.eClass().name + '>>\n' + self.test.read() " roundedCorner="true">
                 <borderColor xsi:type="description:SystemColor" href="environment:/viewpoint#//@systemColors/@entries[name='black']"/>
                 <labelColor xsi:type="description:SystemColor" href="environment:/viewpoint#//@systemColors/@entries[name='black']"/>
                 <backgroundColor xsi:type="description:SystemColor" href="environment:/viewpoint#//@systemColors/@entries[name='white']"/>
@@ -579,7 +579,7 @@
             </firstModelOperations>
           </initialOperation>
         </controls>
-        <controls xsi:type="properties:SelectDescription" name="Specification" labelExpression="Specification" helpExpression="Operation whose behavior defined by activity" valueExpression="aql:self.specification" candidatesExpression="aql:self.getAvailableSpecOperations()" candidateDisplayExpression="aql:candidate.getFullQualifiedName()">
+        <controls xsi:type="properties:SelectDescription" name="Specification" labelExpression="Specification" helpExpression="Operation whose behavior defined by activity" valueExpression="aql:self.specification" candidatesExpression="aql:self.getAvailableSpecOperations()" candidateDisplayExpression="aql:candidate.getFullQualifiedName() + if (candidate.behavior &lt;> null or candidate.ownedRules.size() > 0) then '- ASSIGNED' else '' endif">
           <initialOperation>
             <firstModelOperations xsi:type="tool_1:ChangeContext" browseExpression="var:self">
               <subModelOperations xsi:type="tool_1:SetValue" featureName="specification" valueExpression="var:newValue"/>
@@ -692,7 +692,13 @@
         <controls xsi:type="properties-ext-widgets-reference:ExtReferenceDescription" name="Target Node" labelExpression="Target Node" isEnabledExpression="aql:false" referenceNameExpression="target" referenceOwnerExpression="aql:self"/>
       </groups>
       <groups name="ActivityGroup Shared Info Group" labelExpression="Properties" domainClass="dact::ActivityGroup" semanticCandidateExpression="var:self">
-        <controls xsi:type="properties:TextDescription" name="Name" labelExpression="Name" helpExpression="Name of ActivityGroup" isEnabledExpression="aql:false" valueExpression="aql:self.name"/>
+        <controls xsi:type="properties:TextDescription" name="Name" labelExpression="Name" helpExpression="Name of ActivityGroup" isEnabledExpression="aql:false" valueExpression="aql:self.name">
+          <initialOperation>
+            <firstModelOperations xsi:type="tool_1:ChangeContext" browseExpression="var:self">
+              <subModelOperations xsi:type="tool_1:SetValue" featureName="name" valueExpression="var:newValue"/>
+            </firstModelOperations>
+          </initialOperation>
+        </controls>
         <controls xsi:type="properties:TextDescription" name="Parent" labelExpression="Parent" helpExpression="Parent of the Activity Group" isEnabledExpression="aql:false" valueExpression="aql:'&lt;&lt;' + self.getParent().eClass().name + '>> ' + self.getParent().name"/>
       </groups>
       <groups name="Scope Group" labelExpression="Variables" domainClass="dact::ActivityGroup" semanticCandidateExpression="var:self"/>

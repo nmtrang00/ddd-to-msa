@@ -128,9 +128,7 @@ class Entity extends InternalDomainObject {
 
 class ValueObject extends InternalDomainObject{}
 
-class SharedValueObject extends SharedDomainObject{
-	refers AggregateRoot abstractedRoot
-}
+class SharedValueObject extends SharedDomainObject{}
 
 class AggregateRoot extends Entity{
 }
@@ -200,6 +198,7 @@ class Property extends NamedElement, DefinesIdentityObject, TypedMultiplicityEle
 }
 
 class Operation extends NamedElement, DefinesIdentityObject,DiagnosticSupported{
+	Boolean toExpose = 'false'
 	OperationType ^type
 	
 	refers Behavior behavior opposite specification
@@ -390,7 +389,9 @@ abstract class DomainObject extends Type, DomainElement, DiagnosticSupported {
    	}
 }
 
-abstract class SharedDomainObject extends DomainObject{}
+abstract class SharedDomainObject extends DomainObject{
+	refers AggregateRoot abstractedRoot
+}
 
 abstract class PrimitiveType extends DataType{}
 
@@ -410,7 +411,7 @@ class Enumeration extends DataType, DomainElement{
 
 abstract class DataType extends Type{}
 
-class EnumerationLiteral extends NamedElement{}
+class EnumerationLiteral extends NamedElement, ValueSpecification{}
 
 abstract class Literal extends ValueSpecification{}
 
@@ -526,7 +527,9 @@ class Scope{
 	
 }
 
-class Identifier extends NamedElement{}
+class Identifier extends NamedElement{
+	Integer index
+}
 
 @Ecore(constraints="SingleInitialNode SingleFinalNode NonEmptyGroup")
 class ActivityGroup extends NamedElement, DiagnosticSupported{
@@ -985,3 +988,5 @@ class Ne extends LogicalOperator{}
 class And extends LogicalOperator{}
 
 class Or extends LogicalOperator{}
+
+class In extends LogicalOperator{}

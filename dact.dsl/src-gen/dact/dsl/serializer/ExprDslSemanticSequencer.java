@@ -8,10 +8,12 @@ import dact.And;
 import dact.BinaryExpression;
 import dact.DactPackage;
 import dact.Divide;
+import dact.EnumerationLiteral;
 import dact.Eq;
 import dact.Ge;
 import dact.Gt;
 import dact.Identifier;
+import dact.In;
 import dact.Le;
 import dact.LiteralBoolean;
 import dact.LiteralInteger;
@@ -57,10 +59,13 @@ public class ExprDslSemanticSequencer extends AbstractDelegatingSemanticSequence
 				sequence_AndOperator(context, (And) semanticObject); 
 				return; 
 			case DactPackage.BINARY_EXPRESSION:
-				sequence_AdditiveExpression_AndExpression_ComparisonExpression_MultiplicativeExpression_OrExpression(context, (BinaryExpression) semanticObject); 
+				sequence_AdditiveExpression_AndExpression_ComparisonExpression_InExpression_MultiplicativeExpression_OrExpression(context, (BinaryExpression) semanticObject); 
 				return; 
 			case DactPackage.DIVIDE:
 				sequence_MultiplicativeOperator(context, (Divide) semanticObject); 
+				return; 
+			case DactPackage.ENUMERATION_LITERAL:
+				sequence_EnumSpecification(context, (EnumerationLiteral) semanticObject); 
 				return; 
 			case DactPackage.EQ:
 				sequence_ComparisonOperator(context, (Eq) semanticObject); 
@@ -73,6 +78,9 @@ public class ExprDslSemanticSequencer extends AbstractDelegatingSemanticSequence
 				return; 
 			case DactPackage.IDENTIFIER:
 				sequence_Identifier(context, (Identifier) semanticObject); 
+				return; 
+			case DactPackage.IN:
+				sequence_InOperator(context, (In) semanticObject); 
 				return; 
 			case DactPackage.LE:
 				sequence_ComparisonOperator(context, (Le) semanticObject); 
@@ -124,15 +132,21 @@ public class ExprDslSemanticSequencer extends AbstractDelegatingSemanticSequence
 						|| action == grammarAccess.getComparisonExpressionAccess().getBinaryExpressionLeftExprAction_1_0()
 						|| rule == grammarAccess.getAdditiveExpressionRule()
 						|| action == grammarAccess.getAdditiveExpressionAccess().getBinaryExpressionLeftExprAction_1_0()
+						|| rule == grammarAccess.getInExpressionRule()
+						|| action == grammarAccess.getInExpressionAccess().getBinaryExpressionLeftExprAction_1_0()
 						|| rule == grammarAccess.getMultiplicativeExpressionRule()
 						|| action == grammarAccess.getMultiplicativeExpressionAccess().getBinaryExpressionLeftExprAction_1_0()
 						|| rule == grammarAccess.getUnaryExpressionRule()
 						|| rule == grammarAccess.getPrimaryExpressionRule()) {
-					sequence_LiteralBoolean_LiteralInteger_LiteralNull_LiteralReal_LiteralString_PropertyAccess(context, (UnaryExpression) semanticObject); 
+					sequence_LiteralBoolean_LiteralEnum_LiteralInteger_LiteralNull_LiteralReal_LiteralString_PropertyAccess(context, (UnaryExpression) semanticObject); 
 					return; 
 				}
 				else if (rule == grammarAccess.getLiteralBooleanRule()) {
 					sequence_LiteralBoolean(context, (UnaryExpression) semanticObject); 
+					return; 
+				}
+				else if (rule == grammarAccess.getLiteralEnumRule()) {
+					sequence_LiteralEnum(context, (UnaryExpression) semanticObject); 
 					return; 
 				}
 				else if (rule == grammarAccess.getLiteralIntegerRule()) {
@@ -177,6 +191,8 @@ public class ExprDslSemanticSequencer extends AbstractDelegatingSemanticSequence
 	 *     ComparisonExpression.BinaryExpression_1_0 returns BinaryExpression
 	 *     AdditiveExpression returns BinaryExpression
 	 *     AdditiveExpression.BinaryExpression_1_0 returns BinaryExpression
+	 *     InExpression returns BinaryExpression
+	 *     InExpression.BinaryExpression_1_0 returns BinaryExpression
 	 *     MultiplicativeExpression returns BinaryExpression
 	 *     MultiplicativeExpression.BinaryExpression_1_0 returns BinaryExpression
 	 *     UnaryExpression returns BinaryExpression
@@ -187,12 +203,13 @@ public class ExprDslSemanticSequencer extends AbstractDelegatingSemanticSequence
 	 *         (leftExpr=OrExpression_BinaryExpression_1_0 operator=OrOperator rightExpr=AndExpression) | 
 	 *         (leftExpr=AndExpression_BinaryExpression_1_0 operator=AndOperator rightExpr=ComparisonExpression) | 
 	 *         (leftExpr=ComparisonExpression_BinaryExpression_1_0 operator=ComparisonOperator rightExpr=AdditiveExpression) | 
-	 *         (leftExpr=AdditiveExpression_BinaryExpression_1_0 operator=AdditiveOperator rightExpr=MultiplicativeExpression) | 
+	 *         (leftExpr=AdditiveExpression_BinaryExpression_1_0 operator=AdditiveOperator rightExpr=InExpression) | 
+	 *         (leftExpr=InExpression_BinaryExpression_1_0 operator=InOperator rightExpr=MultiplicativeExpression) | 
 	 *         (leftExpr=MultiplicativeExpression_BinaryExpression_1_0 operator=MultiplicativeOperator rightExpr=UnaryExpression)
 	 *     )
 	 * </pre>
 	 */
-	protected void sequence_AdditiveExpression_AndExpression_ComparisonExpression_MultiplicativeExpression_OrExpression(ISerializationContext context, BinaryExpression semanticObject) {
+	protected void sequence_AdditiveExpression_AndExpression_ComparisonExpression_InExpression_MultiplicativeExpression_OrExpression(ISerializationContext context, BinaryExpression semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);
 	}
 	
@@ -252,6 +269,8 @@ public class ExprDslSemanticSequencer extends AbstractDelegatingSemanticSequence
 	 *     ComparisonExpression.BinaryExpression_1_0 returns VariableAssignment
 	 *     AdditiveExpression returns VariableAssignment
 	 *     AdditiveExpression.BinaryExpression_1_0 returns VariableAssignment
+	 *     InExpression returns VariableAssignment
+	 *     InExpression.BinaryExpression_1_0 returns VariableAssignment
 	 *     MultiplicativeExpression returns VariableAssignment
 	 *     MultiplicativeExpression.BinaryExpression_1_0 returns VariableAssignment
 	 *     UnaryExpression returns VariableAssignment
@@ -376,20 +395,48 @@ public class ExprDslSemanticSequencer extends AbstractDelegatingSemanticSequence
 	/**
 	 * <pre>
 	 * Contexts:
-	 *     Identifier returns Identifier
+	 *     EnumSpecification returns EnumerationLiteral
 	 *
 	 * Constraint:
-	 *     name=QualifiedName
+	 *     name=EnumQualifiedName
 	 * </pre>
 	 */
-	protected void sequence_Identifier(ISerializationContext context, Identifier semanticObject) {
+	protected void sequence_EnumSpecification(ISerializationContext context, EnumerationLiteral semanticObject) {
 		if (errorAcceptor != null) {
 			if (transientValues.isValueTransient(semanticObject, DactPackage.Literals.NAMED_ELEMENT__NAME) == ValueTransient.YES)
 				errorAcceptor.accept(diagnosticProvider.createFeatureValueMissing(semanticObject, DactPackage.Literals.NAMED_ELEMENT__NAME));
 		}
 		SequenceFeeder feeder = createSequencerFeeder(context, semanticObject);
-		feeder.accept(grammarAccess.getIdentifierAccess().getNameQualifiedNameParserRuleCall_1_0(), semanticObject.getName());
+		feeder.accept(grammarAccess.getEnumSpecificationAccess().getNameEnumQualifiedNameParserRuleCall_0(), semanticObject.getName());
 		feeder.finish();
+	}
+	
+	
+	/**
+	 * <pre>
+	 * Contexts:
+	 *     Identifier returns Identifier
+	 *
+	 * Constraint:
+	 *     (name=QualifiedName index=SignedInt?)
+	 * </pre>
+	 */
+	protected void sequence_Identifier(ISerializationContext context, Identifier semanticObject) {
+		genericSequencer.createSequence(context, semanticObject);
+	}
+	
+	
+	/**
+	 * <pre>
+	 * Contexts:
+	 *     InOperator returns In
+	 *
+	 * Constraint:
+	 *     {In}
+	 * </pre>
+	 */
+	protected void sequence_InOperator(ISerializationContext context, In semanticObject) {
+		genericSequencer.createSequence(context, semanticObject);
 	}
 	
 	
@@ -426,6 +473,8 @@ public class ExprDslSemanticSequencer extends AbstractDelegatingSemanticSequence
 	 *     ComparisonExpression.BinaryExpression_1_0 returns UnaryExpression
 	 *     AdditiveExpression returns UnaryExpression
 	 *     AdditiveExpression.BinaryExpression_1_0 returns UnaryExpression
+	 *     InExpression returns UnaryExpression
+	 *     InExpression.BinaryExpression_1_0 returns UnaryExpression
 	 *     MultiplicativeExpression returns UnaryExpression
 	 *     MultiplicativeExpression.BinaryExpression_1_0 returns UnaryExpression
 	 *     UnaryExpression returns UnaryExpression
@@ -438,11 +487,12 @@ public class ExprDslSemanticSequencer extends AbstractDelegatingSemanticSequence
 	 *         value=StringSpecification | 
 	 *         value=BooleanSpecification | 
 	 *         value=NullSpecification | 
-	 *         identifier=Identifier
+	 *         identifier=Identifier | 
+	 *         value=EnumSpecification
 	 *     )
 	 * </pre>
 	 */
-	protected void sequence_LiteralBoolean_LiteralInteger_LiteralNull_LiteralReal_LiteralString_PropertyAccess(ISerializationContext context, UnaryExpression semanticObject) {
+	protected void sequence_LiteralBoolean_LiteralEnum_LiteralInteger_LiteralNull_LiteralReal_LiteralString_PropertyAccess(ISerializationContext context, UnaryExpression semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);
 	}
 	
@@ -463,6 +513,26 @@ public class ExprDslSemanticSequencer extends AbstractDelegatingSemanticSequence
 		}
 		SequenceFeeder feeder = createSequencerFeeder(context, semanticObject);
 		feeder.accept(grammarAccess.getLiteralBooleanAccess().getValueBooleanSpecificationParserRuleCall_0(), semanticObject.getValue());
+		feeder.finish();
+	}
+	
+	
+	/**
+	 * <pre>
+	 * Contexts:
+	 *     LiteralEnum returns UnaryExpression
+	 *
+	 * Constraint:
+	 *     value=EnumSpecification
+	 * </pre>
+	 */
+	protected void sequence_LiteralEnum(ISerializationContext context, UnaryExpression semanticObject) {
+		if (errorAcceptor != null) {
+			if (transientValues.isValueTransient(semanticObject, DactPackage.Literals.UNARY_EXPRESSION__VALUE) == ValueTransient.YES)
+				errorAcceptor.accept(diagnosticProvider.createFeatureValueMissing(semanticObject, DactPackage.Literals.UNARY_EXPRESSION__VALUE));
+		}
+		SequenceFeeder feeder = createSequencerFeeder(context, semanticObject);
+		feeder.accept(grammarAccess.getLiteralEnumAccess().getValueEnumSpecificationParserRuleCall_0(), semanticObject.getValue());
 		feeder.finish();
 	}
 	
@@ -676,6 +746,8 @@ public class ExprDslSemanticSequencer extends AbstractDelegatingSemanticSequence
 	 *     ComparisonExpression.BinaryExpression_1_0 returns NotExpression
 	 *     AdditiveExpression returns NotExpression
 	 *     AdditiveExpression.BinaryExpression_1_0 returns NotExpression
+	 *     InExpression returns NotExpression
+	 *     InExpression.BinaryExpression_1_0 returns NotExpression
 	 *     MultiplicativeExpression returns NotExpression
 	 *     MultiplicativeExpression.BinaryExpression_1_0 returns NotExpression
 	 *     UnaryExpression returns NotExpression
