@@ -1,0 +1,36 @@
+/**
+ */
+package dact;
+
+import org.eclipse.emf.common.util.EList;
+
+/**
+ * <!-- begin-user-doc -->
+ * A representation of the model object '<em><b>Final Node</b></em>'.
+ * <!-- end-user-doc -->
+ *
+ * <p>
+ * The following features are supported:
+ * </p>
+ * <ul>
+ *   <li>{@link dact.FinalNode#getVariablesToReturn <em>Variables To Return</em>}</li>
+ * </ul>
+ *
+ * @see dact.DactPackage#getFinalNode()
+ * @model abstract="true"
+ * @generated
+ */
+public interface FinalNode extends ControlNode {
+	/**
+	 * Returns the value of the '<em><b>Variables To Return</b></em>' containment reference list.
+	 * The list contents are of type {@link dact.Identifier}.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the value of the '<em>Variables To Return</em>' containment reference list.
+	 * @see dact.DactPackage#getFinalNode_VariablesToReturn()
+	 * @model containment="true"
+	 * @generated
+	 */
+	EList<Identifier> getVariablesToReturn();
+
+} // FinalNode

@@ -1,0 +1,189 @@
+[comment encoding = UTF-8 /]
+[module lemmaServiceUtils(
+	'http://www.example.org/xcore/data',
+	'http://www.example.org/xcore/service',
+	'http://www.example.org/xcore/behavior',
+	'http://www.example.org/xcore/technology'
+	)/]
+
+[import lemmaDataUtils/]
+[import lemmaBehaviorUtils/]
+
+[comment import dact::code::generator::utils::ResourceUtils /]
+
+[query public isRepository(i : service::Interface): Boolean = 
+	i.interfaceType = service::InterfaceType::REPOSITORY
+/]
+
+[query public isService(i : service::Interface): Boolean = 
+	i.interfaceType = service::InterfaceType::APPLICATION_SERVICE or
+	i.interfaceType = service::InterfaceType::DOMAIN_SERVICE
+/]
+
+[query public isController(i : service::Interface): Boolean = 
+	i.interfaceType = service::InterfaceType::CONTROLLER
+/]
+
+[query public isOutboundAdapter(i : service::Interface): Boolean = 
+	i.interfaceType = service::InterfaceType::OUTBOUND_ADAPTER
+/]
+
+
+[query public getRepositoryAggregate(i: service::Interface): data::DataStructure =
+	let repoName : String = i.name, 
+		aggregateName : String = i.name.replace('Repository',''),
+		msName : String = i.microservice.name,
+		allAggregates : Sequence(data::ComplexType) = i.microservice.getAllAggregates()
+	in allAggregates -> select(o|o.name = aggregateName) -> first().oclAsType(data::DataStructure)
+/]
+
+
+[query public getAllAggregates(ms : service::Microservice): Sequence(data::ComplexType)=
+	let context : data::Context = ms.getCorrespondingContext() in
+	context.complexTypes->select(t | t.hasFeature(data::ComplexTypeFeature::AGGREGATE))	
+/]
+
+[query public getCorrespondingContext(ms : service::Microservice): data::Context =
+	let dataModel : data::DataModel = ms.serviceModel.getDataModel().oclAsType(data::DataModel) in
+	dataModel.contexts->select(c|c.name = ms.name)->first()
+/]
+
+
+[query public hasCollectionTypeParameter(i : service::Interface) : Boolean =
+  i.operations.parameters.importedType.type->filter(data::CollectionType)->notEmpty()
+/]
+
+[query public getOutParams(o : service::Operation) : Sequence(service::Parameter) =
+  o.parameters -> select(p|p.exchangePattern = technology::ExchangePattern::OUT)
+/]
+
+[query public getInParams(o : service::Operation) : Sequence(service::Parameter) =
+  o.parameters -> select(p|p.exchangePattern = technology::ExchangePattern::IN)
+/]
+
+[query public hasOptionalOutParam(i: service::Interface): Boolean = 
+ i.operations.parameters -> exists(p|p.lowerBound=0)
+/]
+
+[query public generateOperation(op: service::Operation): String = 
+  'public ' + op.generateOperationOutParam() + ' ' + op.name + '(' +op.generateOperationInputParams() + ')'
+/]
+
+[query public generateOperationInputParams(op : service::Operation) : String =
+  op.getInParams()
+  	->sortedBy(p| p.name)
+    ->collect(p | p.generateParameterType() + ' ' + p.name)
+    ->sep(', ')
+    ->toString()
+/]
+
+[query public generateOperationOutParam(op: service::Operation): String = 
+	let outParam : service::Parameter = op.getOutParams()->first() in
+	if  outParam != null then 
+		outParam.generateParameterType()
+	else 
+		'void'
+endif/] 
+
+[query public generateParameterType(p : service::Parameter) : String =
+  if (p.primitiveType != null) then 
+    p.primitiveType.generateType() 
+  else if (p.importedType != null and p.importedType.type != null) then
+    p.importedType.type.generateType()
+  else
+    ''
+  endif endif
+/]
+
+[query public getDomainObjectsToImport(i : service::Interface) : Sequence(data::ComplexType) = 
+  let paramObjects : Sequence(data::ComplexType) = i.operations.parameters.importedType.type
+    ->collect(t | 
+      if (t.oclIsKindOf(data::CollectionType)) then
+        t.oclAsType(data::CollectionType).dataFields -> first().complexType
+      else
+        t
+      endif
+    )
+    ->filter(data::ComplexType)
+    ->asSet()
+    ->asSequence()
+   in
+   paramObjects->including(i.getRepositoryAggregate())->asSet()->asSequence()
+/]
+
+[query public getActivity(op : service::Operation, activityModel : behavior::ActivityModel): behavior::Activity = 
+	activityModel.activities -> select(a|a.specification.oclAsType(behavior::ImportedInterfaceOperation).operation = op)->first()
+/]
+
+[query public getInterfacesToImport(i : service::Interface, activityModel : behavior::ActivityModel) : Sequence(service::Interface) = 
+	i.operations 
+	-> collect(o|o.getInterfacesToImport(activityModel))
+	-> select(foundInterface|foundInterface <> i )
+/]
+
+[query public getInterfacesToImport(op : service::Operation,  activityModel : behavior::ActivityModel) : Sequence(service::Interface) = 
+	let activity : behavior::Activity = op.getActivity(activityModel) in
+	
+	if activity = null then Sequence{} else
+	activity.root.eAllContents()
+		->filter(behavior::CallOperationAction)
+		->collect(a|a.importedOperation.oclAsType(behavior::ImportedInterfaceOperation).operation.interface)
+		->asSet()
+		->asSequence()
+	endif
+/]
+
+[query public getImportDir(interfaceToImport: service::Interface): String =
+	if interfaceToImport.isController() then 'controller'
+	else if interfaceToImport.isService() then 'service'
+	else if interfaceToImport.isRepository() then 'repository'
+	else if interfaceToImport.isOutboundAdapter() then 'outboundAdapter'
+	else ''
+	endif endif endif endif
+/]
+
+[query public getType(p : service::Parameter): data::Type= 
+	if (p.primitiveType != null) then
+		p.primitiveType 
+	else 
+		p.importedType.type
+	endif
+/]
+
+[comment Helper Query to look up a variable directly by its String name /]
+[query public getMatchedVariableByName(varName: String, scope: behavior::Scope): behavior::Variable =
+	let variable : behavior::Variable = scope.ownedVariables -> select(v | v.name = varName) -> first() in
+	if variable != null then 
+		variable
+	else 
+		scope.inheritedVariables -> select(v | v.name = varName) -> first()
+	endif
+/]
+
+[comment Helper Query to extract the Type of a Variable /]
+[query public getType(v: behavior::Variable): data::Type =
+	if v == null then
+		null
+	else if v.primitiveType != null then
+		v.primitiveType
+	else if v.importedType != null then
+		v.importedType.type
+	else
+		null
+	endif endif endif
+/]
+
+[comment Core Query to get Root Type from path like "newCargo.goal.destination" /]
+[query public getRootType(i: behavior::Identifier, scope: behavior::Scope): data::Type = 
+	let rootPart : String = i.name.tokenize('.')->at(1) in
+	rootPart.getMatchedVariableByName(scope).getType()
+/]
+
+[query public getInternalFunctionalContexts(dataModel: data::DataModel, serviceModel: service::ServiceModel): Sequence(data::Context) = 
+	let internalFunctionalMicroservices : Sequence(String) = serviceModel.microservices
+			->select(ms|ms.type = service::MicroserviceType::FUNCTIONAL)
+			->collect(ms|ms.name)
+	in dataModel.contexts -> select(context | internalFunctionalMicroservices -> includes(context.name))
+/]
+
+

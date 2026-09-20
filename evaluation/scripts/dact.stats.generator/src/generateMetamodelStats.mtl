@@ -1,0 +1,52 @@
+[comment encoding = UTF-8 /]
+[**
+ * The documentation of the module generate.
+ * @author trangnguyen
+ * @version 1.0.0
+ * @since 1.0.0
+ */]
+[module generateMetamodelStats('http://www.eclipse.org/emf/2002/Ecore')/]
+
+[comment @main/]
+[template public generateMetamodelStats(aPackage : ecore::EPackage)]
+[file ('metamodel_definition_stats.md', overwrite, 'UTF-8')]
+  # Metamodel Definition Statistics: [aPackage.name/]
+
+  ## Overview
+  * **Package Name:** [aPackage.name/]
+  * **Ns URI:** [aPackage.nsURI/]
+  * **Total EClasses:** [aPackage.eAllContents(ecore::EClass)->size()/]
+  * **Total Enumerations:** [aPackage.eAllContents(ecore::EEnum)->size()/]
+  * **Total Data Types:** [aPackage.eAllContents(ecore::EDataType)->size()/]
+
+  ---
+
+  ## 1. Class Breakdown
+
+  | Class Name | Abstract | Interface | Attributes | References | Operations |
+  | :--- | :--- | :--- | :--- | :--- | :--- |
+[for (cls | aPackage.eAllContents(ecore::EClass)->asOrderedSet()->sortedBy(c | c.name))]
+  | **[cls.name/]** | [cls.abstract/] | [cls.interface/] | [cls.eAttributes->size()/] | [cls.eReferences->size()/] | [cls.eOperations->size()/] |
+[/for]
+
+  ---
+
+  ## 2. Feature Totals across Metamodel
+
+  * **Total Attributes (`EAttribute`):** [aPackage.eAllContents(ecore::EAttribute)->size()/]
+  * **Total Containment References:** [aPackage.eAllContents(ecore::EReference)->select(r | r.containment)->size()/]
+  * **Total Non-Containment References:** [aPackage.eAllContents(ecore::EReference)->select(r | not r.containment)->size()/]
+  * **Total Operations (`EOperation`):** [aPackage.eAllContents(ecore::EOperation)->size()/]
+  * **Total Parameters (`EParameter`):** [aPackage.eAllContents(ecore::EParameter)->size()/]
+
+  ---
+
+  ## 3. Enumerations Detail
+
+[for (enum | aPackage.eAllContents(ecore::EEnum)->asOrderedSet()->sortedBy(e | e.name))]
+  ### Enum: [enum.name/]
+  * **Literals ([enum.eLiterals->size()/]):** [enum.eLiterals.name->sep(', ')/]
+[/for]
+
+[/file]
+[/template]

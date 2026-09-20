@@ -1,0 +1,285 @@
+[comment encoding = UTF-8 /]
+[module lemmaDataUtils(
+	'http://www.example.org/xcore/data',
+	'http://www.example.org/xcore/behavior', 'http://www.example.org/xcore/service'
+)/]
+	
+[query public requiresValidation(d : data::DataStructure) : Boolean = 
+	d.getInvariantOperation() <> null or d.dataFields -> exists(f|f.requiresValidation())
+/]
+
+[query public requiresValidation(f : data::DataField): Boolean =
+	f.complexType <> null 
+	and f.complexType.oclIsKindOf(data::DataStructure)
+	and not f.complexType.oclAsType(data::DataStructure).isEntity()
+	and f.complexType.oclAsType(data::DataStructure).getInvariantOperation() <> null
+/]
+
+[query public getInvariantOperation(d : data::DataStructure) : behavior::SpecDataOperation =
+	d.operations -> select(o|o.oclIsTypeOf(behavior::SpecDataOperation) and o.isInvariant)
+		->asSequence()->first()
+/]
+
+[query public hasCollectionField(d : data::DataStructure) : Boolean = 
+	d.dataFields->select(f | f.complexType <> null and f.complexType.oclIsKindOf(data::CollectionType)) -> size() >0
+/]
+
+[query public hasPrimitiveCollectionField(d : data::DataStructure) : Boolean = 
+    d.dataFields->exists(f | 
+        f.complexType <> null 
+        and f.complexType.oclIsKindOf(data::CollectionType) 
+        and f.complexType.oclAsType(data::CollectionType).primitiveType <> null
+    )
+/]
+
+[query public hasEnumCollectionField(d : data::DataStructure) : Boolean = 
+    d.dataFields->exists(f | 
+        f.complexType <> null 
+        and f.complexType.oclIsKindOf(data::CollectionType) 
+        and f.complexType.oclAsType(data::CollectionType).dataFields->first() <> null
+        and f.complexType.oclAsType(data::CollectionType).dataFields->first().complexType <> null
+        and f.complexType.oclAsType(data::CollectionType).dataFields->first().complexType.oclIsKindOf(data::Enumeration)
+    )
+/]
+
+[query public hasValueObjectCollectionField(d : data::DataStructure) : Boolean = 
+    d.dataFields->exists(f | 
+        f.complexType <> null 
+        and f.complexType.oclIsKindOf(data::CollectionType) 
+        and f.complexType.oclAsType(data::CollectionType).dataFields->first() <> null
+        and f.complexType.oclAsType(data::CollectionType).dataFields->first().complexType <> null
+        and f.complexType.oclAsType(data::CollectionType).dataFields->first().complexType.oclIsKindOf(data::DataStructure)
+        and (f.complexType.oclAsType(data::CollectionType).dataFields->first().complexType.oclAsType(data::DataStructure).hasFeature(data::ComplexTypeFeature::VALUE_OBJECT)
+    	or f.complexType.oclAsType(data::CollectionType).dataFields->first().complexType.oclAsType(data::DataStructure).hasFeature(data::ComplexTypeFeature::SHARED_VALUE_OBJECT))
+    )
+/]
+
+[query public hasDomainObjectCollectionField(d : data::DataStructure) : Boolean = 
+    d.dataFields->exists(f | 
+        f.complexType <> null 
+        and f.complexType.oclIsKindOf(data::CollectionType) 
+        and f.complexType.oclAsType(data::CollectionType).dataFields->first() <> null
+        and f.complexType.oclAsType(data::CollectionType).dataFields->first().complexType <> null
+        and f.complexType.oclAsType(data::CollectionType).dataFields->first().complexType.oclIsKindOf(data::DataStructure)
+    )
+/]
+
+[query public hasEntityCollectionField(d : data::DataStructure) : Boolean = 
+    d.dataFields->exists(f | 
+        f.complexType <> null 
+        and f.complexType.oclIsKindOf(data::CollectionType) 
+        and f.complexType.oclAsType(data::CollectionType).dataFields->first() <> null
+        and f.complexType.oclAsType(data::CollectionType).dataFields->first().complexType <> null
+        and f.complexType.oclAsType(data::CollectionType).dataFields->first().complexType.oclIsKindOf(data::DataStructure)
+        and f.complexType.oclAsType(data::CollectionType).dataFields->first().complexType.oclAsType(data::DataStructure).isEntity()
+    )
+/]
+
+[query public hasEntityField(d : data::DataStructure) : Boolean = 
+	d.dataFields->exists(f | 
+	        f.complexType <> null 
+	        and f.complexType.oclIsKindOf(data::DataStructure)
+	        and f.complexType.oclAsType(data::DataStructure).isEntity()
+	)
+/]
+
+[query public hasDataObjectField(d : data::DataStructure) : Boolean = 
+	d.dataFields->exists(f | 
+	        f.complexType <> null 
+	        and f.complexType.oclIsKindOf(data::DataStructure)
+	        and not f.complexType.oclAsType(data::DataStructure).isEntity()
+	)
+/]
+
+[query public hasEnumerationField(d : data::DataStructure) : Boolean = 
+	d.dataFields->select(f | f.complexType <> null and f.complexType.oclIsKindOf(data::Enumeration)) -> size() >0
+/]
+
+[comment Currently works for single id field, NOT composite ids/]
+[query public hasUUIDId(d : data::DataStructure) : Boolean = 
+    let idFields : Sequence(data::DataField) = d.dataFields->select(f | f.features->includes(data::DataFieldFeature::IDENTIFIER)) in
+    if idFields->notEmpty() then
+        not idFields->asSequence()->first().primitiveType.oclIsKindOf(data::PrimitiveInteger)
+    else
+        false
+    endif
+/]
+
+[query public getIdField(d : data::DataStructure) : data::DataField = 
+    d.dataFields->select(f | f.features->includes(data::DataFieldFeature::IDENTIFIER))->asSequence()->first()
+/]
+[query public isEntity(d : data::DataStructure) : Boolean = 
+	d.features->includes(data::ComplexTypeFeature::ENTITY)
+/]
+
+[query public getDomainTypeToImports(d : data::DataStructure) : Sequence(String) = 
+    d.dataFields
+        ->collect(f | 
+            if (f.complexType <> null) then
+                if (f.complexType.oclIsKindOf(data::DataStructure) or f.complexType.oclIsKindOf(data::Enumeration)) then 
+                    f.complexType.name
+                else if (f.complexType.oclIsKindOf(data::CollectionType) and f.complexType.oclAsType(data::CollectionType).dataFields <> null) then 
+                    f.complexType.oclAsType(data::CollectionType).dataFields.complexType.name.toUpperFirst()
+                else 
+                    null
+                endif endif
+            else
+                null
+            endif
+        )
+        ->reject(name | name = null)
+        ->asSet()
+        ->asSequence()
+/]
+
+[query public toJavaType(type : data::PrimitiveType) : String = 
+    if type.oclIsKindOf(data::PrimitiveBoolean) then 'Boolean'
+    else if type.oclIsKindOf(data::PrimitiveByte) then 'Byte'
+    else if type.oclIsKindOf(data::PrimitiveCharacter) then 'Character'
+    else if type.oclIsKindOf(data::PrimitiveDouble) then 'Double'
+    else if type.oclIsKindOf(data::PrimitiveFloat) then 'Float'
+    else if type.oclIsKindOf(data::PrimitiveInteger) then 'Integer'
+    else if type.oclIsKindOf(data::PrimitiveLong) then 'Long'
+    else if type.oclIsKindOf(data::PrimitiveShort) then 'Short'
+    else if type.oclIsKindOf(data::PrimitiveString) then 'String'
+    else 'Object'
+    endif endif endif endif endif endif endif endif endif
+/]
+
+[query public isDomainObject(t: data::ComplexType): Boolean =
+	t.features -> includes(data::ComplexTypeFeature::AGGREGATE) or 
+	t.features -> includes(data::ComplexTypeFeature::ENTITY) or
+	t.features -> includes(data::ComplexTypeFeature::VALUE_OBJECT) or 
+	t.features -> includes(data::ComplexTypeFeature::SHARED_VALUE_OBJECT) or 
+	t.features -> includes(data::ComplexTypeFeature::DOMAIN_EVENT) or
+	t.oclIsKindOf(data::CollectionType) or 
+	t.oclIsKindOf(data::Enumeration)
+/]
+
+[query public isException(t: data::ComplexType): Boolean =
+	t.features -> includes(data::ComplexTypeFeature::RUNTIME_EXCEPTION) or 
+	t.features -> includes(data::ComplexTypeFeature::NOTFOUND_EXCEPTION)
+/]
+
+[query public isNotFoundException(t: data::ComplexType): Boolean =
+	t.features -> includes(data::ComplexTypeFeature::NOTFOUND_EXCEPTION)
+/]
+
+[query public isPayload(t: data::ComplexType): Boolean =
+	t.features -> includes(data::ComplexTypeFeature::REQUEST_PAYLOAD) or 
+	t.features -> includes(data::ComplexTypeFeature::RESPONSE_PAYLOAD) or
+	t.features -> includes(data::ComplexTypeFeature::EXTERNAL)
+/]
+
+[query public getIdType(t: data::DataStructure): String =
+	let idField : data::DataField = t.getIdField() in
+	if idField.primitiveType.oclIsKindOf(data::PrimitiveInteger) then
+		'Long'
+	else
+		'UUID'
+	endif
+/]
+
+[query public getExceptionDescription(e : data::DataStructure): String =
+	let desc : String = e.dataFields -> first().initializationValue.valueAsString() in 
+	if desc.endsWith('.') then 
+		desc
+	else
+		desc+'.'
+	endif
+/]
+
+[query public hasNotNullField(d : data::DataStructure): Boolean = 
+	d.dataFields -> exists(f|f.lowerBound>0)
+/]
+
+[query public getType(f : data::DataField): data::Type= 
+	if (f.primitiveType != null) then
+		f.primitiveType 
+	else 
+		f.complexType
+	endif
+/]
+
+[query public generateType(t : data::Type): String = '' /]
+
+[query public generateType(t : data::PrimitiveType): String = t.toJavaType()/]
+
+[query public generateType(t : data::ComplexType): String = t.name.toUpperFirst()/]
+
+[query public generateType(t : data::CollectionType): String = 'List<'+t.name.toUpperFirst()+'>' /]
+
+[query public generateDataOperation(op: data::DataOperation, activityModel: behavior::ActivityModel) : String =
+  if (op.getActivity(activityModel) <> null) then
+    'public ' + op.generateOperationOutParam() + ' ' + op.generateDataOperationName() + '(' + op.getActivity(activityModel).generateOperationInputParamsFromMappings() + ')'
+  else
+    'public ' + op.generateOperationOutParam() + ' ' + op.generateDataOperationName() + '(' + op.generateOperationInputParams() + ')'
+  endif
+/]
+
+[query public generateDataOperation(op: data::DataOperation) : String =
+  'public ' + op.generateOperationOutParam() + ' ' + op.generateDataOperationName() + '(' + op.generateOperationInputParams() + ')'
+
+/]
+[query public generateDataOperationName(op:data::DataOperation): String =
+	if (op.oclIsKindOf(behavior::SpecDataOperation) and 
+		op.oclAsType(behavior::SpecDataOperation).isInvariant) then
+		'validate'
+	else
+		op.name
+	endif 
+/]
+
+[query public generateOperationInputParams(op : data::DataOperation) : String =
+  op.getInParams()
+    ->sortedBy(p | p.name)
+    ->collect(p | p.generateParameterType() + ' ' + p.name)
+    ->sep(', ')
+    ->toString()
+/]
+
+[query public generateOperationInputParamsFromMappings(activity: behavior::Activity) : String =
+  activity.getInParamMappings()
+    ->sortedBy(m | m.activityParameter.name)
+    ->collect(m | m.operationParameter.oclAsType(behavior::ImportedDataParameter).parameter.generateParameterType() + ' ' + m.activityParameter.name)
+    ->sep(', ')
+    ->toString()
+/]
+
+[query public generateOperationOutParam(op: data::DataOperation): String = 
+	let outParam : data::DataOperationParameter = op.getOutParams()->first() in
+	if  (outParam == null or 
+		(op.oclIsKindOf(behavior::SpecDataOperation) and op.isInvariant )) then 
+		'void'
+	else 
+		outParam.generateParameterType()
+	endif
+/] 
+
+[query public generateParameterType(p : data::DataOperationParameter) : String =
+  if (p.primitiveType != null) then 
+    p.primitiveType.generateType()
+  else if (p.complexType != null) then
+    p.complexType.generateType()
+  else
+    ''
+  endif endif
+/]
+
+[query public getOutParams(o : data::DataOperation) : Sequence(data::DataOperationParameter) =
+  o.parameters -> select(p|p.exchangePattern = data::ExchangePattern::OUT and p.name != 'self')
+/]
+
+[query public getInParams(o : data::DataOperation) : Sequence(data::DataOperationParameter) =
+  o.parameters 
+  -> select(p|p.exchangePattern = data::ExchangePattern::IN and p.name != 'self')
+/]
+
+[query public getActivity(op : data::DataOperation, activityModel : behavior::ActivityModel): behavior::Activity = 
+	activityModel.activities -> select(a|a.specification.oclAsType(behavior::ImportedDataOperation).operation = op)->first()
+/]
+
+[query public getInParamMappings(activity: behavior::Activity) : Sequence(behavior::ParameterMapping)=
+	activity.parameterMappings
+	-> select(m|m.type = behavior::ParameterMappingType::ACTIVITY_IN and m.operationParameter.oclAsType(behavior::ImportedDataParameter).parameter.name != 'self')
+/]

@@ -1,0 +1,36 @@
+[comment encoding = UTF-8 /]
+[**
+ * The documentation of the module generate.
+ * @author trangnguyen
+ * @version 1.0.0
+ * @since 1.0.0
+ */]
+[module generate('http://www.example.org/xcore/data',
+				'http://www.example.org/xcore/service',
+				'http://www.example.org/xcore/behavior')/]
+
+[import lemmaBehaviorUtils/]
+[import generateApplicationProperties /]
+[import generateDomainObjects /]
+[import generateExceptions /]
+[import generatePayloads /]
+[import generateRepositories /]
+[import generateOutboundAdapters /]
+[import generateServices /]
+[import generateControllers /]
+
+[comment @main/]
+[template public generateElement(
+	behaviorModel: behavior::BehaviorModel)]
+[let serviceModel : service::ServiceModel = behaviorModel.getServiceModel(), 
+	dataModel : data::DataModel = behaviorModel.getDataModel()]
+  [serviceModel.generateApplicationProperties() /]
+  [dataModel.generateDomainObjects(serviceModel,behaviorModel.activityModel) /]
+  [dataModel.generateExceptions(serviceModel) /]
+  [dataModel.generatePayloads(serviceModel) /]
+  [serviceModel.generateRepositories()/]
+  [behaviorModel.generateOutboundAdapters()/]
+  [behaviorModel.generateServices()/]
+  [behaviorModel.generateControllers()/]
+[/let]
+[/template]

@@ -1,0 +1,18 @@
+[comment encoding = UTF-8 /]
+[**
+ * The documentation of the module generate.
+ * @author trangnguyen
+ * @version 1.0.0
+ * @since 1.0.0
+ */]
+[module generate('http://www.example.org/xcore/dact')/]
+
+[import generateElementCount/]
+[import generateSummaryReport/]
+
+[comment @main/]
+[template public generateElement(
+	root: dact::Root)]
+  [root.generateElementCount() /]
+  [root.generateSummaryReport() /]
+[/template]

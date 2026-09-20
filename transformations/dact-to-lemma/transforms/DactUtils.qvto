@@ -1,0 +1,401 @@
+modeltype DACT uses 'http://www.example.org/xcore/dact';
+
+library DactUtils;
+
+-- Helper to print info of a NamedElement
+query DACT::NamedElement::printInfo(ntabs: Integer): String{
+	return self.printInfo(ntabs,'');
+}
+
+query DACT::NamedElement::printInfo(ntabs: Integer, specialTag: String): String{
+    -- 1. Extract Name 
+    var memberName : String := if self.name.oclIsUndefined() or self.name = '' 
+                               then '<Anonymous>' 
+                               else self.name 
+                               endif;
+                               
+    -- 2. Extract Metamodel Type
+    var memberType : String := self.metaClassName();
+    
+    -- 3. Print the consolidated structural record to console
+    var mark := switch {
+    	case (self.oclIsKindOf(DACT::BoundedContext)) "~";
+    	case (self.oclIsKindOf(DACT::Interface)) "!";
+    	case (self.oclIsKindOf(DACT::DomainObject)) "@";
+    	case (self.oclIsKindOf(DACT::Property)) "#";
+    	case (self.oclIsKindOf(DACT::Operation)) "$";
+    	case (self.oclIsKindOf(DACT::Parameter)) "%";
+    	case (self.oclIsKindOf(DACT::Activity)) "^";
+    	case (self.oclIsKindOf(DACT::ActivityGroup)) "&";
+    	case (self.oclIsKindOf(DACT::ActivityNode)) "*";
+    	else "?";
+    };
+    
+    var toPrint : String;
+    if (specialTag <> ''){
+   	 	toPrint := indent(ntabs) + 
+   			'[' + mark + ']'+ specialTag +': ' + memberName + ' | Type: ' + memberType;
+   	} else {
+   		toPrint := indent(ntabs) + 
+   			'[' + mark + ']'+ memberType +': ' + memberName;
+   	};
+    
+    log(toPrint);
+    return toPrint;
+}
+
+-- Helper to create indent in log
+query indent(count: Integer) : String {
+    var space := "";
+    var i := 1;
+    while (i <= count) {
+        space := space + "\t";
+        i := i + 1;
+    };
+    return space;
+}
+
+helper DACT::Scope::printScopeVariables() {
+    log("=== Scope Content Log [Group: " + self.group.name + "] ===");
+    
+    -- 1. Print variables owned directly by this scope
+    log("  Owned Variables (" + self.ownedVariables->size().toString() + "):");
+    if (self.ownedVariables->notEmpty()) {
+        self.ownedVariables->forEach(v) {
+            var typeName := if v.type <> null then v.type.name else "UnknownType" endif;
+            log("    ├── [Owned] " + v.name + " : " + typeName);
+        };
+    } else {
+        log("    └── (None)");
+    };
+    
+    -- 2. Print variables inherited/accessible from outer scopes
+    log("  Inherited Variables (" + self.inheritedVariables->size().toString() + "):");
+    if (self.inheritedVariables->notEmpty()) {
+        self.inheritedVariables->forEach(v) {
+            var typeName := if v.type <> null then v.type.name else "UnknownType" endif;
+            log("    ├── [Inherited] " + v.name + " : " + typeName);
+        };
+    } else {
+        log("    └── (None)");
+    };
+    
+    log("==================================================");
+}
+
+/**
+ * Main helper to serialize an Expression node to a readable String.
+ */
+query DACT::Expression::toString() : String {
+    return "<?>";
+}
+
+/**
+ * Serializes Unary Expressions (Identifiers or Literal values).
+ */
+query DACT::UnaryExpression::toString() : String {
+    -- Print identifier if present (e.g., "self.customerId")
+    if (not self.identifier.oclIsUndefined() and self.identifier.name.size() > 0){
+    	var toReturn := self.identifier.name;
+    	if (self.identifier.index != null){
+    		toReturn := toReturn + "[" + self.identifier.index.toString() + "]";
+    	};
+    	return toReturn;
+    };
+
+    -- Print literal value if present
+    if (not self.value.oclIsUndefined()){
+        return self.value.toString()
+    };
+
+    return "null";
+}
+
+query DACT::ValueSpecification::toString(): String{return "null"}
+
+query DACT::InstanceValue::toString(): String{return "NotSupported"}
+
+query DACT::Literal::toString() : String {
+    if (self.oclIsKindOf(DACT::LiteralBoolean)){
+        return self.oclAsType(DACT::LiteralBoolean).value.toString()
+    };
+    
+    if (self.oclIsKindOf(DACT::LiteralString)) {
+        return "'" + self.oclAsType(DACT::LiteralString).value + "'"
+    };
+
+    if (self.oclIsKindOf(DACT::LiteralInteger)) {
+        return self.oclAsType(DACT::LiteralInteger).value.toString()
+    };
+    
+    if (self.oclIsKindOf(DACT::EnumerationLiteral)){
+    	return self.oclAsType(DACT::EnumerationLiteral).name;
+    };
+    
+    return "null";
+}
+ 
+query DACT::BinaryExpression::toString() : String {
+	// Default operator for the equality assignment in the Domain Expression
+    var leftStr : String := self.leftExpr.toString();
+    var opStr : String := if self.operator.oclIsUndefined() then "=" else self.operator.operatorToString() endif;
+    var rightStr : String := self.rightExpr.toString();
+
+    return "(" + leftStr + " " + opStr + " " + rightStr + ")";
+}
+
+query DACT::NotExpression::toString() : String {
+    var mainStr : String := self.expr.toString();
+    
+    return "!(" + mainStr + ")";
+}
+
+query DACT::Operator::operatorToString() : String {
+	return switch {
+		case (self.oclIsKindOf(DACT::Gt)) ">";
+		case (self.oclIsKindOf(DACT::Ge)) ">=";
+		case (self.oclIsKindOf(DACT::Lt)) "<";
+		case (self.oclIsKindOf(DACT::Le)) "<=";
+		case (self.oclIsKindOf(DACT::Eq)) "==";
+		case (self.oclIsKindOf(DACT::Ne)) "!=";
+		case (self.oclIsKindOf(DACT::And)) "&&";
+		case (self.oclIsKindOf(DACT::Or)) "||";
+		case (self.oclIsKindOf(DACT::In)) "IN";
+		else "<UnknownOp>";
+	}
+}
+
+query DACT::Expression::printExpr(ntab:Integer) {
+	log(indent(ntab) + "   Current Expr: " + self.toString());
+}
+
+query DACT::VariableAssignment::printAssignment(ntab:Integer) {
+	var toLog := indent(ntab) + "   Current Assignment: " + self.identifier.name;
+	if (not self.expr.oclIsUndefined()){
+		toLog := toLog +" = " + self.expr.toString();
+	};
+	log(toLog);
+}
+-- Helper query to format ParameterMapping into a human-readable string
+query DACT::ParameterMapping::printInfo(ntabs:Integer): String {
+    var opParamName := if self.operationParameter <> null then self.operationParameter.name else "null" endif;
+
+    var mappedValStr := if self.variable <> null then
+        self.variable.name
+    else if self.identifier <> null then
+        self.identifier.name
+    else if self.activityParameter <> null then
+        self.activityParameter.name
+    else if self.value <> null then
+        self.value.toString()
+    else
+        "unmapped"
+    endif endif endif endif;
+
+    var toReturn :=  self.type.toString() + " : " + opParamName + " = " + mappedValStr;
+    log(indent(ntabs) + "[+]ParameterMapping - "+ toReturn);
+    return toReturn;
+}
+
+query DACT::ActivityEdge::printInfo(ntabs:Integer): String {
+	var source := if self.source.oclIsUndefined() then "'UndefinedSource'" else self.source.name endif;
+	var target := if self.target.oclIsUndefined() then "'UndefinedTarget'" else self.target.name endif;
+	var toReturn := "ActivityEdge : "  + if self.name.oclIsUndefined() then "" else self.name + "; " endif + source +" --> "+target;
+	log(indent(ntabs)+"[`]" +toReturn);
+	
+	return toReturn; 
+}
+
+query DACT::Activity::getBoundedContext(): DACT::BoundedContext{
+	if (self.specification.domainObject <> null){
+		return self.specification.domainObject.context;
+	}else{
+		return self.specification.interface.context;
+	}
+}
+
+query DACT::ActivityNode::getBoundedContext(): DACT::BoundedContext {
+	// Need to modify when the parallel is implemented
+    -- 1. Ensure node belongs to a group
+    if (self.group = null) {
+        return null;
+    };
+
+    -- 2. Navigate up the nested group hierarchy to find the parent Activity
+    var parentActivity := self.group.getContainingActivity();
+
+    -- 3. Extract the BoundedContext from the Activity
+    if (parentActivity <> null) {
+    	if (parentActivity.specification.domainObject <> null){
+    		 return parentActivity.specification.domainObject.context;
+    	}else if (parentActivity.specification.interface <> null){
+    		return parentActivity.specification.interface.context;
+    	}
+       
+    };
+
+    return null;
+}
+
+-- Helper query to navigate up nested ActivityGroups to find the root Activity
+query DACT::ActivityGroup::getContainingActivity(): DACT::Activity {
+    -- 1. Direct container is Activity
+    if (self.activity <> null) {
+        return self.activity;
+    };
+    
+    -- 2. If nested inside a ConditionalNode body/elseBody or LoopNode
+    if (self.structuredActivityNode <> null) {
+        return self.structuredActivityNode.group.getContainingActivity();
+    };
+    if (self.conditionalNode <> null) {
+        return self.conditionalNode.group.getContainingActivity();
+    };
+   
+    -- Add ParallelNode navigation here when added later!
+    
+    return null;
+}
+
+query DACT::Activity::deriveTargetContext(): Tuple(context: DACT::BoundedContext, aggregate: DACT::AggregateRoot, sideEffectFree: Boolean){
+    var context: DACT::BoundedContext;
+    var aggregate: DACT::AggregateRoot;
+    var sideEffectFree: Boolean;
+
+    var mostInfluentialNode := self.getMostInfluentialDomainNode();
+    
+    if (mostInfluentialNode <> null) {
+    	log(indent(2) + "Most influential Domain Node: " + mostInfluentialNode.name);
+        log(indent(2) + "Resolved Context from Most Influential Domain Node: " + mostInfluentialNode.aggregate.context.name);
+    	context:=mostInfluentialNode.aggregate.context; 
+    	aggregate:=mostInfluentialNode.aggregate;
+    	sideEffectFree:=false;
+       
+    };
+    
+    
+    return Tuple{context=context, aggregate=aggregate, sideEffectFree=sideEffectFree};
+}
+
+-- Helper query to assign type precedence
+query DACT::DomainNode::getTypeRank(): Integer {
+	if (self.oclIsKindOf(DACT::DomainCreateAction)) then return 1 endif;
+	if (self.oclIsKindOf(DACT::DomainDeleteAction)) then return 2 endif;
+	if (self.oclIsKindOf(DACT::DomainUpdateAction)) then return 3 endif;
+	return 4;
+}
+
+query DACT::Activity::getMostInfluentialDomainNode(): DACT::DomainNode {
+    var domainNodes := self.ownedDomainNodes -> asSequence();
+	var mutationNodes := domainNodes
+		->reject(n | n.oclIsKindOf(DACT::DomainFindAction));
+
+	if (mutationNodes->isEmpty()){
+		return domainNodes->first(); // All get = Need to get the parent aggregate/entity first
+	};
+
+	var sortedNodes := mutationNodes
+		->sortedBy(n | n.getTypeRank())             -- Secondary sort (Tie-breaker)
+		->sortedBy(n | n.propertyChain->size());    -- Primary sort (Dominates)
+
+	return sortedNodes->first();
+}
+
+query DACT::Activity::getAllDomainCallOperationNodes(): Sequence(DACT::CallOperationAction){
+	if (self.root <> null) {
+        return self.root.collectDomainCallOperationNodes();
+    };
+    return Sequence{};
+}
+
+query DACT::ActivityGroup::collectDomainCallOperationNodes(): Sequence(DACT::CallOperationAction){
+	-- 1. Collect direct DomainCallOperationNodes in this group
+    var nodes : Sequence(DACT::CallOperationAction) = self.ownedNodes[DACT::CallOperationAction]
+    				->select(n|
+    					n.operation.type = DACT::OperationType::R0_REPOSITORY_CREATE or
+						n.operation.type = DACT::OperationType::R1_REPOSITORY_READ or
+						n.operation.type = DACT::OperationType::R2_REPOSITORY_UPDATE or
+						n.operation.type = DACT::OperationType::R3_REPOSITORY_DELETE or
+						n.operation.type = DACT::OperationType::R4_REPOSITORY_EXIST
+    				)
+    				->asSequence();
+    
+    -- 2. Traverse structural nodes that contain child ActivityGroups
+    self.ownedNodes -> forEach(node) {
+        if (node.oclIsKindOf(DACT::ConditionalNode)) {
+            var cond := node.oclAsType(DACT::ConditionalNode);
+            if (cond.body <> null) {
+                nodes += cond.body.collectDomainCallOperationNodes();
+            };
+            if (cond.elseBody <> null) {
+                nodes += cond.elseBody.collectDomainCallOperationNodes();
+            };
+        } else if (node.oclIsKindOf(DACT::LoopNode)) {
+            var loopNode := node.oclAsType(DACT::LoopNode);
+            if (loopNode.body <> null) {
+                nodes += loopNode.body.collectDomainCallOperationNodes();
+            };
+        };
+        -- TODO: Add ParallelNode / ForkNode branches here when implemented in the future!
+    };
+    
+    return nodes;
+}
+
+-- Query on Activity: Entry point to gather all DomainNodes from the root group
+query DACT::Activity::getAllDomainNodes(): Sequence(DACT::DomainNode) {
+    if (self.root <> null) {
+        return self.root.collectDomainNodes();
+    };
+    return Sequence{};
+}
+
+-- Query on ActivityGroup: Recursively collects DomainNodes from itself and child groups
+query DACT::ActivityGroup::collectDomainNodes(): Sequence(DACT::DomainNode) {
+    -- 1. Collect direct DomainNodes in this group
+    var nodes : Sequence(DACT::DomainNode) = self.ownedNodes[DACT::DomainNode]->asSequence();
+    
+    -- 2. Traverse structural nodes that contain child ActivityGroups
+    self.ownedNodes -> forEach(node) {
+        if (node.oclIsKindOf(DACT::ConditionalNode)) {
+            var cond := node.oclAsType(DACT::ConditionalNode);
+            if (cond.body <> null) {
+                nodes += cond.body.collectDomainNodes();
+            };
+            if (cond.elseBody <> null) {
+                nodes += cond.elseBody.collectDomainNodes();
+            };
+        } else if (node.oclIsKindOf(DACT::LoopNode)) {
+            var loopNode := node.oclAsType(DACT::LoopNode);
+            if (loopNode.body <> null) {
+                nodes += loopNode.body.collectDomainNodes();
+            };
+        };
+        -- TODO: Add ParallelNode / ForkNode branches here when implemented in the future!
+    };
+    
+    return nodes;
+}
+
+-- Helper query on DomainNode to check side-effect status
+query DACT::DomainNode::isSideEffectFree(): Boolean {
+    return switch {
+        case (self.oclIsKindOf(DACT::DomainExistAction)) true;
+        case (self.oclIsKindOf(DACT::DomainFindAction)) true;
+        case (self.oclIsKindOf(DACT::DomainCreateAction)) false;
+        case (self.oclIsKindOf(DACT::DomainUpdateAction)) false;
+        case (self.oclIsKindOf(DACT::DomainDeleteAction)) false;
+        else true;
+    };
+}
+
+query DACT::Operation::getDomainNode(): DACT::DomainNode{
+	var mp := DACT::DomainNodeOperationMapping.allInstances() -> selectOne(m|m.operation=self);
+	return mp.domainNode;
+}
+
+query DACT::Operation::isUsedByExternalContext(): Boolean {
+    return DACT::DomainNodeOperationMapping.allInstances() 
+        -> exists(m | m.operation = self and m.usedByExternalContext = true);
+}
+

@@ -1,0 +1,124 @@
+[comment encoding = UTF-8 /]
+[module lemmaExprTemplates(
+	'http://www.example.org/xcore/data',
+	'http://www.example.org/xcore/service',
+	'http://www.example.org/xcore/behavior',
+	'http://www.example.org/xcore/technology'
+)/]
+[import lemmaDataUtils/]
+
+[template public generateExpression(expr : behavior::Expression)]
+[/template]
+
+[comment In orginal syntax, self identifier starts with self. must replace by this. for Java/]
+[template public generateExpression(expr : behavior::UnaryExpression)]
+[expr.formatUnaryExpression()/]
+[/template]
+
+
+[template public generateExpression(expr : behavior::BinaryExpression)]
+[let hasTypes : Boolean = expr.leftExpr.evaluatedType != null and expr.rightExpr.evaluatedType != null,
+     leftIsColl : Boolean = expr.leftExpr.evaluatedType != null and expr.leftExpr.evaluatedType.type.oclIsKindOf(data::CollectionType),
+     rightIsSingle : Boolean = expr.rightExpr.evaluatedType != null and not expr.rightExpr.evaluatedType.type.oclIsKindOf(data::CollectionType)
+][if (leftIsColl and expr.rightExpr.evaluatedType = null)][if (expr.operator.oclIsKindOf(behavior::Ne))]![/if][expr.leftExpr.generateExpression()/].isEmpty()[elseif (expr.operator.oclIsKindOf(behavior::In))][expr.rightExpr.generateExpression()/].contains([expr.leftExpr.generateExpression()/])[elseif (hasTypes and (expr.operator.oclIsKindOf(behavior::Eq)))][expr.leftExpr.generateExpression()/].equals([expr.rightExpr.generateExpression()/])[elseif (hasTypes and (expr.operator.oclIsKindOf(behavior::Ne)))]![expr.leftExpr.generateExpression()/].equals([expr.rightExpr.generateExpression()/])[elseif (leftIsColl and rightIsSingle and expr.operator.oclIsKindOf(behavior::Plus))][expr.leftExpr.generateExpression()/].add([expr.rightExpr.generateExpression()/])[elseif (leftIsColl and rightIsSingle and expr.operator.oclIsKindOf(behavior::Minus))][expr.leftExpr.generateExpression()/].remove([expr.rightExpr.generateExpression()/])[else][expr.leftExpr.generateExpression()/] [expr.operator.getOperatorPresentation()/] [expr.rightExpr.generateExpression()/][/if]
+[/let]
+[/template]
+                                                            
+[template public generateExpression(expr : behavior::NotExpression)]!([expr.expr.generateExpression()/])[/template]
+
+[query public formatUnaryExpression(expr: behavior::UnaryExpression) : String =  
+	if (expr.identifier <> null) then
+		expr.identifier.formatIdentifierName()
+	else if (expr.value <> null) then
+		if (expr.value.oclIsKindOf(data::PrimitiveValue)) then
+			let value : data::PrimitiveValue = expr.value.oclAsType(data::PrimitiveValue) in
+				if (value.stringValue <> null) then
+					'"' + value.stringValue + '"'
+				else if (value.booleanValue <> null) then
+					value.booleanValue.toString()
+				else if (value.numericValue <> null) then
+					value.numericValue.toString()
+				else
+					'null'
+				endif endif endif
+			endlet
+		else if (expr.value.oclIsKindOf(data::EnumerationField)) then
+			let enumVal : data::EnumerationField = expr.value.oclAsType(data::EnumerationField) in
+				if (enumVal.name <> null) then
+					enumVal.formatEnumerationField()
+				else
+					'null'
+				endif
+			endlet
+		else
+			''
+		endif endif
+	else
+		''
+	endif endif
+/]
+
+[query public formatIdentifierName(identifier: behavior::Identifier) : String =  
+    let hasIndex : Boolean = (identifier.index <> null) in
+    let indexStr : String = if (hasIndex) then if (identifier.index = -1) then '.getLast()' else '.get(' + identifier.index + ')' endif else '' endif in
+    let startsWithSelf : Boolean = identifier.name.startsWith('self.') in
+        let rawName : String = identifier.name.replaceFirst('self.', 'this.') in
+            let segments : Sequence(String) = rawName.tokenize('.') in
+                if (segments->size() <= 1) then
+                    rawName + indexStr
+                else
+                    let head : String = 
+                        if (startsWithSelf) then
+                            segments->first() + '.' + segments->at(2)
+                        else
+                            segments->first()
+                        endif in
+                    let startIndex : Integer = 
+                        if (startsWithSelf) then 3 else 2 endif in
+                    let lastIndex : Integer = segments->size() in
+                    
+                    if (startIndex > lastIndex) then
+                        head + indexStr
+                    else
+                        head + '.' + 
+                        segments->subSequence(startIndex, lastIndex - 1)
+                            ->collect(seg : String | 'get' + seg.toUpperFirst() + '()')
+                            ->sep('.')
+                        + if (startIndex <= lastIndex - 1) then '.' else '' endif
+                        + 'get' + segments->at(lastIndex).toUpperFirst() + '()' + indexStr
+                    endif
+                endif
+/]
+
+[query public formatEnumerationField(field: data::EnumerationField) : String =
+	field.name.replaceAll('::','.')
+/]
+
+[query public generateGetterChain(name : String) : String =
+  let parts : Sequence(String) = name.tokenize('.') in
+    parts->first() + 
+    if parts->size() > 1 then 
+      '.' + parts->subSequence(2, parts->size())
+        ->collect(p | 'get' + p.toUpperFirst() + '()')
+        ->sep('.')
+    else 
+      '' 
+    endif
+/]
+
+[query public getOperatorPresentation(op : behavior::Operator) : String = 'UNKNOWN' /]
+
+[query public getOperatorPresentation(op : behavior::Divide) : String = ':' /]
+[query public getOperatorPresentation(op : behavior::Times) : String = '*' /]
+[query public getOperatorPresentation(op : behavior::Plus) : String = '+' /]
+[query public getOperatorPresentation(op : behavior::Minus) : String = '-' /]
+
+[query public getOperatorPresentation(op : behavior::Gt) : String = '>' /]
+[query public getOperatorPresentation(op : behavior::Lt) : String = '<' /]
+[query public getOperatorPresentation(op : behavior::Ge) : String = '>=' /]
+[query public getOperatorPresentation(op : behavior::Le) : String = '<=' /]
+[query public getOperatorPresentation(op : behavior::Eq) : String = '==' /]
+[query public getOperatorPresentation(op : behavior::Ne) : String = '!=' /]
+[query public getOperatorPresentation(op : behavior::And) : String = '&&' /]
+[query public getOperatorPresentation(op : behavior::Or) : String = '||' /]
+  

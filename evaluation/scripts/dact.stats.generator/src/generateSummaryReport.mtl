@@ -1,0 +1,31 @@
+[comment encoding = UTF-8 /]
+[**
+ * The documentation of the module generate.
+ * @author trangnguyen
+ * @version 1.0.0
+ * @since 1.0.0
+ */]
+[module generateSummaryReport(
+	'http://www.example.org/xcore/dact'
+)/]
+
+
+[comment @main/]
+[template public generateSummaryReport(aRoot : dact::Root)]
+[file ('all_model_element_stats.md', overwrite, 'UTF-8')]
+  # Complete Model Element Statistics
+
+  ## Overall Summary
+  * **Total Model Elements (all types):** [aRoot.eAllContents()->size() + 1/]
+
+  ## Element Count by Type
+
+  | Model Element (EClass) | Count |
+  | :--- | :--- |
+  | **Root** | 1 |
+[for (cls | aRoot.eAllContents()->collect(e | e.eClass())->asOrderedSet()->sortedBy(c | c.name))]
+  | **[cls.name/]** | [aRoot.eAllContents()->select(e | e.eClass() = cls)->size()/] |
+[/for]
+
+[/file]
+[/template]

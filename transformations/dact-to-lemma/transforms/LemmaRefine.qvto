@@ -1,0 +1,752 @@
+import StringUtils;
+import DactToLemmaUtils;
+import DactToLemmaData;
+import DactToLemmaService;
+import DactToLemmaBehavior;
+import LemmaUtils;
+
+modeltype DATA uses 'http://www.example.org/xcore/data';
+modeltype SERV uses 'http://www.example.org/xcore/service';
+modeltype BEHA uses 'http://www.example.org/xcore/behavior' ;
+modeltype TECH uses 'http://www.example.org/xcore/technology' ;
+
+modeltype ECORE "strict" uses ecore('http://www.eclipse.org/emf/2002/Ecore');
+
+transformation LemmaRefine(inout data: DATA, inout service: SERV, in behavior: BEHA, out refinedBehavior: BEHA);
+
+property PROJECT_NAME : String = "DefaultProject";
+property DATA_IMPORT_NAME : String = "DomainData";
+property SERV_IMPORT_NAME : String = "DomainService";
+property SERV_IMPORT : SERV::Import;
+property DATA_IMPORT : SERV::Import;
+property MAPPING_ACTIVITY = "MAPPING_ACTIVITY";
+property MAPPING_ACTION = "MAPPING_ACTION";
+property ROOT_MS : SERV::Microservice;
+property CACHED_OP_MAPPINGS :  Dict(SERV::Operation,SERV::Operation);
+property ACTIVITY_MODEL : BEHA::ActivityModel;
+property TO_DUMP : OrderedSet(BEHA::ActivityNode);
+// ASSUMPTION: There are no naming conflicts among domain objects across context -> Need to add a layer to resolve the conflict by explicit mapping later!!!!
+// Skip ACL for now
+
+main() {
+	behavior.rootObjects()[BEHA::BehaviorModel]->map ModelToModel();
+	log("");
+	log("-------------------------------------------");
+	log("5.REFINING LEMMA BEHAVIOR MODEL");
+	log("-------------------------------------------");	
+	refinedBehavior.rootObjects()[BEHA::BehaviorModel]->forEach(model){
+		ACTIVITY_MODEL := model.activityModel;
+		model.activityModel.refineActivityModel(model.activityModel);	
+	};
+	
+//	refinedBehavior.rootObjects()[BEHA::BehaviorModel]-> forEach(model){
+//		model.activityModel.activities ->forEach(a){a.printInfoFull(0)};
+//	};
+	log("-------------------------------------------");
+	log("");
+}
+
+
+
+mapping BEHA::BehaviorModel::ModelToModel(): BEHA::BehaviorModel {
+	init {
+        // Deep clone the entire root element into the result object
+        result := self.deepclone().oclAsType(BEHA::BehaviorModel);
+    }
+	SERV_IMPORT := result.imports->selectOne(i | i.importType = SERV::ImportType::MICROSERVICES);
+    DATA_IMPORT := result.imports->selectOne(i | i.importType = SERV::ImportType::DATATYPES);
+}
+
+helper BEHA::ActivityModel::refineActivityModel(inout model: BEHA::ActivityModel){
+	model.activities -> forEach(activity){
+		activity.printInfo(0);
+		if (activity.toTransform){
+			activity.refineActivity(activity);
+		}
+	}
+}
+
+
+helper BEHA::Activity::refineActivity(inout activity: BEHA::Activity){
+	if (not self.toTransform){
+		return null;
+	};
+	ROOT_MS := self.getMicroservice();
+	var rootGroup := activity.root;
+	rootGroup.refineActivityGroup(rootGroup);
+}
+
+helper BEHA::ActivityGroup::refineActivityGroup(inout group: BEHA::ActivityGroup){
+	log(indent(1)+"----");
+	self.printInfo(1);
+	var initialNode := self.ownedNodes[BEHA::InitialNode] -> any(true); // Already ensure that each ActivityGroup has a single InitialNode	
+	
+	initialNode.refineNodeWrapper();
+	
+	group.ownedNodes := group.ownedNodes - TO_DUMP;
+	
+	log(indent(1)+"****");
+}
+
+helper BEHA::ActivityNode::refineNodeWrapper(){
+	self.printInfo(2);
+	
+	// Get the next edge before it's overwritten
+	var nextEdge := self.sEdge;
+
+	// Process Current 
+	self.refineNode();
+	
+	if (not self.oclIsKindOf(BEHA::ActivityFinalNode)){
+		
+		if (nextEdge->isEmpty()){ 
+			// No next edge -> Exit current group -> Get nextEdge of parent
+			var parent := self.group.container();
+			if (parent.oclIsKindOf(BEHA::Activity)){
+				log(indent(2)+"Reached the end of the main Activity path: " + self.group.activity.name);
+				return;
+			} else if (parent.oclIsKindOf(BEHA::ConditionalNode)){
+				var condParent := parent.oclAsType(BEHA::ConditionalNode);
+				if (condParent.body = self.group){
+					log(indent(2)+"Finished Main Body branch of " + condParent.name + ". Returning to evaluate Else branch.");
+					return;
+				};
+				nextEdge := condParent.sEdge;
+			} else if (parent.oclIsKindOf(BEHA::LoopNode)){
+				nextEdge := parent.oclAsType(BEHA::LoopNode).sEdge;
+			}
+		};
+
+		-- Ensure we actually found a valid next edge before continuing recursion
+		if (nextEdge->notEmpty() and nextEdge.target->notEmpty()) {
+			var nextNode := nextEdge.target;
+			nextEdge.printInfo(2);
+			nextNode.refineNodeWrapper();
+		} else {
+			assert fatal (false)
+				with log("M2M Execution Error: Dead end reached at node " + self.name + " with no structural parent group to exit to.");
+		}
+	}
+}
+
+helper BEHA::ActivityNode::refineNode(){
+}
+
+helper BEHA::ConditionalNode::refineNode(){
+	self.body.refineActivityGroup(self.body);
+	self.elseBody.refineActivityGroup(self.elseBody);
+}
+
+helper BEHA::LoopNode::refineNode(){
+	self.body.refineActivityGroup(self.body);
+}
+
+helper BEHA::CallOperationAction::refineNode(){
+	var nodeMS := self.getMicroservice();
+	var currentOp := self.importedOperation.oclAsType(BEHA::ImportedInterfaceOperation).operation;
+	if (nodeMS = ROOT_MS){
+		log(indent(2)+"    - Operation '" +self.name +"' belongs to the Root Microservice '" + ROOT_MS.name +"'. No further process!");
+		return;
+	};
+	
+	log(indent(2)+"    - Operation '" +self.name +"' (MS = '"+ nodeMS.name+"') does not belong to the Root Microservice '" + ROOT_MS.name +"'. No further process!");
+	
+	// Derive the corresponding operation to call the external service or repository operation
+	var controllerOp := self.deriveControllerOperation();
+	var controller := controllerOp.interface;
+	
+	// Create Outbound Adapter: Map purely by name
+	var outboundAdapterName := self.getMicroservice().getCorrespondingOutboundAdapterName();
+	var outboundAdapter := ROOT_MS.interfaces 
+		-> selectOne(i|i.interfaceType = SERV::InterfaceType::OUTBOUND_ADAPTER and i.name = outboundAdapterName );
+	
+	if (outboundAdapter <> null){
+		log(indent(2)+"    + Outbound Adapter for microservice '"+nodeMS.name+"' exists.");
+	}else{
+		outboundAdapter := self.createOutboundAdapter();
+		log(indent(2)+"    + Outbound Adapter for microservice '"+nodeMS.name+"' does NOT exists -> Create a new OutboundAdapter: "+ outboundAdapter.name);
+	};
+	
+	// Create oubound operation to call Controller operation + Activity for that function
+	var newOutboundOp := outboundAdapter.operations -> selectOne(o|o.name = controllerOp.name);
+		
+	if (newOutboundOp = null){
+		newOutboundOp := object SERV::Operation{
+			name := self.name.toCamel();
+			notImplemented := false;
+			visibility := SERV::Visibility::INTERNAL;
+			operationType := controllerOp.operationType.getCorrespondingOutboundOperationType();
+		};
+		
+		outboundAdapter.operations += newOutboundOp;
+		newOutboundOp.parameters := currentOp.parameters -> collect(p|p.deepclone());
+		var newOutboundActivity := self.createActivityForOutboundAdapter(newOutboundOp,controllerOp);
+		ACTIVITY_MODEL.activities += newOutboundActivity;
+	};
+	
+	// Create a new CallOperationAction for the ServiceOperation
+	var identifierDict : Dict(String,String);
+	self.parameterMappings -> forEach(mp){
+		identifierDict -> put(mp.operationParameter.oclAsType(BEHA::ImportedInterfaceParameter).parameter.name, mp.identifier.name);
+	};
+	var newCallOutboundOpAction := newOutboundOp.createNewCallOperationAction(identifierDict);
+	newCallOutboundOpAction.toDeclareResult := self.toDeclareResult;
+	// Change Edges
+	var prevEdge := BEHA::ActivityEdge.allInstances()
+		-> selectOne(e|e.target = self);
+	if (prevEdge <> null){
+		prevEdge.target := newCallOutboundOpAction;
+	};
+	
+	var nextEdge := BEHA::ActivityEdge.allInstances()
+		-> selectOne(e|e.source = self);
+	if (nextEdge <> null){
+		nextEdge.source := newCallOutboundOpAction;
+	};
+	self.group.ownedNodes += newCallOutboundOpAction;
+	TO_DUMP += self;
+}
+
+helper BEHA::CallOperationAction::createActivityForOutboundAdapter(outboundOp: SERV::Operation, controllerOp: SERV::Operation): BEHA::Activity{
+	var newActivity := object BEHA::Activity{
+		name := outboundOp.name + 'OutboundAdapter';
+		toTransform := true;
+		specification := object BEHA::ImportedInterfaceOperation{
+			_import := SERV_IMPORT;
+			operation := outboundOp;
+		};
+		ownedParameters := outboundOp.parameters -> collect(p|p.deepclone());
+		root := object BEHA::ActivityGroup{name:="Root";scope:=object Scope{}};
+	};
+	var newParameterMappings : Sequence(BEHA::ParameterMapping);
+	outboundOp.parameters -> forEach(opParam){
+		var matchedActParam := newActivity.ownedParameters -> selectOne(p|p.name = opParam.name);	
+		newParameterMappings += object ParameterMapping{
+			type := if (opParam.exchangePattern = TECH::ExchangePattern::IN) then 
+                        BEHA::ParameterMappingType::ACTIVITY_IN 
+                    else 
+                        BEHA::ParameterMappingType::ACTIVITY_OUT
+                    endif;
+			operationParameter := object BEHA::ImportedInterfaceParameter{
+					_import := SERV_IMPORT;
+					parameter:=opParam;
+			};
+            activityParameter := matchedActParam;
+		};
+	};
+	newActivity.parameterMappings := newParameterMappings;
+	
+	// Create a new CallOperationAction to the Controller
+	var rootGroup := newActivity.root;
+	var newCoreNodes := self.createCallControllerOperationAction(rootGroup.scope,outboundOp, controllerOp);
+	
+	// TODO : Create init node -> call node -> final node : Later add ACL 
+	var initNode := object BEHA::InitialNode{
+		name := newActivity.name+"-InitNode";
+	};
+	var finalNode := object BEHA::ActivityFinalNode{
+		name := newActivity.name+"-ActivityFinalNode";
+	};
+	newActivity.ownedParameters
+		->select(p|p.exchangePattern=TECH::ExchangePattern::OUT)
+		->forEach(p){
+			finalNode.variablesToReturn += object BEHA::Identifier{name:=p.name};
+		};
+	
+	rootGroup.ownedNodes := Sequence{initNode};
+	rootGroup.ownedNodes += newCoreNodes;
+	rootGroup.ownedNodes += finalNode;
+	
+	Sequence{2..rootGroup.ownedNodes->size()-1} -> forEach(i){		
+		rootGroup.ownedEdges+= Sequence{
+			object BEHA::ActivityEdge{
+				source := rootGroup.ownedNodes -> at(i-1);
+				target := rootGroup.ownedNodes -> at(i);	
+			},
+			object BEHA::ActivityEdge{
+				source := rootGroup.ownedNodes -> at(i);
+				target := rootGroup.ownedNodes -> at(i+1);	
+			}
+		};	
+	};
+	
+	return newActivity;	
+}
+
+helper BEHA::CallOperationAction::createCallControllerOperationAction(
+	inout targetScope: BEHA::Scope,
+	outboundOp: SERV::Operation, 
+	controllerOp : SERV::Operation): Sequence(BEHA::ActivityNode){
+
+	var outboundContext := outboundOp.interface.microservice.getCorrespondingContext();
+	var newNodes: Sequence(BEHA::ActivityNode);
+	var mappings:Sequence(BEHA::ParameterMapping);
+	
+	// Map all Path and query param first
+	var pqParams := controllerOp.parameters	 
+				-> select(p|p.adapterParameterType=SERV::AdapterParameterType::PATH_PARAM 
+					or p.adapterParameterType=SERV::AdapterParameterType::QUERY_PARAM);
+	pqParams -> forEach(opParam){
+		mappings += object ParameterMapping{
+			type := if (opParam.exchangePattern = TECH::ExchangePattern::IN) then 
+                        BEHA::ParameterMappingType::ACTION_IN 
+                    else 
+                        BEHA::ParameterMappingType::ACTION_OUT
+                    endif;
+			operationParameter := object BEHA::ImportedInterfaceParameter{
+					_import := SERV_IMPORT;
+					parameter:=opParam;
+			};
+            identifier := object BEHA::Identifier{name:= opParam.name};
+		};
+	};
+	
+	// Check if there are any request body node
+	var requestBody := controllerOp.parameters 
+				-> selectOne(p|p.adapterParameterType=SERV::AdapterParameterType::REQUEST_BODY);
+	if (requestBody != null){
+		// Clone the type of the request body to local first
+		var requestType := requestBody.importedType.type.oclAsType(DATA::DataStructure);
+	    addTypeToOutboundContext(requestType, outboundContext);
+	    
+		var newRequestVariable := object BEHA::Variable {
+			name := requestBody.name;
+			importedType := requestBody.importedType.deepclone();
+			lowerBound := 1;
+			upperBound := 1;
+		};
+		targetScope.ownedVariables+=newRequestVariable;
+		
+		var newVariableDeclaration := object BEHA::VariableDeclarationAction{
+			lowerBound :=1;
+			upperBound :=1;
+			importedType := requestBody.importedType.deepclone();
+			declaration := object BEHA::VariableAssignment{
+				identifier := object Identifier {name := newRequestVariable.name};
+			}
+		};
+		newNodes += newVariableDeclaration;
+		
+		var variableType := newRequestVariable.importedType.type.oclAsType(DATA::DataStructure);
+		variableType.dataFields -> forEach(f){
+			var newVariableAssignment := object BEHA::VariableAssignmentAction{
+				name := newRequestVariable.name+"."+f.name + "=" + f.name;	
+				assignment := object BEHA::VariableAssignment{
+					identifier := object Identifier {name := newRequestVariable.name+"."+f.name};
+					expr := object BEHA::UnaryExpression{
+							identifier:=object Identifier{name:=f.name}
+						}
+				};
+			};
+			newNodes += newVariableAssignment;
+		};
+		
+		mappings += object ParameterMapping{
+			type := BEHA::ParameterMappingType::ACTION_IN; 
+			operationParameter := object BEHA::ImportedInterfaceParameter{
+					_import := SERV_IMPORT;
+					parameter:=requestBody;
+			};
+            identifier := object BEHA::Identifier{name:= newRequestVariable.name};
+		};
+	};
+	
+	var newCallOpAction := object BEHA::CallOperationAction{
+		name:= self.name;
+		importedOperation := object BEHA::ImportedInterfaceOperation{
+			_import:= SERV_IMPORT;
+			operation:= controllerOp;
+		};
+		toDeclareResult := true
+	};
+	newNodes+=newCallOpAction;
+	
+	// Map the response body back to the corresponding out
+	var responseBody := controllerOp.parameters 
+				-> selectOne(p|p.adapterParameterType=SERV::AdapterParameterType::RESPONSE_BODY);
+	if (responseBody <> null){
+		var newResponseVariable := object BEHA::Variable {
+			name := responseBody.name;
+			importedType := responseBody.importedType.deepclone();
+			lowerBound := 1;
+			upperBound := 1;
+		};
+		targetScope.ownedVariables+=newResponseVariable;
+		
+		mappings += object ParameterMapping{
+			type := BEHA::ParameterMappingType::ACTION_OUT; 
+			operationParameter := object BEHA::ImportedInterfaceParameter{
+					_import := SERV_IMPORT;
+					parameter:=responseBody;
+			};
+            identifier := object BEHA::Identifier{name:= newResponseVariable.name};
+		};
+		
+		var responseType := newResponseVariable.importedType.type.oclAsType(DATA::DataStructure);
+		addTypeToOutboundContext(responseType, outboundContext);
+	    
+		responseType.dataFields -> forEach(f){
+			var newResultVariable := object BEHA::Variable {
+				name := f.name;
+				lowerBound := 1;
+				upperBound := 1;
+			};
+			if (f.primitiveType <> null){
+				newResultVariable.primitiveType := f.primitiveType.deepclone();
+			}else{
+				newResultVariable.importedType := object SERV::ImportedType{
+					_import := DATA_IMPORT;
+					type := f.complexType;
+				}
+			};
+			targetScope.ownedVariables+=newResultVariable;
+			
+			var fieldResultDeclaration := object BEHA::VariableDeclarationAction{
+				name := newResultVariable.name + "=" + newResponseVariable.name+"."+f.name;
+				lowerBound := f.lowerBound;
+				upperBound := f.upperBound;
+				declaration := object BEHA::VariableAssignment{
+					identifier := object Identifier {name:= newResultVariable.name};
+					expr := object BEHA::UnaryExpression{
+							identifier:= object BEHA::Identifier{name:= newResponseVariable.name+"."+f.name};
+						}
+				}
+			};
+			if (f.primitiveType <> null){
+				fieldResultDeclaration.primitiveType := f.primitiveType.deepclone();
+			}else{
+				fieldResultDeclaration.importedType := object SERV::ImportedType{
+					_import := DATA_IMPORT;
+					type := f.complexType;
+				}
+			};
+			newNodes += fieldResultDeclaration;
+		}
+	};
+	
+	newCallOpAction.parameterMappings := mappings;
+	
+	return newNodes;
+}
+
+-- Helper definition
+helper addTypeToOutboundContext(targetType : DATA::ComplexType, inout outboundContext : DATA::Context) {
+    if (targetType.oclIsKindOf(DATA::CollectionType) and targetType.oclAsType(DATA::CollectionType).primitiveType <>null){
+    	log("NOT create a local copy of "+targetType.metaClassName()+" '"+targetType.name+"' in bounded context '"+outboundContext.name+"'");
+        
+    	return;
+    };
+    
+    -- Check if the complex type is already present in outboundContext
+    var matchedType := outboundContext.complexTypes->select(t | t.name = targetType.name and t.metaClassName() = targetType.metaClassName());
+    if (matchedType->size() < 1){
+    	log("Create a local copy of "+targetType.metaClassName()+" '"+targetType.name+"' in bounded context '"+outboundContext.name+"'");
+        -- 1. Deep clone the target type and update features
+        var dupType := targetType.deepclone().oclAsType(DATA::ComplexType);
+        
+        dupType.features := DATA::ComplexTypeFeature::EXTERNAL;
+        
+        -- 2. Add cloned type to the outboundContext
+        outboundContext.complexTypes += dupType;
+        -- 3. Recursively process nested ComplexTypes inside dupType's fields
+        -- Adjust 'fields' or 'dataFields' depending on your metamodel property name
+        if (dupType.oclIsKindOf(DATA::DataStructure)){
+	        dupType.oclAsType(DATA::DataStructure).dataFields->forEach(field) {
+	            if (field.complexType <> null) then {
+	                addTypeToOutboundContext(field.complexType, outboundContext);
+	            } endif;
+	        };
+        } else if (dupType.oclIsKindOf(DATA::CollectionType)){
+        	if (dupType.oclAsType((DATA::CollectionType)).primitiveType = null){
+	        	dupType.oclAsType(DATA::CollectionType).dataFields->forEach(field) {
+		            if (field.complexType <> null) then {
+		                addTypeToOutboundContext(field.complexType, outboundContext);
+		            } endif;
+		        };
+        	}
+        };
+    };
+}
+
+helper SERV::Operation::deriveOutboundCallOperationParams(targetOp: SERV::Operation): Sequence(SERV::Parameter){
+	var localContext := self.interface.microservice.getCorrespondingContext();
+	var targetContext := targetOp.interface.microservice.getCorrespondingContext();
+	var newParams : Sequence(SERV::Parameter);
+	
+	targetOp.parameters -> forEach(controllerParam){
+		var newParam := controllerParam.deepclone();
+	
+		if (controllerParam.importedType <> null){
+			// Clone the datastructure from target context to local context (Primitive Type is already created with clone)
+			var targetType := controllerParam.importedType.type.oclAsType(DATA::DataStructure);
+			var localType := targetType.clone();
+			localContext.complexTypes += localType;
+			newParam.importedType := object ImportedType{
+				_import := DATA_IMPORT;
+				type := localType;
+			};
+		};
+		newParams += newParam;
+	};
+	return newParams;
+} 
+helper SERV::OperationType::getCorrespondingOutboundOperationType(): SERV::OperationType{
+	return switch {
+		case (self = SERV::OperationType::I0_INBOUND_GET) SERV::OperationType::O0_OUTBOUND_GET;
+		case (self = SERV::OperationType::I1_INBOUND_PUT) SERV::OperationType::O1_OUTBOUND_PUT;
+		case (self = SERV::OperationType::I2_INBOUND_POST) SERV::OperationType::O2_OUTBOUND_POST;
+		case (self = SERV::OperationType::I3_INBOUND_DELETE) SERV::OperationType::O3_OUTBOUND_DELETE;
+	}
+}
+helper BEHA::CallOperationAction::createOutboundAdapter(): SERV::Interface{
+	
+	var nodeMS := self.getMicroservice();	
+	var adapter := object SERV::Interface{
+		name := nodeMS.getCorrespondingOutboundAdapterName();
+		interfaceType := SERV::InterfaceType::OUTBOUND_ADAPTER;
+		visibility := SERV::Visibility::INTERNAL;
+	};
+	
+	ROOT_MS.interfaces += adapter;
+	return adapter;	
+}
+
+helper BEHA::CallOperationAction::deriveControllerOperation(): SERV::Operation{
+	// Create interface and operation if yet existed
+	
+	return self.importedOperation.deriveControllerOperation()
+}
+
+helper BEHA::ImportedOperation::deriveControllerOperation():  SERV::Operation{
+	return null;
+}
+
+helper BEHA::ImportedInterfaceOperation::deriveControllerOperation():  SERV::Operation{
+	var controller : SERV::Interface;
+	var controllerOp : SERV::Operation;
+	var interfaceOperation := self.operation;
+	var interface := interfaceOperation.interface;
+	var microservice := interface.microservice;
+	
+	interface.printInfo(3);
+	interfaceOperation.printInfo(4);
+	
+	if (CACHED_OP_MAPPINGS -> hasKey(interfaceOperation)){
+		log(indent(3) + "# Controller Operation exists in CACHED_OP_MAPPINGS. Continue..." );	
+		return  CACHED_OP_MAPPINGS -> get(interfaceOperation);
+	};
+	
+	if (interface.interfaceType = SERV::InterfaceType::DOMAIN_SERVICE){
+		controller := microservice.interfaces 
+							-> selectOne(i|i.interfaceType = SERV::InterfaceType::CONTROLLER and (i.name = interface.name or i.name = interface.name.replace("Service","Controller")));
+		controllerOp := controller.operations -> selectOne(o|o.name=interfaceOperation.name);
+		
+		assert fatal (controllerOp <> null)
+			with log("Compile Error: Cannot find the matching Controller Operation to process specification!");
+		
+		CACHED_OP_MAPPINGS -> put(interfaceOperation, controllerOp);
+	}else if (interface.interfaceType = SERV::InterfaceType::REPOSITORY){
+		// Service
+		var service := microservice.interfaces
+							-> selectOne(i|i.interfaceType = SERV::InterfaceType::DOMAIN_SERVICE and (i.name = interface.name or i.name = interface.name.replace("Repository","Service")));
+		var serviceOp := service.operations -> selectOne(o|o.name=interfaceOperation.name);
+		
+		assert fatal (serviceOp <> null)
+			with log("Compile Error: Cannot find the matching Service Operation to process specification!");
+		
+		var serviceOpActivity := BEHA::Activity.allInstances() 
+			-> selectOne(a|a.specification.oclAsType(BEHA::ImportedInterfaceOperation).operation=serviceOp);
+		
+		if (serviceOpActivity.oclIsUndefined()){
+			serviceOpActivity := createActivityForDefaultServiceOperation(interface,interfaceOperation,service,serviceOp, microservice);
+			ACTIVITY_MODEL.activities += serviceOpActivity;
+		};
+	
+		// Controller
+		controller := microservice.interfaces 
+							-> selectOne(i|i.interfaceType = SERV::InterfaceType::CONTROLLER and (i.name = service.name or i.name = service.name.replace("Service","Controller")));
+
+		
+		controllerOp := controller.operations -> selectOne(o|o.name=serviceOp.name);
+		assert fatal (controllerOp <> null)
+			with log("Compile Error: Cannot find the matching Controller Operation to process specification!");
+		
+		var controllerOpActivity := BEHA::Activity.allInstances() 
+			-> selectOne(a|a.specification.oclAsType(BEHA::ImportedInterfaceOperation).operation=controllerOp);
+
+		if (controllerOpActivity.oclIsUndefined()){
+			controllerOpActivity := createActivityForDefaultControllerOperation(service,serviceOp,controller,controllerOp, microservice);
+			ACTIVITY_MODEL.activities += controllerOpActivity;
+		};
+		
+		CACHED_OP_MAPPINGS -> put(interfaceOperation, controllerOp);
+	};
+	
+	controller.printInfo(3);
+	controllerOp.printInfo(4);
+	
+	return controllerOp;
+}
+
+helper BEHA::ImportedDataOperation::deriveControllerOperation():  SERV::Operation{
+	// Currently skipped as only local modification is supported for now!!!!
+	return null;
+}
+
+query SERV::Operation::deriveControllerOperationType(): SERV::OperationType{
+	return switch{
+		case (self.name.indexOf("Create") > 0) SERV::OperationType::I2_INBOUND_POST;
+		case (self.name.indexOf("Find") > 0) SERV::OperationType::I0_INBOUND_GET;
+		case (self.name.indexOf("Update") > 0) SERV::OperationType::I1_INBOUND_PUT;
+		case (self.name.indexOf("Delete") > 0) SERV::OperationType::I3_INBOUND_DELETE;
+	}
+}
+query createActivityForDefaultServiceOperation(
+	lowerInterface : SERV::Interface,
+	lowerOp : SERV::Operation,
+	higherInterface : SERV::Interface,
+	higherOp : SERV::Operation,
+	microservice : SERV::Microservice
+): BEHA::Activity{
+		
+	log(indent(4)+"[NEW] Create a new activity for Operation '"+higherOp.buildQualifiedName("::")+"': " );
+	
+	var newActivity := object BEHA::Activity{
+		name := higherOp.name+higherInterface.interfaceType.toString().toUpperCamel();
+		specification := object BEHA::ImportedInterfaceOperation{
+			_import := SERV_IMPORT;
+			operation := higherOp;
+		};
+		root := object BEHA::ActivityGroup{};
+	};
+	
+	// New activity params + mappings -> return mapping from new input to the service
+	var newActivityMp := higherOp.createParamsAndMappingsForActivity();
+	newActivity.ownedParameters := newActivityMp.activityParameters;
+	newActivity.parameterMappings := newActivityMp.mappings;
+	
+	// Create a new CallOperationAction to the LowerOp
+	var newCallServiceOpAction := lowerOp.createNewCallOperationAction(newActivityMp.csParamMappings,SERV_IMPORT);
+	newCallServiceOpAction.importedOperation.oclAsType(BEHA::ImportedInterfaceOperation)._import := SERV_IMPORT;
+	newCallServiceOpAction.toDeclareResult := true;
+	
+	// TODO : Create init node -> call node -> final node : Later add ACL 
+	var rootGroup := newActivity.root;
+	var initNode := object BEHA::InitialNode{
+		name := newActivity.name+"-InitNode";
+	};
+	var finalNode := object BEHA::ActivityFinalNode{
+		name := newActivity.name+"-ActivityFinalNode";
+	};
+	newActivity.ownedParameters
+		->select(p|p.exchangePattern=TECH::ExchangePattern::OUT)
+		->forEach(p){
+			finalNode.variablesToReturn += object BEHA::Identifier{name:=p.name};
+		};
+	rootGroup.ownedNodes := Sequence{initNode, newCallServiceOpAction, finalNode};
+	
+	rootGroup.ownedEdges := Sequence{
+		object BEHA::ActivityEdge{
+			source := initNode;
+			target := newCallServiceOpAction;	
+		},
+		object BEHA::ActivityEdge{
+			source := newCallServiceOpAction;
+			target := finalNode;	
+		}
+	};	
+	return newActivity;
+}
+
+query createActivityForDefaultControllerOperation(
+	lowerInterface : SERV::Interface,
+	lowerOp : SERV::Operation,
+	higherInterface : SERV::Interface,
+	higherOp : SERV::Operation,
+	microservice : SERV::Microservice
+): BEHA::Activity{
+		
+	log(indent(4)+"[NEW] Create a new activity for Operation '"+higherOp.buildQualifiedName("::")+"': " );
+	
+	var newActivity := object BEHA::Activity{
+		name := higherOp.name+higherInterface.interfaceType.toString().toUpperCamel();
+		specification := object BEHA::ImportedInterfaceOperation{
+			_import := SERV_IMPORT;
+			operation := higherOp;
+		};
+		root := object BEHA::ActivityGroup{scope:=object BEHA::Scope{}};
+	};
+	
+	// New activity params + mappings -> return mapping from new input to the service
+	var newActivityMp := higherOp.createParamsAndMappingsForActivity();
+	newActivity.ownedParameters := newActivityMp.activityParameters;
+	newActivity.parameterMappings := newActivityMp.mappings;
+	
+	// Create a new Node to declare response
+	var responseParam := higherOp.parameters -> selectOne(p|p.exchangePattern = TECH::ExchangePattern::OUT);
+	var newResponseVariable := object BEHA::Variable {
+			name := "responseParam";
+			lowerBound := 1;
+			upperBound := 1;
+	};
+	
+	newActivity.root.scope.ownedVariables+=newResponseVariable;
+	
+	var newVariableDeclaration := object BEHA::VariableDeclarationAction{
+		name := "declareResponseVariable";
+		lowerBound :=1;
+		upperBound :=1;
+		declaration := object BEHA::VariableAssignment{
+			identifier := object BEHA::Identifier {name := newResponseVariable.name};
+		};
+	};
+	
+	if (responseParam.primitiveType <> null){
+		newResponseVariable.primitiveType := responseParam.primitiveType.deepclone();
+		newVariableDeclaration.primitiveType := responseParam.primitiveType.deepclone();	
+	}else{
+		newResponseVariable.importedType := object SERV::ImportedType{
+			_import := DATA_IMPORT;
+			type := responseParam.importedType.type;
+		};
+		newVariableDeclaration.importedType := object SERV::ImportedType{
+			_import := DATA_IMPORT;
+			type := responseParam.importedType.type;
+		}
+	};
+	
+	// Create a new CallOperationAction to the LowerOp
+	var newCallServiceOpAction := lowerOp.createNewCallOperationAction(newActivityMp.csParamMappings,SERV_IMPORT);
+	newCallServiceOpAction.importedOperation.oclAsType(BEHA::ImportedInterfaceOperation)._import := SERV_IMPORT;
+	newCallServiceOpAction.toDeclareResult := false;
+	
+	// TODO : Create init node -> call node -> final node : Later add ACL 
+	var rootGroup := newActivity.root;
+	var initNode := object BEHA::InitialNode{
+		name := newActivity.name+"-InitNode";
+	};
+	var finalNode := object BEHA::ActivityFinalNode{
+		name := newActivity.name+"-ActivityFinalNode";
+	};
+	newActivity.ownedParameters
+		->select(p|p.exchangePattern=TECH::ExchangePattern::OUT)
+		->forEach(p){
+			finalNode.variablesToReturn += object BEHA::Identifier{name:=p.name};
+		};
+	rootGroup.ownedNodes := Sequence{initNode, newVariableDeclaration, newCallServiceOpAction, finalNode};
+	
+	Sequence{2..rootGroup.ownedNodes->size()-1} -> forEach(i){		
+		rootGroup.ownedEdges+= Sequence{
+			object BEHA::ActivityEdge{
+				source := rootGroup.ownedNodes -> at(i-1);
+				target := rootGroup.ownedNodes -> at(i);	
+			},
+			object BEHA::ActivityEdge{
+				source := rootGroup.ownedNodes -> at(i);
+				target := rootGroup.ownedNodes -> at(i+1);	
+			}
+		};	
+	};		
+	return newActivity;
+}
+

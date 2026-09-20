@@ -1,0 +1,11 @@
+Manifest-Version: 1.0
+Bundle-ManifestVersion: 2
+Bundle-Name: Generator
+Bundle-SymbolicName: dact.stats.generator
+Bundle-Version: 1.0.0.qualifier
+Require-Bundle: org.eclipse.swt,
+ org.eclipse.jface,
+ dact.metamodel;bundle-version="0.1.0",
+ org.eclipse.acceleo.aql;bundle-version="4.2.2"
+Automatic-Module-Name: dact.stats.generator
+Bundle-RequiredExecutionEnvironment: JavaSE-21

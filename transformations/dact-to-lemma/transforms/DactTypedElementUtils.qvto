@@ -1,0 +1,339 @@
+modeltype DACT uses 'http://www.example.org/xcore/dact';
+
+library DactTypedElementUtils;
+
+query DACT::Scope::getVariableWithName(varName: String): DACT::Variable {
+	// Check inherited variables first
+	var matchedVar := self.inheritedVariables -> select(v|v.name=varName) -> any(true);
+	if (matchedVar <> null){
+		return matchedVar;
+	};
+	// Check owned scope variables
+	return self.ownedVariables -> select(v|v.name=varName) -> any(true);
+}
+
+query DACT::Scope::getName(): String{
+	var scopeName := "";
+	if (self.group <> null){
+		scopeName := self.group.name;
+	};
+	return scopeName;
+}
+
+query DACT::Scope::getMultiValuedElem(identifier: DACT::Identifier): DACT::TypedMultiplicityElement{
+	var segments := identifier.name.tokenize(".");
+	var matchedElem : DACT::TypedMultiplicityElement;
+	matchedElem := self.getVariableWithName(segments->at(1));
+	
+		
+	if (segments->size()>1){
+		assert fatal(matchedElem.type.oclIsKindOf(DACT::DomainObject))
+			with log("InvalidIdentifierAccess: Identifier '"+segments->at(1)+"' is of type '"+matchedElem.type.metaClassName()+"'. It cannot be accessed with identifier chain: "+identifier.name);
+		
+		var propertyPath := identifier.getChainPath();
+		
+		var rel := matchedElem.type.oclAsType(DACT::DomainObject).getPropertyFromIdentifier(propertyPath);
+		matchedElem := rel.matchedProperty;
+	};
+	
+	assert fatal (matchedElem <> null)
+		with log("VariableYetDeclared: Variable '" + identifier.name + "' has NOT been defined in scope '" + self.getName() + "'.");
+	return matchedElem;
+}
+
+query DACT::Identifier::getChainPath(): String{
+	var varNamePart := self.name.tokenize(".");
+	var slicedSeq := varNamePart->subSequence(2, varNamePart->size());
+	var propertyPath : String;
+	
+	if (slicedSeq -> size() >1){
+    	propertyPath := slicedSeq
+						->subSequence(2, slicedSeq->size())
+						->iterate(str; res : String = slicedSeq->first() | res + "." + str);
+		
+	}else{
+		propertyPath := slicedSeq ->at(1);
+	};
+	return propertyPath
+}
+
+-- Helper to construct the property chain from nested identifier
+helper DACT::DomainObject::getPropertyFromIdentifier(identifier: String): Tuple(matchedProperty : DACT::Property, propertyChain: Sequence(DACT::Property)) {
+    -- 1. Split the string into a sequence of individual property names using the '.' delimiter
+    var segments := identifier.replace('self.','').tokenize(".");
+    
+    -- 2. Initialize tracking variables for the loop context
+    var currentType : DACT::DomainObject := self; -- Start at the root context
+    var matchedProperty : DACT::Property := null;
+    var propertyChain : Sequence(DACT::Property) := Sequence{};
+    var failedSegment := "";
+    
+    var totalSegments := segments->size();
+    var processedCount := 0;
+    var errorCode := "InvalidIdentifierAccess";
+
+    -- 3. Loop through every segment in the dot-separated chain
+    segments->forEach(segment) {
+        processedCount := processedCount + 1;
+        
+        -- Look up the property within the current structural type context
+        matchedProperty := currentType.ownedProperties->selectOne(p | p.name = segment);
+        
+        -- Set failedSegment FIRST so the log message renders correctly
+        failedSegment := segment;
+        
+        -- 1. Assert property existence
+        assert fatal (matchedProperty <> null)
+            with log(errorCode + ": Invalid path navigation at segment '" + failedSegment + "' in the resolved chain context for '" + identifier + "' within DomainObject '" + self.name + "'.");
+        
+        -- 2. Check Primitive vs DomainObject types safely
+        if (matchedProperty.type.oclIsKindOf(DACT::PrimitiveType)) {
+            -- If it's a primitive type but NOT the last segment in the chain, it's an error
+            failedSegment := segment + " (Primitive types cannot have nested properties)";
+            assert fatal (processedCount = totalSegments)
+                with log(errorCode + ": Invalid path navigation at segment '" + failedSegment + "' in the resolved chain context for '" + identifier + "' within DomainObject '" + self.name + "'.");
+                
+        } else if (matchedProperty.type.oclIsKindOf(DACT::DomainObject)) {
+            -- Check if this property is a Reference (DomainObject & NOT Composite)
+            if (not matchedProperty.isComposite) {
+                if (processedCount < totalSegments) {
+                    var nextSegment := segments->at(processedCount + 1);
+                    var nextType := matchedProperty.type.oclAsType(DACT::DomainObject);
+                    var nextProperty := nextType.ownedProperties->selectOne(p | p.name = nextSegment);
+                    
+                    if (nextProperty <> null and (processedCount + 1 = totalSegments)) {
+                        failedSegment := segment + "." + nextSegment + 
+                                " (Violates DDD Aggregate Access Rule: Referencing non-ID property '" + 
+                                nextSegment + "' on external aggregate boundary)";
+                        assert fatal (not nextProperty.definesIdentity)
+                            with log(errorCode + ": Invalid path navigation at segment '" + failedSegment + "' in the resolved chain context for '" + identifier + "' within DomainObject '" + self.name + "'.");
+                    };
+                };
+            };
+
+            -- Safe to advance context ONLY when type is confirmed DomainObject
+            propertyChain += matchedProperty;
+            currentType := matchedProperty.type.oclAsType(DACT::DomainObject); 
+        };
+    };
+
+    -- 4. Return the resolved target property
+    return Tuple{matchedProperty=matchedProperty, propertyChain=propertyChain};
+}
+
+// Query to determine if the target entity is a part of the aggregate
+query DACT::Entity::getPropertyPath(root: DACT::AggregateRoot): Sequence(DACT::Property){
+	var path : Sequence(DACT::Property) := Sequence{};
+	
+	var allProperties := DACT::Property.allInstances();
+	var currentObject : DACT::DomainObject := self;
+	
+	-- Traverse upwards until reaching root or non-entity domain object
+	while (currentObject <> null 
+	       and currentObject.oclIsKindOf(DACT::Entity) 
+	       and currentObject != root 
+	       and not currentObject.oclIsKindOf(DACT::AggregateRoot)) {
+		
+		-- Find composite property owned by parent whose type is currentObject
+		var parentProperty := allProperties->selectOne(p | p.isComposite and p.type = currentObject);
+		
+		-- Guard against broken model links / missing parent property
+		if (parentProperty = null) {
+			break;
+		};
+		
+		-- Append property to bottom-up path
+		path := path->including(parentProperty);
+		
+		-- If this link is a collection, the parent entity ID is required to target the child
+		assert fatal (not (parentProperty.isCollection() and currentObject.oclIsKindOf(DACT::Entity)))
+			with log ("Compile Error: The one-to-many relationship cannot be nested in Identifier string!");
+		
+		-- Advance pointer to the owning domain object (parent)
+		currentObject := parentProperty.domainObject;
+	};
+	
+	-- Successfully navigated all the way up to the target root
+	if (currentObject = root) {
+		return path->reverse();
+	};
+	
+	-- Return null if root was unreachable from this entity
+	return null;
+}
+
+query DACT::Identifier::validate(scope: DACT::Scope): Tuple(type: DACT::Type, lowerBound: Integer, upperBound: Integer){
+	if (self.name.indexOf(".")>0){
+		return self.validateWithChain(scope);
+	}else{
+		return self.validateWithoutChain(scope);
+	}
+}
+
+query DACT::Identifier::validateWithoutChain(scope: DACT::Scope): Tuple(type: DACT::Type, lowerBound: Integer, upperBound: Integer){		
+	// Validate if the index for collection type index if match with the bound of collection
+	
+	var matchedVar := scope.getVariableWithName(self.name);
+	
+	assert fatal (matchedVar <> null)
+		with log("VariableYetDeclared: Variable '" + self.name + "' has NOT been defined in scope '" + scope.getName() + "'.");
+	
+	// Allow index for multi-valued features only
+	if (self.index != null){
+    	matchedVar.validateMultiValue(self.index);
+    	return Tuple{type=matchedVar.type, lowerBound=1, upperBound=1};	
+    };
+	
+    return Tuple{type=matchedVar.type, lowerBound=matchedVar.lowerBound, upperBound=matchedVar.upperBound};
+}
+
+query DACT::Identifier::validateWithChain(scope: DACT::Scope): Tuple(type: DACT::Type, lowerBound: Integer, upperBound: Integer){
+	var segments := self.name.tokenize(".");
+	var varName := segments -> at(1);
+	
+	// Validate if the index for collection type index if match with the bound of collection
+	var matchedVar := scope.getVariableWithName(varName);
+	
+	assert fatal (matchedVar <> null)
+		with log("VariableYetDeclared: Variable '" + varName + "' has NOT been defined in scope '" + scope.getName() + "'.");
+	
+	// Get the chain		
+	assert fatal (not(matchedVar.type.oclIsKindOf(DACT::PrimitiveType) or
+		matchedVar.type.oclIsKindOf(DACT::Enumeration)
+	))
+    	with log("Type Error: Variable '" + varName + "' of type primitive cannot have identifier path");
+    	
+	var propertyPath := self.getChainPath();
+	
+	var rel := matchedVar.type.oclAsType(DACT::DomainObject).getPropertyFromIdentifier(propertyPath);
+	var matchedProperty := rel.matchedProperty;
+	
+	assert fatal(matchedProperty <> null)
+		with log("Compile Error: Cannot find property with given path: "+ self.name);
+    
+    if (self.index != null){
+    	matchedProperty.validateMultiValue(self.index);
+    	return Tuple{type=matchedProperty.type, lowerBound=1, upperBound=1};	
+    };
+
+   	return Tuple{type=matchedProperty.type, lowerBound=matchedProperty.lowerBound, upperBound=matchedProperty.upperBound};		
+}
+
+query DACT::TypedMultiplicityElement::validateMultiValue(index: Integer){
+	var elemName := self.metaClassName();
+	
+    // 1. Ensure the feature is multi-valued (upperBound != 1)
+    assert fatal (self.isCollection())
+        with log("NonIterableType: Index specified for single-valued " + elemName +" '" + self.name+"' of type "+ self.printType());
+
+    // 2. Validate index boundaries (supports Python-style negative indexing)   
+    assert fatal (
+        -- Case A: Unbounded feature (*), any integer index is valid
+        self.upperBound < 0 
+        or 
+        -- Case B: Fixed upper bound N > 1
+        -- Index must be within [-upperBound, upperBound - 1]
+        (index >= -self.upperBound and index < self.upperBound)
+    )
+    with log("InvalidIndexAccess: Index " + index.toString() + " out of bounds for property: " + self.name);
+	
+}
+
+
+query Tuple(type: DACT::Type, lowerBound: Integer, upperBound: Integer)::printType(): String{
+	var typeName := "NULL";
+	
+	if (self.type != null){
+		typeName := self.type.metaClassName();
+	};
+	
+	return typeName + "[" + self.lowerBound.toString() + ".." + self.upperBound.toString() +"]";
+	
+}
+
+query DACT::TypedMultiplicityElement::printType(): String{
+	return self.type.name + "[" + self.lowerBound.toString() + ".." + self.upperBound.toString() +"]";
+}
+query Tuple(type: DACT::Type, lowerBound: Integer, upperBound: Integer)::isSingle(): Boolean{
+	return (self.lowerBound >= 0 and self.lowerBound <= 1) and self.upperBound = 1;
+}
+
+query Tuple(type: DACT::Type, lowerBound: Integer, upperBound: Integer)::isCollection(): Boolean{
+	return (self.upperBound < 0 or self.upperBound > 1);
+}
+
+query DACT::Parameter::isEqual(another: DACT::Parameter): Boolean{
+	return self.type = another.type and self.lowerBound = another.lowerBound and self.upperBound =another.upperBound;
+}
+
+query DACT::Variable::matchesWith(another: DACT::Parameter): Boolean{
+	return self.name =  another.name and self.type = another.type and self.lowerBound = another.lowerBound and self.upperBound =another.upperBound;
+}
+
+query DACT::Variable::matchesWith(another: DACT::ParameterMapping): Boolean{
+	return self.name =  another.identifier.name and self.type = another.operationParameter.type and self.lowerBound = another.operationParameter.lowerBound and self.upperBound =another.operationParameter.upperBound;
+}
+
+query DACT::TypedMultiplicityElement::getBoundedContext(): DACT::BoundedContext{
+	return null;
+}
+
+query DACT::Variable::getBoundedContext(): DACT::BoundedContext{
+	var rootScope := self.scope.getRootScope();
+	var activity := rootScope.group.activity;
+	return activity.specification.getBoundedContext();
+}
+
+query DACT::Parameter::getBoundedContext(): DACT::BoundedContext{
+	if (self.operation != null){
+		return self.operation.getBoundedContext();
+	}else if (self.activity != null){
+		return self.activity.specification.getBoundedContext();
+	};
+	return null;
+}
+
+query DACT::Property::getBoundedContext(): DACT::BoundedContext{
+	return self.domainObject.getBoundedContext();
+}
+
+query DACT::Operation::getBoundedContext(): DACT::BoundedContext{
+	if (self.domainObject != null){
+		return self.domainObject.getBoundedContext();
+	}else if (self.interface != null){
+		return self.interface.context;
+	};
+	return null;
+}
+
+query DACT::DomainElement::getBoundedContext(): DACT::BoundedContext{
+	return null;
+}
+
+query DACT::DomainObject::getBoundedContext(): DACT::BoundedContext{
+	return null;
+}
+
+query DACT::Enumeration::getBoundedContext(): DACT::BoundedContext{
+	return self.context;
+}
+
+query DACT::InternalDomainObject::getBoundedContext(): DACT::BoundedContext{
+	return self.context;
+}
+
+query DACT::SharedDomainObject::getBoundedContext(): DACT::BoundedContext{
+//	if (self.abstractedRoot != null){
+//		return self.abstractedRoot.context;
+//	};
+	return null;
+}
+
+query DACT::Scope::getRootScope(): DACT::Scope{
+	if (self.parent.oclIsUndefined()){
+		return self;
+	}else{
+		return self.parent.getRootScope();
+	}
+}
+

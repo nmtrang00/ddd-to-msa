@@ -1,0 +1,1460 @@
+import DactUtils;
+import StringUtils;
+import DactTypedElementUtils;
+
+modeltype DACT uses 'http://www.example.org/xcore/dact';
+
+transformation DactPreprocess(in dact: DACT, out preprocessedDact: DACT);
+property CURRENT_ACTIVITY_MODEL : DACT::ActivityModel;
+property CURRENT_ACTIVITY : DACT::Activity;
+property CACHED_REQUIRED_PROPERTIES : Sequence(DACT::Property);
+property INT : DACT::PrimitiveType;
+property REAL : DACT::PrimitiveType;
+property BOOL : DACT::PrimitiveType;
+property STR : DACT::PrimitiveType;
+property ENUMERATION_TYPES: Set(DACT::Enumeration);
+property DECLARE_RESULT: Boolean = false;
+
+main() {
+	dact.rootObjects()[DACT::Root]->map RootToRoot();
+
+	log("");
+	log("-------------------------------------");
+	log("1. PREPROCESSING DDMM");
+	log("-------------------------------------");
+	preprocessedDact.rootObjects()[DACT::Root] -> forEach(root){
+		var ddd := root.ddd;
+		var activity := root.activity;
+		
+		INT := root.primitivesTypes[DACT::IntegerType]->first();
+		REAL := root.primitivesTypes[DACT::RealType]->first();
+		BOOL := root.primitivesTypes[DACT::BooleanType]->first();
+		STR := root.primitivesTypes[DACT::StringType]->first();
+		ENUMERATION_TYPES := preprocessedDact.objectsOfKind(DACT::Enumeration);
+	
+		// Format name
+		log("1.0. Formating Name: Start parsing");
+		root.formatName(root);
+		log("1.0. Formating Name: End parsing");
+		log("************************************************");
+		
+		// Add missing Id for Entities and Property name
+		log("1.1. Adding missing Id and DomainObject-typed Property Name for Entities: Start parsing");
+		ddd.addMissingStructuralInfo(ddd);
+		log("1.1. Adding missing Id and DomainObject-typed Property Name for Entities: End parsing");
+		log("************************************************");
+		
+		// Validate SpecRule
+		log("1.2. Validating SpecRule: Start parsing");
+		root.validateSpecRule(root);
+		log("1.2. Validating SpecRule: End parsing");
+		log("************************************************");
+		
+		// Validate Varibale and Derive Operations
+		log("1.3. Validating Variable and Deriving required Operations: Start parsing");
+		root.validateVariablesAndDeriveOperations(root);
+		log("1.3. Validating Variable and Deriving required Operations: End parsing");
+		log("************************************************");
+		
+		// Localize SharedValueObjects
+		log("1.4. Localizing Shared Domain Objects: Start parsing");
+		ddd.localizeSharedDomainObjects(ddd);
+		log("1.4. Localizing Shared Domain Objects: End parsing");
+		log("************************************************");
+		
+	};
+	log("-------------------------------------");
+	log("");
+	
+	// Clean the file
+	var elementsToRemove = preprocessedDact.rootObjects() -> select(e|not e.oclIsKindOf(DACT::Root));
+	elementsToRemove -> forEach(e){
+		preprocessedDact.removeElement(e);
+	}
+}
+
+mapping DACT::Root::RootToRoot(): DACT::Root {
+	init {
+        // Deep clone the entire root element into the result object
+        result := self.deepclone().oclAsType(DACT::Root);
+    }
+}
+
+
+helper DACT::DddModel::addMissingStructuralInfo(inout model: DACT::DddModel){
+	var boundedContexts := model.boundedContexts;
+	
+	boundedContexts -> forEach(b){
+		b.printInfo(1);
+		
+		var domainObjects := b.ownedElements[DACT::InternalDomainObject];
+
+		domainObjects -> forEach(o){
+			o.printInfo(2);
+			if (o.oclIsKindOf(DACT::Entity)){
+				log(indent(3)+'-- MISSING ID CHECK:');
+				o.oclAsType(DACT::Entity).addMissingId(o.oclAsType(DACT::Entity));
+			};
+			log(indent(3)+'-- MISSING PROPERTY NAME CHECK:');
+			o.addMissingPropertyName(o);
+		}
+	}
+}
+
+// Helper to add missing Id in Entity
+helper DACT::Entity::addMissingId(inout entity: DACT::Entity){
+	if (entity.hasIdProperty()){
+		log(indent(3)+"Entity has Id -> Skip!");
+	} else {
+		if (entity.hasIdOperation()) {
+		   // TODO: Implement DefinesIdentity for Operation
+		};
+
+		var newIdAttr := object DACT::Property {
+			name := entity.name.toCamel() + "Id";
+			type := STR;
+			lowerBound := 1;
+			upperBound := 1;
+			definesIdentity := true;
+		};
+		entity.ownedProperties += newIdAttr;
+		log(indent(3)+"Entity does NOT have Id -> Added new Id: '"+newIdAttr.name+"'");			
+	}
+}
+
+// Helper to add missing name in property with Type of DomainObject
+helper DACT::DomainObject::addMissingPropertyName(inout o: DACT::DomainObject){
+	o.ownedProperties -> forEach(p){
+		p.printInfo(3);
+		if (p.name = '' or p.name.oclIsUndefined()){
+			p.name := p.type.name.toCamel();
+			if (p.upperBound >1 or p.upperBound<0){
+				p.name := p.name + "Collection";
+			};
+			log(indent(3)+"Property does NOT have name -> Added new Name: '"+p.name+"'");	
+		};
+	}
+}
+
+// Query to check if an entity already has Id Property
+query DACT::Entity::hasIdProperty(): Boolean{
+	var check := false;
+	self.ownedProperties -> forEach(a){
+		a.printInfo(3);
+		check := a.definesIdentity;
+		if (check) {break}
+	};
+	return check;
+}
+
+// Query to check if an entity already has Id Operation
+query DACT::Entity::hasIdOperation(): Boolean{
+	var check := false;
+	self.ownedOperations -> forEach(o){
+		o.printInfo(3);
+	-- TODO: Uncomment when allow Operation defines identity
+//		check := o.definesIdentity;
+		if (check) {break}
+	};
+	return check;
+}
+
+// Helper to create a copy of Shared Domain Object in each BoundedContext it is used and remove the original one
+helper DACT::DddModel::localizeSharedDomainObjects(inout model: DACT::DddModel) {
+    var sharedObjects := model.sharedDomainObjects[DACT::SharedDomainObject];
+    
+    // Global map to cache local copies: ContextName -> (OriginalType -> LocalCopy)
+    var localizedTypeMap : Dict(String, Dict(DACT::DomainElement, DACT::DomainElement)) := Dict{};
+
+    sharedObjects->forEach(sharedObject) {
+        sharedObject.printInfo(1);
+        
+        // Find all elements targeting this SharedObject
+        var referrers := DACT::TypedMultiplicityElement.allInstances() 
+                        ->select(p | p.type = sharedObject);
+        
+        referrers->forEach(referrer) {
+            var referrerContext := referrer.getBoundedContext();
+            
+            // Get or create localized copy of the main shared object and all its referenced types
+            var localSharedObject := localizeTypeForContext(sharedObject, referrerContext, localizedTypeMap);
+            
+            // Re-point referrer to the newly localized copy
+            referrer.type := localSharedObject.oclAsType(DACT::SharedDomainObject);
+        };
+    };
+
+    // Remove all original SharedObjects from global container
+    model.sharedDomainObjects := model.sharedDomainObjects - sharedObjects;
+}
+
+// Helper to deep-copy a type and localize all its properties, operations, and parameters
+helper localizeTypeForContext(
+    targetType : DACT::DomainElement, 
+    inout context : DACT::BoundedContext, 
+    inout localizedTypeMap : Dict(String, Dict(DACT::DomainElement, DACT::DomainElement))
+) : DACT::DomainElement {
+
+    // 1. If already inside target context, no copy needed
+    var targetContext := targetType.getBoundedContext();
+    if (targetContext = context) {
+        return targetType;
+    };
+
+    // Initialize context map if missing
+    if (not localizedTypeMap->hasKey(context.name)) {
+        localizedTypeMap->put(context.name, Dict{});
+    };
+    var contextMap := localizedTypeMap->get(context.name);
+
+    // 2. Reuse existing local copy if created in this transformation pass
+    if (contextMap->hasKey(targetType)) {
+        log(indent(4) + "[=] Reuse existing local copy for type '" + targetType.name+"' in context '"+context.name+"'");
+        return contextMap->get(targetType);
+    };
+
+    // 3. Clone and register in the target BoundedContext
+    if (context.oclIsUndefined()){	
+   		log(indent(4) + "[0] Context is undefined for object '"+targetType.name+"' of type "+targetType.metaClassName());
+    	return null;
+    };
+    var localCopy := targetType.deepclone().oclAsType(DACT::DomainElement);
+    context.ownedElements += localCopy;
+    contextMap->put(targetType, localCopy); // Cache early to break circular references
+    log(indent(4) + "[+] Created local copy for '" + localCopy.name + "' in context '" + context.name + "'");
+    
+    // 4. Re-link internal references (Attributes, Operations, and Parameters)
+    if (localCopy.oclIsKindOf(DACT::SharedDomainObject)) {
+        var sharedDomainObject := localCopy.oclAsType(DACT::SharedDomainObject);
+        
+        // A. Localize Attribute Types
+        sharedDomainObject.ownedProperties->forEach(p | p.type != null and  p.type.oclIsKindOf(DACT::DomainElement)) {
+            // Recursively process attribute type (will copy if from another context)
+            p.type := localizeTypeForContext(p.type.oclAsType(DACT::DomainElement), context, localizedTypeMap).oclAsType(dact::Type);
+        };
+
+        // B. Localize Operations (Constructors, Methods) and Parameter Types
+        sharedDomainObject.ownedOperations->forEach(op) {
+            // Localize constructor / operation parameter types
+            var originalOp := targetType.oclAsType(DACT::SharedDomainObject).ownedOperations
+            				-> selectOne(o|o.name=op.name);
+            op.ownedParameters->forEach(param | not param.type.oclIsKindOf(DACT::PrimitiveType)) {
+                var orginalParam := originalOp.ownedParameters
+                		-> selectOne(p| p.name = param.name);
+                if (orginalParam.type = targetType.oclAsType(DACT::Type)){
+	                param.type := sharedDomainObject;
+	            }else{
+	            	param.type := sharedDomainObject.ownedProperties
+	                		-> selectOne(p| p.name = param.name).type;
+	            }
+            };
+        };
+    };
+
+    return localCopy;
+}
+
+helper DACT::Root::validateVariablesAndDeriveOperations(inout root: DACT::Root){
+	-- TODO: Derive Repository and Service required by the Activity Diagram! -> Must validate the use of variable here as well!!!
+
+	var activityModel := root.activity;	
+	CURRENT_ACTIVITY_MODEL := activityModel;
+	
+	activityModel.activities -> forEach(activity){
+		activity.printInfo(1);
+		
+		if (activity.toTransform){
+			activity.name := activity.name.toCamel();
+			// Check variable matching for input
+			var rootActivityGroup := activity.root;
+			if (rootActivityGroup.scope.oclIsUndefined()){
+				rootActivityGroup.scope := object Scope{};
+			};
+			var rootScope := rootActivityGroup.scope;
+			
+			if (activity.specification <> null){
+			// Specification Operation exists 
+				log(indent(2)+"Has specification");
+				var inParamMappings := activity.parameterMappings->select(p|p.type = DACT::ParameterMappingType::ACTIVITY_IN);
+				if (inParamMappings -> size() > 0){
+					log(indent(2)+"Has mappings");
+					//Parameter Mapping exists -> Add mapped identifier to variable set
+					inParamMappings -> forEach(m){
+						m.validate(rootScope);
+						
+						var oParam := m.operationParameter;
+						var aParam := m.activityParameter;
+						
+						rootScope.ownedVariables += object Variable{
+							name := aParam.name;
+							type := aParam.type;
+							lowerBound := aParam.lowerBound;
+							upperBound := aParam.upperBound;
+						};
+					}
+				}
+			}else{
+			// Specification Operation not exists -> Add self defined param
+				log(indent(2) + "NO specification");
+								
+				activity.ownedParameters 
+					-> select(p|p.direction = DACT::ParameterDirection::IN)
+					-> forEach(p){
+						rootScope.ownedVariables += object Variable{
+							name := p.name;
+							type := p.type;
+							lowerBound := p.lowerBound;
+							upperBound := p.upperBound;
+						};
+					};
+				
+			};
+			CURRENT_ACTIVITY := activity;
+			
+			// Process Root Group
+			rootActivityGroup.processGroup(rootActivityGroup);
+			
+			// Create A Corresponding Specification Operation If Yet Defined
+			if (activity.specification.oclIsUndefined()){
+				activity.assignSpecification(activity);
+			};
+			
+			activity.processedDomainNodeMappings -> forEach(m){
+				m.usedByExternalContext := activity.getBoundedContext() != m.domainNode.aggregate.context;
+			}
+		}
+	};
+	
+}
+
+helper DACT::Activity::generateMappings(inout activity: DACT::Activity){
+	/// Parameter Mapping does not exist -> Create mappings + Add input params as variables
+
+	-- Set to keep track of activity parameters that have already been mapped
+	var alreadyMappedParams : Set(DACT::Parameter) := Set{};
+	
+	-- Iterate over all operation parameters defined in the activity's specification
+	activity.specification.ownedParameters -> forEach(opParam) {
+	    
+	    -- Find the FIRST unmapped activity parameter that matches type, lowerBound, and upperBound
+	    var matchedActParam := activity.ownedParameters 
+	        -> reject(p | alreadyMappedParams->includes(p))
+	        -> selectOne(p | 
+	            p.type = opParam.type and 
+	            p.lowerBound = opParam.lowerBound and 
+	            p.upperBound = opParam.upperBound
+	        );
+		assert fatal (matchedActParam <> null)
+			with log ("There is no activity param with type and bound can be mapped to the specification parameter '"+opParam.name+"' of operation '"+self.specification.name+"'.");
+			
+        -- Mark as mapped so it won't be picked up again
+        alreadyMappedParams += matchedActParam;
+
+        -- Construct the ParameterMapping
+        var generatedMapping := object DACT::ParameterMapping {
+            
+            type := if (opParam.direction = DACT::ParameterDirection::IN) then 
+                        DACT::ParameterMappingType::ACTIVITY_IN 
+                    else 
+                        DACT::ParameterMappingType::ACTIVITY_OUT 
+                    endif;
+			operationParameter := opParam;
+            activityParameter := matchedActParam;
+        };
+
+        -- Attach generated mapping to the Activity
+        activity.parameterMappings += generatedMapping;
+        log(indent(4) + "Mapped OpParam [" + opParam.name + "] to ActParam [" + matchedActParam.name + "]");
+	};
+}
+
+helper DACT::Activity::assignSpecification(inout activity : DACT::Activity){
+	// Derive BoundedContext
+	var rel := self.deriveTargetContext();
+	var targetContext := rel.context;
+	var targetAggregate := rel.aggregate;
+	var targetSideEffectFree := rel.sideEffectFree;
+	
+	if (targetContext.oclIsUndefined()){
+		log(indent(3)+ "WARNING: There is no Domain Object Action in activity to derive context. The activity will not be generated in Microservice code!");
+		return;
+	};
+	
+	// Create a New Service Interface if required, else added to the generic AggregateService!!!
+	var genericAggServiceName := targetAggregate.name.toUpperCamel() + "Service";
+
+	var matchedService := targetContext.ownedElements[DACT::Service]->selectOne(s|s.name = genericAggServiceName);
+	
+	if (matchedService.oclIsUndefined()){
+		matchedService := object DACT::Service{
+			name := genericAggServiceName;
+		};
+		targetContext.ownedElements += matchedService;
+	};
+
+	
+	// Create Operation
+	var newOperation := object DACT::Operation{
+		name := self.name;
+		type := OperationType::S0_DOMAIN_SERVICE;
+		toExpose := true;
+	};
+	matchedService.ownedOperations+=newOperation;
+	activity.specification := newOperation;
+	
+	// Create parameter + mapping
+	self.ownedParameters -> forEach(p){
+			
+		var newParam := object Parameter{
+			name := p.name;
+			type := p.type;
+			lowerBound := p.lowerBound;
+			upperBound := p.upperBound;
+			direction := p.direction;
+		};
+		newOperation.ownedParameters+=newParam;
+		
+		var newParameterMapping := object ParameterMapping{
+			operationParameter := newParam;
+			activityParameter := p;
+			type :=  if p.direction = DACT::ParameterDirection::IN then DACT::ParameterMappingType::ACTIVITY_IN else DACT::ParameterMappingType::ACTIVITY_OUT endif;
+		};
+		activity.parameterMappings+=newParameterMapping;
+	};
+	
+	
+	log(indent(3)+ "Activity '"+activity.name+"' will be implemented in service '"+matchedService.name+"' within bounded context '"+targetContext.name+"'");
+}
+
+helper DACT::ActivityGroup::processGroup(inout group : DACT::ActivityGroup){
+	log(indent(2)+"----");
+	self.printInfo(2);
+	var initialNode := self.ownedNodes[DACT::InitialNode] -> any(true); // Already ensure that each ActivityGroup has a single InitialNode	
+	
+	initialNode.processNodeWrapper();
+	
+	// Clean the transformed Domain Node
+	var domainNodes := self.ownedNodes[DACT::DomainNode];
+	group.ownedNodes := self.ownedNodes - domainNodes;
+	log(indent(2)+"****");
+}
+
+helper DACT::ActivityNode::processNodeWrapper(){
+	self.printInfo(2);
+	
+	// Get the next edge before it's overwritten
+	var nextEdge := self.sEdge;
+	
+	// Process Current 
+	DECLARE_RESULT := false;
+	self.processNode();
+	if (self.oclIsKindOf(DACT::CallOperationAction)){
+		self.oclAsType(DACT::CallOperationAction).toDeclareResult := DECLARE_RESULT;
+	};
+
+	if (not (self.oclIsKindOf(DACT::FinalNode) and self.group.activity != null)){
+		
+		var traversalValid := false;
+
+		if (nextEdge->isEmpty()){ 
+			// No next edge -> Exit current group -> Get nextEdge of parent
+			var parent := self.group.container();
+			if (self.oclIsKindOf(DACT::FinalNode) and parent.oclIsKindOf(DACT::ConditionalNode)){
+				var condParent := parent.oclAsType(DACT::ConditionalNode);
+				if (condParent.body = self.group){
+					log(indent(2)+"Finished Main Body branch of " + condParent.name + ". Returning to evaluate Else branch.");
+					return;
+				};
+				nextEdge := condParent.sEdge;
+				traversalValid := true;
+			} else if (parent.oclIsKindOf(DACT::LoopNode)){
+				nextEdge := parent.oclAsType(DACT::LoopNode).sEdge;
+				traversalValid := true;
+			}
+		}else if (nextEdge->notEmpty() and nextEdge.target->notEmpty()) {
+			-- Ensure we actually found a valid next edge before continuing recursion
+			var nextNode := nextEdge.target->asSequence()->first();
+			nextNode.processNodeWrapper();
+			traversalValid := true;
+		};
+		
+		var nodeName := self.name;
+		if (nodeName.oclIsUndefined()){
+			nodeName := self.metaClassName();
+		};
+	
+		assert fatal (traversalValid)
+				with log("TraversalDeadEnd: Dead end reached at node " + nodeName + " with no structural parent group to exit to.");
+		
+	}
+}
+
+helper DACT::ActivityNode::processNode(){}
+
+helper DACT::InitialNode::processNode(){}
+
+helper DACT::VariableDeclarationAction::processNode(){
+	// TODO - Support Variale Declaration with Non-literal default value
+	var currentScope := self.group.scope;
+	var varName := self.declaration.identifier.name;
+	var newVar := object Variable{
+				name := varName;
+				type := self.type;
+				lowerBound := self.lowerBound;
+				upperBound := self.upperBound;
+			};
+	// Check if variable already exists in current scope
+	assert fatal (currentScope.getVariableWithName(varName) = null)
+    	with log("DuplicateVariable: Variable '" + varName + "' is already defined in scope '" +  self.group.name + "'.");
+    	
+	// Add to the scope: Currently only support the Literal Default value or Identifier
+	var tmpScope := currentScope.deepclone();
+	self.declaration.validate(tmpScope,newVar);
+	
+	currentScope.ownedVariables += newVar;
+}
+
+helper DACT::VariableAssignmentAction::processNode(){
+	var currentScope := self.group.scope;
+	var assignment := self.assignment;
+	
+	var matchedElem = currentScope.getMultiValuedElem(assignment.identifier);
+	assignment.validate(currentScope, matchedElem);
+}
+
+helper DACT::Expression::getSideInfo(): Tuple(type: DACT::Type,lowerBound: Integer, upperBound: Integer){
+	var type : DACT::Type;
+	var lowerBound : Integer;
+	var upperBound : Integer;
+	
+	
+	return Tuple{type=type,lowerBound=lowerBound,upperBound=upperBound};
+}
+
+helper DACT::ActivityFinalNode::processNode(){
+	// Currently assume there is only a single ActivityFinalNode in the initial Context
+	// Must return the same parameters as the specification
+	var currentScope := self.group.scope;
+	
+	// Existing variable
+	var matchedVars : Sequence(DACT::Variable);
+	
+	self.variablesToReturn -> forEach(v){
+		var matchedVar := currentScope.getVariableWithName(v.name);
+		
+		assert fatal (matchedVar <> null)
+			with log("VariableYetDeclared: Variable to return '" + v.name + "' has NOT been defined in scope '" + self.group.name + "'.");
+		
+		matchedVars += matchedVar;
+	};
+	
+	if (self.group.activity.specification <> null){
+		var expectedOutParams := self.group.activity.specification.ownedParameters -> select(p|p.direction = DACT::ParameterDirection::OUT);
+		
+		var actualCount := self.variablesToReturn->size();
+	    var expectedCount := expectedOutParams->size();
+	    
+	    assert fatal (actualCount = expectedCount)
+	        with log("Compile Error: Return count mismatch at " + self.repr() + 
+	                 ". The specification expects " + expectedCount.toString() + 
+	                 " return values, but the node returns " + actualCount.toString() + ".");
+	    Sequence{1..actualCount}->forEach(i) {
+	        var returnVar := matchedVars->at(i);
+	        var returnParam := expectedOutParams
+	        	->selectOne(p| (returnVar.type = p.type) and 
+	        		(returnVar.lowerBound = p.lowerBound) and
+	        		(returnVar.upperBound = p.upperBound));
+	        
+	        assert fatal (returnParam != null)
+	        	with log("VariableYetDeclared: Variable to return '" + returnVar.name + "' has NOT been defined in scope '" + self.group.name + "'.");
+	        
+	    }
+	    }
+}
+
+helper DACT::FlowFinalNode::processNode(){
+	var currentScope := self.group.scope;
+	
+	self.variablesToReturn -> forEach(v){
+		var matchedVar := currentScope.getVariableWithName(v.name);
+		
+		assert fatal (matchedVar <> null)
+			with log("VariableYetDeclared: Variable to return '" + matchedVar.name + "' has NOT been defined in scope '" + self.group.name + "'.");
+	};
+}
+
+
+helper DACT::ConditionalNode::processNode(){
+	var currentScope := self.group.scope;
+	self.test.printExpr(2);
+	self.test.validate(currentScope,self.test);
+	
+	var testValidation = self.test;
+	assert fatal(testValidation.type = BOOL and testValidation.lowerBound = 1 and testValidation.upperBound = 1)
+		with log("Compile Error: Test expression must return Boolean type.", testValidation.printType());
+	
+	var variablesToInherit := currentScope.ownedVariables;
+	variablesToInherit += currentScope.inheritedVariables;
+	
+	// Generate new scope here if yet existed!!!!
+	if (self.body.scope.oclIsUndefined()){
+		self.body.scope := object DACT::Scope{
+			parent := currentScope;
+	        group := self.body;
+		};
+	};
+	self.body.scope.inheritedVariables := variablesToInherit;
+
+	
+	self.body.processGroup(self.body);
+	
+	if (self.elseBody.scope.oclIsUndefined()){
+		self.elseBody.scope := object DACT::Scope{
+			parent := currentScope;
+	        group := self.elseBody;
+		};
+	};
+	self.elseBody.scope.inheritedVariables := variablesToInherit;
+	self.elseBody.processGroup(self.elseBody);
+}
+
+helper DACT::CallOperationAction::processNode(){
+	var outMappings := self.parameterMappings -> select(m|m.type =  ParameterMappingType::ACTION_OUT);
+	
+	outMappings -> forEach(m){
+		if (m.identifier <> null){
+			var matchedVar := self.group.scope.getVariableWithName(m.identifier.name);
+			if (matchedVar.oclIsUndefined()){
+				var newVar := object Variable {
+		            name := m.identifier.name;
+		            type := m.operationParameter.type;
+		            lowerBound := m.operationParameter.lowerBound;
+		            upperBound := m.operationParameter.upperBound;
+		        };      
+		        self.group.scope.ownedVariables += newVar;
+		        DECLARE_RESULT := true;
+			}	
+		}
+	};
+	
+	// Validate mapping
+	self.parameterMappings -> forEach(m){
+		m.validate(self.group.scope);
+	};
+	
+	
+}
+
+helper DACT::LoopNode::processNode(){
+	-- TODO: Validate each body
+}
+
+helper DACT::ParallelNode::processNode(){
+	-- TODO: Validate each body
+}
+helper DACT::DomainNode::processNode(){
+	-- Determine target context: Use self.entity if provided, otherwise default to self.aggregate
+	var propChain : Sequence(Property); // Path to go from root to target entity
+	var targetEntity : DACT::Entity := if self.entity <> null then self.entity else self.aggregate endif;
+	CACHED_REQUIRED_PROPERTIES := Sequence{};
+	
+	if (self.entity <> null){
+		var pp := self.entity.getPropertyPath(self.aggregate);
+		assert fatal (pp <> null)
+			with log("Compile Error: The specified entity '"+self.entity.name+"' is not a part of aggregate '"+self.aggregate.name+"'.");
+		propChain := pp;
+	};
+	
+	// Use Root For Mutation, Entity can have side effect free
+	var entityForRepo : DACT::Entity;
+	if (targetEntity != self.aggregate and self.oclIsKindOf(DACT::DomainFindAction)){
+		entityForRepo := targetEntity;
+	}else{
+		entityForRepo := self.aggregate;
+	};
+	
+	var aggRepo := entityForRepo.repository;
+	if (aggRepo.oclIsUndefined()){
+		log(indent(2) + "   Repository does not exist!");
+		aggRepo := object DACT::Repository {
+			name := entityForRepo.name.toUpperCamel() + "Repository";
+			entity := entityForRepo;
+		};
+		entityForRepo.context.ownedElements += aggRepo;
+		log(indent(2) + "  -> New repository '"+ aggRepo.name +"' added to the bounded context '"+entityForRepo.context.name+"'");
+	} else {
+		log(indent(2) + "   Repository '" + aggRepo.name+ "' exists!");
+	};
+	
+	var availableVars := self.group.scope.ownedVariables;
+	availableVars += self.group.scope.inheritedVariables;
+	var resultIsDeclared := availableVars -> exists(v|v.name=self.result.name);
+
+	
+//	self.group.scope.printScopeVariables();
+	
+	var inMp := self.generateMainMappings(self.group.scope);
+    var outMp := self.generateOutputMappings(self.group.scope);
+    
+    var matchedOperation := aggRepo.ownedOperations -> selectOne(o| o.name = inMp.newName);
+   
+ 	// TODO :Check if operation of the same name exist?  -> Yes -> Use the same name for now!
+	if (matchedOperation <> null){
+		log(indent(2) + "   Operation '"+ matchedOperation.name+ "' exists in the repository '"+aggRepo.name+"'");
+		// change the inMPs to the current parameter
+		matchedOperation.remapParameters(inMp.mappings);
+		
+		// change the outMPs to the current parameter
+		matchedOperation.remapParameters(outMp.mappings);
+		
+		// Dump all created inMP, spMP, outMp -> Currently ignore it
+		
+	} else {
+	    var operationType = switch {
+	    	case (self.oclIsTypeOf(DACT::DomainExistAction)) OperationType::R4_REPOSITORY_EXIST;
+	    	case (self.oclIsTypeOf(DACT::DomainFindAction)) OperationType::R1_REPOSITORY_READ;
+	    	case (self.oclIsTypeOf(DACT::DomainUpdateAction)) OperationType::R2_REPOSITORY_UPDATE;
+	    	case (self.oclIsTypeOf(DACT::DomainCreateAction)) OperationType::R0_REPOSITORY_CREATE;
+	    	case (self.oclIsTypeOf(DACT::DomainDeleteAction)) OperationType::R3_REPOSITORY_DELETE;
+	    };
+	    
+		var newOperation := object DACT::Operation{
+			name := inMp.newName;
+			type := operationType;
+		};
+		
+		newOperation.ownedParameters := inMp.parameters;
+		newOperation.ownedParameters += outMp.parameters;
+		
+		aggRepo.ownedOperations+=newOperation;
+		log(indent(2) + "   Added new operation '"+ newOperation.name+ "' to the repository '"+aggRepo.name+"'");
+		matchedOperation := newOperation;
+	};
+	
+	// check if result is already declare
+
+	var newAction := object DACT::CallOperationAction{
+		name := self.name;
+		operation := matchedOperation;
+		toDeclareResult := not resultIsDeclared;
+	};
+	newAction.parameterMappings := inMp.mappings;
+	newAction.parameterMappings += outMp.mappings;
+
+	var prevEdge := DACT::ActivityEdge.allInstances()
+		-> selectOne(e|e.target = self);
+	if (prevEdge <> null){
+		prevEdge.target := newAction;
+	};
+	
+	var nextEdge := DACT::ActivityEdge.allInstances()
+		-> selectOne(e|e.source = self);
+	if (nextEdge <> null){
+		nextEdge.source := newAction;
+	};
+	self.group.ownedNodes += newAction;
+	
+	var toRecord : DACT::DomainNode;
+	toRecord := self.deepclone();
+	toRecord.propertyChain := propChain;
+	
+	CURRENT_ACTIVITY.processedDomainNodeMappings += object DomainNodeOperationMapping{
+		domainNode := toRecord;
+		operation := matchedOperation;
+	};
+	CURRENT_ACTIVITY.ownedDomainNodes += toRecord;
+}
+
+helper DACT::Operation::remapParameters(inout mappings: Sequence(DACT::ParameterMapping)){
+	var availableParams := self.ownedParameters;
+	
+	mappings -> forEach(m){
+		var currentMappedParam := m.operationParameter;
+		var actualParam := availableParams -> selectOne(p|p.isEqual(currentMappedParam));
+		assert fatal (actualParam <> null)
+			with log("Compile Error: Could not find the parameter corresponding to pameter"+ currentMappedParam.printInfo(0));
+		m.operationParameter := actualParam;
+	};
+}
+
+
+helper DACT::DomainNode::generateMainMappings(inout scope : DACT::Scope): Tuple(newName: String, parameters: Sequence(Parameter), mappings: Sequence(DACT::ParameterMapping)){
+	return Tuple{newName=null,parameters=null,mappings=null};
+}
+
+helper DACT::DomainNode::generateOutputMappings(inout scope : DACT::Scope): Tuple(parameters: Sequence(Parameter), mappings: Sequence(DACT::ParameterMapping)){
+	var parameters : Sequence(Parameter);
+	var mappings : Sequence(ParameterMapping);
+	
+	var targetEntity : DACT::DomainObject := if self.entity <> null then self.entity else self.aggregate endif;
+	
+	// Output
+	var outParam : Parameter;
+	if (self.oclIsTypeOf(DACT::DomainExistAction)){
+		// Exists: Always return a single boolean
+		outParam := object Parameter{
+			name := "result";
+			type := BOOL;
+			lowerBound := 1;
+			upperBound := 1;
+			role:=ParameterRole::CORE;
+			direction:=ParameterDirection::OUT;
+		};
+	} else if (self.oclIsTypeOf(DACT::DomainFindAction)){
+		// Find: Returns a single instance if queried by ID, else a collection of targetContext instances
+		// Currently default return a collection
+		var isSingle := (CACHED_REQUIRED_PROPERTIES->size()=1 and CACHED_REQUIRED_PROPERTIES -> exists(p|p.definesIdentity));
+		outParam := object Parameter{
+			name := "result";
+			type := targetEntity; 
+			lowerBound := 0;
+			upperBound := if isSingle then 1 else -1 endif; 
+			role:=ParameterRole::CORE;
+			direction:=ParameterDirection::OUT;
+		};
+	} else {
+		outParam := object Parameter {
+	        name := "result";
+	        type := targetEntity;
+	        lowerBound := 0;
+	        upperBound := 1;
+	        role:=ParameterRole::CORE;
+	        direction:=ParameterDirection::OUT;
+	    };
+	};
+
+	parameters += outParam;
+
+	if (self.result <> null){
+		
+		var matchedVar := scope.getVariableWithName(self.result.name);
+		if (matchedVar.oclIsUndefined()){
+			// Create if yet found
+			var newVar := object Variable{
+				name := self.result.name;
+				type := outParam.type;
+				lowerBound := outParam.lowerBound;
+				upperBound := outParam.upperBound;
+			};		
+			scope.ownedVariables += newVar;
+		};
+		var outMapping := object ParameterMapping{
+			operationParameter := outParam;
+			identifier:= self.result.deepclone();
+			type := ParameterMappingType::ACTION_OUT;
+		};
+	
+		outMapping.validate(scope);
+		mappings += outMapping;
+	};
+	
+	return Tuple{parameters=parameters,mappings=mappings};
+}
+
+helper DACT::DomainFindAction::generateMainMappings(inout scope : DACT::Scope): Tuple(newName: String, parameters: Sequence(Parameter), mappings: Sequence(DACT::ParameterMapping)){
+	// Currently only supports query EQ operator
+	// Name customized for Domain Exist & Domain Find
+
+	var parameters : Sequence(Parameter);
+	var mappings : Sequence(ParameterMapping);
+	var queriedProperties : Sequence(DACT::Property);
+	var identifiersToProcess : Sequence(String); // Use to construct the Query Name
+	var newName : String;
+	var targetEntity : DACT::DomainObject := if self.entity <> null then self.entity else self.aggregate endif;
+	// Input
+	//// Main Query
+	if (self.mainExpr -> size() = 0){
+		newName := 'findAll';
+	}else{
+		self.mainExpr -> forEach(e){
+			e.printExpr(2);
+			
+			// Left is the property -> Check if actually exists 
+			var leftExpr := e.oclAsType(DACT::BinaryExpression).leftExpr;
+		
+			var identifierName := leftExpr.oclAsType(DACT::UnaryExpression).identifier.name;
+
+			-- Resolve property against the selected targetContext (Sub-Entity or AggregateRoot)
+			var rel := targetEntity.getPropertyFromIdentifier(identifierName);
+			var matchedProperty := rel.matchedProperty;
+			
+			assert fatal(matchedProperty <> null)
+				with log("InvalidPropertyAccess: No property with matching name found for identifier '"+identifierName+"'");
+			assert fatal(matchedProperty.upperBound = 1)
+				with log("CompileError: Currently multiplicity fields are not supported for query!");
+			assert fatal(matchedProperty.type.oclIsKindOf(DACT::PrimitiveType))
+				with log("CompileError: Currently only primitive fields can be queried");
+			
+			queriedProperties += matchedProperty;
+			identifiersToProcess += identifierName.replace("self.","").toPascalCase();
+			var newParameter := object Parameter{
+				name := matchedProperty.name;
+				type := matchedProperty.type;
+				lowerBound := matchedProperty.lowerBound;
+				upperBound := matchedProperty.upperBound;
+				role:=ParameterRole::CORE;
+			};
+				
+			// Right is the identifier or value -> Check if actually exists and match type
+			var rightExpr := e.oclAsType(DACT::BinaryExpression).rightExpr;
+			assert fatal(
+				(rightExpr.oclIsKindOf(DACT::UnaryExpression) and rightExpr.oclAsType(DACT::UnaryExpression).identifier<>null) or
+				(rightExpr.oclIsKindOf(DACT::UnaryExpression) and rightExpr.oclAsType(DACT::UnaryExpression).value<>null))
+				with log("Type Error: The right side of Domain Node expression must be identifier or value, but provided: ", rightExpr.toString());
+			
+			var newMapping : ParameterMapping;
+			
+			if (rightExpr.oclAsType(DACT::UnaryExpression).identifier <> null){
+				var identifierToCheck := rightExpr.oclAsType(DACT::UnaryExpression).identifier;
+				
+				newMapping := object ParameterMapping{
+					operationParameter := newParameter;
+					identifier := identifierToCheck.deepclone();
+					type := ParameterMappingType::ACTION_IN;
+				};
+			}else{
+				var valueToCheck := rightExpr.oclAsType(DACT::UnaryExpression).value;
+				
+				newMapping := object ParameterMapping{
+					operationParameter := newParameter;
+					value := valueToCheck.deepclone();
+					type := ParameterMappingType::ACTION_IN;
+				};
+			};
+			
+			newMapping.validate(scope);
+			
+			parameters += newParameter;
+			mappings += newMapping;
+		};
+		
+		// Name Generation
+		newName := if self.oclIsTypeOf(DACT::DomainExistAction) then "existsBy" else "findBy" endif;
+	
+		var isFirst := true;
+		identifiersToProcess
+			->sortedBy(p | p)	
+			->forEach(p) {
+				if (isFirst) {
+					newName := newName + p;
+					isFirst := false;
+				} else {
+					newName := newName + "And" + p;
+				};
+			};
+	};
+	CACHED_REQUIRED_PROPERTIES := queriedProperties;
+	return Tuple{newName = newName, parameters = parameters, mappings = mappings};
+}
+
+//
+helper DACT::DomainCreateAction::generateMainMappings(inout scope : DACT::Scope): Tuple(
+	newName: String, 
+	parameters: Sequence(Parameter), 
+	mappings: Sequence(DACT::ParameterMapping)
+	){
+	var parameters : Sequence(Parameter);
+	var mappings : Sequence(ParameterMapping);
+	var newName : String;
+	
+	var targetEntity : DACT::DomainObject := if self.entity <> null then self.entity else self.aggregate endif;
+	
+	// Main: EntityPath = Identifier
+	var mainExpr := self.mainExpr->at(1);
+
+	mainExpr.printExpr(2);
+
+	// Left is the entity itself -> Check if actually exists 
+	var leftExpr := mainExpr.oclAsType(DACT::BinaryExpression).leftExpr;
+	var identifierName := leftExpr.oclAsType(DACT::UnaryExpression).identifier.name;
+	
+	var newMainParameter := object Parameter{
+		name:= targetEntity.name.toCamel();
+		type:= targetEntity;
+		lowerBound:=1;
+		upperBound:=1;
+		role:=ParameterRole::CORE;
+	};
+	
+	newName := if self.oclIsKindOf(DACT::DomainUpdateAction) then "update" else "create" endif + targetEntity.name.toUpperCamel();
+	
+	// Right is the identifier or value -> Check if actually exists and match type
+	var rightExpr := mainExpr.oclAsType(DACT::BinaryExpression).rightExpr;
+	assert fatal(rightExpr.oclIsKindOf(DACT::UnaryExpression) and rightExpr.oclAsType(DACT::UnaryExpression).identifier<>null)
+		with log("Type Error: The right side of Domain Node expression must be identifier, but provided: ", rightExpr.toString());
+	var identifierToCheck := rightExpr.oclAsType(DACT::UnaryExpression).identifier;
+
+	var newMainMapping := object ParameterMapping{
+		operationParameter := newMainParameter;
+		identifier := identifierToCheck.deepclone();
+		type := ParameterMappingType::ACTION_IN;
+	};
+	
+	parameters += newMainParameter;
+	mappings += newMainMapping;
+	
+	return Tuple{newName = newName, parameters = parameters, mappings = mappings};
+}
+
+helper DACT::DomainDeleteAction::generateMainMappings(inout scope : DACT::Scope): Tuple(newName: String, parameters: Sequence(Parameter), mappings: Sequence(DACT::ParameterMapping)){
+	// Currently Allow delete by Entity Id only
+	var parameters : Sequence(Parameter);
+	var mappings : Sequence(ParameterMapping);
+	var newName : String;
+	
+	var targetEntity : DACT::DomainObject := if self.entity <> null then self.entity else self.aggregate endif;
+	
+	var idProperty := targetEntity.ownedProperties->selectOne(p | p.definesIdentity);
+	assert fatal(idProperty <> null)
+		with log("Compile Error: Entity '" + self.aggregate.name + "' has no property defining identity.");
+	
+	var mainParam := object Parameter{
+		name:= idProperty.name.toCamel();
+		type:= idProperty.type;
+		lowerBound:=idProperty.lowerBound;
+		upperBound:=idProperty.upperBound;
+		role:=ParameterRole::CORE;
+	};
+	
+	// Right is the identifier or value -> Check if actually exists and match type
+	var rightExpr := self.mainExpr-> first().oclAsType(DACT::BinaryExpression).rightExpr;
+	assert fatal(
+		rightExpr.oclIsKindOf(DACT::UnaryExpression) and 
+		(rightExpr.oclAsType(DACT::UnaryExpression).identifier<>null or rightExpr.oclAsType(DACT::UnaryExpression).value<>null)
+	)
+		with log("Type Error: The right side of Domain Node expression must be identifier or value , but provided: ", rightExpr.toString());
+	
+	var mainMapping : ParameterMapping;
+	
+	if (rightExpr.oclAsType(DACT::UnaryExpression).identifier <> null){
+		var identifierToCheck := rightExpr.oclAsType(DACT::UnaryExpression).identifier;
+		mainMapping := object ParameterMapping{
+			operationParameter := mainParam;
+			identifier := identifierToCheck.deepclone();
+			type := ParameterMappingType::ACTION_IN;
+		};
+	}else{
+		var valueToCheck := rightExpr.oclAsType(DACT::UnaryExpression).value;
+		mainMapping := object ParameterMapping{
+			operationParameter := mainParam;
+			value := valueToCheck.deepclone();
+			type := ParameterMappingType::ACTION_IN;
+		};
+	};
+	mainMapping.validate(self.group.scope);
+	
+	parameters+=mainParam;
+	mappings+=mainMapping;
+		
+	if (targetEntity = self.aggregate) {
+		newName := "deleteBy" + idProperty.name.toUpperCamel();
+		
+	} else {
+		newName := "delete" + targetEntity.name.toUpperCamel() + "By" + idProperty.name.toUpperCamel();
+	};
+	return Tuple{newName = newName, parameters = parameters, mappings = mappings};
+}
+
+
+helper DACT::SendSignalAction::processNode(){}
+
+helper DACT::ReceiveSignalAction::processNode(){}
+
+helper DACT::RaiseExceptionAction::processNode(){}
+
+query DACT::ValueSpecification::hasType(type: DACT::Type): Boolean{
+	return switch{
+		case (self.oclIsKindOf(DACT::InstanceValue)) 
+            self.oclAsType(DACT::InstanceValue).isInstanceOf = type;
+		case (self.oclIsKindOf(DACT::LiteralString)) type.oclIsKindOf(DACT::StringType);
+		case (self.oclIsKindOf(DACT::LiteralInteger)) type.oclIsKindOf(DACT::IntegerType);
+		case (self.oclIsKindOf(DACT::LiteralReal)) type.oclIsKindOf(DACT::RealType);
+		case (self.oclIsKindOf(DACT::LiteralBoolean)) type.oclIsKindOf(DACT::BooleanType);
+		else true;	
+	}
+}
+
+query DACT::VariableAssignment::validate(scope : DACT::Scope, sourceElem: DACT::TypedMultiplicityElement){
+	self.printAssignment(3);
+	
+	// Need to check if the expr is null
+	if (self.expr.oclIsUndefined()){
+		return;
+	};
+	
+	var srcTypeName := sourceElem.metaClassName();
+
+	self.expr.validate(scope,self.expr);
+	var exprValidation := self.expr;
+	var targetType := exprValidation.type;
+	var targetLowerBound := exprValidation.lowerBound;
+	var targetUpperBound := exprValidation.upperBound;
+	
+	assert fatal (targetType = sourceElem.type)
+		with log("AssignmentTypeMismatch: "+ srcTypeName  +" '"  + 
+		sourceElem.name + "' and the assigned value are not the same type: " +
+		sourceElem.type.toString() + " vs " +
+		targetType.toString());
+			
+	assert fatal (targetUpperBound = sourceElem.upperBound)
+		with log("AssignmentBoundMismatch: "+ srcTypeName  +" '" + 
+		sourceElem.name + "' and the assigned value have different upper bound: "+
+		sourceElem.upperBound.toString() + " vs "+
+		targetUpperBound.toString());
+}
+
+query DACT::ParameterMapping::validate(scope : DACT::Scope){
+	
+	var oParam := self.operationParameter;
+	var aParam := self.activityParameter;
+	var identifier := self.identifier;
+	var variable := self.variable;
+	var value := self.value;
+	
+	if (aParam <> null){
+		assert fatal (aParam.direction = oParam.direction)
+			with log("MappingDirectionMismatch: Activity Param '" + aParam.name + "' and the operation param '" + oParam.name + "' are not for the same direction.");
+	
+		assert fatal (aParam.type = oParam.type)
+			with log("MappingTypeMismatch: Activity Param '" + aParam.name + "' and the operation param '" + oParam.name + "' are not the same type.");
+		
+		assert fatal (aParam.lowerBound = oParam.lowerBound)
+			with log("MappingBoundMismatch: Activity Param  '" + aParam.name + "' and the operation param '" + oParam.name + "' have different lower bound.");
+			
+		assert fatal (aParam.upperBound = oParam.upperBound)
+			with log("MappingBoundMismatch: Activity Param '" + aParam.name + "' and the operation param '" + oParam.name + "' have different upper bound.");
+	};			
+	
+	if (identifier <> null){
+		var segments := identifier.name.tokenize(".");
+		var matchedElem : DACT::TypedMultiplicityElement;
+		matchedElem := scope.getVariableWithName(segments->at(1));
+		
+			
+		if (segments->size()>1){
+			assert fatal(matchedElem.type.oclIsKindOf(DACT::DomainObject))
+				with log("InvalidIdentifierAccess: Identifier '"+segments->at(1)+"' is of type '"+matchedElem.type.metaClassName()+"'. It cannot be accessed with identifier chain: "+identifier.name);
+			
+			var propertyPath := identifier.getChainPath();
+			
+			var rel := matchedElem.type.oclAsType(DACT::DomainObject).getPropertyFromIdentifier(propertyPath);
+			matchedElem := rel.matchedProperty;
+		};
+		
+		assert fatal (matchedElem <> null)
+			with log("VariableYetDeclared: Variable '" + self.identifier.name + "' has NOT been defined in scope '" + scope.group.name + "'.");
+
+		assert fatal (matchedElem.type = oParam.type)
+			with log("MappingTypeMismatch: Mapped Variable '" + matchedElem.name + 
+			"' and the operation param '" + oParam.name + 
+			"' are not the same type:"+
+			matchedElem.type.toString()+ " vs " +
+			oParam.type.toString());
+	};	
+	
+	
+	if (variable <> null){
+		assert fatal (variable <> null)
+			with log("Compile Error: Variable '" + variable.name + "' has NOT been defined in scope '" + scope.group.name + "'.");
+		
+		assert fatal (variable.type = oParam.type)
+			with log("Type Error: Mapped Varibale '" + variable.name + "' and the operation param '" + oParam.name + "' are not the same type.");
+		
+		assert fatal (variable.isCollection() = oParam.isCollection())
+		    with log("Type Error: Multiplicity mismatch between Variable '" 
+		            + variable.name + "' (isCollection=" + variable.isCollection().toString() 
+		            + ", lower=" + variable.lowerBound.toString() 
+		            + ", upper=" + variable.upperBound.toString() 
+		            + ") and Operation Parameter '" + oParam.name 
+		            + "' (isCollection=" + oParam.isCollection().toString() 
+		            + ", lower=" + oParam.lowerBound.toString() 
+		            + ", upper=" + oParam.upperBound.toString() + ").");
+		
+	};	
+	if (value <> null){
+		
+	};	
+}
+
+query DACT::Expression::validate(scope: DACT::Scope, inout expr: DACT::Expression){
+	-- Currently works for non-collection only!!!!
+}
+
+query DACT::UnaryExpression::validate(scope: DACT::Scope, inout expr: DACT::Expression){
+	var scopeName := "";
+	if (scope.group <> null){
+		scopeName := scope.group.name;
+	};
+	
+	if (self.identifier <> null){
+		var validatedIdentifier := self.identifier.validate(scope);
+		expr.type := validatedIdentifier.type;
+		expr.lowerBound := validatedIdentifier.lowerBound;
+		expr.upperBound := validatedIdentifier.upperBound;
+	};
+	
+	if (self.value <> null){
+		if (self.value.oclIsKindOf(DACT::LiteralNull)){
+			expr.type := null;			
+			expr.lowerBound :=1;
+			expr.upperBound :=1;
+		};
+		
+		if (self.value.oclIsKindOf(DACT::LiteralInteger)){
+			expr.type := INT;
+			expr.lowerBound :=1;
+			expr.upperBound :=1;
+		};
+		
+		if (self.value.oclIsKindOf(DACT::LiteralReal)){
+			expr.type := REAL;
+			expr.lowerBound :=1;
+			expr.upperBound :=1;
+		};
+		
+		if (self.value.oclIsKindOf(DACT::LiteralString)){
+			expr.type := STR;
+			expr.lowerBound :=1;
+			expr.upperBound :=1;
+		};
+		
+		if (self.value.oclIsKindOf(DACT::LiteralBoolean)){
+			expr.type := BOOL;
+			expr.lowerBound :=1;
+			expr.upperBound :=1;
+		};
+		
+		if (self.value.oclIsKindOf(DACT::EnumerationLiteral)){
+			expr.type := self.value.oclAsType(DACT::EnumerationLiteral).validate();
+			expr.lowerBound :=1;
+			expr.upperBound :=1;
+		}
+	};
+	
+	assert fatal(true)
+		with log("Type Error: Empty expression in the group " + scope.group.name); 
+	return null;
+}
+
+
+query DACT::BinaryExpression::validate(scope: DACT::Scope, inout expr: DACT::Expression){
+	// Type matching and operator compatible
+	self.leftExpr.validate(scope, self.leftExpr);
+	self.rightExpr.validate(scope,self.rightExpr);
+	
+	var lType := self.leftExpr.type;
+	var rType := self.rightExpr.type;
+	
+	var lLowerBound := self.leftExpr.lowerBound;
+	var rLowerBound := self.rightExpr.lowerBound;
+	
+	var lUpperBound := self.leftExpr.upperBound;
+	var rUpperBound := self.rightExpr.upperBound;
+
+	// Helper flags for single vs collection bounds
+	var isLeftSingle := self.leftExpr.isSingle();
+	var isLeftCollection := self.leftExpr.isCollection();
+	var isRightSingle :=  self.rightExpr.isSingle();
+	var isRightCollection := self.rightExpr.isCollection();
+
+	// Basic type compatibility check (null right operand is allowed for null-checks)
+	assert fatal(
+		(lType = rType) or 
+		(rType = null) or 
+		(lType = INT and rType = REAL) or
+		(lType = REAL and rType = INT)
+	)
+		with log("Type Error: Left and right of the expression are of different types: "+ 
+			lType.toString() +" vs " + rType.toString());
+    
+	// EQUALITY OPERATORS: == and !=
+	if (self.operator.oclIsKindOf(DACT::Eq) or self.operator.oclIsKindOf(DACT::Ne)) {
+        -- Special Case: Checking if a Collection is null/empty (e.g., collection == null or collection != null)
+        var isCollectionNullCheck := isLeftCollection and (rType = null);
+        
+        -- Standard Case: Both operands must be single-valued if comparing regular values
+        var isStandardSingleComparison := isLeftSingle and isRightSingle;
+
+        assert fatal (isStandardSingleComparison or isCollectionNullCheck)
+        with log("TypeError: Equality operators only accept single-valued comparisons, or 'collection == null' / 'collection != null' checks: "+
+        	"leftType = "+self.leftExpr.printType()+ 
+        	" vs "+
+        	"rightType = "+self.rightExpr.printType());
+
+        -- Equality check always yields a single-valued Boolean result
+        expr.type := BOOL;
+        expr.lowerBound := 1;
+        expr.upperBound := 1;
+        return;
+    };
+    
+    if (self.operator.oclIsKindOf(DACT::Gt) or self.operator.oclIsKindOf(DACT::Lt) or 
+        self.operator.oclIsKindOf(DACT::Ge) or self.operator.oclIsKindOf(DACT::Le)
+       	) {
+        -- Relational operators require numeric values (Integer or Real).
+        assert fatal (
+        	(lType = INT or lType = REAL) and
+        	(isLeftSingle and isRightSingle)
+        )
+            with log("TypeError: Relational operators can only compare single-valued numeric types: "+ 
+			self.leftExpr.printType() +" vs " + self.rightExpr.printType());
+            
+        expr.type := BOOL;
+        expr.lowerBound := 1;
+        expr.upperBound := 1;
+        return;
+    };
+    
+    -- Collection Plus / Minus (Left: Collection, Right: Single)
+    if (self.operator.oclIsKindOf(DACT::Plus) or self.operator.oclIsKindOf(DACT::Minus)) {
+    	if (isLeftCollection and isRightSingle) {
+    		expr.type := lType;
+	        expr.lowerBound := 0;
+	        expr.upperBound := -1;	
+	        return;
+    	};
+    };
+    
+    -- Standard Arithmetic Operators (Single-valued)
+    if (self.operator.oclIsKindOf(DACT::Plus) or self.operator.oclIsKindOf(DACT::Minus) or 
+        self.operator.oclIsKindOf(DACT::Times) or self.operator.oclIsKindOf(DACT::Divide)) {
+        assert fatal (
+        	(lType = INT or lType = REAL) and 
+        	(isLeftSingle and isRightSingle)
+        )
+            with log("TypeError: Arithmetic operators require single-valued numeric operands: "+ 
+			lType.toString() +" vs " + rType.toString());
+            
+        var resultType := if (lType = REAL or rType = REAL) then REAL else INT endif;
+        expr.type := resultType;
+        expr.lowerBound := 1;
+        expr.upperBound := 1;
+        return;
+    };
+    
+    -- Logical Operators
+    if (self.operator.oclIsKindOf(DACT::And) or self.operator.oclIsKindOf(DACT::Or)) {
+        assert fatal ((lType = BOOL and rType = BOOL) and (isLeftSingle and isRightSingle))
+            with log("TypeError: Logical operators can only compare single-valued boolean types: "+ 
+			lType.toString() +" vs " + rType.toString());
+        expr.type := BOOL;
+        expr.lowerBound := 1;
+        expr.upperBound := 1;
+        return;
+    };
+    
+    -- IN Operator (Left: Single-valued, Right: Collection)
+    if (self.operator.oclIsKindOf(DACT::In)) {
+    	assert fatal (isLeftSingle and isRightCollection)
+    		with log("TypeError: 'IN' operator requires single-valued element on left and collection on right: " +
+    			self.leftExpr.printType() + " IN " + self.rightExpr.printType());
+    	expr.type := BOOL;
+        expr.lowerBound := 1;
+        expr.upperBound := 1;		
+        return;
+    };
+}
+
+
+query DACT::NotExpression::validate(scope: DACT::Scope, inout expr: DACT::Expression){
+	self.expr.validate(scope,self.expr);
+	var exprValidation := self.expr;
+	
+	assert fatal (exprValidation.type = BOOL and exprValidation.upperBound = 1 and exprValidation.lowerBound = 1)
+		with log("Type Error: Not operator require Boolean expr: ", exprValidation.printType());
+	
+	expr.type := BOOL;
+	expr.lowerBound := 1;
+	expr.upperBound := 1;
+}
+
+
+
+
+query DACT::EnumerationLiteral::validate(): DACT::Type{
+	var segments := self.name.tokenize("::");
+	var enumName := segments->at(1);
+	var enumLiteralName := segments->at(2);
+	
+	var enumType := ENUMERATION_TYPES -> selectOne(e|e.name = enumName);
+	assert fatal (enumType <> null)
+		with log("EnumerationNotExists: Cannot find the enumeration with name '"+enumName+"'.");
+		
+	var enumLiteral := enumType.ownedLiterals -> selectOne(l|l.name = enumLiteralName);
+	assert fatal (enumLiteral <> null)
+		with log("EnumerationLiteralNotExists: Cannot find the literal '"+enumLiteralName+"' for enumeration '"+enumName+"'.");
+	return enumType;
+}
+
+helper DACT::Root::validateSpecRule(inout root: DACT::Root){
+	root.ddd.boundedContexts -> forEach(context){
+		context.printInfo(1);
+		context.ownedElements[DACT::InternalDomainObject] -> forEach(ob){
+			ob.printInfo(2);
+			// Use Domain Object as scope with self.{property} as variable
+			var domainScope = object DACT::Scope{};
+			// Add self as variable
+			var selfVar = object DACT::Variable{
+					name := "self";
+					type := ob;
+					lowerBound := 1;
+					upperBound := 1;
+				};
+			domainScope.ownedVariables += selfVar;
+			
+			ob.ownedOperations[DACT::SpecOperation] -> forEach(op){
+				op.printInfo(3);
+				// Add input param as variables
+				op.ownedParameters -> forEach(p){
+					p.printInfo(3);
+					var newVar = object DACT::Variable{
+						name := p.name;
+						type := p.type;
+						lowerBound := p.lowerBound;
+						upperBound := p.upperBound;
+					};
+					domainScope.ownedVariables += newVar;	
+				};
+				
+				op.ownedRules -> forEach(rule){
+					rule.expr.printExpr(4);
+					rule.expr.validate(domainScope, rule.expr);
+					var exprValidation = rule.expr;
+					assert fatal(exprValidation.type = BOOL and 
+						exprValidation.lowerBound = 1 and
+						exprValidation.upperBound = 1)
+						with log("NonBooleanSpecificationRule: Expression of rule '"+ rule.name +
+							"' does not evaluate to Boolean. Given: " + exprValidation.printType());
+				}
+			};
+			
+		}
+	}
+}
+
+helper DACT::Root::formatName(inout root : DACT::Root){
+    // 1. Elements to convert to UpperCamelCase
+    var upperCamelElements : Set(DACT::NamedElement);
+    upperCamelElements := root.allSubobjectsOfKind(DACT::BoundedContext);
+    upperCamelElements += root.allSubobjectsOfKind(DACT::DomainElement);
+    upperCamelElements += root.allSubobjectsOfKind(DACT::EnumerationLiteral);
+    
+    upperCamelElements -> forEach(elem){
+    	if (not elem.name.oclIsUndefined()) {
+            elem.name := elem.name.toUpperCamel();
+        }
+    };
+
+    // 2. Elements to convert to lowerCamelCase
+    var lowerCamelElements : Set(DACT::NamedElement);
+    lowerCamelElements := root.allSubobjectsOfKind(DACT::Property);
+    lowerCamelElements += root.allSubobjectsOfKind(DACT::Variable);
+    lowerCamelElements += root.allSubobjectsOfKind(DACT::Operation);
+    lowerCamelElements += root.allSubobjectsOfKind(DACT::Parameter);
+
+	lowerCamelElements -> forEach(elem){
+		if (not elem.name.oclIsUndefined()) {
+            elem.name := elem.name.toCamel();
+        }
+	}
+}

@@ -1,0 +1,22 @@
+```bash
+# Init Spring Boot projects before running the Java microservice code generator
+./initProjects.sh "/Path/to/phase2/cargo.service" "Path/to/phase3"
+
+# Clean the 'domain' layer across all projects inside cargo_example
+./cleanProjects.sh -r "/Path/to/phase3" -l domain
+
+# Clean the 'exception' layer across all projects inside cargo_example
+./cleanProjects.sh -r "/Path/to/phase3" -l exception
+
+# Clean the 'payload' layer across all projects inside cargo_example
+./cleanProjects.sh -r "/Path/to/phase3" -l payload
+
+# Clean the 'controller' layer across all projects inside cargo_example
+./cleanProjects.sh -r "/Path/to/phase3" -l controller
+
+# Clean only the 'customer' service inside cargo_example
+./cleanProjects.sh -r "/Path/to/phase3" -s customer
+
+# Reset everything (preserving all main Spring Boot Application entry points)
+./cleanProjects.sh -r "/Path/to/phase3" -a
+```

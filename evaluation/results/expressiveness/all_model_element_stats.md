@@ -1,0 +1,69 @@
+# Complete Model Element Statistics
+
+## Overall Summary
+* **Total Model Elements (all types):** 1562
+
+## Element Count by Type
+
+| Model Element (EClass) | Count |
+| :--- | :--- |
+| **Root** | 1 |
+| **Activity** | 12 |
+| **ActivityEdge** | 153 |
+| **ActivityFinalNode** | 32 |
+| **ActivityGroup** | 51 |
+| **ActivityModel** | 1 |
+| **AggregateRoot** | 3 |
+| **And** | 29 |
+| **BinaryExpression** | 146 |
+| **BooleanType** | 1 |
+| **BoundedContext** | 5 |
+| **CallOperationAction** | 12 |
+| **ConditionalNode** | 27 |
+| **DddModel** | 1 |
+| **DomainCreateAction** | 3 |
+| **DomainDeleteAction** | 1 |
+| **DomainEvent** | 1 |
+| **DomainExistAction** | 3 |
+| **DomainFindAction** | 7 |
+| **DomainUpdateAction** | 3 |
+| **Entity** | 4 |
+| **Enumeration** | 4 |
+| **EnumerationLiteral** | 87 |
+| **Eq** | 57 |
+| **FlowFinalNode** | 20 |
+| **Gt** | 2 |
+| **Identifier** | 231 |
+| **In** | 4 |
+| **InitialNode** | 52 |
+| **IntegerType** | 1 |
+| **LiteralBoolean** | 3 |
+| **LiteralInteger** | 2 |
+| **LiteralNull** | 18 |
+| **Ne** | 31 |
+| **NotExpression** | 1 |
+| **Operation** | 11 |
+| **Or** | 16 |
+| **ParallelFlow** | 1 |
+| **ParallelNode** | 1 |
+| **Parameter** | 75 |
+| **ParameterMapping** | 38 |
+| **Plus** | 1 |
+| **Property** | 44 |
+| **RaiseEntityNotFoundExceptionAction** | 3 |
+| **RaiseExceptionAction** | 9 |
+| **RealType** | 1 |
+| **ReceiveSignalAction** | 1 |
+| **Scope** | 28 |
+| **SendSignalAction** | 1 |
+| **Service** | 3 |
+| **SharedValueObject** | 2 |
+| **SpecOperation** | 4 |
+| **SpecRule** | 17 |
+| **StringType** | 1 |
+| **UnaryExpression** | 232 |
+| **ValueObject** | 4 |
+| **VariableAssignment** | 30 |
+| **VariableAssignmentAction** | 25 |
+| **VariableDeclarationAction** | 5 |
+

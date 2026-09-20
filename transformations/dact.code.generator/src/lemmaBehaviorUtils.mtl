@@ -1,0 +1,32 @@
+[comment encoding = UTF-8 /]
+[module lemmaBehaviorUtils(
+	'http://www.example.org/xcore/data',
+	'http://www.example.org/xcore/service',
+	'http://www.example.org/xcore/behavior',
+	'http://www.example.org/xcore/technology'
+	)/]
+
+[import lemmaDataUtils/]
+[import dact::code::generator::utils::ResourceUtils /]
+
+[comment -- Retrieve Service Model safely --/]
+[query public getServiceModel(behaviorModel : behavior::BehaviorModel) : service::ServiceModel= 
+  behaviorModel.getAllResourceSetRoots()
+    ->filter(service::ServiceModel)
+    ->first().oclAsType(service::ServiceModel)
+/]
+
+[comment -- Retrieve Data Model safely --/]
+[query public getDataModel(behaviorModel : behavior::BehaviorModel) : data::DataModel = 
+  behaviorModel.getAllResourceSetRoots()
+    ->filter(data::DataModel)
+    ->first().oclAsType(data::DataModel)
+/]
+
+[query public getDataModel(serviceModel : service::ServiceModel) :  data::DataModel = 
+  serviceModel.getAllResourceSetRoots()
+    ->filter(data::DataModel)
+    ->first().oclAsType(data::DataModel)
+/]
+
+

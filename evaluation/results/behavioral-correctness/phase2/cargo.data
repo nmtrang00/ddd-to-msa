@@ -1,0 +1,1345 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<data:DataModel xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:behavior="http://www.example.org/xcore/behavior" xmlns:data="http://www.example.org/xcore/data" t_modelUri="cargo">
+  <contexts name="Customer">
+    <complexTypes xsi:type="data:DataStructure" name="Customer">
+      <features>ENTITY</features>
+      <features>AGGREGATE</features>
+      <dataFields name="email" lowerBound="1" upperBound="1">
+        <primitiveType xsi:type="data:PrimitiveString"/>
+        <features>NEVER_EMPTY</features>
+      </dataFields>
+      <dataFields name="name" lowerBound="0" upperBound="1">
+        <primitiveType xsi:type="data:PrimitiveString"/>
+      </dataFields>
+      <dataFields name="customerId" lowerBound="1" upperBound="1">
+        <primitiveType xsi:type="data:PrimitiveInteger"/>
+        <features>IDENTIFIER</features>
+        <features>NEVER_EMPTY</features>
+      </dataFields>
+      <operations name="customer">
+        <parameters name="name" lowerBound="0" upperBound="1">
+          <primitiveType xsi:type="data:PrimitiveString"/>
+        </parameters>
+        <parameters name="self" lowerBound="1" upperBound="1" exchangePattern="OUT" complexType="//@contexts.0/@complexTypes.0"/>
+        <parameters name="email" lowerBound="1" upperBound="1">
+          <primitiveType xsi:type="data:PrimitiveString"/>
+        </parameters>
+      </operations>
+    </complexTypes>
+    <complexTypes xsi:type="data:DataStructure" name="UpdateCustomerDetailsRequest">
+      <features>REQUEST_PAYLOAD</features>
+      <dataFields name="newName" lowerBound="0" upperBound="1">
+        <primitiveType xsi:type="data:PrimitiveString"/>
+      </dataFields>
+      <dataFields name="newEmail" lowerBound="0" upperBound="1">
+        <primitiveType xsi:type="data:PrimitiveString"/>
+      </dataFields>
+    </complexTypes>
+    <complexTypes xsi:type="data:DataStructure" name="UpdateCustomerDetailsResponse">
+      <features>RESPONSE_PAYLOAD</features>
+      <dataFields name="customer" lowerBound="0" upperBound="1" complexType="//@contexts.0/@complexTypes.0"/>
+    </complexTypes>
+    <complexTypes xsi:type="data:DataStructure" name="RegisterACustomerRequest">
+      <features>REQUEST_PAYLOAD</features>
+      <dataFields name="name" lowerBound="1" upperBound="1">
+        <primitiveType xsi:type="data:PrimitiveString"/>
+      </dataFields>
+      <dataFields name="email" lowerBound="1" upperBound="1">
+        <primitiveType xsi:type="data:PrimitiveString"/>
+      </dataFields>
+    </complexTypes>
+    <complexTypes xsi:type="data:DataStructure" name="RegisterACustomerResponse">
+      <features>RESPONSE_PAYLOAD</features>
+      <dataFields name="customer" lowerBound="0" upperBound="1" complexType="//@contexts.0/@complexTypes.0"/>
+    </complexTypes>
+    <complexTypes xsi:type="data:DataStructure" name="ExistsByCustomerIdResponse">
+      <features>RESPONSE_PAYLOAD</features>
+      <dataFields name="result" lowerBound="1" upperBound="1">
+        <primitiveType xsi:type="data:PrimitiveBoolean"/>
+      </dataFields>
+    </complexTypes>
+    <complexTypes xsi:type="data:DataStructure" name="DuplicateCustomer">
+      <features>RUNTIME_EXCEPTION</features>
+      <dataFields name="description" lowerBound="1" upperBound="1">
+        <primitiveType xsi:type="data:PrimitiveString"/>
+        <initializationValue stringValue="Customer with given email already exists in the system"/>
+      </dataFields>
+    </complexTypes>
+    <complexTypes xsi:type="data:DataStructure" name="UnknownCustomer">
+      <features>RUNTIME_EXCEPTION</features>
+      <dataFields name="description" lowerBound="1" upperBound="1">
+        <primitiveType xsi:type="data:PrimitiveString"/>
+        <initializationValue stringValue="Customer does not exist"/>
+      </dataFields>
+    </complexTypes>
+  </contexts>
+  <contexts name="Location">
+    <complexTypes xsi:type="data:DataStructure" name="Location">
+      <features>ENTITY</features>
+      <features>AGGREGATE</features>
+      <dataFields name="portCode" lowerBound="1" upperBound="1">
+        <primitiveType xsi:type="data:PrimitiveInteger"/>
+        <features>IDENTIFIER</features>
+        <features>NEVER_EMPTY</features>
+      </dataFields>
+      <dataFields name="name" lowerBound="1" upperBound="1">
+        <primitiveType xsi:type="data:PrimitiveString"/>
+        <features>NEVER_EMPTY</features>
+      </dataFields>
+    </complexTypes>
+    <complexTypes xsi:type="data:DataStructure" name="RegisterALocationRequest">
+      <features>REQUEST_PAYLOAD</features>
+      <dataFields name="name" lowerBound="1" upperBound="1">
+        <primitiveType xsi:type="data:PrimitiveString"/>
+      </dataFields>
+    </complexTypes>
+    <complexTypes xsi:type="data:DataStructure" name="RegisterALocationResponse">
+      <features>RESPONSE_PAYLOAD</features>
+      <dataFields name="location" lowerBound="0" upperBound="1" complexType="//@contexts.1/@complexTypes.0"/>
+    </complexTypes>
+    <complexTypes xsi:type="data:DataStructure" name="ExistsByPortCodeResponse">
+      <features>RESPONSE_PAYLOAD</features>
+      <dataFields name="result" lowerBound="1" upperBound="1">
+        <primitiveType xsi:type="data:PrimitiveBoolean"/>
+      </dataFields>
+    </complexTypes>
+  </contexts>
+  <contexts name="Cargo">
+    <complexTypes xsi:type="data:CollectionType" name="HandlingEvent">
+      <dataFields name="handlingEvent" complexType="//@contexts.2/@complexTypes.8"/>
+    </complexTypes>
+    <complexTypes xsi:type="data:CollectionType" name="SharedLocation">
+      <dataFields name="sharedLocation" complexType="//@contexts.2/@complexTypes.5"/>
+    </complexTypes>
+    <complexTypes xsi:type="data:DataStructure" name="CarrierMovement">
+      <features>VALUE_OBJECT</features>
+      <dataFields name="destination" lowerBound="1" upperBound="1" complexType="//@contexts.2/@complexTypes.5"/>
+      <dataFields name="source" lowerBound="1" upperBound="1" complexType="//@contexts.2/@complexTypes.5"/>
+      <operations xsi:type="behavior:SpecDataOperation" name="isValid" operationType="D5_SPECIFICATION" isInvariant="true">
+        <features>VALIDATOR</features>
+        <parameters name="result" lowerBound="1" upperBound="1" exchangePattern="OUT">
+          <primitiveType xsi:type="data:PrimitiveBoolean"/>
+        </parameters>
+        <ownedRules name="Source and Destination must be different">
+          <expr xsi:type="behavior:BinaryExpression" lowerBound="1" upperBound="1">
+            <evaluatedPrimitiveType xsi:type="data:PrimitiveBoolean"/>
+            <operator xsi:type="behavior:Ne"/>
+            <leftExpr xsi:type="behavior:UnaryExpression" lowerBound="1" upperBound="1">
+              <evaluatedPrimitiveType xsi:type="data:PrimitiveInteger"/>
+              <identifier name="self.source.portCode"/>
+            </leftExpr>
+            <rightExpr xsi:type="behavior:UnaryExpression" lowerBound="1" upperBound="1">
+              <evaluatedPrimitiveType xsi:type="data:PrimitiveInteger"/>
+              <identifier name="self.destination.portCode"/>
+            </rightExpr>
+          </expr>
+        </ownedRules>
+      </operations>
+    </complexTypes>
+    <complexTypes xsi:type="data:DataStructure" name="DeliveryHistory">
+      <features>ENTITY</features>
+      <dataFields name="events" lowerBound="0" upperBound="-1" complexType="//@contexts.2/@complexTypes.0">
+        <features>PART</features>
+      </dataFields>
+      <dataFields name="lastValidEvent" lowerBound="0" upperBound="1" complexType="//@contexts.2/@complexTypes.8"/>
+      <dataFields name="deliveryHistoryId" lowerBound="1" upperBound="1">
+        <primitiveType xsi:type="data:PrimitiveString"/>
+        <features>IDENTIFIER</features>
+        <features>NEVER_EMPTY</features>
+      </dataFields>
+    </complexTypes>
+    <complexTypes xsi:type="data:DataStructure" name="SharedCustomer">
+      <features>SHARED_VALUE_OBJECT</features>
+      <dataFields name="customerId" lowerBound="1" upperBound="1">
+        <primitiveType xsi:type="data:PrimitiveInteger"/>
+        <features>NEVER_EMPTY</features>
+      </dataFields>
+    </complexTypes>
+    <complexTypes xsi:type="data:DataStructure" name="SharedLocation">
+      <features>SHARED_VALUE_OBJECT</features>
+      <dataFields name="portCode" lowerBound="1" upperBound="1">
+        <primitiveType xsi:type="data:PrimitiveInteger"/>
+        <features>NEVER_EMPTY</features>
+      </dataFields>
+    </complexTypes>
+    <complexTypes xsi:type="data:DataStructure" name="TrackingReceipt">
+      <features>VALUE_OBJECT</features>
+      <dataFields name="lastLocation" lowerBound="1" upperBound="1" complexType="//@contexts.2/@complexTypes.5"/>
+      <dataFields name="trackingId" lowerBound="1" upperBound="1">
+        <primitiveType xsi:type="data:PrimitiveInteger"/>
+        <features>NEVER_EMPTY</features>
+      </dataFields>
+      <dataFields name="status" lowerBound="1" upperBound="1" complexType="//@contexts.2/@complexTypes.10">
+        <features>NEVER_EMPTY</features>
+      </dataFields>
+      <dataFields name="events" lowerBound="0" upperBound="-1" complexType="//@contexts.2/@complexTypes.0"/>
+      <operations name="trackingReceipt">
+        <parameters name="trackingId" lowerBound="1" upperBound="1">
+          <primitiveType xsi:type="data:PrimitiveInteger"/>
+        </parameters>
+        <parameters name="self" lowerBound="1" upperBound="1" exchangePattern="OUT" complexType="//@contexts.2/@complexTypes.6"/>
+        <parameters name="status" lowerBound="1" upperBound="1" complexType="//@contexts.2/@complexTypes.10"/>
+        <parameters name="events" lowerBound="0" upperBound="-1" complexType="//@contexts.2/@complexTypes.0"/>
+      </operations>
+    </complexTypes>
+    <complexTypes xsi:type="data:DataStructure" name="DeliverySpecification">
+      <features>VALUE_OBJECT</features>
+      <dataFields name="deadline" lowerBound="1" upperBound="1">
+        <primitiveType xsi:type="data:PrimitiveInteger"/>
+        <features>NEVER_EMPTY</features>
+      </dataFields>
+      <dataFields name="delivery" lowerBound="1" upperBound="1" complexType="//@contexts.2/@complexTypes.2"/>
+      <operations xsi:type="behavior:SpecDataOperation" name="isValid" operationType="D5_SPECIFICATION" isInvariant="true">
+        <features>VALIDATOR</features>
+        <parameters name="result" lowerBound="1" upperBound="1" exchangePattern="OUT">
+          <primitiveType xsi:type="data:PrimitiveBoolean"/>
+        </parameters>
+        <ownedRules name="Deadline must be a positive integer">
+          <expr xsi:type="behavior:BinaryExpression" lowerBound="1" upperBound="1">
+            <evaluatedPrimitiveType xsi:type="data:PrimitiveBoolean"/>
+            <operator xsi:type="behavior:Gt"/>
+            <leftExpr xsi:type="behavior:UnaryExpression" lowerBound="1" upperBound="1">
+              <evaluatedPrimitiveType xsi:type="data:PrimitiveInteger"/>
+              <identifier name="self.deadline"/>
+            </leftExpr>
+            <rightExpr xsi:type="behavior:UnaryExpression" lowerBound="1" upperBound="1">
+              <evaluatedPrimitiveType xsi:type="data:PrimitiveInteger"/>
+              <value xsi:type="data:PrimitiveValue" numericValue="0.0"/>
+            </rightExpr>
+          </expr>
+        </ownedRules>
+      </operations>
+    </complexTypes>
+    <complexTypes xsi:type="data:DataStructure" name="HandlingEvent">
+      <features>ENTITY</features>
+      <dataFields name="port" lowerBound="0" upperBound="1" complexType="//@contexts.2/@complexTypes.5"/>
+      <dataFields name="reportedTime" lowerBound="1" upperBound="1">
+        <primitiveType xsi:type="data:PrimitiveInteger"/>
+        <features>NEVER_EMPTY</features>
+      </dataFields>
+      <dataFields name="type" lowerBound="1" upperBound="1" complexType="//@contexts.2/@complexTypes.9">
+        <features>NEVER_EMPTY</features>
+      </dataFields>
+      <dataFields name="leg" lowerBound="0" upperBound="1" complexType="//@contexts.2/@complexTypes.2"/>
+      <dataFields name="handlingEventId" lowerBound="1" upperBound="1">
+        <primitiveType xsi:type="data:PrimitiveString"/>
+        <features>IDENTIFIER</features>
+        <features>NEVER_EMPTY</features>
+      </dataFields>
+      <operations name="handlingEvent">
+        <parameters name="reportedTime" lowerBound="1" upperBound="1">
+          <primitiveType xsi:type="data:PrimitiveInteger"/>
+        </parameters>
+        <parameters name="type" lowerBound="1" upperBound="1" complexType="//@contexts.2/@complexTypes.9"/>
+        <parameters name="leg" lowerBound="0" upperBound="1" complexType="//@contexts.2/@complexTypes.2"/>
+        <parameters name="port" lowerBound="0" upperBound="1" complexType="//@contexts.2/@complexTypes.5"/>
+        <parameters name="self" lowerBound="1" upperBound="1" exchangePattern="OUT" complexType="//@contexts.2/@complexTypes.8"/>
+      </operations>
+      <operations xsi:type="behavior:SpecDataOperation" name="isValid" operationType="D5_SPECIFICATION" isInvariant="true">
+        <features>VALIDATOR</features>
+        <parameters name="result" lowerBound="1" upperBound="1" exchangePattern="OUT">
+          <primitiveType xsi:type="data:PrimitiveBoolean"/>
+        </parameters>
+        <ownedRules name="Leg must be defined for 'TRANSPORT' event">
+          <expr xsi:type="behavior:BinaryExpression" lowerBound="1" upperBound="1">
+            <evaluatedPrimitiveType xsi:type="data:PrimitiveBoolean"/>
+            <operator xsi:type="behavior:Or"/>
+            <leftExpr xsi:type="behavior:BinaryExpression" lowerBound="1" upperBound="1">
+              <evaluatedPrimitiveType xsi:type="data:PrimitiveBoolean"/>
+              <operator xsi:type="behavior:Ne"/>
+              <leftExpr xsi:type="behavior:UnaryExpression" lowerBound="1" upperBound="1">
+                <evaluatedType type="//@contexts.2/@complexTypes.9">
+                  <import href="cargo.behavior#//@imports.0"/>
+                </evaluatedType>
+                <identifier name="self.type"/>
+              </leftExpr>
+              <rightExpr xsi:type="behavior:UnaryExpression" lowerBound="1" upperBound="1">
+                <evaluatedType type="//@contexts.2/@complexTypes.9">
+                  <import href="cargo.behavior#//@imports.0"/>
+                </evaluatedType>
+                <value xsi:type="data:EnumerationField" name="HandlingEventType::Transport"/>
+              </rightExpr>
+            </leftExpr>
+            <rightExpr xsi:type="behavior:BinaryExpression" lowerBound="1" upperBound="1">
+              <evaluatedPrimitiveType xsi:type="data:PrimitiveBoolean"/>
+              <operator xsi:type="behavior:And"/>
+              <leftExpr xsi:type="behavior:BinaryExpression" lowerBound="1" upperBound="1">
+                <evaluatedPrimitiveType xsi:type="data:PrimitiveBoolean"/>
+                <operator xsi:type="behavior:Eq"/>
+                <leftExpr xsi:type="behavior:UnaryExpression" lowerBound="1" upperBound="1">
+                  <evaluatedType type="//@contexts.2/@complexTypes.9">
+                    <import href="cargo.behavior#//@imports.0"/>
+                  </evaluatedType>
+                  <identifier name="self.type"/>
+                </leftExpr>
+                <rightExpr xsi:type="behavior:UnaryExpression" lowerBound="1" upperBound="1">
+                  <evaluatedType type="//@contexts.2/@complexTypes.9">
+                    <import href="cargo.behavior#//@imports.0"/>
+                  </evaluatedType>
+                  <value xsi:type="data:EnumerationField" name="HandlingEventType::Transport"/>
+                </rightExpr>
+              </leftExpr>
+              <rightExpr xsi:type="behavior:BinaryExpression" lowerBound="1" upperBound="1">
+                <evaluatedPrimitiveType xsi:type="data:PrimitiveBoolean"/>
+                <operator xsi:type="behavior:Ne"/>
+                <leftExpr xsi:type="behavior:UnaryExpression" lowerBound="0" upperBound="1">
+                  <evaluatedType type="//@contexts.2/@complexTypes.2">
+                    <import href="cargo.behavior#//@imports.0"/>
+                  </evaluatedType>
+                  <identifier name="self.leg"/>
+                </leftExpr>
+                <rightExpr xsi:type="behavior:UnaryExpression" lowerBound="1" upperBound="1">
+                  <value xsi:type="data:PrimitiveValue"/>
+                </rightExpr>
+              </rightExpr>
+            </rightExpr>
+          </expr>
+        </ownedRules>
+        <ownedRules name="Reported time must be positive">
+          <expr xsi:type="behavior:BinaryExpression" lowerBound="1" upperBound="1">
+            <evaluatedPrimitiveType xsi:type="data:PrimitiveBoolean"/>
+            <operator xsi:type="behavior:Gt"/>
+            <leftExpr xsi:type="behavior:UnaryExpression" lowerBound="1" upperBound="1">
+              <evaluatedPrimitiveType xsi:type="data:PrimitiveInteger"/>
+              <identifier name="self.reportedTime"/>
+            </leftExpr>
+            <rightExpr xsi:type="behavior:UnaryExpression" lowerBound="1" upperBound="1">
+              <evaluatedPrimitiveType xsi:type="data:PrimitiveInteger"/>
+              <value xsi:type="data:PrimitiveValue" numericValue="0.0"/>
+            </rightExpr>
+          </expr>
+        </ownedRules>
+        <ownedRules name="Only port or voyage can be defined at a time">
+          <expr xsi:type="behavior:BinaryExpression" lowerBound="1" upperBound="1">
+            <evaluatedPrimitiveType xsi:type="data:PrimitiveBoolean"/>
+            <operator xsi:type="behavior:Or"/>
+            <leftExpr xsi:type="behavior:BinaryExpression" lowerBound="1" upperBound="1">
+              <evaluatedPrimitiveType xsi:type="data:PrimitiveBoolean"/>
+              <operator xsi:type="behavior:Ne"/>
+              <leftExpr xsi:type="behavior:UnaryExpression" lowerBound="0" upperBound="1">
+                <evaluatedType type="//@contexts.2/@complexTypes.2">
+                  <import href="cargo.behavior#//@imports.0"/>
+                </evaluatedType>
+                <identifier name="self.leg"/>
+              </leftExpr>
+              <rightExpr xsi:type="behavior:UnaryExpression" lowerBound="1" upperBound="1">
+                <value xsi:type="data:PrimitiveValue"/>
+              </rightExpr>
+            </leftExpr>
+            <rightExpr xsi:type="behavior:BinaryExpression" lowerBound="1" upperBound="1">
+              <evaluatedPrimitiveType xsi:type="data:PrimitiveBoolean"/>
+              <operator xsi:type="behavior:Ne"/>
+              <leftExpr xsi:type="behavior:UnaryExpression" lowerBound="0" upperBound="1">
+                <evaluatedType>
+                  <import href="cargo.behavior#//@imports.0"/>
+                  <type xsi:type="data:DataStructure" href="cargo.service#/1"/>
+                </evaluatedType>
+                <identifier name="self.port"/>
+              </leftExpr>
+              <rightExpr xsi:type="behavior:UnaryExpression" lowerBound="1" upperBound="1">
+                <value xsi:type="data:PrimitiveValue"/>
+              </rightExpr>
+            </rightExpr>
+          </expr>
+        </ownedRules>
+        <ownedRules name="Port must be defined for any handling event rather than 'TRANSPORT'">
+          <expr xsi:type="behavior:BinaryExpression" lowerBound="1" upperBound="1">
+            <evaluatedPrimitiveType xsi:type="data:PrimitiveBoolean"/>
+            <operator xsi:type="behavior:Or"/>
+            <leftExpr xsi:type="behavior:BinaryExpression" lowerBound="1" upperBound="1">
+              <evaluatedPrimitiveType xsi:type="data:PrimitiveBoolean"/>
+              <operator xsi:type="behavior:Eq"/>
+              <leftExpr xsi:type="behavior:UnaryExpression" lowerBound="1" upperBound="1">
+                <evaluatedType type="//@contexts.2/@complexTypes.9">
+                  <import href="cargo.behavior#//@imports.0"/>
+                </evaluatedType>
+                <identifier name="self.type"/>
+              </leftExpr>
+              <rightExpr xsi:type="behavior:UnaryExpression" lowerBound="1" upperBound="1">
+                <evaluatedType type="//@contexts.2/@complexTypes.9">
+                  <import href="cargo.behavior#//@imports.0"/>
+                </evaluatedType>
+                <value xsi:type="data:EnumerationField" name="HandlingEventType::Transport"/>
+              </rightExpr>
+            </leftExpr>
+            <rightExpr xsi:type="behavior:BinaryExpression" lowerBound="1" upperBound="1">
+              <evaluatedPrimitiveType xsi:type="data:PrimitiveBoolean"/>
+              <operator xsi:type="behavior:Ne"/>
+              <leftExpr xsi:type="behavior:UnaryExpression" lowerBound="0" upperBound="1">
+                <evaluatedType>
+                  <import href="cargo.behavior#//@imports.0"/>
+                  <type xsi:type="data:DataStructure" href="cargo.service#/1"/>
+                </evaluatedType>
+                <identifier name="self.port"/>
+              </leftExpr>
+              <rightExpr xsi:type="behavior:UnaryExpression" lowerBound="1" upperBound="1">
+                <value xsi:type="data:PrimitiveValue"/>
+              </rightExpr>
+            </rightExpr>
+          </expr>
+        </ownedRules>
+      </operations>
+    </complexTypes>
+    <complexTypes xsi:type="data:Enumeration" name="HandlingEventType">
+      <fields name="Receive"/>
+      <fields name="Load"/>
+      <fields name="Unload"/>
+      <fields name="Transport"/>
+      <fields name="Customs"/>
+      <fields name="Clear"/>
+      <fields name="Deliver"/>
+    </complexTypes>
+    <complexTypes xsi:type="data:Enumeration" name="TransportStatus">
+      <fields name="Unreceived"/>
+      <fields name="Received"/>
+      <fields name="Ready"/>
+      <fields name="Loaded"/>
+      <fields name="OnPath"/>
+      <fields name="Unloaded"/>
+      <fields name="InCustoms"/>
+      <fields name="Cleared"/>
+      <fields name="Delivered"/>
+      <fields name="Mishandled"/>
+    </complexTypes>
+    <complexTypes xsi:type="data:DataStructure" name="Cargo">
+      <features>ENTITY</features>
+      <features>AGGREGATE</features>
+      <dataFields name="role" lowerBound="1" upperBound="1" complexType="//@contexts.2/@complexTypes.4"/>
+      <dataFields name="status" lowerBound="1" upperBound="1" complexType="//@contexts.2/@complexTypes.10">
+        <features>NEVER_EMPTY</features>
+      </dataFields>
+      <dataFields name="itinerary" lowerBound="0" upperBound="-1" complexType="//@contexts.2/@complexTypes.1"/>
+      <dataFields name="trackingId" lowerBound="1" upperBound="1">
+        <primitiveType xsi:type="data:PrimitiveInteger"/>
+        <features>IDENTIFIER</features>
+        <features>NEVER_EMPTY</features>
+      </dataFields>
+      <dataFields name="history" lowerBound="0" upperBound="1" complexType="//@contexts.2/@complexTypes.3">
+        <features>PART</features>
+      </dataFields>
+      <dataFields name="goal" lowerBound="1" upperBound="1" complexType="//@contexts.2/@complexTypes.7"/>
+      <operations name="setStatusByEvent" operationType="D2_COMPOUND_MUTATOR">
+        <parameters name="event" lowerBound="1" upperBound="1" complexType="//@contexts.2/@complexTypes.8"/>
+        <parameters name="self" lowerBound="1" upperBound="1" complexType="//@contexts.2/@complexTypes.11"/>
+      </operations>
+      <operations name="cargo">
+        <parameters name="goal" lowerBound="1" upperBound="1" complexType="//@contexts.2/@complexTypes.7"/>
+        <parameters name="status" lowerBound="1" upperBound="1" complexType="//@contexts.2/@complexTypes.10"/>
+        <parameters name="self" lowerBound="1" upperBound="1" exchangePattern="OUT" complexType="//@contexts.2/@complexTypes.11"/>
+        <parameters name="history" lowerBound="0" upperBound="1" complexType="//@contexts.2/@complexTypes.3"/>
+        <parameters name="role" lowerBound="1" upperBound="1" complexType="//@contexts.2/@complexTypes.4"/>
+      </operations>
+      <operations xsi:type="behavior:SpecDataOperation" name="isValid" operationType="D5_SPECIFICATION" isInvariant="true">
+        <features>VALIDATOR</features>
+        <parameters name="result" lowerBound="1" upperBound="1" exchangePattern="OUT">
+          <primitiveType xsi:type="data:PrimitiveBoolean"/>
+        </parameters>
+        <parameters name="self" lowerBound="1" upperBound="1" complexType="//@contexts.2/@complexTypes.11"/>
+        <ownedRules name="Once ready, cargo must always be routed">
+          <expr xsi:type="behavior:BinaryExpression" lowerBound="1" upperBound="1">
+            <evaluatedPrimitiveType xsi:type="data:PrimitiveBoolean"/>
+            <operator xsi:type="behavior:Or"/>
+            <leftExpr xsi:type="behavior:BinaryExpression" lowerBound="1" upperBound="1">
+              <evaluatedPrimitiveType xsi:type="data:PrimitiveBoolean"/>
+              <operator xsi:type="behavior:Or"/>
+              <leftExpr xsi:type="behavior:BinaryExpression" lowerBound="1" upperBound="1">
+                <evaluatedPrimitiveType xsi:type="data:PrimitiveBoolean"/>
+                <operator xsi:type="behavior:Or"/>
+                <leftExpr xsi:type="behavior:BinaryExpression" lowerBound="1" upperBound="1">
+                  <evaluatedPrimitiveType xsi:type="data:PrimitiveBoolean"/>
+                  <operator xsi:type="behavior:Eq"/>
+                  <leftExpr xsi:type="behavior:UnaryExpression" lowerBound="1" upperBound="1">
+                    <evaluatedType type="//@contexts.2/@complexTypes.10">
+                      <import href="cargo.behavior#//@imports.0"/>
+                    </evaluatedType>
+                    <identifier name="self.status"/>
+                  </leftExpr>
+                  <rightExpr xsi:type="behavior:UnaryExpression" lowerBound="1" upperBound="1">
+                    <evaluatedType type="//@contexts.2/@complexTypes.10">
+                      <import href="cargo.behavior#//@imports.0"/>
+                    </evaluatedType>
+                    <value xsi:type="data:EnumerationField" name="TransportStatus::Unreceived"/>
+                  </rightExpr>
+                </leftExpr>
+                <rightExpr xsi:type="behavior:BinaryExpression" lowerBound="1" upperBound="1">
+                  <evaluatedPrimitiveType xsi:type="data:PrimitiveBoolean"/>
+                  <operator xsi:type="behavior:Eq"/>
+                  <leftExpr xsi:type="behavior:UnaryExpression" lowerBound="1" upperBound="1">
+                    <evaluatedType type="//@contexts.2/@complexTypes.10">
+                      <import href="cargo.behavior#//@imports.0"/>
+                    </evaluatedType>
+                    <identifier name="self.status"/>
+                  </leftExpr>
+                  <rightExpr xsi:type="behavior:UnaryExpression" lowerBound="1" upperBound="1">
+                    <evaluatedType type="//@contexts.2/@complexTypes.10">
+                      <import href="cargo.behavior#//@imports.0"/>
+                    </evaluatedType>
+                    <value xsi:type="data:EnumerationField" name="TransportStatus::Received"/>
+                  </rightExpr>
+                </rightExpr>
+              </leftExpr>
+              <rightExpr xsi:type="behavior:BinaryExpression" lowerBound="1" upperBound="1">
+                <evaluatedPrimitiveType xsi:type="data:PrimitiveBoolean"/>
+                <operator xsi:type="behavior:Eq"/>
+                <leftExpr xsi:type="behavior:UnaryExpression" lowerBound="1" upperBound="1">
+                  <evaluatedType type="//@contexts.2/@complexTypes.10">
+                    <import href="cargo.behavior#//@imports.0"/>
+                  </evaluatedType>
+                  <identifier name="self.status"/>
+                </leftExpr>
+                <rightExpr xsi:type="behavior:UnaryExpression" lowerBound="1" upperBound="1">
+                  <evaluatedType type="//@contexts.2/@complexTypes.10">
+                    <import href="cargo.behavior#//@imports.0"/>
+                  </evaluatedType>
+                  <value xsi:type="data:EnumerationField" name="TransportStatus::Mishandled"/>
+                </rightExpr>
+              </rightExpr>
+            </leftExpr>
+            <rightExpr xsi:type="behavior:BinaryExpression" lowerBound="1" upperBound="1">
+              <evaluatedPrimitiveType xsi:type="data:PrimitiveBoolean"/>
+              <operator xsi:type="behavior:Ne"/>
+              <leftExpr xsi:type="behavior:UnaryExpression" lowerBound="0" upperBound="-1">
+                <evaluatedType>
+                  <import href="cargo.behavior#//@imports.0"/>
+                  <type xsi:type="data:CollectionType" href="cargo.service#/2"/>
+                </evaluatedType>
+                <identifier name="self.itinerary"/>
+              </leftExpr>
+              <rightExpr xsi:type="behavior:UnaryExpression" lowerBound="1" upperBound="1">
+                <value xsi:type="data:PrimitiveValue"/>
+              </rightExpr>
+            </rightExpr>
+          </expr>
+        </ownedRules>
+      </operations>
+      <operations xsi:type="behavior:SpecDataOperation" name="validateEvent" operationType="D5_SPECIFICATION">
+        <features>VALIDATOR</features>
+        <parameters name="self" lowerBound="1" upperBound="1" complexType="//@contexts.2/@complexTypes.11"/>
+        <parameters name="event" lowerBound="1" upperBound="1" complexType="//@contexts.2/@complexTypes.8"/>
+        <parameters name="result" lowerBound="1" upperBound="1" exchangePattern="OUT">
+          <primitiveType xsi:type="data:PrimitiveBoolean"/>
+        </parameters>
+        <ownedRules name="Current is UNRECEIVED. Only allow RECEIVE event">
+          <expr xsi:type="behavior:BinaryExpression" lowerBound="1" upperBound="1">
+            <evaluatedPrimitiveType xsi:type="data:PrimitiveBoolean"/>
+            <operator xsi:type="behavior:Or"/>
+            <leftExpr xsi:type="behavior:BinaryExpression" lowerBound="1" upperBound="1">
+              <evaluatedPrimitiveType xsi:type="data:PrimitiveBoolean"/>
+              <operator xsi:type="behavior:Ne"/>
+              <leftExpr xsi:type="behavior:UnaryExpression" lowerBound="1" upperBound="1">
+                <evaluatedType type="//@contexts.2/@complexTypes.10">
+                  <import href="cargo.behavior#//@imports.0"/>
+                </evaluatedType>
+                <identifier name="self.status"/>
+              </leftExpr>
+              <rightExpr xsi:type="behavior:UnaryExpression" lowerBound="1" upperBound="1">
+                <evaluatedType type="//@contexts.2/@complexTypes.10">
+                  <import href="cargo.behavior#//@imports.0"/>
+                </evaluatedType>
+                <value xsi:type="data:EnumerationField" name="TransportStatus::Unreceived"/>
+              </rightExpr>
+            </leftExpr>
+            <rightExpr xsi:type="behavior:BinaryExpression" lowerBound="1" upperBound="1">
+              <evaluatedPrimitiveType xsi:type="data:PrimitiveBoolean"/>
+              <operator xsi:type="behavior:And"/>
+              <leftExpr xsi:type="behavior:BinaryExpression" lowerBound="1" upperBound="1">
+                <evaluatedPrimitiveType xsi:type="data:PrimitiveBoolean"/>
+                <operator xsi:type="behavior:Eq"/>
+                <leftExpr xsi:type="behavior:UnaryExpression" lowerBound="1" upperBound="1">
+                  <evaluatedType type="//@contexts.2/@complexTypes.10">
+                    <import href="cargo.behavior#//@imports.0"/>
+                  </evaluatedType>
+                  <identifier name="self.status"/>
+                </leftExpr>
+                <rightExpr xsi:type="behavior:UnaryExpression" lowerBound="1" upperBound="1">
+                  <evaluatedType type="//@contexts.2/@complexTypes.10">
+                    <import href="cargo.behavior#//@imports.0"/>
+                  </evaluatedType>
+                  <value xsi:type="data:EnumerationField" name="TransportStatus::Unreceived"/>
+                </rightExpr>
+              </leftExpr>
+              <rightExpr xsi:type="behavior:BinaryExpression" lowerBound="1" upperBound="1">
+                <evaluatedPrimitiveType xsi:type="data:PrimitiveBoolean"/>
+                <operator xsi:type="behavior:Eq"/>
+                <leftExpr xsi:type="behavior:UnaryExpression" lowerBound="1" upperBound="1">
+                  <evaluatedType type="//@contexts.2/@complexTypes.9">
+                    <import href="cargo.behavior#//@imports.0"/>
+                  </evaluatedType>
+                  <identifier name="event.type"/>
+                </leftExpr>
+                <rightExpr xsi:type="behavior:UnaryExpression" lowerBound="1" upperBound="1">
+                  <evaluatedType type="//@contexts.2/@complexTypes.9">
+                    <import href="cargo.behavior#//@imports.0"/>
+                  </evaluatedType>
+                  <value xsi:type="data:EnumerationField" name="HandlingEventType::Receive"/>
+                </rightExpr>
+              </rightExpr>
+            </rightExpr>
+          </expr>
+        </ownedRules>
+        <ownedRules name="Current is RECEIVED. Do not allow any futher event until the cargo is ROUTED">
+          <expr xsi:type="behavior:BinaryExpression" lowerBound="1" upperBound="1">
+            <evaluatedPrimitiveType xsi:type="data:PrimitiveBoolean"/>
+            <operator xsi:type="behavior:Or"/>
+            <leftExpr xsi:type="behavior:BinaryExpression" lowerBound="1" upperBound="1">
+              <evaluatedPrimitiveType xsi:type="data:PrimitiveBoolean"/>
+              <operator xsi:type="behavior:Ne"/>
+              <leftExpr xsi:type="behavior:UnaryExpression" lowerBound="1" upperBound="1">
+                <evaluatedType type="//@contexts.2/@complexTypes.10">
+                  <import href="cargo.behavior#//@imports.0"/>
+                </evaluatedType>
+                <identifier name="self.status"/>
+              </leftExpr>
+              <rightExpr xsi:type="behavior:UnaryExpression" lowerBound="1" upperBound="1">
+                <evaluatedType type="//@contexts.2/@complexTypes.10">
+                  <import href="cargo.behavior#//@imports.0"/>
+                </evaluatedType>
+                <value xsi:type="data:EnumerationField" name="TransportStatus::Received"/>
+              </rightExpr>
+            </leftExpr>
+            <rightExpr xsi:type="behavior:BinaryExpression" lowerBound="1" upperBound="1">
+              <evaluatedPrimitiveType xsi:type="data:PrimitiveBoolean"/>
+              <operator xsi:type="behavior:And"/>
+              <leftExpr xsi:type="behavior:BinaryExpression" lowerBound="1" upperBound="1">
+                <evaluatedPrimitiveType xsi:type="data:PrimitiveBoolean"/>
+                <operator xsi:type="behavior:Eq"/>
+                <leftExpr xsi:type="behavior:UnaryExpression" lowerBound="1" upperBound="1">
+                  <evaluatedType type="//@contexts.2/@complexTypes.10">
+                    <import href="cargo.behavior#//@imports.0"/>
+                  </evaluatedType>
+                  <identifier name="self.status"/>
+                </leftExpr>
+                <rightExpr xsi:type="behavior:UnaryExpression" lowerBound="1" upperBound="1">
+                  <evaluatedType type="//@contexts.2/@complexTypes.10">
+                    <import href="cargo.behavior#//@imports.0"/>
+                  </evaluatedType>
+                  <value xsi:type="data:EnumerationField" name="TransportStatus::Received"/>
+                </rightExpr>
+              </leftExpr>
+              <rightExpr xsi:type="behavior:UnaryExpression" lowerBound="1" upperBound="1">
+                <evaluatedPrimitiveType xsi:type="data:PrimitiveBoolean"/>
+                <value xsi:type="data:PrimitiveValue" booleanValue="false"/>
+              </rightExpr>
+            </rightExpr>
+          </expr>
+        </ownedRules>
+        <ownedRules name="Current is READY. Only allow LOAD event">
+          <expr xsi:type="behavior:BinaryExpression" lowerBound="1" upperBound="1">
+            <evaluatedPrimitiveType xsi:type="data:PrimitiveBoolean"/>
+            <operator xsi:type="behavior:Or"/>
+            <leftExpr xsi:type="behavior:BinaryExpression" lowerBound="1" upperBound="1">
+              <evaluatedPrimitiveType xsi:type="data:PrimitiveBoolean"/>
+              <operator xsi:type="behavior:Ne"/>
+              <leftExpr xsi:type="behavior:UnaryExpression" lowerBound="1" upperBound="1">
+                <evaluatedType type="//@contexts.2/@complexTypes.10">
+                  <import href="cargo.behavior#//@imports.0"/>
+                </evaluatedType>
+                <identifier name="self.status"/>
+              </leftExpr>
+              <rightExpr xsi:type="behavior:UnaryExpression" lowerBound="1" upperBound="1">
+                <evaluatedType type="//@contexts.2/@complexTypes.10">
+                  <import href="cargo.behavior#//@imports.0"/>
+                </evaluatedType>
+                <value xsi:type="data:EnumerationField" name="TransportStatus::Ready"/>
+              </rightExpr>
+            </leftExpr>
+            <rightExpr xsi:type="behavior:BinaryExpression" lowerBound="1" upperBound="1">
+              <evaluatedPrimitiveType xsi:type="data:PrimitiveBoolean"/>
+              <operator xsi:type="behavior:And"/>
+              <leftExpr xsi:type="behavior:BinaryExpression" lowerBound="1" upperBound="1">
+                <evaluatedPrimitiveType xsi:type="data:PrimitiveBoolean"/>
+                <operator xsi:type="behavior:Eq"/>
+                <leftExpr xsi:type="behavior:UnaryExpression" lowerBound="1" upperBound="1">
+                  <evaluatedType type="//@contexts.2/@complexTypes.10">
+                    <import href="cargo.behavior#//@imports.0"/>
+                  </evaluatedType>
+                  <identifier name="self.status"/>
+                </leftExpr>
+                <rightExpr xsi:type="behavior:UnaryExpression" lowerBound="1" upperBound="1">
+                  <evaluatedType type="//@contexts.2/@complexTypes.10">
+                    <import href="cargo.behavior#//@imports.0"/>
+                  </evaluatedType>
+                  <value xsi:type="data:EnumerationField" name="TransportStatus::Ready"/>
+                </rightExpr>
+              </leftExpr>
+              <rightExpr xsi:type="behavior:BinaryExpression" lowerBound="1" upperBound="1">
+                <evaluatedPrimitiveType xsi:type="data:PrimitiveBoolean"/>
+                <operator xsi:type="behavior:Eq"/>
+                <leftExpr xsi:type="behavior:UnaryExpression" lowerBound="1" upperBound="1">
+                  <evaluatedType type="//@contexts.2/@complexTypes.9">
+                    <import href="cargo.behavior#//@imports.0"/>
+                  </evaluatedType>
+                  <identifier name="event.type"/>
+                </leftExpr>
+                <rightExpr xsi:type="behavior:UnaryExpression" lowerBound="1" upperBound="1">
+                  <evaluatedType type="//@contexts.2/@complexTypes.9">
+                    <import href="cargo.behavior#//@imports.0"/>
+                  </evaluatedType>
+                  <value xsi:type="data:EnumerationField" name="HandlingEventType::Load"/>
+                </rightExpr>
+              </rightExpr>
+            </rightExpr>
+          </expr>
+        </ownedRules>
+        <ownedRules name="Current is LOADED. Only allow TRANSPORT event if the movement is valid">
+          <expr xsi:type="behavior:BinaryExpression" lowerBound="1" upperBound="1">
+            <evaluatedPrimitiveType xsi:type="data:PrimitiveBoolean"/>
+            <operator xsi:type="behavior:Or"/>
+            <leftExpr xsi:type="behavior:BinaryExpression" lowerBound="1" upperBound="1">
+              <evaluatedPrimitiveType xsi:type="data:PrimitiveBoolean"/>
+              <operator xsi:type="behavior:Ne"/>
+              <leftExpr xsi:type="behavior:UnaryExpression" lowerBound="1" upperBound="1">
+                <evaluatedType type="//@contexts.2/@complexTypes.10">
+                  <import href="cargo.behavior#//@imports.0"/>
+                </evaluatedType>
+                <identifier name="self.status"/>
+              </leftExpr>
+              <rightExpr xsi:type="behavior:UnaryExpression" lowerBound="1" upperBound="1">
+                <evaluatedType type="//@contexts.2/@complexTypes.10">
+                  <import href="cargo.behavior#//@imports.0"/>
+                </evaluatedType>
+                <value xsi:type="data:EnumerationField" name="TransportStatus::Loaded"/>
+              </rightExpr>
+            </leftExpr>
+            <rightExpr xsi:type="behavior:BinaryExpression" lowerBound="1" upperBound="1">
+              <evaluatedPrimitiveType xsi:type="data:PrimitiveBoolean"/>
+              <operator xsi:type="behavior:And"/>
+              <leftExpr xsi:type="behavior:BinaryExpression" lowerBound="1" upperBound="1">
+                <evaluatedPrimitiveType xsi:type="data:PrimitiveBoolean"/>
+                <operator xsi:type="behavior:Eq"/>
+                <leftExpr xsi:type="behavior:UnaryExpression" lowerBound="1" upperBound="1">
+                  <evaluatedType type="//@contexts.2/@complexTypes.10">
+                    <import href="cargo.behavior#//@imports.0"/>
+                  </evaluatedType>
+                  <identifier name="self.status"/>
+                </leftExpr>
+                <rightExpr xsi:type="behavior:UnaryExpression" lowerBound="1" upperBound="1">
+                  <evaluatedType type="//@contexts.2/@complexTypes.10">
+                    <import href="cargo.behavior#//@imports.0"/>
+                  </evaluatedType>
+                  <value xsi:type="data:EnumerationField" name="TransportStatus::Loaded"/>
+                </rightExpr>
+              </leftExpr>
+              <rightExpr xsi:type="behavior:BinaryExpression" lowerBound="1" upperBound="1">
+                <evaluatedPrimitiveType xsi:type="data:PrimitiveBoolean"/>
+                <operator xsi:type="behavior:Eq"/>
+                <leftExpr xsi:type="behavior:UnaryExpression" lowerBound="1" upperBound="1">
+                  <evaluatedType type="//@contexts.2/@complexTypes.9">
+                    <import href="cargo.behavior#//@imports.0"/>
+                  </evaluatedType>
+                  <identifier name="event.type"/>
+                </leftExpr>
+                <rightExpr xsi:type="behavior:UnaryExpression" lowerBound="1" upperBound="1">
+                  <evaluatedType type="//@contexts.2/@complexTypes.9">
+                    <import href="cargo.behavior#//@imports.0"/>
+                  </evaluatedType>
+                  <value xsi:type="data:EnumerationField" name="HandlingEventType::Transport"/>
+                </rightExpr>
+              </rightExpr>
+            </rightExpr>
+          </expr>
+        </ownedRules>
+        <ownedRules name="Current is ON_PATH. Only allow UNLOAD event at port in the itinerary">
+          <expr xsi:type="behavior:BinaryExpression" lowerBound="1" upperBound="1">
+            <evaluatedPrimitiveType xsi:type="data:PrimitiveBoolean"/>
+            <operator xsi:type="behavior:Or"/>
+            <leftExpr xsi:type="behavior:BinaryExpression" lowerBound="1" upperBound="1">
+              <evaluatedPrimitiveType xsi:type="data:PrimitiveBoolean"/>
+              <operator xsi:type="behavior:Ne"/>
+              <leftExpr xsi:type="behavior:UnaryExpression" lowerBound="1" upperBound="1">
+                <evaluatedType type="//@contexts.2/@complexTypes.10">
+                  <import href="cargo.behavior#//@imports.0"/>
+                </evaluatedType>
+                <identifier name="self.status"/>
+              </leftExpr>
+              <rightExpr xsi:type="behavior:UnaryExpression" lowerBound="1" upperBound="1">
+                <evaluatedType type="//@contexts.2/@complexTypes.10">
+                  <import href="cargo.behavior#//@imports.0"/>
+                </evaluatedType>
+                <value xsi:type="data:EnumerationField" name="TransportStatus::OnPath"/>
+              </rightExpr>
+            </leftExpr>
+            <rightExpr xsi:type="behavior:BinaryExpression" lowerBound="1" upperBound="1">
+              <evaluatedPrimitiveType xsi:type="data:PrimitiveBoolean"/>
+              <operator xsi:type="behavior:And"/>
+              <leftExpr xsi:type="behavior:BinaryExpression" lowerBound="1" upperBound="1">
+                <evaluatedPrimitiveType xsi:type="data:PrimitiveBoolean"/>
+                <operator xsi:type="behavior:And"/>
+                <leftExpr xsi:type="behavior:BinaryExpression" lowerBound="1" upperBound="1">
+                  <evaluatedPrimitiveType xsi:type="data:PrimitiveBoolean"/>
+                  <operator xsi:type="behavior:Eq"/>
+                  <leftExpr xsi:type="behavior:UnaryExpression" lowerBound="1" upperBound="1">
+                    <evaluatedType type="//@contexts.2/@complexTypes.10">
+                      <import href="cargo.behavior#//@imports.0"/>
+                    </evaluatedType>
+                    <identifier name="self.status"/>
+                  </leftExpr>
+                  <rightExpr xsi:type="behavior:UnaryExpression" lowerBound="1" upperBound="1">
+                    <evaluatedType type="//@contexts.2/@complexTypes.10">
+                      <import href="cargo.behavior#//@imports.0"/>
+                    </evaluatedType>
+                    <value xsi:type="data:EnumerationField" name="TransportStatus::OnPath"/>
+                  </rightExpr>
+                </leftExpr>
+                <rightExpr xsi:type="behavior:BinaryExpression" lowerBound="1" upperBound="1">
+                  <evaluatedPrimitiveType xsi:type="data:PrimitiveBoolean"/>
+                  <operator xsi:type="behavior:Eq"/>
+                  <leftExpr xsi:type="behavior:UnaryExpression" lowerBound="1" upperBound="1">
+                    <evaluatedType type="//@contexts.2/@complexTypes.9">
+                      <import href="cargo.behavior#//@imports.0"/>
+                    </evaluatedType>
+                    <identifier name="event.type"/>
+                  </leftExpr>
+                  <rightExpr xsi:type="behavior:UnaryExpression" lowerBound="1" upperBound="1">
+                    <evaluatedType type="//@contexts.2/@complexTypes.9">
+                      <import href="cargo.behavior#//@imports.0"/>
+                    </evaluatedType>
+                    <value xsi:type="data:EnumerationField" name="HandlingEventType::Unload"/>
+                  </rightExpr>
+                </rightExpr>
+              </leftExpr>
+              <rightExpr xsi:type="behavior:BinaryExpression" lowerBound="1" upperBound="1">
+                <evaluatedPrimitiveType xsi:type="data:PrimitiveBoolean"/>
+                <operator xsi:type="behavior:In"/>
+                <leftExpr xsi:type="behavior:UnaryExpression" lowerBound="0" upperBound="1">
+                  <evaluatedType>
+                    <import href="cargo.behavior#//@imports.0"/>
+                    <type xsi:type="data:DataStructure" href="cargo.service#/1"/>
+                  </evaluatedType>
+                  <identifier name="event.port"/>
+                </leftExpr>
+                <rightExpr xsi:type="behavior:UnaryExpression" lowerBound="0" upperBound="-1">
+                  <evaluatedType>
+                    <import href="cargo.behavior#//@imports.0"/>
+                    <type xsi:type="data:CollectionType" href="cargo.service#/2"/>
+                  </evaluatedType>
+                  <identifier name="self.itinerary"/>
+                </rightExpr>
+              </rightExpr>
+            </rightExpr>
+          </expr>
+        </ownedRules>
+        <ownedRules name="Current is UNLOADED. Only allow LOAD event if port is not the destination">
+          <expr xsi:type="behavior:BinaryExpression" lowerBound="1" upperBound="1">
+            <evaluatedPrimitiveType xsi:type="data:PrimitiveBoolean"/>
+            <operator xsi:type="behavior:Or"/>
+            <leftExpr xsi:type="behavior:BinaryExpression" lowerBound="1" upperBound="1">
+              <evaluatedPrimitiveType xsi:type="data:PrimitiveBoolean"/>
+              <operator xsi:type="behavior:Ne"/>
+              <leftExpr xsi:type="behavior:UnaryExpression" lowerBound="1" upperBound="1">
+                <evaluatedType type="//@contexts.2/@complexTypes.10">
+                  <import href="cargo.behavior#//@imports.0"/>
+                </evaluatedType>
+                <identifier name="self.status"/>
+              </leftExpr>
+              <rightExpr xsi:type="behavior:UnaryExpression" lowerBound="1" upperBound="1">
+                <evaluatedType type="//@contexts.2/@complexTypes.10">
+                  <import href="cargo.behavior#//@imports.0"/>
+                </evaluatedType>
+                <value xsi:type="data:EnumerationField" name="TransportStatus::Unloaded"/>
+              </rightExpr>
+            </leftExpr>
+            <rightExpr xsi:type="behavior:BinaryExpression" lowerBound="1" upperBound="1">
+              <evaluatedPrimitiveType xsi:type="data:PrimitiveBoolean"/>
+              <operator xsi:type="behavior:And"/>
+              <leftExpr xsi:type="behavior:BinaryExpression" lowerBound="1" upperBound="1">
+                <evaluatedPrimitiveType xsi:type="data:PrimitiveBoolean"/>
+                <operator xsi:type="behavior:And"/>
+                <leftExpr xsi:type="behavior:BinaryExpression" lowerBound="1" upperBound="1">
+                  <evaluatedPrimitiveType xsi:type="data:PrimitiveBoolean"/>
+                  <operator xsi:type="behavior:Eq"/>
+                  <leftExpr xsi:type="behavior:UnaryExpression" lowerBound="1" upperBound="1">
+                    <evaluatedType type="//@contexts.2/@complexTypes.10">
+                      <import href="cargo.behavior#//@imports.0"/>
+                    </evaluatedType>
+                    <identifier name="self.status"/>
+                  </leftExpr>
+                  <rightExpr xsi:type="behavior:UnaryExpression" lowerBound="1" upperBound="1">
+                    <evaluatedType type="//@contexts.2/@complexTypes.10">
+                      <import href="cargo.behavior#//@imports.0"/>
+                    </evaluatedType>
+                    <value xsi:type="data:EnumerationField" name="TransportStatus::Unloaded"/>
+                  </rightExpr>
+                </leftExpr>
+                <rightExpr xsi:type="behavior:BinaryExpression" lowerBound="1" upperBound="1">
+                  <evaluatedPrimitiveType xsi:type="data:PrimitiveBoolean"/>
+                  <operator xsi:type="behavior:Eq"/>
+                  <leftExpr xsi:type="behavior:UnaryExpression" lowerBound="1" upperBound="1">
+                    <evaluatedType type="//@contexts.2/@complexTypes.9">
+                      <import href="cargo.behavior#//@imports.0"/>
+                    </evaluatedType>
+                    <identifier name="event.type"/>
+                  </leftExpr>
+                  <rightExpr xsi:type="behavior:UnaryExpression" lowerBound="1" upperBound="1">
+                    <evaluatedType type="//@contexts.2/@complexTypes.9">
+                      <import href="cargo.behavior#//@imports.0"/>
+                    </evaluatedType>
+                    <value xsi:type="data:EnumerationField" name="HandlingEventType::Load"/>
+                  </rightExpr>
+                </rightExpr>
+              </leftExpr>
+              <rightExpr xsi:type="behavior:BinaryExpression" lowerBound="1" upperBound="1">
+                <evaluatedPrimitiveType xsi:type="data:PrimitiveBoolean"/>
+                <operator xsi:type="behavior:Ne"/>
+                <leftExpr xsi:type="behavior:UnaryExpression" lowerBound="0" upperBound="1">
+                  <evaluatedType>
+                    <import href="cargo.behavior#//@imports.0"/>
+                    <type xsi:type="data:DataStructure" href="cargo.service#/1"/>
+                  </evaluatedType>
+                  <identifier name="event.port"/>
+                </leftExpr>
+                <rightExpr xsi:type="behavior:UnaryExpression" lowerBound="1" upperBound="1">
+                  <evaluatedType>
+                    <import href="cargo.behavior#//@imports.0"/>
+                    <type xsi:type="data:DataStructure" href="cargo.service#/1"/>
+                  </evaluatedType>
+                  <identifier name="self.goal.delivery.destination"/>
+                </rightExpr>
+              </rightExpr>
+            </rightExpr>
+          </expr>
+        </ownedRules>
+        <ownedRules name="Current is UNLOADED. Only allow CUSTOMS event if port is the destination">
+          <expr xsi:type="behavior:BinaryExpression" lowerBound="1" upperBound="1">
+            <evaluatedPrimitiveType xsi:type="data:PrimitiveBoolean"/>
+            <operator xsi:type="behavior:Or"/>
+            <leftExpr xsi:type="behavior:BinaryExpression" lowerBound="1" upperBound="1">
+              <evaluatedPrimitiveType xsi:type="data:PrimitiveBoolean"/>
+              <operator xsi:type="behavior:Ne"/>
+              <leftExpr xsi:type="behavior:UnaryExpression" lowerBound="1" upperBound="1">
+                <evaluatedType type="//@contexts.2/@complexTypes.10">
+                  <import href="cargo.behavior#//@imports.0"/>
+                </evaluatedType>
+                <identifier name="self.status"/>
+              </leftExpr>
+              <rightExpr xsi:type="behavior:UnaryExpression" lowerBound="1" upperBound="1">
+                <evaluatedType type="//@contexts.2/@complexTypes.10">
+                  <import href="cargo.behavior#//@imports.0"/>
+                </evaluatedType>
+                <value xsi:type="data:EnumerationField" name="TransportStatus::Unloaded"/>
+              </rightExpr>
+            </leftExpr>
+            <rightExpr xsi:type="behavior:BinaryExpression" lowerBound="1" upperBound="1">
+              <evaluatedPrimitiveType xsi:type="data:PrimitiveBoolean"/>
+              <operator xsi:type="behavior:And"/>
+              <leftExpr xsi:type="behavior:BinaryExpression" lowerBound="1" upperBound="1">
+                <evaluatedPrimitiveType xsi:type="data:PrimitiveBoolean"/>
+                <operator xsi:type="behavior:And"/>
+                <leftExpr xsi:type="behavior:BinaryExpression" lowerBound="1" upperBound="1">
+                  <evaluatedPrimitiveType xsi:type="data:PrimitiveBoolean"/>
+                  <operator xsi:type="behavior:Eq"/>
+                  <leftExpr xsi:type="behavior:UnaryExpression" lowerBound="1" upperBound="1">
+                    <evaluatedType type="//@contexts.2/@complexTypes.10">
+                      <import href="cargo.behavior#//@imports.0"/>
+                    </evaluatedType>
+                    <identifier name="self.status"/>
+                  </leftExpr>
+                  <rightExpr xsi:type="behavior:UnaryExpression" lowerBound="1" upperBound="1">
+                    <evaluatedType type="//@contexts.2/@complexTypes.10">
+                      <import href="cargo.behavior#//@imports.0"/>
+                    </evaluatedType>
+                    <value xsi:type="data:EnumerationField" name="TransportStatus::Unloaded"/>
+                  </rightExpr>
+                </leftExpr>
+                <rightExpr xsi:type="behavior:BinaryExpression" lowerBound="1" upperBound="1">
+                  <evaluatedPrimitiveType xsi:type="data:PrimitiveBoolean"/>
+                  <operator xsi:type="behavior:Eq"/>
+                  <leftExpr xsi:type="behavior:UnaryExpression" lowerBound="1" upperBound="1">
+                    <evaluatedType type="//@contexts.2/@complexTypes.9">
+                      <import href="cargo.behavior#//@imports.0"/>
+                    </evaluatedType>
+                    <identifier name="event.type"/>
+                  </leftExpr>
+                  <rightExpr xsi:type="behavior:UnaryExpression" lowerBound="1" upperBound="1">
+                    <evaluatedType type="//@contexts.2/@complexTypes.9">
+                      <import href="cargo.behavior#//@imports.0"/>
+                    </evaluatedType>
+                    <value xsi:type="data:EnumerationField" name="HandlingEventType::Customs"/>
+                  </rightExpr>
+                </rightExpr>
+              </leftExpr>
+              <rightExpr xsi:type="behavior:BinaryExpression" lowerBound="1" upperBound="1">
+                <evaluatedPrimitiveType xsi:type="data:PrimitiveBoolean"/>
+                <operator xsi:type="behavior:Eq"/>
+                <leftExpr xsi:type="behavior:UnaryExpression" lowerBound="0" upperBound="1">
+                  <evaluatedType>
+                    <import href="cargo.behavior#//@imports.0"/>
+                    <type xsi:type="data:DataStructure" href="cargo.service#/1"/>
+                  </evaluatedType>
+                  <identifier name="event.port"/>
+                </leftExpr>
+                <rightExpr xsi:type="behavior:UnaryExpression" lowerBound="1" upperBound="1">
+                  <evaluatedType>
+                    <import href="cargo.behavior#//@imports.0"/>
+                    <type xsi:type="data:DataStructure" href="cargo.service#/1"/>
+                  </evaluatedType>
+                  <identifier name="self.goal.delivery.destination"/>
+                </rightExpr>
+              </rightExpr>
+            </rightExpr>
+          </expr>
+        </ownedRules>
+        <ownedRules name="Current is IN_CUSTOMS. Only allow CLEAR event ">
+          <expr xsi:type="behavior:BinaryExpression" lowerBound="1" upperBound="1">
+            <evaluatedPrimitiveType xsi:type="data:PrimitiveBoolean"/>
+            <operator xsi:type="behavior:Or"/>
+            <leftExpr xsi:type="behavior:BinaryExpression" lowerBound="1" upperBound="1">
+              <evaluatedPrimitiveType xsi:type="data:PrimitiveBoolean"/>
+              <operator xsi:type="behavior:Ne"/>
+              <leftExpr xsi:type="behavior:UnaryExpression" lowerBound="1" upperBound="1">
+                <evaluatedType type="//@contexts.2/@complexTypes.10">
+                  <import href="cargo.behavior#//@imports.0"/>
+                </evaluatedType>
+                <identifier name="self.status"/>
+              </leftExpr>
+              <rightExpr xsi:type="behavior:UnaryExpression" lowerBound="1" upperBound="1">
+                <evaluatedType type="//@contexts.2/@complexTypes.10">
+                  <import href="cargo.behavior#//@imports.0"/>
+                </evaluatedType>
+                <value xsi:type="data:EnumerationField" name="TransportStatus::InCustoms"/>
+              </rightExpr>
+            </leftExpr>
+            <rightExpr xsi:type="behavior:BinaryExpression" lowerBound="1" upperBound="1">
+              <evaluatedPrimitiveType xsi:type="data:PrimitiveBoolean"/>
+              <operator xsi:type="behavior:And"/>
+              <leftExpr xsi:type="behavior:BinaryExpression" lowerBound="1" upperBound="1">
+                <evaluatedPrimitiveType xsi:type="data:PrimitiveBoolean"/>
+                <operator xsi:type="behavior:Eq"/>
+                <leftExpr xsi:type="behavior:UnaryExpression" lowerBound="1" upperBound="1">
+                  <evaluatedType type="//@contexts.2/@complexTypes.10">
+                    <import href="cargo.behavior#//@imports.0"/>
+                  </evaluatedType>
+                  <identifier name="self.status"/>
+                </leftExpr>
+                <rightExpr xsi:type="behavior:UnaryExpression" lowerBound="1" upperBound="1">
+                  <evaluatedType type="//@contexts.2/@complexTypes.10">
+                    <import href="cargo.behavior#//@imports.0"/>
+                  </evaluatedType>
+                  <value xsi:type="data:EnumerationField" name="TransportStatus::InCustoms"/>
+                </rightExpr>
+              </leftExpr>
+              <rightExpr xsi:type="behavior:BinaryExpression" lowerBound="1" upperBound="1">
+                <evaluatedPrimitiveType xsi:type="data:PrimitiveBoolean"/>
+                <operator xsi:type="behavior:Eq"/>
+                <leftExpr xsi:type="behavior:UnaryExpression" lowerBound="1" upperBound="1">
+                  <evaluatedType type="//@contexts.2/@complexTypes.9">
+                    <import href="cargo.behavior#//@imports.0"/>
+                  </evaluatedType>
+                  <identifier name="event.type"/>
+                </leftExpr>
+                <rightExpr xsi:type="behavior:UnaryExpression" lowerBound="1" upperBound="1">
+                  <evaluatedType type="//@contexts.2/@complexTypes.9">
+                    <import href="cargo.behavior#//@imports.0"/>
+                  </evaluatedType>
+                  <value xsi:type="data:EnumerationField" name="HandlingEventType::Clear"/>
+                </rightExpr>
+              </rightExpr>
+            </rightExpr>
+          </expr>
+        </ownedRules>
+        <ownedRules name="Current is CLEARED. Only allow DELIVER event ">
+          <expr xsi:type="behavior:BinaryExpression" lowerBound="1" upperBound="1">
+            <evaluatedPrimitiveType xsi:type="data:PrimitiveBoolean"/>
+            <operator xsi:type="behavior:Or"/>
+            <leftExpr xsi:type="behavior:BinaryExpression" lowerBound="1" upperBound="1">
+              <evaluatedPrimitiveType xsi:type="data:PrimitiveBoolean"/>
+              <operator xsi:type="behavior:Ne"/>
+              <leftExpr xsi:type="behavior:UnaryExpression" lowerBound="1" upperBound="1">
+                <evaluatedType type="//@contexts.2/@complexTypes.10">
+                  <import href="cargo.behavior#//@imports.0"/>
+                </evaluatedType>
+                <identifier name="self.status"/>
+              </leftExpr>
+              <rightExpr xsi:type="behavior:UnaryExpression" lowerBound="1" upperBound="1">
+                <evaluatedType type="//@contexts.2/@complexTypes.10">
+                  <import href="cargo.behavior#//@imports.0"/>
+                </evaluatedType>
+                <value xsi:type="data:EnumerationField" name="TransportStatus::Cleared"/>
+              </rightExpr>
+            </leftExpr>
+            <rightExpr xsi:type="behavior:BinaryExpression" lowerBound="1" upperBound="1">
+              <evaluatedPrimitiveType xsi:type="data:PrimitiveBoolean"/>
+              <operator xsi:type="behavior:And"/>
+              <leftExpr xsi:type="behavior:BinaryExpression" lowerBound="1" upperBound="1">
+                <evaluatedPrimitiveType xsi:type="data:PrimitiveBoolean"/>
+                <operator xsi:type="behavior:Eq"/>
+                <leftExpr xsi:type="behavior:UnaryExpression" lowerBound="1" upperBound="1">
+                  <evaluatedType type="//@contexts.2/@complexTypes.10">
+                    <import href="cargo.behavior#//@imports.0"/>
+                  </evaluatedType>
+                  <identifier name="self.status"/>
+                </leftExpr>
+                <rightExpr xsi:type="behavior:UnaryExpression" lowerBound="1" upperBound="1">
+                  <evaluatedType type="//@contexts.2/@complexTypes.10">
+                    <import href="cargo.behavior#//@imports.0"/>
+                  </evaluatedType>
+                  <value xsi:type="data:EnumerationField" name="TransportStatus::Cleared"/>
+                </rightExpr>
+              </leftExpr>
+              <rightExpr xsi:type="behavior:BinaryExpression" lowerBound="1" upperBound="1">
+                <evaluatedPrimitiveType xsi:type="data:PrimitiveBoolean"/>
+                <operator xsi:type="behavior:Eq"/>
+                <leftExpr xsi:type="behavior:UnaryExpression" lowerBound="1" upperBound="1">
+                  <evaluatedType type="//@contexts.2/@complexTypes.9">
+                    <import href="cargo.behavior#//@imports.0"/>
+                  </evaluatedType>
+                  <identifier name="event.type"/>
+                </leftExpr>
+                <rightExpr xsi:type="behavior:UnaryExpression" lowerBound="1" upperBound="1">
+                  <evaluatedType type="//@contexts.2/@complexTypes.9">
+                    <import href="cargo.behavior#//@imports.0"/>
+                  </evaluatedType>
+                  <value xsi:type="data:EnumerationField" name="HandlingEventType::Deliver"/>
+                </rightExpr>
+              </rightExpr>
+            </rightExpr>
+          </expr>
+        </ownedRules>
+        <ownedRules name="Current is DELIVERED. No event is allowed">
+          <expr xsi:type="behavior:BinaryExpression" lowerBound="1" upperBound="1">
+            <evaluatedPrimitiveType xsi:type="data:PrimitiveBoolean"/>
+            <operator xsi:type="behavior:Or"/>
+            <leftExpr xsi:type="behavior:BinaryExpression" lowerBound="1" upperBound="1">
+              <evaluatedPrimitiveType xsi:type="data:PrimitiveBoolean"/>
+              <operator xsi:type="behavior:Ne"/>
+              <leftExpr xsi:type="behavior:UnaryExpression" lowerBound="1" upperBound="1">
+                <evaluatedType type="//@contexts.2/@complexTypes.10">
+                  <import href="cargo.behavior#//@imports.0"/>
+                </evaluatedType>
+                <identifier name="self.status"/>
+              </leftExpr>
+              <rightExpr xsi:type="behavior:UnaryExpression" lowerBound="1" upperBound="1">
+                <evaluatedType type="//@contexts.2/@complexTypes.10">
+                  <import href="cargo.behavior#//@imports.0"/>
+                </evaluatedType>
+                <value xsi:type="data:EnumerationField" name="TransportStatus::Delivered"/>
+              </rightExpr>
+            </leftExpr>
+            <rightExpr xsi:type="behavior:BinaryExpression" lowerBound="1" upperBound="1">
+              <evaluatedPrimitiveType xsi:type="data:PrimitiveBoolean"/>
+              <operator xsi:type="behavior:And"/>
+              <leftExpr xsi:type="behavior:BinaryExpression" lowerBound="1" upperBound="1">
+                <evaluatedPrimitiveType xsi:type="data:PrimitiveBoolean"/>
+                <operator xsi:type="behavior:Eq"/>
+                <leftExpr xsi:type="behavior:UnaryExpression" lowerBound="1" upperBound="1">
+                  <evaluatedType type="//@contexts.2/@complexTypes.10">
+                    <import href="cargo.behavior#//@imports.0"/>
+                  </evaluatedType>
+                  <identifier name="self.status"/>
+                </leftExpr>
+                <rightExpr xsi:type="behavior:UnaryExpression" lowerBound="1" upperBound="1">
+                  <evaluatedType type="//@contexts.2/@complexTypes.10">
+                    <import href="cargo.behavior#//@imports.0"/>
+                  </evaluatedType>
+                  <value xsi:type="data:EnumerationField" name="TransportStatus::Delivered"/>
+                </rightExpr>
+              </leftExpr>
+              <rightExpr xsi:type="behavior:UnaryExpression" lowerBound="1" upperBound="1">
+                <evaluatedPrimitiveType xsi:type="data:PrimitiveBoolean"/>
+                <value xsi:type="data:PrimitiveValue" booleanValue="false"/>
+              </rightExpr>
+            </rightExpr>
+          </expr>
+        </ownedRules>
+        <ownedRules name="Current is MISHANDLED. No event is allowed">
+          <expr xsi:type="behavior:BinaryExpression" lowerBound="1" upperBound="1">
+            <evaluatedPrimitiveType xsi:type="data:PrimitiveBoolean"/>
+            <operator xsi:type="behavior:Or"/>
+            <leftExpr xsi:type="behavior:BinaryExpression" lowerBound="1" upperBound="1">
+              <evaluatedPrimitiveType xsi:type="data:PrimitiveBoolean"/>
+              <operator xsi:type="behavior:Ne"/>
+              <leftExpr xsi:type="behavior:UnaryExpression" lowerBound="1" upperBound="1">
+                <evaluatedType type="//@contexts.2/@complexTypes.10">
+                  <import href="cargo.behavior#//@imports.0"/>
+                </evaluatedType>
+                <identifier name="self.status"/>
+              </leftExpr>
+              <rightExpr xsi:type="behavior:UnaryExpression" lowerBound="1" upperBound="1">
+                <evaluatedType type="//@contexts.2/@complexTypes.10">
+                  <import href="cargo.behavior#//@imports.0"/>
+                </evaluatedType>
+                <value xsi:type="data:EnumerationField" name="TransportStatus::Mishandled"/>
+              </rightExpr>
+            </leftExpr>
+            <rightExpr xsi:type="behavior:BinaryExpression" lowerBound="1" upperBound="1">
+              <evaluatedPrimitiveType xsi:type="data:PrimitiveBoolean"/>
+              <operator xsi:type="behavior:And"/>
+              <leftExpr xsi:type="behavior:BinaryExpression" lowerBound="1" upperBound="1">
+                <evaluatedPrimitiveType xsi:type="data:PrimitiveBoolean"/>
+                <operator xsi:type="behavior:Eq"/>
+                <leftExpr xsi:type="behavior:UnaryExpression" lowerBound="1" upperBound="1">
+                  <evaluatedType type="//@contexts.2/@complexTypes.10">
+                    <import href="cargo.behavior#//@imports.0"/>
+                  </evaluatedType>
+                  <identifier name="self.status"/>
+                </leftExpr>
+                <rightExpr xsi:type="behavior:UnaryExpression" lowerBound="1" upperBound="1">
+                  <evaluatedType type="//@contexts.2/@complexTypes.10">
+                    <import href="cargo.behavior#//@imports.0"/>
+                  </evaluatedType>
+                  <value xsi:type="data:EnumerationField" name="TransportStatus::Mishandled"/>
+                </rightExpr>
+              </leftExpr>
+              <rightExpr xsi:type="behavior:UnaryExpression" lowerBound="1" upperBound="1">
+                <evaluatedPrimitiveType xsi:type="data:PrimitiveBoolean"/>
+                <value xsi:type="data:PrimitiveValue" booleanValue="false"/>
+              </rightExpr>
+            </rightExpr>
+          </expr>
+        </ownedRules>
+      </operations>
+    </complexTypes>
+    <complexTypes xsi:type="data:DataStructure" name="TrackACargoResponse">
+      <features>RESPONSE_PAYLOAD</features>
+      <dataFields name="trackingReceipt" lowerBound="0" upperBound="1" complexType="//@contexts.2/@complexTypes.6"/>
+    </complexTypes>
+    <complexTypes xsi:type="data:DataStructure" name="RouteACargoRequest">
+      <features>REQUEST_PAYLOAD</features>
+      <dataFields name="selectedItinerary" lowerBound="2" upperBound="-1" complexType="//@contexts.2/@complexTypes.1"/>
+    </complexTypes>
+    <complexTypes xsi:type="data:DataStructure" name="RouteACargoResponse">
+      <features>RESPONSE_PAYLOAD</features>
+      <dataFields name="updatedCargo" lowerBound="0" upperBound="1" complexType="//@contexts.2/@complexTypes.11"/>
+    </complexTypes>
+    <complexTypes xsi:type="data:DataStructure" name="RequestRouteCandidatesResponse">
+      <features>RESPONSE_PAYLOAD</features>
+      <dataFields name="candidates" lowerBound="0" upperBound="-1" complexType="//@contexts.3/@complexTypes.3"/>
+    </complexTypes>
+    <complexTypes xsi:type="data:DataStructure" name="ReportHandlingEventRequest">
+      <features>REQUEST_PAYLOAD</features>
+      <dataFields name="carrierMovement" lowerBound="0" upperBound="1" complexType="//@contexts.2/@complexTypes.2"/>
+      <dataFields name="reportedTime" lowerBound="1" upperBound="1">
+        <primitiveType xsi:type="data:PrimitiveInteger"/>
+      </dataFields>
+      <dataFields name="port" lowerBound="1" upperBound="1" complexType="//@contexts.2/@complexTypes.5"/>
+      <dataFields name="eventType" lowerBound="1" upperBound="1" complexType="//@contexts.2/@complexTypes.9"/>
+    </complexTypes>
+    <complexTypes xsi:type="data:DataStructure" name="ReportHandlingEventResponse">
+      <features>RESPONSE_PAYLOAD</features>
+      <dataFields name="event" lowerBound="0" upperBound="1" complexType="//@contexts.2/@complexTypes.8"/>
+    </complexTypes>
+    <complexTypes xsi:type="data:DataStructure" name="DeleteACargoResponse">
+      <features>RESPONSE_PAYLOAD</features>
+      <dataFields name="deletedCargo" lowerBound="0" upperBound="1" complexType="//@contexts.2/@complexTypes.11"/>
+    </complexTypes>
+    <complexTypes xsi:type="data:DataStructure" name="BookACargoRequest">
+      <features>REQUEST_PAYLOAD</features>
+      <dataFields name="deadline" lowerBound="1" upperBound="1">
+        <primitiveType xsi:type="data:PrimitiveInteger"/>
+      </dataFields>
+      <dataFields name="srcPort" lowerBound="1" upperBound="1">
+        <primitiveType xsi:type="data:PrimitiveInteger"/>
+      </dataFields>
+      <dataFields name="destPort" lowerBound="1" upperBound="1">
+        <primitiveType xsi:type="data:PrimitiveInteger"/>
+      </dataFields>
+      <dataFields name="customerId" lowerBound="1" upperBound="1">
+        <primitiveType xsi:type="data:PrimitiveInteger"/>
+      </dataFields>
+    </complexTypes>
+    <complexTypes xsi:type="data:DataStructure" name="BookACargoResponse">
+      <features>RESPONSE_PAYLOAD</features>
+      <dataFields name="newCargo" lowerBound="0" upperBound="1" complexType="//@contexts.2/@complexTypes.11"/>
+    </complexTypes>
+    <complexTypes xsi:type="data:DataStructure" name="CustomerNotFound">
+      <features>RUNTIME_EXCEPTION</features>
+      <dataFields name="description" lowerBound="1" upperBound="1">
+        <primitiveType xsi:type="data:PrimitiveString"/>
+        <initializationValue stringValue="Customer with given customerId is not found"/>
+      </dataFields>
+    </complexTypes>
+    <complexTypes xsi:type="data:DataStructure" name="RouteMismatch">
+      <features>RUNTIME_EXCEPTION</features>
+      <dataFields name="description" lowerBound="1" upperBound="1">
+        <primitiveType xsi:type="data:PrimitiveString"/>
+        <initializationValue stringValue="Source and/or destination of the route does not match with the delivery specification"/>
+      </dataFields>
+    </complexTypes>
+    <complexTypes xsi:type="data:DataStructure" name="CargoAlreadyRouted">
+      <features>RUNTIME_EXCEPTION</features>
+      <dataFields name="description" lowerBound="1" upperBound="1">
+        <primitiveType xsi:type="data:PrimitiveString"/>
+        <initializationValue stringValue="Cargo with given tracking Id is already routed. Cannot be re-routed."/>
+      </dataFields>
+    </complexTypes>
+    <complexTypes xsi:type="data:DataStructure" name="CargoNotFound">
+      <features>NOTFOUND_EXCEPTION</features>
+      <dataFields name="description" lowerBound="1" upperBound="1">
+        <primitiveType xsi:type="data:PrimitiveString"/>
+        <initializationValue stringValue="Cargo with given tracking Id is not found"/>
+      </dataFields>
+      <dataFields name="entity" lowerBound="1" upperBound="1"/>
+    </complexTypes>
+    <complexTypes xsi:type="data:DataStructure" name="LocationNotFound">
+      <features>RUNTIME_EXCEPTION</features>
+      <dataFields name="description" lowerBound="1" upperBound="1">
+        <primitiveType xsi:type="data:PrimitiveString"/>
+        <initializationValue stringValue="Location with given port code cannot be resolved"/>
+      </dataFields>
+    </complexTypes>
+    <complexTypes xsi:type="data:DataStructure" name="CargoIsHandled">
+      <features>RUNTIME_EXCEPTION</features>
+      <dataFields name="description" lowerBound="1" upperBound="1">
+        <primitiveType xsi:type="data:PrimitiveString"/>
+        <initializationValue stringValue="A cargo with at least a handling event cannot be deleted from the system."/>
+      </dataFields>
+    </complexTypes>
+    <complexTypes xsi:type="data:DataStructure" name="ExistsByCustomerIdResponse">
+      <features>EXTERNAL</features>
+      <dataFields name="result" lowerBound="1" upperBound="1">
+        <primitiveType xsi:type="data:PrimitiveBoolean"/>
+      </dataFields>
+    </complexTypes>
+    <complexTypes xsi:type="data:DataStructure" name="FindShortestPathRequest">
+      <features>EXTERNAL</features>
+      <dataFields name="source" lowerBound="1" upperBound="1" complexType="//@contexts.3/@complexTypes.1"/>
+      <dataFields name="destination" lowerBound="1" upperBound="1" complexType="//@contexts.3/@complexTypes.1"/>
+    </complexTypes>
+    <complexTypes xsi:type="data:DataStructure" name="FindShortestPathResponse">
+      <features>EXTERNAL</features>
+      <dataFields name="candidates" lowerBound="0" upperBound="-1" complexType="//@contexts.3/@complexTypes.3"/>
+    </complexTypes>
+    <complexTypes xsi:type="data:CollectionType" name="Itinerary">
+      <features>EXTERNAL</features>
+      <dataFields name="itinerary" complexType="//@contexts.3/@complexTypes.2"/>
+    </complexTypes>
+    <complexTypes xsi:type="data:DataStructure" name="Itinerary">
+      <features>EXTERNAL</features>
+      <dataFields name="ports" lowerBound="0" upperBound="-1" complexType="//@contexts.3/@complexTypes.0"/>
+    </complexTypes>
+    <complexTypes xsi:type="data:DataStructure" name="ExistsByPortCodeResponse">
+      <features>EXTERNAL</features>
+      <dataFields name="result" lowerBound="1" upperBound="1">
+        <primitiveType xsi:type="data:PrimitiveBoolean"/>
+      </dataFields>
+    </complexTypes>
+  </contexts>
+  <contexts name="RoutePlanning">
+    <complexTypes xsi:type="data:CollectionType" name="SharedLocation">
+      <dataFields name="sharedLocation" complexType="//@contexts.3/@complexTypes.1"/>
+    </complexTypes>
+    <complexTypes xsi:type="data:DataStructure" name="SharedLocation">
+      <features>SHARED_VALUE_OBJECT</features>
+      <dataFields name="portCode" lowerBound="1" upperBound="1">
+        <primitiveType xsi:type="data:PrimitiveInteger"/>
+        <features>NEVER_EMPTY</features>
+      </dataFields>
+    </complexTypes>
+    <complexTypes xsi:type="data:DataStructure" name="Itinerary">
+      <features>VALUE_OBJECT</features>
+      <dataFields name="ports" lowerBound="0" upperBound="-1" complexType="//@contexts.3/@complexTypes.0"/>
+    </complexTypes>
+    <complexTypes xsi:type="data:CollectionType" name="Itinerary">
+      <dataFields name="itinerary" complexType="//@contexts.3/@complexTypes.2"/>
+    </complexTypes>
+    <complexTypes xsi:type="data:DataStructure" name="FindShortestPathRequest">
+      <features>REQUEST_PAYLOAD</features>
+      <dataFields name="source" lowerBound="1" upperBound="1" complexType="//@contexts.3/@complexTypes.1"/>
+      <dataFields name="destination" lowerBound="1" upperBound="1" complexType="//@contexts.3/@complexTypes.1"/>
+    </complexTypes>
+    <complexTypes xsi:type="data:DataStructure" name="FindShortestPathResponse">
+      <features>RESPONSE_PAYLOAD</features>
+      <dataFields name="candidates" lowerBound="0" upperBound="-1" complexType="//@contexts.3/@complexTypes.3"/>
+    </complexTypes>
+  </contexts>
+</data:DataModel>

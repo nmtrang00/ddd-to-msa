@@ -1,0 +1,603 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xmi:XMI xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:data="http://www.example.org/xcore/data" xmlns:service="http://www.example.org/xcore/service">
+  <service:ServiceModel t_modelUri="cargo">
+    <imports name="DomainData" importURI="./cargo.data"/>
+    <microservices name="Cargo" visibility="PUBLIC">
+      <endpoints>
+        <addresses>/Cargo-ms</addresses>
+      </endpoints>
+      <interfaces name="CargoService" visibility="INTERNAL" interfaceType="DOMAIN_SERVICE">
+        <operations name="deleteACargo" toExpose="true" visibility="INTERNAL" operationType="S0_DOMAIN_SERVICE">
+          <protocols/>
+          <parameters name="deletedCargo" exchangePattern="OUT" optional="true" lowerBound="0" upperBound="1">
+            <importedType import="/0/@imports.0">
+              <type xsi:type="data:DataStructure" href="cargo.data#//@contexts.2/@complexTypes.11"/>
+            </importedType>
+          </parameters>
+          <parameters name="trackingId" lowerBound="1" upperBound="1">
+            <primitiveType xsi:type="data:PrimitiveInteger"/>
+          </parameters>
+        </operations>
+        <operations name="routeACargo" toExpose="true" visibility="INTERNAL" operationType="S0_DOMAIN_SERVICE">
+          <protocols/>
+          <parameters name="trackingId" lowerBound="1" upperBound="1">
+            <primitiveType xsi:type="data:PrimitiveInteger"/>
+          </parameters>
+          <parameters name="selectedItinerary" lowerBound="2" upperBound="-1">
+            <importedType import="/0/@imports.0">
+              <type xsi:type="data:CollectionType" href="cargo.data#//@contexts.2/@complexTypes.1"/>
+            </importedType>
+          </parameters>
+          <parameters name="updatedCargo" exchangePattern="OUT" optional="true" lowerBound="0" upperBound="1">
+            <importedType import="/0/@imports.0">
+              <type xsi:type="data:DataStructure" href="cargo.data#//@contexts.2/@complexTypes.11"/>
+            </importedType>
+          </parameters>
+        </operations>
+        <operations name="validateLocation" visibility="INTERNAL" operationType="S0_DOMAIN_SERVICE">
+          <protocols/>
+          <parameters name="location" lowerBound="1" upperBound="1">
+            <importedType import="/0/@imports.0">
+              <type xsi:type="data:DataStructure" href="cargo.data#//@contexts.2/@complexTypes.5"/>
+            </importedType>
+          </parameters>
+        </operations>
+        <operations name="requestRouteCandidates" toExpose="true" visibility="INTERNAL" operationType="S0_DOMAIN_SERVICE">
+          <protocols/>
+          <parameters name="candidates" exchangePattern="OUT" optional="true" lowerBound="0" upperBound="-1">
+            <importedType import="/0/@imports.0">
+              <type xsi:type="data:CollectionType" href="cargo.data#//@contexts.3/@complexTypes.3"/>
+            </importedType>
+          </parameters>
+          <parameters name="trackingId" lowerBound="1" upperBound="1">
+            <primitiveType xsi:type="data:PrimitiveInteger"/>
+          </parameters>
+        </operations>
+        <operations name="validateCarrierMovement" visibility="INTERNAL" operationType="S0_DOMAIN_SERVICE">
+          <protocols/>
+          <parameters name="carrierMovement" lowerBound="1" upperBound="1">
+            <importedType import="/0/@imports.0">
+              <type xsi:type="data:DataStructure" href="cargo.data#//@contexts.2/@complexTypes.2"/>
+            </importedType>
+          </parameters>
+        </operations>
+        <operations name="bookACargo" toExpose="true" visibility="INTERNAL" operationType="S0_DOMAIN_SERVICE">
+          <protocols/>
+          <parameters name="srcPort" lowerBound="1" upperBound="1">
+            <primitiveType xsi:type="data:PrimitiveInteger"/>
+          </parameters>
+          <parameters name="customerId" lowerBound="1" upperBound="1">
+            <primitiveType xsi:type="data:PrimitiveInteger"/>
+          </parameters>
+          <parameters name="newCargo" exchangePattern="OUT" optional="true" lowerBound="0" upperBound="1">
+            <importedType import="/0/@imports.0">
+              <type xsi:type="data:DataStructure" href="cargo.data#//@contexts.2/@complexTypes.11"/>
+            </importedType>
+          </parameters>
+          <parameters name="deadline" lowerBound="1" upperBound="1">
+            <primitiveType xsi:type="data:PrimitiveInteger"/>
+          </parameters>
+          <parameters name="destPort" lowerBound="1" upperBound="1">
+            <primitiveType xsi:type="data:PrimitiveInteger"/>
+          </parameters>
+        </operations>
+        <operations name="trackACargo" toExpose="true" visibility="INTERNAL" operationType="S0_DOMAIN_SERVICE">
+          <protocols/>
+          <parameters name="trackingReceipt" exchangePattern="OUT" optional="true" lowerBound="0" upperBound="1">
+            <importedType import="/0/@imports.0">
+              <type xsi:type="data:DataStructure" href="cargo.data#//@contexts.2/@complexTypes.6"/>
+            </importedType>
+          </parameters>
+          <parameters name="trackingId" lowerBound="1" upperBound="1">
+            <primitiveType xsi:type="data:PrimitiveInteger"/>
+          </parameters>
+        </operations>
+        <operations name="reportHandlingEvent" toExpose="true" visibility="INTERNAL" operationType="S0_DOMAIN_SERVICE">
+          <protocols/>
+          <parameters name="trackingId" lowerBound="1" upperBound="1">
+            <primitiveType xsi:type="data:PrimitiveInteger"/>
+          </parameters>
+          <parameters name="eventType" lowerBound="1" upperBound="1">
+            <importedType import="/0/@imports.0">
+              <type xsi:type="data:Enumeration" href="cargo.data#//@contexts.2/@complexTypes.9"/>
+            </importedType>
+          </parameters>
+          <parameters name="carrierMovement" optional="true" lowerBound="0" upperBound="1">
+            <importedType import="/0/@imports.0">
+              <type xsi:type="data:DataStructure" href="cargo.data#//@contexts.2/@complexTypes.2"/>
+            </importedType>
+          </parameters>
+          <parameters name="event" exchangePattern="OUT" optional="true" lowerBound="0" upperBound="1">
+            <importedType import="/0/@imports.0">
+              <type xsi:type="data:DataStructure" href="cargo.data#//@contexts.2/@complexTypes.8"/>
+            </importedType>
+          </parameters>
+          <parameters name="reportedTime" lowerBound="1" upperBound="1">
+            <primitiveType xsi:type="data:PrimitiveInteger"/>
+          </parameters>
+          <parameters name="port" lowerBound="1" upperBound="1">
+            <importedType import="/0/@imports.0">
+              <type xsi:type="data:DataStructure" href="cargo.data#//@contexts.2/@complexTypes.5"/>
+            </importedType>
+          </parameters>
+        </operations>
+      </interfaces>
+      <interfaces name="CargoRepository" visibility="INTERNAL" interfaceType="REPOSITORY">
+        <operations name="findByTrackingId" notImplemented="true" visibility="INTERNAL" operationType="R1_REPOSITORY_READ">
+          <protocols/>
+          <parameters name="result" exchangePattern="OUT" optional="true" lowerBound="0" upperBound="1">
+            <importedType import="/0/@imports.0">
+              <type xsi:type="data:DataStructure" href="cargo.data#//@contexts.2/@complexTypes.11"/>
+            </importedType>
+          </parameters>
+          <parameters name="trackingId" lowerBound="1" upperBound="1">
+            <primitiveType xsi:type="data:PrimitiveInteger"/>
+          </parameters>
+        </operations>
+        <operations name="createCargo" notImplemented="true" visibility="INTERNAL" operationType="R0_REPOSITORY_CREATE">
+          <protocols/>
+          <parameters name="result" exchangePattern="OUT" optional="true" lowerBound="0" upperBound="1">
+            <importedType import="/0/@imports.0">
+              <type xsi:type="data:DataStructure" href="cargo.data#//@contexts.2/@complexTypes.11"/>
+            </importedType>
+          </parameters>
+          <parameters name="cargo" lowerBound="1" upperBound="1">
+            <importedType import="/0/@imports.0">
+              <type xsi:type="data:DataStructure" href="cargo.data#//@contexts.2/@complexTypes.11"/>
+            </importedType>
+          </parameters>
+        </operations>
+        <operations name="deleteByTrackingId" notImplemented="true" visibility="INTERNAL" operationType="R3_REPOSITORY_DELETE">
+          <protocols/>
+          <parameters name="result" exchangePattern="OUT" optional="true" lowerBound="0" upperBound="1">
+            <importedType import="/0/@imports.0">
+              <type xsi:type="data:DataStructure" href="cargo.data#//@contexts.2/@complexTypes.11"/>
+            </importedType>
+          </parameters>
+          <parameters name="trackingId" lowerBound="1" upperBound="1">
+            <primitiveType xsi:type="data:PrimitiveInteger"/>
+          </parameters>
+        </operations>
+        <operations name="updateCargo" notImplemented="true" visibility="INTERNAL" operationType="R2_REPOSITORY_UPDATE">
+          <protocols/>
+          <parameters name="result" exchangePattern="OUT" optional="true" lowerBound="0" upperBound="1">
+            <importedType import="/0/@imports.0">
+              <type xsi:type="data:DataStructure" href="cargo.data#//@contexts.2/@complexTypes.11"/>
+            </importedType>
+          </parameters>
+          <parameters name="cargo" lowerBound="1" upperBound="1">
+            <importedType import="/0/@imports.0">
+              <type xsi:type="data:DataStructure" href="cargo.data#//@contexts.2/@complexTypes.11"/>
+            </importedType>
+          </parameters>
+        </operations>
+      </interfaces>
+      <interfaces name="CargoController" visibility="PUBLIC">
+        <endpoints>
+          <addresses>/cargo</addresses>
+        </endpoints>
+        <operations name="trackACargo" visibility="PUBLIC">
+          <endpoints>
+            <addresses>/{trackingId}</addresses>
+          </endpoints>
+          <parameters name="trackingId" lowerBound="1" upperBound="1">
+            <primitiveType xsi:type="data:PrimitiveInteger"/>
+          </parameters>
+          <parameters name="responseParam" exchangePattern="OUT" lowerBound="1" upperBound="1" adapterParameterType="RESPONSE_BODY">
+            <importedType import="/0/@imports.0">
+              <type xsi:type="data:DataStructure" href="cargo.data#//@contexts.2/@complexTypes.12"/>
+            </importedType>
+          </parameters>
+        </operations>
+        <operations name="routeACargo" visibility="PUBLIC" operationType="I2_INBOUND_POST">
+          <endpoints>
+            <addresses>/{trackingId}</addresses>
+          </endpoints>
+          <parameters name="trackingId" lowerBound="1" upperBound="1">
+            <primitiveType xsi:type="data:PrimitiveInteger"/>
+          </parameters>
+          <parameters name="requestParam" lowerBound="1" upperBound="1" adapterParameterType="REQUEST_BODY">
+            <importedType import="/0/@imports.0">
+              <type xsi:type="data:DataStructure" href="cargo.data#//@contexts.2/@complexTypes.13"/>
+            </importedType>
+          </parameters>
+          <parameters name="responseParam" exchangePattern="OUT" lowerBound="1" upperBound="1" adapterParameterType="RESPONSE_BODY">
+            <importedType import="/0/@imports.0">
+              <type xsi:type="data:DataStructure" href="cargo.data#//@contexts.2/@complexTypes.14"/>
+            </importedType>
+          </parameters>
+        </operations>
+        <operations name="requestRouteCandidates" visibility="PUBLIC">
+          <endpoints>
+            <addresses>/requestRouteCandidates/{trackingId}</addresses>
+          </endpoints>
+          <parameters name="trackingId" lowerBound="1" upperBound="1">
+            <primitiveType xsi:type="data:PrimitiveInteger"/>
+          </parameters>
+          <parameters name="responseParam" exchangePattern="OUT" lowerBound="1" upperBound="1" adapterParameterType="RESPONSE_BODY">
+            <importedType import="/0/@imports.0">
+              <type xsi:type="data:DataStructure" href="cargo.data#//@contexts.2/@complexTypes.15"/>
+            </importedType>
+          </parameters>
+        </operations>
+        <operations name="reportHandlingEvent" visibility="PUBLIC" operationType="I2_INBOUND_POST">
+          <endpoints>
+            <addresses>/reportHandlingEvent/{trackingId}</addresses>
+          </endpoints>
+          <parameters name="trackingId" lowerBound="1" upperBound="1">
+            <primitiveType xsi:type="data:PrimitiveInteger"/>
+          </parameters>
+          <parameters name="requestParam" lowerBound="1" upperBound="1" adapterParameterType="REQUEST_BODY">
+            <importedType import="/0/@imports.0">
+              <type xsi:type="data:DataStructure" href="cargo.data#//@contexts.2/@complexTypes.16"/>
+            </importedType>
+          </parameters>
+          <parameters name="responseParam" exchangePattern="OUT" lowerBound="1" upperBound="1" adapterParameterType="RESPONSE_BODY">
+            <importedType import="/0/@imports.0">
+              <type xsi:type="data:DataStructure" href="cargo.data#//@contexts.2/@complexTypes.17"/>
+            </importedType>
+          </parameters>
+        </operations>
+        <operations name="deleteACargo" visibility="PUBLIC" operationType="I3_INBOUND_DELETE">
+          <endpoints>
+            <addresses>/{trackingId}</addresses>
+          </endpoints>
+          <parameters name="trackingId" lowerBound="1" upperBound="1">
+            <primitiveType xsi:type="data:PrimitiveInteger"/>
+          </parameters>
+          <parameters name="responseParam" exchangePattern="OUT" lowerBound="1" upperBound="1" adapterParameterType="RESPONSE_BODY">
+            <importedType import="/0/@imports.0">
+              <type xsi:type="data:DataStructure" href="cargo.data#//@contexts.2/@complexTypes.18"/>
+            </importedType>
+          </parameters>
+        </operations>
+        <operations name="bookACargo" visibility="PUBLIC" operationType="I2_INBOUND_POST">
+          <endpoints>
+            <addresses></addresses>
+          </endpoints>
+          <parameters name="requestParam" lowerBound="1" upperBound="1" adapterParameterType="REQUEST_BODY">
+            <importedType import="/0/@imports.0">
+              <type xsi:type="data:DataStructure" href="cargo.data#//@contexts.2/@complexTypes.19"/>
+            </importedType>
+          </parameters>
+          <parameters name="responseParam" exchangePattern="OUT" lowerBound="1" upperBound="1" adapterParameterType="RESPONSE_BODY">
+            <importedType import="/0/@imports.0">
+              <type xsi:type="data:DataStructure" href="cargo.data#//@contexts.2/@complexTypes.20"/>
+            </importedType>
+          </parameters>
+        </operations>
+      </interfaces>
+      <interfaces name="CustomerOutboundAdapter" visibility="INTERNAL" interfaceType="OUTBOUND_ADAPTER">
+        <operations name="checkCustomerExists" visibility="INTERNAL" operationType="O0_OUTBOUND_GET">
+          <parameters name="result" exchangePattern="OUT" lowerBound="1" upperBound="1">
+            <primitiveType xsi:type="data:PrimitiveBoolean"/>
+          </parameters>
+          <parameters name="customerId" lowerBound="1" upperBound="1">
+            <primitiveType xsi:type="data:PrimitiveInteger"/>
+          </parameters>
+        </operations>
+      </interfaces>
+      <interfaces name="RoutePlanningOutboundAdapter" visibility="INTERNAL" interfaceType="OUTBOUND_ADAPTER">
+        <operations name="getRouteCandidates" visibility="INTERNAL" operationType="O2_OUTBOUND_POST">
+          <parameters name="candidates" exchangePattern="OUT" optional="true" lowerBound="0" upperBound="-1">
+            <importedType import="/0/@imports.0">
+              <type xsi:type="data:CollectionType" href="cargo.data#//@contexts.3/@complexTypes.3"/>
+            </importedType>
+          </parameters>
+          <parameters name="destination" lowerBound="1" upperBound="1">
+            <importedType import="/0/@imports.0">
+              <type xsi:type="data:DataStructure" href="cargo.data#//@contexts.3/@complexTypes.1"/>
+            </importedType>
+          </parameters>
+          <parameters name="source" lowerBound="1" upperBound="1">
+            <importedType import="/0/@imports.0">
+              <type xsi:type="data:DataStructure" href="cargo.data#//@contexts.3/@complexTypes.1"/>
+            </importedType>
+          </parameters>
+        </operations>
+      </interfaces>
+      <interfaces name="LocationOutboundAdapter" visibility="INTERNAL" interfaceType="OUTBOUND_ADAPTER">
+        <operations name="checkLocation" visibility="INTERNAL" operationType="O0_OUTBOUND_GET">
+          <parameters name="portCode" lowerBound="1" upperBound="1">
+            <primitiveType xsi:type="data:PrimitiveInteger"/>
+          </parameters>
+          <parameters name="result" exchangePattern="OUT" lowerBound="1" upperBound="1">
+            <primitiveType xsi:type="data:PrimitiveBoolean"/>
+          </parameters>
+        </operations>
+      </interfaces>
+    </microservices>
+    <microservices name="RoutePlanning" visibility="PUBLIC">
+      <endpoints>
+        <addresses>/RoutePlanning-ms</addresses>
+      </endpoints>
+      <interfaces name="RouteService" visibility="INTERNAL" interfaceType="DOMAIN_SERVICE">
+        <operations name="findShortestPath" toExpose="true" notImplemented="true" visibility="INTERNAL" operationType="S0_DOMAIN_SERVICE">
+          <protocols/>
+          <parameters name="candidates" exchangePattern="OUT" optional="true" lowerBound="0" upperBound="-1">
+            <importedType import="/0/@imports.0">
+              <type xsi:type="data:CollectionType" href="cargo.data#//@contexts.3/@complexTypes.3"/>
+            </importedType>
+          </parameters>
+          <parameters name="destination" lowerBound="1" upperBound="1">
+            <importedType import="/0/@imports.0">
+              <type xsi:type="data:DataStructure" href="cargo.data#//@contexts.3/@complexTypes.1"/>
+            </importedType>
+          </parameters>
+          <parameters name="source" lowerBound="1" upperBound="1">
+            <importedType import="/0/@imports.0">
+              <type xsi:type="data:DataStructure" href="cargo.data#//@contexts.3/@complexTypes.1"/>
+            </importedType>
+          </parameters>
+        </operations>
+      </interfaces>
+      <interfaces name="RouteController" visibility="PUBLIC">
+        <endpoints>
+          <addresses>/route</addresses>
+        </endpoints>
+        <operations name="findShortestPath" visibility="PUBLIC" operationType="I2_INBOUND_POST">
+          <endpoints>
+            <addresses>/findShortestPath</addresses>
+          </endpoints>
+          <parameters name="requestParam" lowerBound="1" upperBound="1" adapterParameterType="REQUEST_BODY">
+            <importedType import="/0/@imports.0">
+              <type xsi:type="data:DataStructure" href="cargo.data#//@contexts.3/@complexTypes.4"/>
+            </importedType>
+          </parameters>
+          <parameters name="responseParam" exchangePattern="OUT" lowerBound="1" upperBound="1" adapterParameterType="RESPONSE_BODY">
+            <importedType import="/0/@imports.0">
+              <type xsi:type="data:DataStructure" href="cargo.data#//@contexts.3/@complexTypes.5"/>
+            </importedType>
+          </parameters>
+        </operations>
+      </interfaces>
+    </microservices>
+    <microservices name="Location" visibility="PUBLIC">
+      <endpoints>
+        <addresses>/Location-ms</addresses>
+      </endpoints>
+      <interfaces name="LocationRepository" visibility="INTERNAL" interfaceType="REPOSITORY">
+        <operations name="existsByPortCode" notImplemented="true" visibility="INTERNAL" operationType="R4_REPOSITORY_EXIST">
+          <protocols/>
+          <parameters name="portCode" lowerBound="1" upperBound="1">
+            <primitiveType xsi:type="data:PrimitiveInteger"/>
+          </parameters>
+          <parameters name="result" exchangePattern="OUT" lowerBound="1" upperBound="1">
+            <primitiveType xsi:type="data:PrimitiveBoolean"/>
+          </parameters>
+        </operations>
+        <operations name="createLocation" notImplemented="true" visibility="INTERNAL" operationType="R0_REPOSITORY_CREATE">
+          <protocols/>
+          <parameters name="location" lowerBound="1" upperBound="1">
+            <importedType import="/0/@imports.0">
+              <type xsi:type="data:DataStructure" href="cargo.data#//@contexts.1/@complexTypes.0"/>
+            </importedType>
+          </parameters>
+          <parameters name="result" exchangePattern="OUT" optional="true" lowerBound="0" upperBound="1">
+            <importedType import="/0/@imports.0">
+              <type xsi:type="data:DataStructure" href="cargo.data#//@contexts.1/@complexTypes.0"/>
+            </importedType>
+          </parameters>
+        </operations>
+      </interfaces>
+      <interfaces name="LocationService" visibility="INTERNAL" interfaceType="DOMAIN_SERVICE">
+        <operations name="registerALocation" toExpose="true" visibility="INTERNAL" operationType="S0_DOMAIN_SERVICE">
+          <protocols/>
+          <parameters name="name" lowerBound="1" upperBound="1">
+            <primitiveType xsi:type="data:PrimitiveString"/>
+          </parameters>
+          <parameters name="location" exchangePattern="OUT" optional="true" lowerBound="0" upperBound="1">
+            <importedType import="/0/@imports.0">
+              <type xsi:type="data:DataStructure" href="cargo.data#//@contexts.1/@complexTypes.0"/>
+            </importedType>
+          </parameters>
+        </operations>
+        <operations name="existsByPortCode" operationType="S0_DOMAIN_SERVICE">
+          <parameters name="result" exchangePattern="OUT" lowerBound="1" upperBound="1">
+            <primitiveType xsi:type="data:PrimitiveBoolean"/>
+          </parameters>
+          <parameters name="portCode" lowerBound="1" upperBound="1">
+            <primitiveType xsi:type="data:PrimitiveInteger"/>
+          </parameters>
+        </operations>
+      </interfaces>
+      <interfaces name="LocationController" visibility="PUBLIC">
+        <endpoints>
+          <addresses>/location</addresses>
+        </endpoints>
+        <operations name="registerALocation" visibility="PUBLIC" operationType="I2_INBOUND_POST">
+          <endpoints>
+            <addresses></addresses>
+          </endpoints>
+          <parameters name="requestParam" lowerBound="1" upperBound="1" adapterParameterType="REQUEST_BODY">
+            <importedType import="/0/@imports.0">
+              <type xsi:type="data:DataStructure" href="cargo.data#//@contexts.1/@complexTypes.1"/>
+            </importedType>
+          </parameters>
+          <parameters name="responseParam" exchangePattern="OUT" lowerBound="1" upperBound="1" adapterParameterType="RESPONSE_BODY">
+            <importedType import="/0/@imports.0">
+              <type xsi:type="data:DataStructure" href="cargo.data#//@contexts.1/@complexTypes.2"/>
+            </importedType>
+          </parameters>
+        </operations>
+        <operations name="existsByPortCode">
+          <endpoints>
+            <addresses>/{portCode}/exists</addresses>
+          </endpoints>
+          <parameters name="portCode" lowerBound="1" upperBound="1">
+            <primitiveType xsi:type="data:PrimitiveInteger"/>
+          </parameters>
+          <parameters name="responseParam" exchangePattern="OUT" lowerBound="1" upperBound="1" adapterParameterType="RESPONSE_BODY">
+            <importedType import="/0/@imports.0">
+              <type xsi:type="data:DataStructure" href="cargo.data#//@contexts.1/@complexTypes.3"/>
+            </importedType>
+          </parameters>
+        </operations>
+      </interfaces>
+    </microservices>
+    <microservices name="Customer" visibility="PUBLIC">
+      <endpoints>
+        <addresses>/Customer-ms</addresses>
+      </endpoints>
+      <interfaces name="CustomerRepository" visibility="INTERNAL" interfaceType="REPOSITORY">
+        <operations name="existsByCustomerId" notImplemented="true" visibility="INTERNAL" operationType="R4_REPOSITORY_EXIST">
+          <protocols/>
+          <parameters name="result" exchangePattern="OUT" lowerBound="1" upperBound="1">
+            <primitiveType xsi:type="data:PrimitiveBoolean"/>
+          </parameters>
+          <parameters name="customerId" lowerBound="1" upperBound="1">
+            <primitiveType xsi:type="data:PrimitiveInteger"/>
+          </parameters>
+        </operations>
+        <operations name="createCustomer" notImplemented="true" visibility="INTERNAL" operationType="R0_REPOSITORY_CREATE">
+          <protocols/>
+          <parameters name="result" exchangePattern="OUT" optional="true" lowerBound="0" upperBound="1">
+            <importedType import="/0/@imports.0">
+              <type xsi:type="data:DataStructure" href="cargo.data#//@contexts.0/@complexTypes.0"/>
+            </importedType>
+          </parameters>
+          <parameters name="customer" lowerBound="1" upperBound="1">
+            <importedType import="/0/@imports.0">
+              <type xsi:type="data:DataStructure" href="cargo.data#//@contexts.0/@complexTypes.0"/>
+            </importedType>
+          </parameters>
+        </operations>
+        <operations name="findByCustomerId" notImplemented="true" visibility="INTERNAL" operationType="R1_REPOSITORY_READ">
+          <protocols/>
+          <parameters name="customerId" lowerBound="1" upperBound="1">
+            <primitiveType xsi:type="data:PrimitiveInteger"/>
+          </parameters>
+          <parameters name="result" exchangePattern="OUT" optional="true" lowerBound="0" upperBound="1">
+            <importedType import="/0/@imports.0">
+              <type xsi:type="data:DataStructure" href="cargo.data#//@contexts.0/@complexTypes.0"/>
+            </importedType>
+          </parameters>
+        </operations>
+        <operations name="existsByEmail" notImplemented="true" visibility="INTERNAL" operationType="R4_REPOSITORY_EXIST">
+          <protocols/>
+          <parameters name="email" lowerBound="1" upperBound="1">
+            <primitiveType xsi:type="data:PrimitiveString"/>
+          </parameters>
+          <parameters name="result" exchangePattern="OUT" lowerBound="1" upperBound="1">
+            <primitiveType xsi:type="data:PrimitiveBoolean"/>
+          </parameters>
+        </operations>
+        <operations name="updateCustomer" notImplemented="true" visibility="INTERNAL" operationType="R2_REPOSITORY_UPDATE">
+          <protocols/>
+          <parameters name="result" exchangePattern="OUT" optional="true" lowerBound="0" upperBound="1">
+            <importedType import="/0/@imports.0">
+              <type xsi:type="data:DataStructure" href="cargo.data#//@contexts.0/@complexTypes.0"/>
+            </importedType>
+          </parameters>
+          <parameters name="customer" lowerBound="1" upperBound="1">
+            <importedType import="/0/@imports.0">
+              <type xsi:type="data:DataStructure" href="cargo.data#//@contexts.0/@complexTypes.0"/>
+            </importedType>
+          </parameters>
+        </operations>
+      </interfaces>
+      <interfaces name="CustomerService" visibility="INTERNAL" interfaceType="DOMAIN_SERVICE">
+        <operations name="registerACustomer" toExpose="true" visibility="INTERNAL" operationType="S0_DOMAIN_SERVICE">
+          <protocols/>
+          <parameters name="customer" exchangePattern="OUT" optional="true" lowerBound="0" upperBound="1">
+            <importedType import="/0/@imports.0">
+              <type xsi:type="data:DataStructure" href="cargo.data#//@contexts.0/@complexTypes.0"/>
+            </importedType>
+          </parameters>
+          <parameters name="name" lowerBound="1" upperBound="1">
+            <primitiveType xsi:type="data:PrimitiveString"/>
+          </parameters>
+          <parameters name="email" lowerBound="1" upperBound="1">
+            <primitiveType xsi:type="data:PrimitiveString"/>
+          </parameters>
+        </operations>
+        <operations name="updateCustomerDetails" toExpose="true" visibility="INTERNAL" operationType="S0_DOMAIN_SERVICE">
+          <protocols/>
+          <parameters name="newName" optional="true" lowerBound="0" upperBound="1">
+            <primitiveType xsi:type="data:PrimitiveString"/>
+          </parameters>
+          <parameters name="customerId" lowerBound="1" upperBound="1">
+            <primitiveType xsi:type="data:PrimitiveInteger"/>
+          </parameters>
+          <parameters name="customer" exchangePattern="OUT" optional="true" lowerBound="0" upperBound="1">
+            <importedType import="/0/@imports.0">
+              <type xsi:type="data:DataStructure" href="cargo.data#//@contexts.0/@complexTypes.0"/>
+            </importedType>
+          </parameters>
+          <parameters name="newEmail" optional="true" lowerBound="0" upperBound="1">
+            <primitiveType xsi:type="data:PrimitiveString"/>
+          </parameters>
+        </operations>
+        <operations name="existsByCustomerId" operationType="S0_DOMAIN_SERVICE">
+          <parameters name="customerId" lowerBound="1" upperBound="1">
+            <primitiveType xsi:type="data:PrimitiveInteger"/>
+          </parameters>
+          <parameters name="result" exchangePattern="OUT" lowerBound="1" upperBound="1">
+            <primitiveType xsi:type="data:PrimitiveBoolean"/>
+          </parameters>
+        </operations>
+      </interfaces>
+      <interfaces name="CustomerController" visibility="PUBLIC">
+        <endpoints>
+          <addresses>/customer</addresses>
+        </endpoints>
+        <operations name="updateCustomerDetails" visibility="PUBLIC" operationType="I2_INBOUND_POST">
+          <endpoints>
+            <addresses>/{customerId}</addresses>
+          </endpoints>
+          <parameters name="customerId" lowerBound="1" upperBound="1">
+            <primitiveType xsi:type="data:PrimitiveInteger"/>
+          </parameters>
+          <parameters name="requestParam" lowerBound="1" upperBound="1" adapterParameterType="REQUEST_BODY">
+            <importedType import="/0/@imports.0">
+              <type xsi:type="data:DataStructure" href="cargo.data#//@contexts.0/@complexTypes.1"/>
+            </importedType>
+          </parameters>
+          <parameters name="responseParam" exchangePattern="OUT" lowerBound="1" upperBound="1" adapterParameterType="RESPONSE_BODY">
+            <importedType import="/0/@imports.0">
+              <type xsi:type="data:DataStructure" href="cargo.data#//@contexts.0/@complexTypes.2"/>
+            </importedType>
+          </parameters>
+        </operations>
+        <operations name="registerACustomer" visibility="PUBLIC" operationType="I2_INBOUND_POST">
+          <endpoints>
+            <addresses></addresses>
+          </endpoints>
+          <parameters name="requestParam" lowerBound="1" upperBound="1" adapterParameterType="REQUEST_BODY">
+            <importedType import="/0/@imports.0">
+              <type xsi:type="data:DataStructure" href="cargo.data#//@contexts.0/@complexTypes.3"/>
+            </importedType>
+          </parameters>
+          <parameters name="responseParam" exchangePattern="OUT" lowerBound="1" upperBound="1" adapterParameterType="RESPONSE_BODY">
+            <importedType import="/0/@imports.0">
+              <type xsi:type="data:DataStructure" href="cargo.data#//@contexts.0/@complexTypes.4"/>
+            </importedType>
+          </parameters>
+        </operations>
+        <operations name="existsByCustomerId">
+          <endpoints>
+            <addresses>/{customerId}/exists</addresses>
+          </endpoints>
+          <parameters name="customerId" lowerBound="1" upperBound="1">
+            <primitiveType xsi:type="data:PrimitiveInteger"/>
+          </parameters>
+          <parameters name="responseParam" exchangePattern="OUT" lowerBound="1" upperBound="1" adapterParameterType="RESPONSE_BODY">
+            <importedType import="/0/@imports.0">
+              <type xsi:type="data:DataStructure" href="cargo.data#//@contexts.0/@complexTypes.5"/>
+            </importedType>
+          </parameters>
+        </operations>
+      </interfaces>
+    </microservices>
+  </service:ServiceModel>
+  <data:DataStructure name="SharedLocation">
+    <features>SHARED_VALUE_OBJECT</features>
+    <dataFields name="portCode" lowerBound="1" upperBound="1">
+      <primitiveType xsi:type="data:PrimitiveInteger"/>
+      <features>NEVER_EMPTY</features>
+    </dataFields>
+  </data:DataStructure>
+  <data:CollectionType name="SharedLocation">
+    <dataFields name="sharedLocation" complexType="/1"/>
+  </data:CollectionType>
+</xmi:XMI>

@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<dact:Root xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:dact="http://www.example.org/xcore/dact">
+  <ddd>
+    <boundedContexts name="Cargo">
+      <ownedElements xsi:type="dact:Service" name="CargoService">
+        <ownedOperations name="doSomething" behavior="//@activity/@activities.0">
+          <ownedParameters name="inParam1" type="//@primitivesTypes.3"/>
+        </ownedOperations>
+      </ownedElements>
+      <ownedElements xsi:type="dact:Entity" name="Cargo"/>
+    </boundedContexts>
+  </ddd>
+  <activity>
+    <activities name="doSomethingActivity" specification="//@ddd/@boundedContexts.0/@ownedElements.0/@ownedOperations.0">
+      <ownedParameters name="inActParam1" type="//@primitivesTypes.3"/>
+      <parameterMappings type="ACTIVITY_IN" operationParameter="//@ddd/@boundedContexts.0/@ownedElements.0/@ownedOperations.0/@ownedParameters.0"/>
+    </activities>
+  </activity>
+  <primitivesTypes xsi:type="dact:StringType" name="String"/>
+  <primitivesTypes xsi:type="dact:BooleanType" name="Boolean"/>
+  <primitivesTypes xsi:type="dact:IntegerType" name="Integer"/>
+  <primitivesTypes xsi:type="dact:RealType" name="Real"/>
+</dact:Root>

@@ -1,0 +1,314 @@
+/**
+ */
+package dact.provider;
+
+
+import dact.ActivityGroup;
+import dact.DactFactory;
+import dact.DactPackage;
+
+import java.util.Collection;
+import java.util.List;
+
+import org.eclipse.emf.common.notify.AdapterFactory;
+import org.eclipse.emf.common.notify.Notification;
+
+import org.eclipse.emf.ecore.EStructuralFeature;
+
+import org.eclipse.emf.edit.provider.ComposeableAdapterFactory;
+import org.eclipse.emf.edit.provider.IItemPropertyDescriptor;
+import org.eclipse.emf.edit.provider.ViewerNotification;
+
+/**
+ * This is the item provider adapter for a {@link dact.ActivityGroup} object.
+ * <!-- begin-user-doc -->
+ * <!-- end-user-doc -->
+ * @generated
+ */
+public class ActivityGroupItemProvider extends NamedElementItemProvider {
+	/**
+	 * This constructs an instance from a factory and a notifier.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public ActivityGroupItemProvider(AdapterFactory adapterFactory) {
+		super(adapterFactory);
+	}
+
+	/**
+	 * This returns the property descriptors for the adapted class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	@Override
+	public List<IItemPropertyDescriptor> getPropertyDescriptors(Object object) {
+		if (itemPropertyDescriptors == null) {
+			super.getPropertyDescriptors(object);
+
+			addActivityPropertyDescriptor(object);
+			addStructuredActivityNodePropertyDescriptor(object);
+			addConditionalNodePropertyDescriptor(object);
+		}
+		return itemPropertyDescriptors;
+	}
+
+	/**
+	 * This adds a property descriptor for the Activity feature.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	protected void addActivityPropertyDescriptor(Object object) {
+		itemPropertyDescriptors.add
+			(createItemPropertyDescriptor
+				(((ComposeableAdapterFactory)adapterFactory).getRootAdapterFactory(),
+				 getResourceLocator(),
+				 getString("_UI_ActivityGroup_activity_feature"),
+				 getString("_UI_PropertyDescriptor_description", "_UI_ActivityGroup_activity_feature", "_UI_ActivityGroup_type"),
+				 DactPackage.eINSTANCE.getActivityGroup_Activity(),
+				 true,
+				 false,
+				 true,
+				 null,
+				 null,
+				 null));
+	}
+
+	/**
+	 * This adds a property descriptor for the Structured Activity Node feature.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	protected void addStructuredActivityNodePropertyDescriptor(Object object) {
+		itemPropertyDescriptors.add
+			(createItemPropertyDescriptor
+				(((ComposeableAdapterFactory)adapterFactory).getRootAdapterFactory(),
+				 getResourceLocator(),
+				 getString("_UI_ActivityGroup_structuredActivityNode_feature"),
+				 getString("_UI_PropertyDescriptor_description", "_UI_ActivityGroup_structuredActivityNode_feature", "_UI_ActivityGroup_type"),
+				 DactPackage.eINSTANCE.getActivityGroup_StructuredActivityNode(),
+				 true,
+				 false,
+				 true,
+				 null,
+				 null,
+				 null));
+	}
+
+	/**
+	 * This adds a property descriptor for the Conditional Node feature.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	protected void addConditionalNodePropertyDescriptor(Object object) {
+		itemPropertyDescriptors.add
+			(createItemPropertyDescriptor
+				(((ComposeableAdapterFactory)adapterFactory).getRootAdapterFactory(),
+				 getResourceLocator(),
+				 getString("_UI_ActivityGroup_conditionalNode_feature"),
+				 getString("_UI_PropertyDescriptor_description", "_UI_ActivityGroup_conditionalNode_feature", "_UI_ActivityGroup_type"),
+				 DactPackage.eINSTANCE.getActivityGroup_ConditionalNode(),
+				 true,
+				 false,
+				 true,
+				 null,
+				 null,
+				 null));
+	}
+
+	/**
+	 * This specifies how to implement {@link #getChildren} and is used to deduce an appropriate feature for an
+	 * {@link org.eclipse.emf.edit.command.AddCommand}, {@link org.eclipse.emf.edit.command.RemoveCommand} or
+	 * {@link org.eclipse.emf.edit.command.MoveCommand} in {@link #createCommand}.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	@Override
+	public Collection<? extends EStructuralFeature> getChildrenFeatures(Object object) {
+		if (childrenFeatures == null) {
+			super.getChildrenFeatures(object);
+			childrenFeatures.add(DactPackage.eINSTANCE.getActivityGroup_OwnedNodes());
+			childrenFeatures.add(DactPackage.eINSTANCE.getActivityGroup_OwnedEdges());
+			childrenFeatures.add(DactPackage.eINSTANCE.getActivityGroup_Scope());
+		}
+		return childrenFeatures;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	@Override
+	protected EStructuralFeature getChildFeature(Object object, Object child) {
+		// Check the type of the specified child object and return the proper feature to use for
+		// adding (see {@link AddCommand}) it as a child.
+
+		return super.getChildFeature(object, child);
+	}
+
+	/**
+	 * This returns ActivityGroup.gif.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	@Override
+	public Object getImage(Object object) {
+		return overlayImage(object, getResourceLocator().getImage("full/obj16/ActivityGroup"));
+	}
+
+	/**
+	 * This returns the label text for the adapted class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	@Override
+	public String getText(Object object) {
+		String label = ((ActivityGroup)object).getName();
+		return label == null || label.length() == 0 ?
+			getString("_UI_ActivityGroup_type") :
+			getString("_UI_ActivityGroup_type") + " " + label;
+	}
+
+
+	/**
+	 * This handles model notifications by calling {@link #updateChildren} to update any cached
+	 * children and by creating a viewer notification, which it passes to {@link #fireNotifyChanged}.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	@Override
+	public void notifyChanged(Notification notification) {
+		updateChildren(notification);
+
+		switch (notification.getFeatureID(ActivityGroup.class)) {
+			case DactPackage.ACTIVITY_GROUP__OWNED_NODES:
+			case DactPackage.ACTIVITY_GROUP__OWNED_EDGES:
+			case DactPackage.ACTIVITY_GROUP__SCOPE:
+				fireNotifyChanged(new ViewerNotification(notification, notification.getNotifier(), true, false));
+				return;
+		}
+		super.notifyChanged(notification);
+	}
+
+	/**
+	 * This adds {@link org.eclipse.emf.edit.command.CommandParameter}s describing the children
+	 * that can be created under this object.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	@Override
+	protected void collectNewChildDescriptors(Collection<Object> newChildDescriptors, Object object) {
+		super.collectNewChildDescriptors(newChildDescriptors, object);
+
+		newChildDescriptors.add
+			(createChildParameter
+				(DactPackage.eINSTANCE.getActivityGroup_OwnedNodes(),
+				 DactFactory.eINSTANCE.createInitialNode()));
+
+		newChildDescriptors.add
+			(createChildParameter
+				(DactPackage.eINSTANCE.getActivityGroup_OwnedNodes(),
+				 DactFactory.eINSTANCE.createActivityFinalNode()));
+
+		newChildDescriptors.add
+			(createChildParameter
+				(DactPackage.eINSTANCE.getActivityGroup_OwnedNodes(),
+				 DactFactory.eINSTANCE.createFlowFinalNode()));
+
+		newChildDescriptors.add
+			(createChildParameter
+				(DactPackage.eINSTANCE.getActivityGroup_OwnedNodes(),
+				 DactFactory.eINSTANCE.createConditionalNode()));
+
+		newChildDescriptors.add
+			(createChildParameter
+				(DactPackage.eINSTANCE.getActivityGroup_OwnedNodes(),
+				 DactFactory.eINSTANCE.createLoopNode()));
+
+		newChildDescriptors.add
+			(createChildParameter
+				(DactPackage.eINSTANCE.getActivityGroup_OwnedNodes(),
+				 DactFactory.eINSTANCE.createCallOperationAction()));
+
+		newChildDescriptors.add
+			(createChildParameter
+				(DactPackage.eINSTANCE.getActivityGroup_OwnedNodes(),
+				 DactFactory.eINSTANCE.createVariableDeclarationAction()));
+
+		newChildDescriptors.add
+			(createChildParameter
+				(DactPackage.eINSTANCE.getActivityGroup_OwnedNodes(),
+				 DactFactory.eINSTANCE.createRaiseExceptionAction()));
+
+		newChildDescriptors.add
+			(createChildParameter
+				(DactPackage.eINSTANCE.getActivityGroup_OwnedNodes(),
+				 DactFactory.eINSTANCE.createRaiseEntityNotFoundExceptionAction()));
+
+		newChildDescriptors.add
+			(createChildParameter
+				(DactPackage.eINSTANCE.getActivityGroup_OwnedNodes(),
+				 DactFactory.eINSTANCE.createSendSignalAction()));
+
+		newChildDescriptors.add
+			(createChildParameter
+				(DactPackage.eINSTANCE.getActivityGroup_OwnedNodes(),
+				 DactFactory.eINSTANCE.createReceiveSignalAction()));
+
+		newChildDescriptors.add
+			(createChildParameter
+				(DactPackage.eINSTANCE.getActivityGroup_OwnedNodes(),
+				 DactFactory.eINSTANCE.createVariableAssignmentAction()));
+
+		newChildDescriptors.add
+			(createChildParameter
+				(DactPackage.eINSTANCE.getActivityGroup_OwnedNodes(),
+				 DactFactory.eINSTANCE.createParallelNode()));
+
+		newChildDescriptors.add
+			(createChildParameter
+				(DactPackage.eINSTANCE.getActivityGroup_OwnedNodes(),
+				 DactFactory.eINSTANCE.createDomainFindAction()));
+
+		newChildDescriptors.add
+			(createChildParameter
+				(DactPackage.eINSTANCE.getActivityGroup_OwnedNodes(),
+				 DactFactory.eINSTANCE.createDomainExistAction()));
+
+		newChildDescriptors.add
+			(createChildParameter
+				(DactPackage.eINSTANCE.getActivityGroup_OwnedNodes(),
+				 DactFactory.eINSTANCE.createDomainCreateAction()));
+
+		newChildDescriptors.add
+			(createChildParameter
+				(DactPackage.eINSTANCE.getActivityGroup_OwnedNodes(),
+				 DactFactory.eINSTANCE.createDomainUpdateAction()));
+
+		newChildDescriptors.add
+			(createChildParameter
+				(DactPackage.eINSTANCE.getActivityGroup_OwnedNodes(),
+				 DactFactory.eINSTANCE.createDomainDeleteAction()));
+
+		newChildDescriptors.add
+			(createChildParameter
+				(DactPackage.eINSTANCE.getActivityGroup_OwnedEdges(),
+				 DactFactory.eINSTANCE.createActivityEdge()));
+
+		newChildDescriptors.add
+			(createChildParameter
+				(DactPackage.eINSTANCE.getActivityGroup_Scope(),
+				 DactFactory.eINSTANCE.createScope()));
+	}
+
+}

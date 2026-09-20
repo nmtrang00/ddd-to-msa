@@ -1,0 +1,20 @@
+[comment encoding = UTF-8 /]
+[**
+ * The documentation of the module generate.
+ * @author trangnguyen
+ * @version 1.0.0
+ * @since 1.0.0
+ */]
+[module generateMetamodelCount('http://www.eclipse.org/emf/2002/Ecore')/]
+
+[comment @main/]
+[template public generateMetamodelCount(aPackage : ecore::EPackage)]
+[file ('metamodel_list.csv', overwrite, 'UTF-8')]
+  Class,Abstract,SuperType
+[for (cls | aPackage.eAllContents(ecore::EClass)->asOrderedSet()->sortedBy(c | c.name))]
+  [cls.name/],[cls.abstract/],[if (cls.eSuperTypes->notEmpty())][cls.eSuperTypes->first().name/][else]None[/if]
+[/for]
+
+  
+[/file]
+[/template]
